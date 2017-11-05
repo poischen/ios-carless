@@ -11,6 +11,8 @@ target 'ios' do
     pod 'Firebase/Database'
     pod 'Firebase/Auth'
     pod 'KeychainSwift'
+    pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
 
   target 'iosTests' do
     inherit! :search_paths
