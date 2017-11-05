@@ -21,6 +21,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        // Add gesture recognizer, a listener that waits for swipe
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(leftSwipe)
     }
 
     //actions
@@ -37,8 +42,12 @@ class ViewController: UIViewController {
     }
     
 
+    @IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
+    }
     
 
+    @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
+    }
     
     
     //function
@@ -130,11 +139,23 @@ class ViewController: UIViewController {
     
     }
     
-    
-    
-    
-    
+}
 
+//extension so the function is accessable by both ViewControllers
+extension UIViewController
+{
+    @objc func swipeAction(swipe:UISwipeGestureRecognizer)
+    {
+        //check which swipe it has been
+        switch swipe.direction.rawValue {
+        case 1:
+            performSegue(withIdentifier: "goLeft", sender: self)
+        case 2:
+            performSegue(withIdentifier: "goRight", sender: self)
+        default:
+            break
+        }
+    }
 }
         
         

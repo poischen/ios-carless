@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="967-Mf-ETl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -81,6 +81,74 @@
             <point key="canvasLocation" x="-90.400000000000006" y="33.733133433283363"/>
         </scene>
         <!--View Controller-->
+        <scene sceneID="z19-4e-DIk">
+            <objects>
+                <viewController id="967-Mf-ETl" customClass="ViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LmW-K1-XGX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Vorfahrt" translatesAutoresizingMaskIntoConstraints="NO" id="bZ2-3h-Jit">
+                                <rect key="frame" x="16" y="121" width="343" height="474"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="hsm-cN-kHk"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="gmm-S0-Ll4" appends="YES" id="AtT-hl-Ige"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <segue destination="YR8-8X-Pgx" kind="presentation" identifier="goRight" modalTransitionStyle="flipHorizontal" id="EX7-Vk-R9g"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RgO-Vo-MIT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="cgn-mI-RFh" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="right" id="gmm-S0-Ll4">
+                    <connections>
+                        <action selector="swipeRight:" destination="cgn-mI-RFh" id="PVs-ve-ChK"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="229.59999999999999" y="728.18590704647681"/>
+        </scene>
+        <!--View Controller2 View Controller-->
+        <scene sceneID="5yn-vK-nTl">
+            <objects>
+                <viewController id="YR8-8X-Pgx" customClass="ViewController2ViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="PYb-MR-v28">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Vorfahrt2" translatesAutoresizingMaskIntoConstraints="NO" id="loq-vT-OiK">
+                                <rect key="frame" x="16" y="125" width="343" height="474"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <viewLayoutGuide key="safeArea" id="GIn-za-JaI"/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="KLw-ix-aYy" appends="YES" id="dEE-zw-loy"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <segue destination="967-Mf-ETl" kind="presentation" identifier="goLeft" modalTransitionStyle="flipHorizontal" id="2Fy-DZ-ojW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vWP-Se-e5x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="wPj-D7-ptK" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer cancelsTouchesInView="NO" direction="left" id="KLw-ix-aYy">
+                    <connections>
+                        <action selector="swipeLeft:" destination="wPj-D7-ptK" id="ozr-rS-1b3"/>
+                    </connections>
+                </swipeGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1074" y="728"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="6oZ-7L-Uc9">
             <objects>
                 <viewController storyboardIdentifier="Home" id="dyd-1j-bhe" sceneMemberID="viewController">
@@ -140,5 +208,7 @@
         <image name="Hintergrund.jpg" width="210" height="315"/>
         <image name="HomePicture.jpg" width="1920" height="1080"/>
         <image name="Profil.png" width="500" height="500"/>
+        <image name="Vorfahrt" width="285" height="325"/>
+        <image name="Vorfahrt2" width="285" height="325"/>
     </resources>
 </document>
