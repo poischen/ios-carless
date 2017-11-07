@@ -131,10 +131,10 @@
             </objects>
             <point key="canvasLocation" x="1074" y="728"/>
         </scene>
-        <!--View Controller2 View Controller-->
+        <!--View Controller3-->
         <scene sceneID="72X-uZ-z8N">
             <objects>
-                <viewController id="56d-fM-8bP" customClass="ViewController2ViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="56d-fM-8bP" customClass="ViewController3" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IzQ-wY-WWG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -148,7 +148,7 @@
                         <viewLayoutGuide key="safeArea" id="Q81-gd-Pe9"/>
                     </view>
                     <connections>
-                        <segue destination="YR8-8X-Pgx" kind="presentation" identifier="goLeft" modalTransitionStyle="coverVertical" id="V19-Tp-iyg"/>
+                        <segue destination="YR8-8X-Pgx" kind="presentation" identifier="goLeft" modalTransitionStyle="flipHorizontal" id="V19-Tp-iyg"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgB-Wb-j5z" userLabel="First Responder" sceneMemberID="firstResponder"/>
