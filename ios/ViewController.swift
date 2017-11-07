@@ -41,14 +41,6 @@ class ViewController: UIViewController {
         logout()
     }
     
-
-    @IBAction func swipeRight(_ sender: UISwipeGestureRecognizer) {
-    }
-    
-
-    @IBAction func swipeLeft(_ sender: UISwipeGestureRecognizer) {
-    }
-    
     
     //function
     func login() {

@@ -16,9 +16,14 @@ class ViewController2ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         // Add gesture recognizer, a listener that waits for swipe
+        
         let rightSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
         rightSwipe.direction = UISwipeGestureRecognizerDirection.right
         self.view.addGestureRecognizer(rightSwipe)
+        
+        let leftSwipe2 = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
+        leftSwipe2.direction = UISwipeGestureRecognizerDirection.left
+        self.view.addGestureRecognizer(leftSwipe2)
     }
 
     override func didReceiveMemoryWarning() {
