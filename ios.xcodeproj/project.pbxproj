@@ -12,6 +12,7 @@
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
 		196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */; };
 		196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewController.swift */; };
+		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
 		2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9491FA8A2250013D67E /* ViewController.swift */; };
@@ -53,6 +54,7 @@
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
 		196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewController.swift; sourceTree = "<group>"; };
 		196FD4F21FAFC46E000875AE /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -111,6 +113,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				196FD4EA1FAFC0F0000875AE /* Car.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		19C9E9A71FB1A3A0002F4C84 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		2AD4E93B1FA8A2250013D67E = {
 			isa = PBXGroup;
 			children = (
@@ -136,11 +154,12 @@
 		2AD4E9461FA8A2250013D67E /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				19C9E9A71FB1A3A0002F4C84 /* API */,
+				19C9E9A61FB1A2D5002F4C84 /* Model */,
 				2AD4E97A1FA8AA100013D67E /* PictureFiles */,
 				2AD4E9471FA8A2250013D67E /* AppDelegate.swift */,
 				2AD4E9491FA8A2250013D67E /* ViewController.swift */,
 				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
-				196FD4EA1FAFC0F0000875AE /* Car.swift */,
 				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */,
 				2AD4E94B1FA8A2250013D67E /* Main.storyboard */,
@@ -514,6 +533,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */,
+				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,

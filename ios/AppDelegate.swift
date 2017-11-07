@@ -22,6 +22,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         GMSPlacesClient.provideAPIKey("AIzaSyAyMV-s4s4QIw1KHLmgkqa2t5zcc1dxhCg")
         
+        let test = StorageAPI.shared;
+        test.getCar()
+        
         return true
     }
 
