@@ -20,12 +20,22 @@ final class StorageAPI {
         fireBaseDBAccess = Database.database().reference()
     }
     
-    func getCar() {
-        fireBaseDBAccess.child("carModels").observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.valueInExportFormat() as! NSDictionary
-            print(value)
-            // ...
+    func getCars(){
+        fireBaseDBAccess.child("cars").observeSingleEvent(of: .value, with: { (snapshot) in
+            let photo = UIImage(named: "car1")
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            var resultCars:[Car]
+            for (cardID, rawCarData) in receivedData {
+                let carData:NSDictionary = rawCarData as! NSDictionary
+                let carModel:Int = carData["model"] as! Int
+                let carGearshift:Int = carData["gearshift"] as! Int
+                let carFuel:Int = carData["fuel"] as! Int
+                let carMileage:Int = carData["mileage"] as! Int
+                let carSeats:Int = carData["seats"] as! Int
+                
+                let newCar:Car = Car(model: carModel, gearshift: carGearshift, mileage: Double(carMileage), fuel: carFuel, seats: carSeats, extras: ["Navi", "Kindersitz"], location: "München", photo: photo , rating: 5) as! Car
+                //resultCars.append(newCar)
+            }
         }) { (error) in
             print(error.localizedDescription)
         }

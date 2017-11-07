@@ -83,7 +83,7 @@
         <!--View Controller-->
         <scene sceneID="6oZ-7L-Uc9">
             <objects>
-                <viewController storyboardIdentifier="Home" id="dyd-1j-bhe" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Home" id="dyd-1j-bhe" customClass="ViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gs6-v9-yHc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -123,6 +123,14 @@
                                 </state>
                                 <connections>
                                     <action selector="Button:" destination="7tC-DY-h2g" eventType="touchUpInside" id="gOc-x0-lvh"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-QW-59L">
+                                <rect key="frame" x="163" y="431" width="48" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Search"/>
+                                <connections>
+                                    <action selector="searchButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="Rrb-E6-PXv"/>
                                 </connections>
                             </button>
                         </subviews>

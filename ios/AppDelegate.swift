@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSPlacesClient.provideAPIKey("AIzaSyAyMV-s4s4QIw1KHLmgkqa2t5zcc1dxhCg")
         
         let test = StorageAPI.shared;
-        test.getCar()
+        test.getCars()
         
         return true
     }
