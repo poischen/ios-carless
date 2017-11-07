@@ -50,9 +50,7 @@ class CarTableViewController: UITableViewController {
         cell.locationLabel.text = car.location
         cell.extrasLabel.text = car.extras.joined()
         cell.photo.image = car.photo
-        
-        print("yay2")
-
+    
         return cell
     }
 
