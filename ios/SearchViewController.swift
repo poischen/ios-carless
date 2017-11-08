@@ -20,7 +20,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     let occupantNumbers = ["1 person","2 persons","3 persons","4 persons","5 persons","6 persons","7 persons","8 persons"]
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         occupantsPicker.dataSource = self
@@ -54,7 +53,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         nameLabel.text = place.formattedAddress
-        print(place.formattedAddress)
         dismiss(animated: true, completion: nil)
     }
     

@@ -11,11 +11,19 @@ import UIKit
 class CarTableViewController: UITableViewController {
     
     var cars = [Car]()
-
+    let notificationCenter: NotificationCenter = NotificationCenter.default
+    let storageAPI: StorageAPI = StorageAPI.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        loadSampleCars()
+        notificationCenter.addObserver(
+            forName:Notification.Name(rawValue:"sendCars"),
+            object:nil,
+            queue:nil,
+            using:receiveCars
+        )
+        storageAPI.getCars()
+        //loadSampleCars()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,6 +60,17 @@ class CarTableViewController: UITableViewController {
         cell.photo.image = car.photo
     
         return cell
+    }
+    
+    func receiveCars(notification: Notification) -> Void {
+        guard let userInfo = notification.userInfo,
+            let receivedCars  = userInfo["cars"] as? [Car] else {
+                print("No userInfo found in notification")
+                return
+        }
+        
+        cars = receivedCars
+        self.tableView.reloadData()
     }
 
 

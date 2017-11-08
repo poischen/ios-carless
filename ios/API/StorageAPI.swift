@@ -15,16 +15,18 @@ import FirebaseDatabase
 final class StorageAPI {
     static let shared = StorageAPI()
     private let fireBaseDBAccess: DatabaseReference!
+    private let notificationCenter: NotificationCenter
     
     private init() {
         fireBaseDBAccess = Database.database().reference()
+        notificationCenter = NotificationCenter.default
     }
     
     func getCars(){
         fireBaseDBAccess.child("cars").observeSingleEvent(of: .value, with: { (snapshot) in
             let photo = UIImage(named: "car1")
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultCars:[Car]
+            var resultCars:[Car] = [Car]()
             for (cardID, rawCarData) in receivedData {
                 let carData:NSDictionary = rawCarData as! NSDictionary
                 let carModel:Int = carData["model"] as! Int
@@ -34,8 +36,13 @@ final class StorageAPI {
                 let carSeats:Int = carData["seats"] as! Int
                 
                 let newCar:Car = Car(model: carModel, gearshift: carGearshift, mileage: Double(carMileage), fuel: carFuel, seats: carSeats, extras: ["Navi", "Kindersitz"], location: "München", photo: photo , rating: 5) as! Car
-                //resultCars.append(newCar)
+                resultCars.append(newCar)
             }
+            self.notificationCenter.post(
+                name: Notification.Name(rawValue:"sendCars"),
+                object: nil,
+                userInfo: ["cars":resultCars]
+            )
         }) { (error) in
             print(error.localizedDescription)
         }
