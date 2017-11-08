@@ -56,7 +56,7 @@ class CarTableViewController: UITableViewController {
         cell.gearshiftLabel.text = String(car.gearshift)
         cell.mileageLabel.text = String(car.mileage) + "l/100km"
         cell.locationLabel.text = car.location
-        cell.extrasLabel.text = car.extras.joined()
+        cell.extrasLabel.text = car.extras.joined(separator: ", ")
         cell.photo.image = car.photo
     
         return cell
