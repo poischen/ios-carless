@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196FD4E81FAFBFE2000875AE /* Search.storyboard */; };
 		196FD4ED1FAFC0F0000875AE /* Car.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Car.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		196FD4E81FAFBFE2000875AE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Car.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Car.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
@@ -113,6 +115,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		191BBB9E1FB5070300D95B26 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				196FD4E81FAFBFE2000875AE /* Search.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		191BBB9F1FB5075E00D95B26 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
 		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,6 +172,8 @@
 		2AD4E9461FA8A2250013D67E /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				191BBB9F1FB5075E00D95B26 /* Controller */,
+				191BBB9E1FB5070300D95B26 /* View */,
 				19C9E9A71FB1A3A0002F4C84 /* API */,
 				19C9E9A61FB1A2D5002F4C84 /* Model */,
 				2AD4E97A1FA8AA100013D67E /* PictureFiles */,
@@ -163,7 +183,6 @@
 				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */,
 				2AD4E94B1FA8A2250013D67E /* Main.storyboard */,
-				196FD4E81FAFBFE2000875AE /* Search.storyboard */,
 				2AD4E9511FA8A2250013D67E /* Assets.xcassets */,
 				2AD4E9531FA8A2250013D67E /* LaunchScreen.storyboard */,
 				2AD4E9561FA8A2250013D67E /* Info.plist */,
@@ -536,6 +555,7 @@
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
+				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Car.swift in Sources */,
