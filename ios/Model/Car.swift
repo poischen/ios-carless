@@ -9,15 +9,15 @@
 import UIKit
 
 class Car {
-    var model: Int
-    var gearshift: Int
-    var mileage: Double
-    var fuel: Int
-    var seats: Int
-    var extras: [String]
-    var location: String
-    var photo: UIImage?
-    var rating: Int
+    let model: Int
+    let gearshift: Int
+    let mileage: Double
+    let fuel: Int
+    let seats: Int
+    let extras: [String]
+    let location: String
+    let photo: UIImage?
+    let rating: Int
     
     init?(model: Int, gearshift: Int, mileage: Double, fuel: Int, seats: Int, extras: [String], location: String, photo: UIImage?, rating: Int) {
         if rating < 0  {

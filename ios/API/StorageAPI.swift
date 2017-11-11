@@ -47,4 +47,25 @@ final class StorageAPI {
             print(error.localizedDescription)
         }
     }
+    
+    func getExtras(){
+        fireBaseDBAccess.child("extras").observeSingleEvent(of: .value, with: { (snapshot) in
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            var resultExtras:[Extra] = [Extra]()
+            for (extraIDRaw, extraNameRaw) in receivedData {
+                let extraName:String = extraNameRaw as! String
+                let extraID:Int = extraIDRaw as! Int
+                
+                let newExtra:Extra = Extra(name: extraName, id: extraID)
+                resultExtras.append(newExtra)
+            }
+            self.notificationCenter.post(
+                name: Notification.Name(rawValue:"sendExtras"),
+                object: nil,
+                userInfo: ["extras":resultExtras]
+            )
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 }
