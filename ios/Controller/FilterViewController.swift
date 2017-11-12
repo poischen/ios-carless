@@ -27,7 +27,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickExtraTable.delegate = self
         pickExtraTable.dataSource = self
         
-        
+        notificationCenter.addObserver(
+            forName:Notification.Name(rawValue:"sendExtras"),
+            object:nil,
+            queue:nil,
+            using:receiveExtras
+        )
+        storageAPI.getExtras()
     }
 
     override func didReceiveMemoryWarning() {
@@ -48,7 +54,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("hallo424242")
         return extras.count
     }
     
@@ -69,6 +74,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // cell selected code here
     }
+    
+    func receiveExtras(notification: Notification) -> Void {
+        guard let userInfo = notification.userInfo,
+            let receivedExtras  = userInfo["extras"] as? [Extra] else {
+                print("No userInfo found in notification")
+                return
+        }
+        
+        print(receivedExtras)
+        
+        self.extras = receivedExtras
+        self.pickExtraTable.reloadData()
+    }
+    
     /*
     // MARK: - Navigation
 

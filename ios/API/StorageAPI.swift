@@ -52,11 +52,13 @@ final class StorageAPI {
         fireBaseDBAccess.child("extras").observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultExtras:[Extra] = [Extra]()
-            for (extraIDRaw, extraNameRaw) in receivedData {
-                let extraName:String = extraNameRaw as! String
-                let extraID:Int = extraIDRaw as! Int
+            for (extraIDRaw, extraDataRaw) in receivedData {
+                let extraData:NSDictionary = extraDataRaw as! NSDictionary
+                let extraName:String = extraData["name"] as! String
+                let extraID:String = extraIDRaw as! String // TODO: solve the conversion problem here
                 
-                let newExtra:Extra = Extra(name: extraName, id: extraID)
+                let newExtra:Extra = Extra(name: extraName, id: Int(extraID)!)
+                print(Int(extraID)!)
                 resultExtras.append(newExtra)
             }
             self.notificationCenter.post(

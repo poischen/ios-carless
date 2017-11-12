@@ -16,12 +16,6 @@ class ExtraTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationCenter.addObserver(
-            forName:Notification.Name(rawValue:"sendExtras"),
-            object:nil,
-            queue:nil,
-            using:receiveExtras
-        )
         //storageAPI.getExtras()
         extras += [
             Extra(name: "test", id: 1),
@@ -56,17 +50,6 @@ class ExtraTableViewController: UITableViewController {
         cell.extraNameLabel.text = extra.name
         
         return cell
-    }
-    
-    func receiveExtras(notification: Notification) -> Void {
-        guard let userInfo = notification.userInfo,
-            let receivedExtras  = userInfo["extras"] as? [Extra] else {
-                print("No userInfo found in notification")
-                return
-        }
-        
-        self.extras = receivedExtras
-        self.tableView.reloadData()
     }
 
     /*
