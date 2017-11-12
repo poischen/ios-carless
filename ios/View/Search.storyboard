@@ -188,7 +188,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W4z-O3-btb" customClass="ExtraExtraTableViewController">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W4z-O3-btb">
                                 <rect key="frame" x="16" y="308" width="343" height="247"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -226,6 +226,7 @@
                         <outlet property="maxMileageSlider" destination="B8N-G6-Xr2" id="3SH-oo-w3W"/>
                         <outlet property="maxPriceLabel" destination="KyW-2G-EZ9" id="VxL-Ee-Lm8"/>
                         <outlet property="maxPriceSlider" destination="vhS-an-RiK" id="qEg-q1-VJQ"/>
+                        <outlet property="pickExtraTable" destination="W4z-O3-btb" id="pyZ-Bb-ZbB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ig8-7G-EsY" userLabel="First Responder" sceneMemberID="firstResponder"/>

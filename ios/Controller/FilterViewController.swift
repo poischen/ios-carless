@@ -8,17 +8,26 @@
 
 import UIKit
 
-class FilterViewController: UIViewController {
-
+class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+    
     @IBOutlet weak var maxPriceLabel: UILabel!
     @IBOutlet weak var maxPriceSlider: UISlider!
     @IBOutlet weak var maxDistanceLabel: UILabel!
     @IBOutlet weak var maxDistanceSlider: UISlider!
     @IBOutlet weak var maxMileageLabel: UILabel!
     @IBOutlet weak var maxMileageSlider: UISlider!
+    @IBOutlet weak var pickExtraTable: UITableView!
+    
+    var extras = [Extra]()
+    let notificationCenter: NotificationCenter = NotificationCenter.default
+    let storageAPI: StorageAPI = StorageAPI.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickExtraTable.delegate = self
+        pickExtraTable.dataSource = self
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,6 +45,29 @@ class FilterViewController: UIViewController {
     
     @IBAction func maxMileageChanged(_ sender: Any) {
         maxMileageLabel.text = String(Int(maxMileageSlider.value)) + "l/100km"
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("hallo424242")
+        return extras.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cellIdentifier = "ExtraTableViewCell"
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ExtraTableViewCell else {
+            fatalError("The dequeued cell is not an instance of ExtraTableViewCell.")
+        }
+        
+        let extra = extras[indexPath.row]
+        print(extra)
+        
+        cell.extraNameLabel.text = extra.name
+        
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // cell selected code here
     }
     /*
     // MARK: - Navigation
