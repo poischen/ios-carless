@@ -10,6 +10,14 @@ import UIKit
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    /*@IBOutlet weak var maxPriceLabel: UILabel!
+    @IBOutlet weak var maxPriceSlider: UISlider!
+    @IBOutlet weak var maxDistanceLabel: UILabel!
+    @IBOutlet weak var maxDistanceSlider: UISlider!
+    @IBOutlet weak var maxMileageLabel: UILabel!
+    @IBOutlet weak var maxMileageSlider: UISlider!
+    @IBOutlet weak var pickExtraTable: UITableView!*/
+    
     @IBOutlet weak var maxPriceLabel: UILabel!
     @IBOutlet weak var maxPriceSlider: UISlider!
     @IBOutlet weak var maxDistanceLabel: UILabel!
