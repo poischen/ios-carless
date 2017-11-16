@@ -49,6 +49,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // Dispose of any resources that can be recreated.
     }
     
+    
     @IBAction func maxPriceChanged(_ sender: Any) {
         maxPriceLabel.text = String(Int(maxPriceSlider.value)) + "€"
     }
@@ -64,6 +65,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return extras.count
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ExtraTableViewCell"
