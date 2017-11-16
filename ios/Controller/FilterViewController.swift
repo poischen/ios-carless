@@ -27,10 +27,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        pickEngineTable.delegate = self
+        pickEngineTable.dataSource = self
         pickExtraTable.delegate = self
         pickExtraTable.dataSource = self
-        pickEngineTable.delegate = self
-        pickExtraTable.delegate = self
         
         notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
@@ -68,7 +68,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             count = extras.count
         } else if (tableView == self.pickEngineTable){
             count = engines.count
-            print("hallo1")
         }
         
         return count!
@@ -80,23 +79,16 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         if (tableView == self.pickExtraTable){
             let cellIdentifier = "ExtraTableViewCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ExtraTableViewCell else {
-                fatalError("The dequeued cell is not an instance of ExtraTableViewCell.")
-            }
-            
             let extra = extras[indexPath.row]
-            cell.extraNameLabel.text = extra.name
+            var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            cell!.textLabel!.text = extra.name
             returnCell = cell
         } else if (tableView === self.pickEngineTable){
             let cellIdentifier = "EngineTableViewCell"
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? EngineTableViewCell else {
-                fatalError("The dequeued cell is not an instance of EngineTableViewCell.")
-            }
-            
-            let engine = engines[indexPath.row] // TODO: avoid code duplication here?
-            cell.engineNameLabel.text = engine.name
+            let engine = engines[indexPath.row]
+            var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            cell!.textLabel!.text = engine.name
             returnCell = cell
-            print("hallo")
         }
         
         return returnCell!
