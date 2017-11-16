@@ -91,15 +91,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Filter"/>
                                 <connections>
-                                    <segue destination="j9f-wt-da8" kind="show" id="A3C-dZ-Xlc"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZJh-gj-kYf">
-                                <rect key="frame" x="275" y="620" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="o0c-hY-NhQ" kind="show" id="E8C-uH-Ysa"/>
+                                    <segue destination="o0c-hY-NhQ" kind="show" id="yre-6v-cx3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -118,30 +110,6 @@
             </objects>
             <point key="canvasLocation" x="711.20000000000005" y="33.733133433283363"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="gRv-RT-vmd">
-            <objects>
-                <viewController id="j9f-wt-da8" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="zIg-bX-xcu">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="GuI-FU-xIn"/>
-                    </view>
-                    <connections>
-                        <outlet property="maxDistanceLabel" destination="g5V-KV-rBh" id="AFA-pb-sID"/>
-                        <outlet property="maxDistanceSlider" destination="4Bv-1H-Gcq" id="HOl-bD-FW3"/>
-                        <outlet property="maxMileageLabel" destination="3D5-ZF-LWz" id="fqG-Lc-QcY"/>
-                        <outlet property="maxMileageSlider" destination="B8N-G6-Xr2" id="3SH-oo-w3W"/>
-                        <outlet property="maxPriceLabel" destination="KyW-2G-EZ9" id="VxL-Ee-Lm8"/>
-                        <outlet property="maxPriceSlider" destination="vhS-an-RiK" id="qEg-q1-VJQ"/>
-                        <outlet property="pickExtraTable" destination="W4z-O3-btb" id="pyZ-Bb-ZbB"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ig8-7G-EsY" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1102" y="877"/>
-        </scene>
         <!--Filter View Controller-->
         <scene sceneID="ndM-kj-Dry">
             <objects>
@@ -151,7 +119,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xf-Zt-ujR">
-                                <rect key="frame" x="0.0" y="68" width="375" height="932"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="936"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-yq-ywS">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
@@ -174,7 +142,6 @@
                                                 <rect key="frame" x="27" y="37" width="321" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
-                                                    <action selector="maxPriceChanged:" destination="j9f-wt-da8" eventType="valueChanged" id="AnE-2M-ySl"/>
                                                     <action selector="maxPriceChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="Vlh-WU-VdK"/>
                                                 </connections>
                                             </slider>
@@ -196,7 +163,6 @@
                                                 <rect key="frame" x="27" y="102" width="321" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
-                                                    <action selector="maxDistanceChanged:" destination="j9f-wt-da8" eventType="valueChanged" id="1dq-Pe-Sen"/>
                                                     <action selector="maxDistanceChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="lal-Kc-E38"/>
                                                 </connections>
                                             </slider>
@@ -215,14 +181,28 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Extras:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gnb-fj-wYj">
-                                                <rect key="frame" x="8" y="205" width="53" height="21"/>
+                                                <rect key="frame" x="7" y="589" width="53" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Typ:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSE-U6-T93">
+                                                <rect key="frame" x="7" y="205" width="33" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Schaltung:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Frp-F8-njz">
+                                                <rect key="frame" x="8" y="270" width="82" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="W4z-O3-btb">
-                                                <rect key="frame" x="16" y="234" width="343" height="247"/>
+                                                <rect key="frame" x="16" y="618" width="343" height="190"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <prototypes>
@@ -252,10 +232,63 @@
                                                 <rect key="frame" x="27" y="168" width="321" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
-                                                    <action selector="maxMileageChanged:" destination="j9f-wt-da8" eventType="valueChanged" id="nET-9a-PUM"/>
                                                     <action selector="maxMileageChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="voY-jQ-4B5"/>
                                                 </connections>
                                             </slider>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="csm-Qt-38s">
+                                                <rect key="frame" x="16" y="234" width="343" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <segments>
+                                                    <segment title="Kleinwagen"/>
+                                                    <segment title="Kombi"/>
+                                                    <segment title="Cabrio"/>
+                                                    <segment title="Gelände"/>
+                                                    <segment title="Van"/>
+                                                </segments>
+                                            </segmentedControl>
+                                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Psy-lT-8wr">
+                                                <rect key="frame" x="16" y="299" width="343" height="29"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <segments>
+                                                    <segment title="Schaltgetriebe"/>
+                                                    <segment title="Automatikgetriebe"/>
+                                                </segments>
+                                            </segmentedControl>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Antriebsart:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bea-sa-pW5">
+                                                <rect key="frame" x="7" y="335" width="91" height="21"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="VRT-RG-ere">
+                                                <rect key="frame" x="16" y="364" width="343" height="190"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="EngineTableViewCell" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="EngineTableViewCell" rowHeight="35" id="QL2-in-bV7" userLabel="EngineTableViewCell" customClass="EngineTableViewCell" customModule="ios" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="28" width="343" height="35"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="QL2-in-bV7" id="XIb-jz-1OP">
+                                                            <rect key="frame" x="0.0" y="0.0" width="343" height="34.5"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Antriebs-Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bi-2E-Dkh">
+                                                                    <rect key="frame" x="8" y="7" width="327" height="21"/>
+                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="engineNameLabel" destination="7bi-2E-Dkh" id="ogD-WS-Ngp"/>
+                                                            <outlet property="extraNameLabel" destination="7bi-2E-Dkh" id="BEC-Pc-RSB"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1000" id="TUR-Dg-hkz"/>
@@ -288,6 +321,7 @@
                         <outlet property="maxMileageSlider" destination="B8N-G6-Xr2" id="9y5-RK-sAH"/>
                         <outlet property="maxPriceLabel" destination="KyW-2G-EZ9" id="h5m-Ap-YFV"/>
                         <outlet property="maxPriceSlider" destination="vhS-an-RiK" id="jXu-EV-X0d"/>
+                        <outlet property="pickEngineTable" destination="VRT-RG-ere" id="tZt-uB-PKS"/>
                         <outlet property="pickExtraTable" destination="W4z-O3-btb" id="1c9-ny-67w"/>
                     </connections>
                 </viewController>
@@ -394,7 +428,7 @@
                 <navigationController storyboardIdentifier="SearchNavigation" automaticallyAdjustsScrollViewInsets="NO" id="Fsf-dV-nZq" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="N4k-e5-GCV">
-                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

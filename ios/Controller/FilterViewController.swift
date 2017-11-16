@@ -10,23 +10,18 @@ import UIKit
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    /*@IBOutlet weak var maxPriceLabel: UILabel!
-    @IBOutlet weak var maxPriceSlider: UISlider!
-    @IBOutlet weak var maxDistanceLabel: UILabel!
-    @IBOutlet weak var maxDistanceSlider: UISlider!
-    @IBOutlet weak var maxMileageLabel: UILabel!
-    @IBOutlet weak var maxMileageSlider: UISlider!
-    @IBOutlet weak var pickExtraTable: UITableView!*/
-    
     @IBOutlet weak var maxPriceLabel: UILabel!
     @IBOutlet weak var maxPriceSlider: UISlider!
     @IBOutlet weak var maxDistanceLabel: UILabel!
     @IBOutlet weak var maxDistanceSlider: UISlider!
     @IBOutlet weak var maxMileageLabel: UILabel!
     @IBOutlet weak var maxMileageSlider: UISlider!
+    
     @IBOutlet weak var pickExtraTable: UITableView!
+    @IBOutlet weak var pickEngineTable: UITableView!
     
     var extras = [Extra]()
+    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1)]
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
     
@@ -34,6 +29,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         super.viewDidLoad()
         pickExtraTable.delegate = self
         pickExtraTable.dataSource = self
+        pickEngineTable.delegate = self
+        pickExtraTable.delegate = self
         
         notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
@@ -42,6 +39,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             using:receiveExtras
         )
         storageAPI.getExtras()
+        
+        // TESTING
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,32 +62,56 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return extras.count
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "ExtraTableViewCell"
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ExtraTableViewCell else {
-            fatalError("The dequeued cell is not an instance of ExtraTableViewCell.")
+        var count: Int?
+        
+        if (tableView == self.pickExtraTable){
+            count = extras.count
+        } else if (tableView == self.pickEngineTable){
+            count = engines.count
+            print("hallo1")
         }
         
-        let extra = extras[indexPath.row]
-        print(extra)
+        return count!
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        cell.extraNameLabel.text = extra.name
+        var returnCell: UITableViewCell?
         
-        return cell
+        if (tableView == self.pickExtraTable){
+            let cellIdentifier = "ExtraTableViewCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ExtraTableViewCell else {
+                fatalError("The dequeued cell is not an instance of ExtraTableViewCell.")
+            }
+            
+            let extra = extras[indexPath.row]
+            cell.extraNameLabel.text = extra.name
+            returnCell = cell
+        } else if (tableView === self.pickEngineTable){
+            let cellIdentifier = "EngineTableViewCell"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? EngineTableViewCell else {
+                fatalError("The dequeued cell is not an instance of EngineTableViewCell.")
+            }
+            
+            let engine = engines[indexPath.row] // TODO: avoid code duplication here?
+            cell.engineNameLabel.text = engine.name
+            returnCell = cell
+            print("hallo")
+        }
+        
+        return returnCell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let extra = self.extras[indexPath.row]
-        if (extra.isSelected){
-            pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-        } else {
-            pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+        if (tableView == self.pickExtraTable){
+            let extra = self.extras[indexPath.row]
+            if (extra.isSelected){
+                pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            } else {
+                pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            extra.toggleSelected()
         }
-        extra.toggleSelected()
     }
     
     func receiveExtras(notification: Notification) -> Void {
@@ -97,8 +120,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 print("No userInfo found in notification")
                 return
         }
-        
-        print(receivedExtras)
         
         self.extras = receivedExtras
         self.pickExtraTable.reloadData()
