@@ -21,7 +21,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickEngineTable: UITableView!
     
     var extras = [Extra]()
-    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1)]
+    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1), Engine(name: "Elektro", id:2), Engine(name: "Hybrid", id: 3), Engine(name: "Erdgas", id: 3), Engine(name: "Wasserstoff", id: 3)]
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
     
@@ -91,6 +91,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             returnCell = cell
         }
         
+        returnCell!.selectionStyle = UITableViewCellSelectionStyle.none
         return returnCell!
     }
     
@@ -103,6 +104,14 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             extra.toggleSelected()
+        } else {
+            let engine = self.engines[indexPath.row]
+            if (engine.isSelected){
+                pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            } else {
+                pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            engine.toggleSelected()
         }
     }
     
