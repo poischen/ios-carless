@@ -18,11 +18,9 @@ class Car {
     let location: String
     let photo: UIImage?
     let rating: Int
+    let price: Int
     
-    init?(model: Int, gearshift: Int, mileage: Double, fuel: Int, seats: Int, extras: [String], location: String, photo: UIImage?, rating: Int) {
-        if rating < 0  {
-            return nil
-        }
+    init(model: Int, gearshift: Int, mileage: Double, fuel: Int, seats: Int, extras: [String], location: String, photo: UIImage?, rating: Int, price: Int) {
         
         self.model = model
         self.gearshift = gearshift
@@ -33,5 +31,6 @@ class Car {
         self.location = location
         self.photo = photo
         self.rating = rating
+        self.price = price
     }
 }

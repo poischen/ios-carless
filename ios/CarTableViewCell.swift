@@ -15,9 +15,10 @@ class CarTableViewCell: UITableViewCell {
     @IBOutlet weak var mileageLabel: UILabel!
     @IBOutlet weak var fuelLabel: UILabel!
     @IBOutlet weak var seatsLabel: UILabel!
-    @IBOutlet weak var extrasLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var photo: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

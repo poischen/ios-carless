@@ -19,6 +19,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var pickExtraTable: UITableView!
     @IBOutlet weak var pickEngineTable: UITableView!
+    @IBOutlet weak var applyFilterButton: UIButton!
     
     var extras = [Extra]()
     var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1), Engine(name: "Elektro", id:2), Engine(name: "Hybrid", id: 3), Engine(name: "Erdgas", id: 3), Engine(name: "Wasserstoff", id: 3)]
@@ -125,6 +126,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.extras = receivedExtras
         self.pickExtraTable.reloadData()
     }
+    
+    @IBAction func applyFilterClicked(_ sender: Any) {
+        self.storageAPI.filterCars(filter: Filter(maxPrice: Int(self.maxPriceSlider.value)))
+    }
+    
     
     /*
     // MARK: - Navigation

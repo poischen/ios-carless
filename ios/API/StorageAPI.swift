@@ -16,10 +16,12 @@ final class StorageAPI {
     static let shared = StorageAPI()
     private let fireBaseDBAccess: DatabaseReference!
     private let notificationCenter: NotificationCenter
+    private var cars: [Car]
     
     private init() {
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
+        self.cars = []
     }
     
     func getCars(){
@@ -34,8 +36,9 @@ final class StorageAPI {
                 let carFuel:Int = carData["fuel"] as! Int
                 let carMileage:Int = carData["mileage"] as! Int
                 let carSeats:Int = carData["seats"] as! Int
+                let carPrice:Int = carData["price"] as! Int
                 
-                let newCar:Car = Car(model: carModel, gearshift: carGearshift, mileage: Double(carMileage), fuel: carFuel, seats: carSeats, extras: ["Navi", "Kindersitz"], location: "München", photo: photo , rating: 5) as! Car
+                let newCar:Car = Car(model: carModel, gearshift: carGearshift, mileage: Double(carMileage), fuel: carFuel, seats: carSeats, extras: ["Navi", "Kindersitz"], location: "München", photo: photo , rating: 5, price: carPrice) as! Car
                 resultCars.append(newCar)
             }
             self.notificationCenter.post(
@@ -43,9 +46,21 @@ final class StorageAPI {
                 object: nil,
                 userInfo: ["cars":resultCars]
             )
+            self.cars = resultCars
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func filterCars(filter: Filter) {
+        let filteredCars = self.cars.filter({(currentCar: Car) -> Bool in
+            return (currentCar.price < filter.maxPrice)
+        })
+        self.notificationCenter.post(
+            name: Notification.Name(rawValue:"sendFilteredCars"),
+            object: nil,
+            userInfo: ["cars":filteredCars]
+        )
     }
     
     func getExtras(){

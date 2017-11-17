@@ -22,6 +22,12 @@ class CarTableViewController: UITableViewController {
             queue:nil,
             using:receiveCars
         )
+        notificationCenter.addObserver(
+            forName:Notification.Name(rawValue:"sendFilteredCars"),
+            object:nil,
+            queue:nil,
+            using:receiveCars
+        )
         storageAPI.getCars()
         //loadSampleCars()
     }
@@ -56,13 +62,14 @@ class CarTableViewController: UITableViewController {
         cell.gearshiftLabel.text = String(car.gearshift)
         cell.mileageLabel.text = String(car.mileage) + "l/100km"
         cell.locationLabel.text = car.location
-        cell.extrasLabel.text = car.extras.joined(separator: ", ")
+        cell.priceLabel.text = String(car.price) + "€ pro Tag"
         cell.photo.image = car.photo
     
         return cell
     }
     
     func receiveCars(notification: Notification) -> Void {
+        print("received cars")
         guard let userInfo = notification.userInfo,
             let receivedCars  = userInfo["cars"] as? [Car] else {
                 print("No userInfo found in notification")
@@ -119,25 +126,17 @@ class CarTableViewController: UITableViewController {
     }
     */
     
-    private func loadSampleCars() {
+    /* private func loadSampleCars() {
         
         print("yay")
         
         //     init?(model: Int, gearshift: Int, mileage: Double, fuel: Double, seats: Int, extras: [String], location: String, photo: UIImage?, rating: Int) {
         let photo = UIImage(named: "car1")
-        guard let car1 = Car(model: 42, gearshift: 0, mileage: 5.0, fuel: 1, seats: 5, extras: ["Kindersitz"], location: "München, Schwabing", photo: photo, rating: 5) else {
-            fatalError("Unable to instantiate Car1")
-        }
-        
-        guard let car2 = Car(model: 45, gearshift: 0, mileage: 5.0, fuel: 1, seats: 7, extras: ["Kindersitz", "Navi"], location: "München, Schwabing", photo: photo, rating: 5) else {
-            fatalError("Unable to instantiate Car2")
-        }
-        
-        guard let car3 = Car(model: 45, gearshift: 1, mileage: 5.0, fuel: 1, seats: 7, extras: ["Kindersitz", "Navi"], location: "München, Neuhausen", photo: photo, rating: 5) else {
-            fatalError("Unable to instantiate Car3")
-        }
+        let car1 = Car(model: 42, gearshift: 0, mileage: 5.0, fuel: 1, seats: 5, extras: ["Kindersitz"], location: "München, Schwabing", photo: photo, rating: 5, price: 42)
+        let car2 = Car(model: 45, gearshift: 0, mileage: 5.0, fuel: 1, seats: 7, extras: ["Kindersitz", "Navi"], location: "München, Schwabing", photo: photo, rating: 5, price: 10)
+        let car3 = Car(model: 45, gearshift: 1, mileage: 5.0, fuel: 1, seats: 7, extras: ["Kindersitz", "Navi"], location: "München, Neuhausen", photo: photo, rating: 5, price: 100)
         
         cars += [car1, car2, car3]
-    }
+    }*/
 
 }
