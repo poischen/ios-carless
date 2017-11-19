@@ -28,37 +28,26 @@ final class StorageAPI {
         fireBaseDBAccess.child("inserat").observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultOfferings:[Offering] = [Offering]()
-            for (offeringID, rawOfferingData) in receivedData {
+            for (_, rawOfferingData) in receivedData {
                 let offeringData:NSDictionary = rawOfferingData as! NSDictionary
                 // TODO: Shorthand for this?
-                /*guard
+                guard
                     let offeringBrand:String = offeringData["brand"] as? String,
-                    let offeringConsumption = offeringData["consumption"] as? Float,
-                    let offeringDescription = offeringData["description"] as? String,
-                    let offeringFuel = offeringData["fuel"] as? String,
-                    let offeringGear = offeringData["Gear"] as? String,
-                    let offeringHP = offeringData["hp"] as? Int,
-                    let offeringLatitude = offeringData["latitude"] as? Float,
-                    let offeringLongitude = offeringData["longitude"] as? Float,
-                    let offeringPictureURL = offeringData["picture"] as? String,
-                    let offeringSeats = offeringData["seats"] as? Int,
-                    let offeringType = offeringData["type"] as? String else {
+                let offeringConsumption = offeringData["consumption"] as? Float,
+                let offeringDescription = offeringData["description"] as? String,
+                let offeringFuel = offeringData["fuel"] as? String,
+                let offeringGear = offeringData["gear"] as? String,
+                let offeringHP = offeringData["hp"] as? Int,
+                let offeringLatitude = offeringData["latitude"] as? Float,
+                let offeringLongitude = offeringData["longitude"] as? Float,
+                let offeringPictureURL = offeringData["picture"] as? String,
+                let offeringSeats = offeringData["seats"] as? Int,
+                let offeringType = offeringData["type"] as? String else {
                         print("error")
                         return
-                } */
-                let offeringBrand:String = offeringData["brand"] as! String
-                let offeringConsumption = offeringData["consumption"] as! Float
-                let offeringDescription = offeringData["description"] as! String
-                let offeringFuel = offeringData["fuel"] as! String
-                let offeringGear = offeringData["gear"] as! String
-                let offeringHP = offeringData["hp"] as! Int
-                let offeringLatitude = offeringData["latitude"] as! Float
-                let offeringLongitude = offeringData["longitude"] as! Float
-                let offeringPictureURL = offeringData["picture"] as! String
-                let offeringSeats = offeringData["seats"] as! Int
-                let offeringType = offeringData["type"] as! String
+                }
                 
-                let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType) as! Offering
+                let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType)
                 resultOfferings.append(newOffering)
             }
             self.notificationCenter.post(

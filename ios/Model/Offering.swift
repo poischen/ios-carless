@@ -29,6 +29,7 @@ struct Offering {
         self.latitude = latitude
         self.longitude = longitude
         self.pictureURL = pictureURL
+        print(pictureURL)
         self.seats = seats
         self.type = type
     }

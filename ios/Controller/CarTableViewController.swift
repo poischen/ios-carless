@@ -65,10 +65,11 @@ class CarTableViewController: UITableViewController {
         // TODO: make location and price dynamic
         cell.locationLabel.text = "Munich"
         cell.priceLabel.text = "10€ per day"
-        if let filePath = Bundle.main.path(forResource: offering.pictureURL, ofType: "jpg"), let image = UIImage(contentsOfFile: filePath) {
-            cell.photo.contentMode = .scaleAspectFit
-            cell.photo.image = image
-        }
+        print(offering.pictureURL)
+        let url = URL(string: offering.pictureURL)
+        let data = try? Data(contentsOf: url!)
+        let image: UIImage = UIImage(data: data!)!
+        cell.photo.image = image
     
         return cell
     }
