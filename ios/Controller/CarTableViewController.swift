@@ -10,7 +10,7 @@ import UIKit
 
 class CarTableViewController: UITableViewController {
     
-    var cars = [Car]()
+    var offerings = [Offering]()
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
     
@@ -28,7 +28,7 @@ class CarTableViewController: UITableViewController {
             queue:nil,
             using:receiveCars
         )
-        storageAPI.getCars()
+        storageAPI.getOfferings()
         //loadSampleCars()
     }
 
@@ -44,7 +44,7 @@ class CarTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cars.count
+        return offerings.count
     }
 
 
@@ -54,16 +54,21 @@ class CarTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of CarTableViewCell.")
         }
 
-        let car = cars[indexPath.row]
+        let offering = offerings[indexPath.row]
         
-        cell.fuelLabel.text = String(car.fuel)
-        cell.modelLabel.text = String(car.model)
-        cell.seatsLabel.text = String(car.seats) + " Sitze"
-        cell.gearshiftLabel.text = String(car.gearshift)
-        cell.mileageLabel.text = String(car.mileage) + "l/100km"
-        cell.locationLabel.text = car.location
-        cell.priceLabel.text = String(car.price) + "€ pro Tag"
-        cell.photo.image = car.photo
+        cell.fuelLabel.text = offering.fuel
+        cell.modelLabel.text = offering.brand + " " + offering.type
+        cell.seatsLabel.text = String(offering.seats) + " seats"
+        cell.gearshiftLabel.text = offering.gear
+        cell.mileageLabel.text = String(offering.consumption) + "l/100km"
+        //cell.locationLabel.text = offering.location
+        // TODO: make location and price dynamic
+        cell.locationLabel.text = "Munich"
+        cell.priceLabel.text = "10€ per day"
+        if let filePath = Bundle.main.path(forResource: offering.pictureURL, ofType: "jpg"), let image = UIImage(contentsOfFile: filePath) {
+            cell.photo.contentMode = .scaleAspectFit
+            cell.photo.image = image
+        }
     
         return cell
     }
@@ -71,12 +76,12 @@ class CarTableViewController: UITableViewController {
     func receiveCars(notification: Notification) -> Void {
         print("received cars")
         guard let userInfo = notification.userInfo,
-            let receivedCars  = userInfo["cars"] as? [Car] else {
+            let receivedCars  = userInfo["cars"] as? [Offering] else {
                 print("No userInfo found in notification")
                 return
         }
         
-        cars = receivedCars
+        offerings = receivedCars
         self.tableView.reloadData()
     }
 

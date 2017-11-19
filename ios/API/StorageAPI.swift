@@ -16,51 +16,69 @@ final class StorageAPI {
     static let shared = StorageAPI()
     private let fireBaseDBAccess: DatabaseReference!
     private let notificationCenter: NotificationCenter
-    private var cars: [Car]
     
     private init() {
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
-        self.cars = []
     }
     
-    func getCars(){
-        fireBaseDBAccess.child("cars").observeSingleEvent(of: .value, with: { (snapshot) in
-            let photo = UIImage(named: "car1")
+    // TODO: only call when necessary and not (for some reason) when the app starts
+    func getOfferings(){
+        // TODO: only get offerings that match certain criteria
+        fireBaseDBAccess.child("inserat").observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultCars:[Car] = [Car]()
-            for (cardID, rawCarData) in receivedData {
-                let carData:NSDictionary = rawCarData as! NSDictionary
-                let carModel:Int = carData["model"] as! Int
-                let carGearshift:Int = carData["gearshift"] as! Int
-                let carFuel:Int = carData["fuel"] as! Int
-                let carMileage:Int = carData["mileage"] as! Int
-                let carSeats:Int = carData["seats"] as! Int
-                let carPrice:Int = carData["price"] as! Int
+            var resultOfferings:[Offering] = [Offering]()
+            for (offeringID, rawOfferingData) in receivedData {
+                let offeringData:NSDictionary = rawOfferingData as! NSDictionary
+                // TODO: Shorthand for this?
+                /*guard
+                    let offeringBrand:String = offeringData["brand"] as? String,
+                    let offeringConsumption = offeringData["consumption"] as? Float,
+                    let offeringDescription = offeringData["description"] as? String,
+                    let offeringFuel = offeringData["fuel"] as? String,
+                    let offeringGear = offeringData["Gear"] as? String,
+                    let offeringHP = offeringData["hp"] as? Int,
+                    let offeringLatitude = offeringData["latitude"] as? Float,
+                    let offeringLongitude = offeringData["longitude"] as? Float,
+                    let offeringPictureURL = offeringData["picture"] as? String,
+                    let offeringSeats = offeringData["seats"] as? Int,
+                    let offeringType = offeringData["type"] as? String else {
+                        print("error")
+                        return
+                } */
+                let offeringBrand:String = offeringData["brand"] as! String
+                let offeringConsumption = offeringData["consumption"] as! Float
+                let offeringDescription = offeringData["description"] as! String
+                let offeringFuel = offeringData["fuel"] as! String
+                let offeringGear = offeringData["gear"] as! String
+                let offeringHP = offeringData["hp"] as! Int
+                let offeringLatitude = offeringData["latitude"] as! Float
+                let offeringLongitude = offeringData["longitude"] as! Float
+                let offeringPictureURL = offeringData["picture"] as! String
+                let offeringSeats = offeringData["seats"] as! Int
+                let offeringType = offeringData["type"] as! String
                 
-                let newCar:Car = Car(model: carModel, gearshift: carGearshift, mileage: Double(carMileage), fuel: carFuel, seats: carSeats, extras: ["Navi", "Kindersitz"], location: "München", photo: photo , rating: 5, price: carPrice) as! Car
-                resultCars.append(newCar)
+                let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType) as! Offering
+                resultOfferings.append(newOffering)
             }
             self.notificationCenter.post(
                 name: Notification.Name(rawValue:"sendCars"),
                 object: nil,
-                userInfo: ["cars":resultCars]
+                userInfo: ["cars":resultOfferings]
             )
-            self.cars = resultCars
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
-    func filterCars(filter: Filter) {
-        let filteredCars = self.cars.filter({(currentCar: Car) -> Bool in
-            return (currentCar.price < filter.maxPrice)
-        })
+    func filterOfferings(filter: Filter) {
+        // TODO: implement
+        /* let filteredOfferings =
         self.notificationCenter.post(
             name: Notification.Name(rawValue:"sendFilteredCars"),
             object: nil,
-            userInfo: ["cars":filteredCars]
-        )
+            userInfo: ["cars":filteredOfferings]
+        ) */
     }
     
     func getExtras(){

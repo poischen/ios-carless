@@ -1,0 +1,35 @@
+//
+//  Car.swift
+//  iOS Cars
+//
+//  Created by Konrad Fischer on 02.11.17.
+//  Copyright © 2017 Konrad Fischer. All rights reserved.
+//
+
+struct Offering {
+    let brand: String
+    let consumption: Float
+    let description: String
+    let fuel: String
+    let gear: String
+    let hp: Int
+    let latitude: Float
+    let longitude: Float
+    let pictureURL: String
+    let seats: Int
+    let type: String
+    
+    init(brand: String, consumption: Float, description: String, fuel: String, gear: String, hp: Int, latitude: Float, longitude: Float, pictureURL: String, seats: Int, type: String) {
+        self.brand = brand
+        self.consumption = consumption
+        self.description = description
+        self.fuel = fuel
+        self.gear = gear
+        self.hp = hp
+        self.latitude = latitude
+        self.longitude = longitude
+        self.pictureURL = pictureURL
+        self.seats = seats
+        self.type = type
+    }
+}

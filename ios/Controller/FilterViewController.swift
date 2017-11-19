@@ -81,13 +81,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if (tableView == self.pickExtraTable){
             let cellIdentifier = "ExtraTableViewCell"
             let extra = extras[indexPath.row]
-            var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = extra.name
             returnCell = cell
         } else if (tableView === self.pickEngineTable){
             let cellIdentifier = "EngineTableViewCell"
             let engine = engines[indexPath.row]
-            var cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = engine.name
             returnCell = cell
         }
@@ -128,7 +128,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func applyFilterClicked(_ sender: Any) {
-        self.storageAPI.filterCars(filter: Filter(maxPrice: Int(self.maxPriceSlider.value)))
+        //self.storageAPI.filterOfferings(filter: Filter(maxPrice: Int(self.maxPriceSlider.value)))
     }
     
     
