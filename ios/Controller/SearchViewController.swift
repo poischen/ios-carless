@@ -47,11 +47,18 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func pickPlace(_ sender: UIButton) {
         let autocompleteController = GMSAutocompleteViewController()
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        autocompleteController.autocompleteFilter = filter
         autocompleteController.delegate = self
         present(autocompleteController, animated: true, completion: nil)
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        print(place.attributions)
+        for test in place.addressComponents! {
+            print(test.name)
+        }
         nameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)
     }

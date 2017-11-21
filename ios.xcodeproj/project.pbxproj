@@ -135,7 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
+				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
 				196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */,
+				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -192,8 +194,6 @@
 				2AD4E97A1FA8AA100013D67E /* PictureFiles */,
 				2AD4E9471FA8A2250013D67E /* AppDelegate.swift */,
 				2AD4E9491FA8A2250013D67E /* ViewController.swift */,
-				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
-				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				2AD4E94B1FA8A2250013D67E /* Main.storyboard */,
 				2AD4E9511FA8A2250013D67E /* Assets.xcassets */,
 				2AD4E9531FA8A2250013D67E /* LaunchScreen.storyboard */,
