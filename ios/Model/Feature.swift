@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Extra {
+class Feature {
     let name: String
     let id: Int
     var isSelected: Bool

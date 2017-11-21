@@ -8,6 +8,10 @@
 
 import Foundation
 
-struct Filter {
+class Filter {
     var maxPrice: Int
+    
+    init(maxPrice: Int) {
+        self.maxPrice = maxPrice
+    }
 }

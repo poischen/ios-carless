@@ -39,6 +39,7 @@ final class StorageAPI {
                 let offeringGear = offeringData["gear"] as? String,
                 let offeringHP = offeringData["hp"] as? Int,
                 let offeringLatitude = offeringData["latitude"] as? Float,
+                let offeringLocation = offeringData["location"] as? String,
                 let offeringLongitude = offeringData["longitude"] as? Float,
                 let offeringPictureURL = offeringData["picture"] as? String,
                 let offeringSeats = offeringData["seats"] as? Int,
@@ -47,7 +48,7 @@ final class StorageAPI {
                         return
                 }
                 
-                let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType)
+                let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType)
                 resultOfferings.append(newOffering)
             }
             self.notificationCenter.post(
@@ -71,17 +72,15 @@ final class StorageAPI {
     }
     
     func getExtras(){
-        fireBaseDBAccess.child("extras").observeSingleEvent(of: .value, with: { (snapshot) in
+        fireBaseDBAccess.child("features").observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultExtras:[Extra] = [Extra]()
-            for (extraIDRaw, extraDataRaw) in receivedData {
-                let extraData:NSDictionary = extraDataRaw as! NSDictionary
-                let extraName:String = extraData["name"] as! String
-                let extraID:String = extraIDRaw as! String // TODO: solve the conversion problem here
+            var resultExtras:[Feature] = [Feature]()
+            for (featureIDRaw, featureNameRaw) in receivedData {
+                let featureName:String = featureNameRaw as! String
+                let featureID:String = featureIDRaw as! String // TODO: solve the conversion problem here
                 
-                let newExtra:Extra = Extra(name: extraName, id: Int(extraID)!)
-                print(Int(extraID)!)
-                resultExtras.append(newExtra)
+                let newFeature:Feature = Feature(name: featureName, id: Int(featureID)!)
+                resultExtras.append(newFeature)
             }
             self.notificationCenter.post(
                 name: Notification.Name(rawValue:"sendExtras"),

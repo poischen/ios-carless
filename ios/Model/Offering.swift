@@ -6,7 +6,7 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
-struct Offering {
+class Offering {
     let brand: String
     let consumption: Float
     let description: String
@@ -14,12 +14,13 @@ struct Offering {
     let gear: String
     let hp: Int
     let latitude: Float
+    let location: String
     let longitude: Float
     let pictureURL: String
     let seats: Int
     let type: String
     
-    init(brand: String, consumption: Float, description: String, fuel: String, gear: String, hp: Int, latitude: Float, longitude: Float, pictureURL: String, seats: Int, type: String) {
+    init(brand: String, consumption: Float, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String) {
         self.brand = brand
         self.consumption = consumption
         self.description = description
@@ -32,5 +33,6 @@ struct Offering {
         print(pictureURL)
         self.seats = seats
         self.type = type
+        self.location = location
     }
 }

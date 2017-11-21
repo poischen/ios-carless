@@ -17,7 +17,8 @@
 		196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewController.swift */; };
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
 		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
-		19D4126B1FB707D500794F1F /* Extra.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Extra.swift */; };
+		19CE072C1FC41C250087E958 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE072B1FC41C250087E958 /* Brand.swift */; };
+		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
 		2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9491FA8A2250013D67E /* ViewController.swift */; };
@@ -64,7 +65,8 @@
 		196FD4F21FAFC46E000875AE /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
-		19D4126A1FB707D500794F1F /* Extra.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extra.swift; sourceTree = "<group>"; };
+		19CE072B1FC41C250087E958 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
+		19D4126A1FB707D500794F1F /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,10 +148,11 @@
 			isa = PBXGroup;
 			children = (
 				196FD4EA1FAFC0F0000875AE /* Offering.swift */,
-				19D4126A1FB707D500794F1F /* Extra.swift */,
+				19D4126A1FB707D500794F1F /* Feature.swift */,
 				1922178C1FBDA5BE00D7FDFE /* Engine.swift */,
 				190DB08B1FBF30E90027F5CD /* Filter.swift */,
 				199BFDA51FC1CB81002A0101 /* SearchModel.swift */,
+				19CE072B1FC41C250087E958 /* Brand.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -566,7 +569,7 @@
 				196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */,
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
-				19D4126B1FB707D500794F1F /* Extra.swift in Sources */,
+				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
@@ -576,6 +579,7 @@
 				190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */,
 				199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */,
 				2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */,
+				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				1922178D1FBDA5BE00D7FDFE /* Engine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

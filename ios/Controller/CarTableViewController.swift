@@ -63,7 +63,7 @@ class CarTableViewController: UITableViewController {
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
         //cell.locationLabel.text = offering.location
         // TODO: make location and price dynamic
-        cell.locationLabel.text = "Munich"
+        cell.locationLabel.text = offering.location
         cell.priceLabel.text = "10€ per day"
         print(offering.pictureURL)
         let url = URL(string: offering.pictureURL)

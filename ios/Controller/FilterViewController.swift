@@ -19,10 +19,15 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var pickExtraTable: UITableView!
     @IBOutlet weak var pickEngineTable: UITableView!
+    @IBOutlet weak var pickBrandTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
-    var extras = [Extra]()
-    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1), Engine(name: "Elektro", id:2), Engine(name: "Hybrid", id: 3), Engine(name: "Erdgas", id: 3), Engine(name: "Wasserstoff", id: 3)]
+    var extras = [Feature]()
+    
+    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1), Engine(name: "Elektro", id:2), Engine(name: "Hybrid", id: 3), Engine(name: "Erdgas", id: 3), Engine(name: "Wasserstoff", id: 3)] // TODO: move to better location
+    
+    var brands:[Brand] = [Brand(name: "BMW"), Brand(name: "Audi")]
+    
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
     
@@ -32,6 +37,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickEngineTable.dataSource = self
         pickExtraTable.delegate = self
         pickExtraTable.dataSource = self
+        pickBrandTable.delegate = self
+        pickBrandTable.dataSource = self
         
         notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
@@ -65,11 +72,17 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count: Int?
         
-        if (tableView == self.pickExtraTable){
+        switch tableView {
+        case self.pickExtraTable:
             count = extras.count
-        } else if (tableView == self.pickEngineTable){
+        case self.pickEngineTable:
             count = engines.count
+        case self.pickBrandTable:
+            count = brands.count
+        default:
+            count = nil
         }
+
         
         return count!
     }
@@ -78,26 +91,38 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         var returnCell: UITableViewCell?
         
-        if (tableView == self.pickExtraTable){
+        switch tableView {
+        case self.pickExtraTable:
             let cellIdentifier = "ExtraTableViewCell"
             let extra = extras[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = extra.name
             returnCell = cell
-        } else if (tableView === self.pickEngineTable){
+        case self.pickEngineTable:
             let cellIdentifier = "EngineTableViewCell"
             let engine = engines[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = engine.name
             returnCell = cell
+        case self.pickBrandTable:
+            let cellIdentifier = "BrandTableViewCell"
+            let brand = brands[indexPath.row]
+            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            cell!.textLabel!.text = brand.name
+            returnCell = cell
+        default:
+            returnCell = nil
         }
+
         
         returnCell!.selectionStyle = UITableViewCellSelectionStyle.none
         return returnCell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == self.pickExtraTable){
+        
+        switch tableView {
+        case self.pickExtraTable:
             let extra = self.extras[indexPath.row]
             if (extra.isSelected){
                 pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
@@ -105,20 +130,31 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             extra.toggleSelected()
-        } else {
+        case self.pickEngineTable:
             let engine = self.engines[indexPath.row]
+            // TODO: avoid code duplication here
             if (engine.isSelected){
                 pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
             } else {
                 pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             engine.toggleSelected()
+        case self.pickBrandTable:
+            let brand = self.brands[indexPath.row]
+            if (brand.isSelected){
+                pickBrandTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            } else {
+                pickBrandTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            brand.toggleSelected()
+        default:
+            return
         }
     }
     
     func receiveExtras(notification: Notification) -> Void {
         guard let userInfo = notification.userInfo,
-            let receivedExtras  = userInfo["extras"] as? [Extra] else {
+            let receivedExtras  = userInfo["extras"] as? [Feature] else {
                 print("No userInfo found in notification")
                 return
         }
@@ -126,20 +162,5 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.extras = receivedExtras
         self.pickExtraTable.reloadData()
     }
-    
-    @IBAction func applyFilterClicked(_ sender: Any) {
-        //self.storageAPI.filterOfferings(filter: Filter(maxPrice: Int(self.maxPriceSlider.value)))
-    }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
