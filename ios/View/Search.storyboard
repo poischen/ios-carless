@@ -121,7 +121,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xf-Zt-ujR">
                                 <rect key="frame" x="0.0" y="64" width="375" height="1136"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-yq-ywS">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-yq-ywS">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="max price per day:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GdR-9j-5IV">
@@ -171,6 +171,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
                                                     <action selector="maxDistanceChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="rb6-nh-fhZ"/>
+                                                    <action selector="maxHorsepowerChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="67j-rR-7nU"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="max consumption:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkV-gN-izg">
@@ -195,7 +196,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="100 hp" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="T6x-CA-o5s">
-                                                <rect key="frame" x="228" y="205" width="53" height="21"/>
+                                                <rect key="frame" x="228" y="205" width="88" height="21"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="1" green="0.56862745100000001" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -289,50 +290,40 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cus-Xm-JPk">
-                                                <rect key="frame" x="22" y="1028" width="330" height="30"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                <state key="normal" title="Apply filters">
-                                                    <color key="titleColor" red="1" green="0.56862745100000001" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="applyFilterClicked:" destination="o0c-hY-NhQ" eventType="touchUpInside" id="9eV-7U-NWY"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="1000" id="TUR-Dg-hkz"/>
+                                            <constraint firstAttribute="height" constant="1200" id="48P-hO-w4K"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="BUv-yq-ywS" secondAttribute="bottom" id="BCH-su-kvq"/>
-                                    <constraint firstItem="BUv-yq-ywS" firstAttribute="top" secondItem="8xf-Zt-ujR" secondAttribute="top" id="GRS-gF-RwV"/>
-                                    <constraint firstItem="BUv-yq-ywS" firstAttribute="leading" secondItem="8xf-Zt-ujR" secondAttribute="leading" id="Ixh-wi-wLD"/>
-                                    <constraint firstAttribute="trailing" secondItem="BUv-yq-ywS" secondAttribute="trailing" id="hyd-i5-poR"/>
+                                    <constraint firstItem="BUv-yq-ywS" firstAttribute="leading" secondItem="8xf-Zt-ujR" secondAttribute="leading" id="87r-9y-tZy"/>
+                                    <constraint firstAttribute="trailing" secondItem="BUv-yq-ywS" secondAttribute="trailing" id="D8N-2L-GxB"/>
+                                    <constraint firstItem="BUv-yq-ywS" firstAttribute="top" secondItem="8xf-Zt-ujR" secondAttribute="top" id="ZiO-TI-S5D"/>
+                                    <constraint firstAttribute="bottom" secondItem="BUv-yq-ywS" secondAttribute="bottom" id="eNC-GF-SbI"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="top" secondItem="12p-dG-mKr" secondAttribute="top" id="EZh-kr-R4D"/>
-                            <constraint firstItem="BUv-yq-ywS" firstAttribute="width" secondItem="xo0-ML-KVb" secondAttribute="width" id="H74-70-1nW"/>
-                            <constraint firstItem="12p-dG-mKr" firstAttribute="bottom" secondItem="8xf-Zt-ujR" secondAttribute="bottom" id="eat-7x-ed9"/>
-                            <constraint firstItem="12p-dG-mKr" firstAttribute="trailing" secondItem="8xf-Zt-ujR" secondAttribute="trailing" id="mva-W1-zaM"/>
-                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="leading" secondItem="12p-dG-mKr" secondAttribute="leading" id="qec-QZ-oCI"/>
+                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="trailing" secondItem="12p-dG-mKr" secondAttribute="trailing" id="CB2-cl-bxY"/>
+                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="leading" secondItem="12p-dG-mKr" secondAttribute="leading" id="CiH-Ki-wrG"/>
+                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="top" secondItem="12p-dG-mKr" secondAttribute="top" id="YhB-Af-zFa"/>
+                            <constraint firstItem="BUv-yq-ywS" firstAttribute="width" secondItem="xo0-ML-KVb" secondAttribute="width" id="ZGp-XC-WEc"/>
+                            <constraint firstItem="8xf-Zt-ujR" firstAttribute="bottom" secondItem="12p-dG-mKr" secondAttribute="bottom" id="vYE-4G-iCU"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="12p-dG-mKr"/>
                     </view>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
-                        <outlet property="applyFilterButton" destination="Cus-Xm-JPk" id="30z-lL-TFq"/>
                         <outlet property="maxDistanceLabel" destination="g5V-KV-rBh" id="e5H-Fi-IX5"/>
                         <outlet property="maxDistanceSlider" destination="4Bv-1H-Gcq" id="SKE-B0-1CI"/>
                         <outlet property="maxMileageLabel" destination="3D5-ZF-LWz" id="JQl-gQ-agl"/>
                         <outlet property="maxMileageSlider" destination="B8N-G6-Xr2" id="9y5-RK-sAH"/>
                         <outlet property="maxPriceLabel" destination="KyW-2G-EZ9" id="h5m-Ap-YFV"/>
                         <outlet property="maxPriceSlider" destination="vhS-an-RiK" id="jXu-EV-X0d"/>
+                        <outlet property="minHorsepowerLabel" destination="T6x-CA-o5s" id="500-JN-h3I"/>
+                        <outlet property="minHorsepowerSlider" destination="Oes-fi-5tf" id="Qs0-IP-rnQ"/>
                         <outlet property="pickBrandTable" destination="ru2-Bd-SG8" id="AaH-lz-QTS"/>
                         <outlet property="pickEngineTable" destination="VRT-RG-ere" id="tZt-uB-PKS"/>
                         <outlet property="pickExtraTable" destination="W4z-O3-btb" id="1c9-ny-67w"/>
@@ -340,7 +331,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxk-oa-6my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2132" y="1040"/>
+            <point key="canvasLocation" x="2132" y="1039.8800599700151"/>
         </scene>
         <!--Car Table View Controller-->
         <scene sceneID="3kz-5R-omw">

@@ -16,6 +16,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var maxDistanceSlider: UISlider!
     @IBOutlet weak var maxMileageLabel: UILabel!
     @IBOutlet weak var maxMileageSlider: UISlider!
+    @IBOutlet weak var minHorsepowerLabel: UILabel!
+    @IBOutlet weak var minHorsepowerSlider: UISlider!
     
     @IBOutlet weak var pickExtraTable: UITableView!
     @IBOutlet weak var pickEngineTable: UITableView!
@@ -30,6 +32,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
+    let model: SearchModel = SearchModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,6 +70,14 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func maxMileageChanged(_ sender: Any) {
         maxMileageLabel.text = String(Int(maxMileageSlider.value)) + "l/100km"
+    }
+    
+    @IBAction func maxHorsepowerChanged(_ sender: Any) {
+        minHorsepowerLabel.text = String(Int(minHorsepowerSlider.value)) + " hp"
+    }
+    
+    @IBAction func applyFiltersClicked(_ sender: Any) {
+        model.filterOfferings(filter: Filter(maxPrice: 10))
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -152,6 +163,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // TODO: also hardcode the extras as it's unlikely that new ones will be created
     func receiveExtras(notification: Notification) -> Void {
         guard let userInfo = notification.userInfo,
             let receivedExtras  = userInfo["extras"] as? [Feature] else {
