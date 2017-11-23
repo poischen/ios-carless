@@ -17,25 +17,14 @@ final class StorageAPI {
     private let fireBaseDBAccess: DatabaseReference!
     private let notificationCenter: NotificationCenter
     
-    private var offeringsCache: [Offering]
-    
     private init() {
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
-        offeringsCache = []
     }
     
     // TODO: only call when necessary and not (for some reason) when the app starts
     func getOfferings(){
         // TODO: only get offerings that match certain criteria
-        if (self.offeringsCache.count > 0){
-            self.notificationCenter.post(
-                name: Notification.Name(rawValue:"sendOfferings"),
-                object: nil,
-                userInfo: ["offerings":self.offeringsCache]
-            )
-        } else {
-            var resultOfferings:[Offering] = []
             self.fireBaseDBAccess.child("inserat").observeSingleEvent(of: .value, with: {snapshot in
                 let receivedData = snapshot.valueInExportFormat() as! NSDictionary
                 var resultOfferings:[Offering] = [Offering]()
@@ -61,7 +50,6 @@ final class StorageAPI {
                     
                     let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType)
                     resultOfferings.append(newOffering)
-                    resultOfferings.append(newOffering)
                 }
                 self.notificationCenter.post(
                     name: Notification.Name(rawValue:"sendOfferings"),
@@ -71,7 +59,6 @@ final class StorageAPI {
             }) { (error) in
                 print(error.localizedDescription)
             }
-        }
     }
     
     func filterOfferings(filter: Filter) {
@@ -85,7 +72,7 @@ final class StorageAPI {
     }
     
     func getExtras(){
-        fireBaseDBAccess.child("features").observeSingleEvent(of: .value, with: { (snapshot) in
+        self.fireBaseDBAccess.child("features").observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultExtras:[Feature] = [Feature]()
             for (featureIDRaw, featureNameRaw) in receivedData {
@@ -105,3 +92,4 @@ final class StorageAPI {
         }
     }
 }
+
