@@ -10,29 +10,20 @@ import Foundation
 
 class SearchModel {
     private let notificationCenter: NotificationCenter
+    private let storageAPI: StorageAPI
     
     init() {
         self.notificationCenter = NotificationCenter.default
+        self.storageAPI = StorageAPI.shared
     }
     
-    func filterOfferings(filter: Filter) {
-        print("hallo")
-        // TODO: Query DB in the right way
-        let url = URL(string: "https://us-central1-ioscars-32e69.cloudfunctions.net/filteredOfferings?minSeats=1")
-
-        URLSession.shared.dataTask(with: url!) { data, response, error in
-            guard error == nil else {
-                print(error!)
-                return
+    func getFilteredOfferings(filterFunctions: [(_ offering: Offering) -> Bool], completion: @escaping (_ offerings: [Offering]) -> Void) {
+        storageAPI.getOfferings(completion: {offerings in
+            let filteredOfferings = filterFunctions.reduce(offerings) { accu, currFilter in
+                return accu.filter(currFilter)
             }
-            guard let data = data else {
-                print("Data is empty")
-                return
-            }
-            
-            print(data)
-            let json = try! JSONSerialization.jsonObject(with: data, options: [])
-            print(json)
-        }
+            completion(filteredOfferings)
+        });
     }
+    
 }

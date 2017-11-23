@@ -77,8 +77,17 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
 
     
+    func filterFunc(_ offering: Offering) -> Bool {
+        return offering.seats > 4
+    }
+    
     @IBAction func applyFiltersClicked(_ sender: Any) {
-        model.filterOfferings(filter: Filter(maxPrice: 10))
+        let filterFunctions = [filterFunc]
+        model.getFilteredOfferings(filterFunctions: filterFunctions, completion: {filteredOfferings in
+            for offerring in filteredOfferings {
+                print(offerring)
+            }
+        })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

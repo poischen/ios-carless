@@ -16,19 +16,19 @@ class CarTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notificationCenter.addObserver(
+        /* notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendOfferings"),
             object:nil,
             queue:nil,
             using:receiveOfferings
-        )
+        ) */
         /* notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendFilteredCars"),
             object:nil,
             queue:nil,
             using:receiveOfferings
         ) */
-        storageAPI.getOfferings()
+        storageAPI.getOfferings(completion: receiveOfferings)
         //loadSampleCars()
     }
 
@@ -74,7 +74,7 @@ class CarTableViewController: UITableViewController {
         return cell
     }
     
-    func receiveOfferings(notification: Notification) -> Void {
+    /* func receiveOfferings(notification: Notification) -> Void {
         print("received cars")
         guard let userInfo = notification.userInfo,
             let receivedCars  = userInfo["offerings"] as? [Offering] else {
@@ -83,6 +83,11 @@ class CarTableViewController: UITableViewController {
         }
         print("I received " + String(receivedCars.count) + " cars")
         offerings = receivedCars
+        self.tableView.reloadData()
+    } */
+    
+    func receiveOfferings(_ offerings: [Offering]) {
+        self.offerings = offerings
         self.tableView.reloadData()
     }
 

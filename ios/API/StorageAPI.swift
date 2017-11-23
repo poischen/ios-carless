@@ -23,7 +23,7 @@ final class StorageAPI {
     }
     
     // TODO: only call when necessary and not (for some reason) when the app starts
-    func getOfferings(){
+    func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
         // TODO: only get offerings that match certain criteria
             self.fireBaseDBAccess.child("inserat").observeSingleEvent(of: .value, with: {snapshot in
                 let receivedData = snapshot.valueInExportFormat() as! NSDictionary
@@ -51,11 +51,13 @@ final class StorageAPI {
                     let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType)
                     resultOfferings.append(newOffering)
                 }
-                self.notificationCenter.post(
-                    name: Notification.Name(rawValue:"sendOfferings"),
-                    object: nil,
-                    userInfo: ["offerings":resultOfferings]
-                )
+                completion(resultOfferings)
+                /* let filteredOfferings =
+                 self.notificationCenter.post(
+                 name: Notification.Name(rawValue:"sendFilteredCars"),
+                 object: nil,
+                 userInfo: ["cars":filteredOfferings]
+                 ) */
             }) { (error) in
                 print(error.localizedDescription)
             }
