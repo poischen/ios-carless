@@ -17,13 +17,24 @@ class SearchModel {
         self.storageAPI = StorageAPI.shared
     }
     
-    func getFilteredOfferings(filterFunctions: [(_ offering: Offering) -> Bool], completion: @escaping (_ offerings: [Offering]) -> Void) {
+    func getFilteredOfferings(filter: Filter, completion: @escaping (_ offerings: [Offering]) -> Void) {
         storageAPI.getOfferings(completion: {offerings in
-            let filteredOfferings = filterFunctions.reduce(offerings) { accu, currFilter in
+            let filteredOfferings = self.filterToFilterFunctions(filter: filter).reduce(offerings) { accu, currFilter in
                 return accu.filter(currFilter)
             }
             completion(filteredOfferings)
         });
+    }
+    
+    func filterToFilterFunctions(filter: Filter) -> [(_ offering: Offering) -> Bool] {
+        var filterFunctions:[(_ offering: Offering) -> Bool] = []
+        if let minSeats = filter.minSeats {
+            filterFunctions.append({offering in return offering.seats >= minSeats})
+        }
+        if let city = filter.city {
+            filterFunctions.append({offering in return offering.location == city})
+        }
+        return filterFunctions
     }
     
 }

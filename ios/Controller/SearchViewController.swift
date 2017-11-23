@@ -17,8 +17,9 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var nameLabel: UILabel!
     
-    let occupantNumbers = ["1 person","2 persons","3 persons","4 persons","5 persons","6 persons","7 persons","8 persons"]
+    let occupantNumbers = Array(1...8)
     let searchModel:SearchModel = SearchModel()
+    var pickedPlace:GMSPlace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +43,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     // The data to return for the row and component (column) that's being passed in
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return occupantNumbers[row]
+        return String(occupantNumbers[row])
     }
     
     @IBAction func pickPlace(_ sender: UIButton) {
@@ -55,10 +56,10 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        print(place.attributions)
-        for test in place.addressComponents! {
+        /* for test in place.addressComponents! {
             print(test.name)
-        }
+        } */
+        self.pickedPlace = place
         nameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)
     }
@@ -72,15 +73,15 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         dismiss(animated: true, completion: nil)
     }
     
-    func filterFunc (offering: Offering) -> Bool {
-        return offering.seats > 4
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "ToSearchResults") { // TODO: check for something useful here
             // next screen: search results
             if let searchResultsViewController = segue.destination as? CarTableViewController {
-                self.searchModel.getFilteredOfferings(filterFunctions: [filterFunc], completion: searchResultsViewController.receiveOfferings)
+                self.searchModel.getFilteredOfferings(filter: Filter(
+                    maxPrice: 10,
+                    minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
+                    city: pickedPlace!.addressComponents![0].name
+                ), completion: searchResultsViewController.receiveOfferings)
             }
         }
     }

@@ -8,10 +8,14 @@
 
 import Foundation
 
-class Filter {
-    var maxPrice: Int
+struct Filter {
+    let maxPrice: Int?
+    let minSeats: Int?
+    let city: String?
     
-    init(maxPrice: Int) {
+    init(maxPrice: Int, minSeats: Int, city: String) {
         self.maxPrice = maxPrice
+        self.minSeats = minSeats
+        self.city = city
     }
 }
