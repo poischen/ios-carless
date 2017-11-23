@@ -75,6 +75,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBAction func maxHorsepowerChanged(_ sender: Any) {
         minHorsepowerLabel.text = String(Int(minHorsepowerSlider.value)) + " hp"
     }
+
     
     @IBAction func applyFiltersClicked(_ sender: Any) {
         model.filterOfferings(filter: Filter(maxPrice: 10))

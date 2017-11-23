@@ -16,8 +16,9 @@ class SearchModel {
     }
     
     func filterOfferings(filter: Filter) {
+        print("hallo")
         // TODO: Query DB in the right way
-        let url = URL(string: "https://httpbin.org/ip")
+        let url = URL(string: "https://us-central1-ioscars-32e69.cloudfunctions.net/filteredOfferings?minSeats=1")
 
         URLSession.shared.dataTask(with: url!) { data, response, error in
             guard error == nil else {
@@ -29,6 +30,7 @@ class SearchModel {
                 return
             }
             
+            print(data)
             let json = try! JSONSerialization.jsonObject(with: data, options: [])
             print(json)
         }

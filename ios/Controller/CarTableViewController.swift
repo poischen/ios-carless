@@ -77,7 +77,7 @@ class CarTableViewController: UITableViewController {
     func receiveCars(notification: Notification) -> Void {
         print("received cars")
         guard let userInfo = notification.userInfo,
-            let receivedCars  = userInfo["cars"] as? [Offering] else {
+            let receivedCars  = userInfo["offerings"] as? [Offering] else {
                 print("No userInfo found in notification")
                 return
         }
