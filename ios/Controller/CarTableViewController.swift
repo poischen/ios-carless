@@ -28,7 +28,7 @@ class CarTableViewController: UITableViewController {
             queue:nil,
             using:receiveOfferings
         ) */
-        storageAPI.getOfferings(completion: receiveOfferings)
+        //storageAPI.getOfferings(completion: receiveOfferings)
         //loadSampleCars()
     }
 

@@ -17,8 +17,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var nameLabel: UILabel!
     
-    
     let occupantNumbers = ["1 person","2 persons","3 persons","4 persons","5 persons","6 persons","7 persons","8 persons"]
+    let searchModel:SearchModel = SearchModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +70,19 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         dismiss(animated: true, completion: nil)
+    }
+    
+    func filterFunc (offering: Offering) -> Bool {
+        return offering.seats > 4
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "ToSearchResults") { // TODO: check for something useful here
+            // next screen: search results
+            if let searchResultsViewController = segue.destination as? CarTableViewController {
+                self.searchModel.getFilteredOfferings(filterFunctions: [filterFunc], completion: searchResultsViewController.receiveOfferings)
+            }
+        }
     }
 }
 
