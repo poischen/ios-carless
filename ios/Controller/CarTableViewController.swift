@@ -89,7 +89,6 @@ class CarTableViewController: UITableViewController {
     } */
     
     func receiveOfferings(_ offerings: [Offering]) {
-        print("called receiveOfferings")
         self.offerings = offerings
         self.tableView.reloadData()
     }

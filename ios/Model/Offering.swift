@@ -8,7 +8,7 @@
 
 class Offering {
     let brand: String
-    let consumption: Float
+    let consumption: Int
     let description: String
     let fuel: String
     let gear: String
@@ -20,7 +20,7 @@ class Offering {
     let seats: Int
     let type: String
     
-    init(brand: String, consumption: Float, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String) {
+    init(brand: String, consumption: Int, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String) {
         self.brand = brand
         self.consumption = consumption
         self.description = description

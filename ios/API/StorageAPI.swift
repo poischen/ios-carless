@@ -33,7 +33,7 @@ final class StorageAPI {
                     // TODO: Shorthand for this?
                     guard
                         let offeringBrand:String = offeringData["brand"] as? String,
-                        let offeringConsumption = offeringData["consumption"] as? Float,
+                        let offeringConsumption = offeringData["consumption"] as? Int,
                         let offeringDescription = offeringData["description"] as? String,
                         let offeringFuel = offeringData["fuel"] as? String,
                         let offeringGear = offeringData["gear"] as? String,

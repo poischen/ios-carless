@@ -34,6 +34,9 @@ class SearchModel {
         if let city = filter.city {
             filterFunctions.append({offering in return offering.location == city})
         }
+        if let maxConsumption = filter.maxConsumption {
+            filterFunctions.append({offering in return offering.consumption <= maxConsumption})
+        }
         return filterFunctions
     }
     

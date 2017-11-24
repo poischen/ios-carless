@@ -81,17 +81,12 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JM7-CF-QwS">
                                 <rect key="frame" x="45" y="582" width="284" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Search"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Search">
+                                    <color key="titleColor" red="1" green="0.56862745100000001" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
                                 <connections>
                                     <action selector="searchButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uco-7c-c2E"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gw-2E-wfF">
-                                <rect key="frame" x="170" y="620" width="35" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Filter"/>
-                                <connections>
-                                    <segue destination="o0c-hY-NhQ" kind="show" id="yre-6v-cx3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -110,7 +105,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="711.20000000000005" y="33.733133433283363"/>
+            <point key="canvasLocation" x="12" y="165"/>
         </scene>
         <!--Filter View Controller-->
         <scene sceneID="ndM-kj-Dry">
@@ -301,6 +296,7 @@
                                                 </state>
                                                 <connections>
                                                     <action selector="applyFiltersClicked:" destination="o0c-hY-NhQ" eventType="touchUpInside" id="GL2-Rh-627"/>
+                                                    <segue destination="Jrx-et-awz" kind="show" identifier="applyFilters" id="AsX-Ef-7wB"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -329,10 +325,10 @@
                     </view>
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
+                        <outlet property="maxConsumptionLabel" destination="3D5-ZF-LWz" id="JQl-gQ-agl"/>
+                        <outlet property="maxConsumptionSlider" destination="B8N-G6-Xr2" id="9y5-RK-sAH"/>
                         <outlet property="maxDistanceLabel" destination="g5V-KV-rBh" id="e5H-Fi-IX5"/>
                         <outlet property="maxDistanceSlider" destination="4Bv-1H-Gcq" id="SKE-B0-1CI"/>
-                        <outlet property="maxMileageLabel" destination="3D5-ZF-LWz" id="JQl-gQ-agl"/>
-                        <outlet property="maxMileageSlider" destination="B8N-G6-Xr2" id="9y5-RK-sAH"/>
                         <outlet property="maxPriceLabel" destination="KyW-2G-EZ9" id="h5m-Ap-YFV"/>
                         <outlet property="maxPriceSlider" destination="vhS-an-RiK" id="jXu-EV-X0d"/>
                         <outlet property="minHorsepowerLabel" destination="T6x-CA-o5s" id="500-JN-h3I"/>
@@ -344,7 +340,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gxk-oa-6my" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2132" y="1039.8800599700151"/>
+            <point key="canvasLocation" x="2185" y="344"/>
         </scene>
         <!--Results Old-->
         <scene sceneID="3kz-5R-omw">
@@ -541,7 +537,11 @@
                                                 <segue destination="BYZ-38-t0r" kind="show" id="BmO-SL-vEt"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="filter" id="Bfr-3I-Mlf"/>
+                                        <barButtonItem key="rightBarButtonItem" title="filter" id="Bfr-3I-Mlf">
+                                            <connections>
+                                                <segue destination="o0c-hY-NhQ" kind="show" identifier="showFilter" id="1sJ-g3-qcm"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -556,10 +556,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mm5-nh-hOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1880.8" y="-215.44227886056973"/>
+            <point key="canvasLocation" x="1142" y="104"/>
         </scene>
     </scenes>
     <resources>
         <image name="Cars" width="250" height="250"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AsX-Ef-7wB"/>
+    </inferredMetricsTieBreakers>
 </document>

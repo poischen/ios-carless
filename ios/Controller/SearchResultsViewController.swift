@@ -58,19 +58,19 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func receiveOfferings(_ offerings: [Offering]) {
-        print("called new receiveOfferings")
+        print("yay, called new receiveOfferings")
         self.offerings = offerings
         self.searchResultsTable.reloadData()
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "showFilter") {
+            // next screen: filter
+            if let filterViewController = segue.destination as? FilterViewController {
+                // pass current filter to the filter screen to be able to modify it there
+                filterViewController.searchFilter = self.searchFilter
+            }
+        }
     }
-    */
 
 }

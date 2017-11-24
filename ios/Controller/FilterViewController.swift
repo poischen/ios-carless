@@ -14,8 +14,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var maxPriceSlider: UISlider!
     @IBOutlet weak var maxDistanceLabel: UILabel!
     @IBOutlet weak var maxDistanceSlider: UISlider!
-    @IBOutlet weak var maxMileageLabel: UILabel!
-    @IBOutlet weak var maxMileageSlider: UISlider!
+    @IBOutlet weak var maxConsumptionLabel: UILabel!
+    @IBOutlet weak var maxConsumptionSlider: UISlider!
     @IBOutlet weak var minHorsepowerLabel: UILabel!
     @IBOutlet weak var minHorsepowerSlider: UISlider!
     
@@ -32,7 +32,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
-    let model: SearchModel = SearchModel()
+    let searchModel: SearchModel = SearchModel()
+    var searchFilter:Filter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +70,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func maxMileageChanged(_ sender: Any) {
-        maxMileageLabel.text = String(Int(maxMileageSlider.value)) + "l/100km"
+        maxConsumptionLabel.text = String(Int(maxConsumptionSlider.value)) + "l/100km"
     }
     
     @IBAction func maxHorsepowerChanged(_ sender: Any) {
@@ -178,6 +179,19 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         self.extras = receivedExtras
         self.pickExtraTable.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "applyFilters") {
+            // next screen: search results
+            if let searchResultsController = segue.destination as? SearchResultsViewController {
+                if var currentSearchFilter = self.searchFilter {
+                    currentSearchFilter.maxConsumption = Int(self.maxConsumptionSlider.value)
+                    searchResultsController.searchFilter = currentSearchFilter
+                    self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
+                }
+            }
+        }
     }
 
 }
