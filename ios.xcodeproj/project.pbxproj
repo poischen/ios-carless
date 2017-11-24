@@ -10,6 +10,8 @@
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
 		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		1922178D1FBDA5BE00D7FDFE /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1922178C1FBDA5BE00D7FDFE /* Engine.swift */; };
+		194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769221FC8480000AB02E4 /* SearchResultsViewController.swift */; };
+		194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */; };
 		196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196FD4E81FAFBFE2000875AE /* Search.storyboard */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
@@ -58,6 +60,8 @@
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		1922178C1FBDA5BE00D7FDFE /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
+		194769221FC8480000AB02E4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
+		194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		196FD4E81FAFBFE2000875AE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
@@ -128,7 +132,9 @@
 		191BBB9E1FB5070300D95B26 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				196FD4E81FAFBFE2000875AE /* Search.storyboard */,
+				194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -139,7 +145,7 @@
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
 				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
 				196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */,
-				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
+				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -568,6 +574,7 @@
 			files = (
 				196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */,
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
+				194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */,
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
@@ -580,6 +587,7 @@
 				199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */,
 				2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */,
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
+				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				1922178D1FBDA5BE00D7FDFE /* Engine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

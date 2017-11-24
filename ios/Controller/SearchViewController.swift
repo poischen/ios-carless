@@ -91,13 +91,15 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
             // next screen: search results
-            if let searchResultsViewController = segue.destination as? CarTableViewController {
-                self.searchModel.getFilteredOfferings(filter: Filter(
+            if let searchResultsViewController = segue.destination as? SearchResultsViewController {
+                let newFilter:Filter = Filter(
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     city: pickedPlace!.addressComponents![0].name,
                     maxConsumption: nil
-                ), completion: searchResultsViewController.receiveOfferings)
+                )
+                searchResultsViewController.searchFilter = newFilter
+                self.searchModel.getFilteredOfferings(filter: newFilter, completion: searchResultsViewController.receiveOfferings)
             }
         }
     }

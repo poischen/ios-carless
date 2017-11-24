@@ -13,6 +13,7 @@ class CarTableViewController: UITableViewController {
     var offerings = [Offering]()
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
+    var searchFilter:Filter?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +89,7 @@ class CarTableViewController: UITableViewController {
     } */
     
     func receiveOfferings(_ offerings: [Offering]) {
+        print("called receiveOfferings")
         self.offerings = offerings
         self.tableView.reloadData()
     }

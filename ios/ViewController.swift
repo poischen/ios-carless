@@ -39,7 +39,7 @@ class ViewController: UIViewController {
     // temporary link, remove later
     @IBAction func searchButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SearchNavigation")
+        let vc = storyboard.instantiateViewController(withIdentifier: "Search")
         self.present(vc, animated: true, completion: nil)
     }
     
