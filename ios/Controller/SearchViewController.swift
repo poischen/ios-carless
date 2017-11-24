@@ -16,6 +16,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var endTimePicker: UIDatePicker!
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var searchButton: UIButton!
     
     let occupantNumbers = Array(1...8)
     let searchModel:SearchModel = SearchModel()
@@ -73,14 +74,29 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func searchButtonClicked(_ sender: Any) {
+        // only proceed to the search results if the user has picked a place
+        if let userPickedPlace = pickedPlace {
+            performSegue(withIdentifier: "showSearchResults", sender: nil)
+        } else {
+            // show error message to remind the user to pick a place first
+            let alertController = UIAlertController(title: "Error", message: "Please pick a location.", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "ToSearchResults") { // TODO: check for something useful here
+        if (segue.identifier == "showSearchResults") {
             // next screen: search results
             if let searchResultsViewController = segue.destination as? CarTableViewController {
                 self.searchModel.getFilteredOfferings(filter: Filter(
-                    maxPrice: 10,
+                    maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
-                    city: pickedPlace!.addressComponents![0].name
+                    city: pickedPlace!.addressComponents![0].name,
+                    maxConsumption: nil
                 ), completion: searchResultsViewController.receiveOfferings)
             }
         }

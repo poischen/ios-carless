@@ -12,10 +12,12 @@ struct Filter {
     let maxPrice: Int?
     let minSeats: Int?
     let city: String?
+    let maxConsumption: Int?
     
-    init(maxPrice: Int, minSeats: Int, city: String) {
+    init(maxPrice: Int?, minSeats: Int?, city: String?, maxConsumption: Int?) {
         self.maxPrice = maxPrice
         self.minSeats = minSeats
         self.city = city
+        self.maxConsumption = maxConsumption
     }
 }

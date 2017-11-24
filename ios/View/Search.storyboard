@@ -83,7 +83,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Search"/>
                                 <connections>
-                                    <segue destination="LKe-Qd-3jo" kind="show" identifier="ToSearchResults" id="vNd-Cf-GRs"/>
+                                    <action selector="searchButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Uco-7c-c2E"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7gw-2E-wfF">
@@ -103,7 +103,9 @@
                         <outlet property="endTimePicker" destination="xui-St-a0Z" id="mkN-YJ-d2l"/>
                         <outlet property="nameLabel" destination="dyB-bf-rp1" id="9Ln-Xa-OrM"/>
                         <outlet property="occupantsPicker" destination="XbY-N5-yO1" id="EjF-pi-l1V"/>
+                        <outlet property="searchButton" destination="JM7-CF-QwS" id="Tvp-B4-Iua"/>
                         <outlet property="startTimePicker" destination="aWz-dc-kfg" id="t1U-Ad-6gE"/>
+                        <segue destination="LKe-Qd-3jo" kind="show" identifier="showSearchResults" id="QY6-XK-3Xt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

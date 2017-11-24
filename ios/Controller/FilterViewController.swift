@@ -82,12 +82,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func applyFiltersClicked(_ sender: Any) {
-        let filterFunctions = [filterFunc]
-        /* model.getFilteredOfferings(filterFunctions: filterFunctions, completion: {filteredOfferings in
-            for offerring in filteredOfferings {
-                print(offerring)
-            }
-        }) */
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

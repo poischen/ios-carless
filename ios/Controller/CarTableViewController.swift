@@ -30,6 +30,7 @@ class CarTableViewController: UITableViewController {
         ) */
         //storageAPI.getOfferings(completion: receiveOfferings)
         //loadSampleCars()
+        print("yay, loaded")
     }
 
     override func didReceiveMemoryWarning() {
