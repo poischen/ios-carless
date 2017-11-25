@@ -58,9 +58,17 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     func receiveOfferings(_ offerings: [Offering]) {
-        print("yay, called new receiveOfferings")
-        self.offerings = offerings
-        self.searchResultsTable.reloadData()
+        if (offerings.count <= 0) {
+            let alertController = UIAlertController(title: "Sorry", message: "We couln't find a car for you. :(", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "back to search", style: .cancel, handler: {alterAction in
+                self.performSegue(withIdentifier: "backToSearch", sender: nil)
+            })
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
+        } else {
+            self.offerings = offerings
+            self.searchResultsTable.reloadData()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
