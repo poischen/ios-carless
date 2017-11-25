@@ -29,13 +29,21 @@ class SearchModel {
     func filterToFilterFunctions(filter: Filter) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
         if let minSeats = filter.minSeats {
-            filterFunctions.append({offering in return offering.seats >= minSeats})
+            filterFunctions.append({$0.seats >= minSeats})
         }
         if let city = filter.city {
-            filterFunctions.append({offering in return offering.location == city})
+            filterFunctions.append({$0.location == city})
         }
         if let maxConsumption = filter.maxConsumption {
-            filterFunctions.append({offering in return offering.consumption <= maxConsumption})
+            filterFunctions.append({$0.consumption <= maxConsumption})
+        }
+        if let minHP = filter.minHP {
+            filterFunctions.append({$0.hp >= minHP})
+        }
+        if let gearshift = filter.gearshifts {
+            filterFunctions.append({offering in
+                return gearshift.contains {$0.name == offering.gear}
+            })
         }
         return filterFunctions
     }

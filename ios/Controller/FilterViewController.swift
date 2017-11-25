@@ -22,13 +22,29 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickExtraTable: UITableView!
     @IBOutlet weak var pickEngineTable: UITableView!
     @IBOutlet weak var pickBrandTable: UITableView!
+    @IBOutlet weak var pickGearTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
     var extras = [Feature]()
     
-    var engines = [Engine(name: "Diesel", id: 0), Engine(name: "Benzin", id: 1), Engine(name: "Elektro", id:2), Engine(name: "Hybrid", id: 3), Engine(name: "Erdgas", id: 3), Engine(name: "Wasserstoff", id: 3)] // TODO: move to better location
+    var engines = [
+        Engine(name: "diesel"),
+        Engine(name: "benzine"),
+        Engine(name: "electric"),
+        Engine(name: "hybrid"),
+        Engine(name: "natural gas"),
+        Engine(name: "hydrogen")
+    ] // TODO: move to better location
     
-    var brands:[Brand] = [Brand(name: "BMW"), Brand(name: "Audi")]
+    var brands:[Brand] = [
+        Brand(name: "BMW"),
+        Brand(name: "Audi")
+    ]
+    
+    var gears:[Gear] = [
+        Gear(name: "shift"),
+        Gear(name: "automatic")
+    ]
     
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
@@ -43,6 +59,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickExtraTable.dataSource = self
         pickBrandTable.delegate = self
         pickBrandTable.dataSource = self
+        pickGearTable.dataSource = self
+        pickGearTable.delegate = self
         
         notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
@@ -96,6 +114,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             count = engines.count
         case self.pickBrandTable:
             count = brands.count
+        case self.pickGearTable:
+            count = gears.count
         default:
             count = nil
         }
@@ -107,6 +127,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var returnCell: UITableViewCell?
+        
+        // TODO: avoid code duplication here by merging Engine, Feature and Gear?
         
         switch tableView {
         case self.pickExtraTable:
@@ -127,6 +149,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = brand.name
             returnCell = cell
+        case self.pickGearTable:
+            let cellIdentifier = "GearTableViewCell"
+            let gear = gears[indexPath.row]
+            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            cell!.textLabel!.text = gear.name
+            returnCell = cell
         default:
             returnCell = nil
         }
@@ -137,6 +165,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        // TODO: avoid code duplication here by merging Engine, Feature and Gear
+
         
         switch tableView {
         case self.pickExtraTable:
@@ -164,12 +195,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 pickBrandTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             brand.toggleSelected()
+        case self.pickGearTable:
+            let gear = self.gears[indexPath.row]
+            if (gear.isSelected){
+                pickGearTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            } else {
+                pickGearTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
+            gear.toggleSelected()
         default:
             return
         }
     }
     
-    // TODO: also hardcode the extras as it's unlikely that new ones will be created
+    // TODO: also hardcode the extras as it's unlikely that new ones will be created?
     func receiveExtras(notification: Notification) -> Void {
         guard let userInfo = notification.userInfo,
             let receivedExtras  = userInfo["extras"] as? [Feature] else {
@@ -187,6 +226,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             if let searchResultsController = segue.destination as? SearchResultsViewController {
                 if var currentSearchFilter = self.searchFilter {
                     currentSearchFilter.maxConsumption = Int(self.maxConsumptionSlider.value)
+                    currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
+                    currentSearchFilter.gearshifts = self.gears.filter({gear in return gear.isSelected})
+                    print(currentSearchFilter.gearshifts)
                     searchResultsController.searchFilter = currentSearchFilter
                     self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }

@@ -96,7 +96,9 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     city: pickedPlace!.addressComponents![0].name,
-                    maxConsumption: nil
+                    maxConsumption: nil,
+                    minHP: nil,
+                    gearshift: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
                 self.searchModel.getFilteredOfferings(filter: newFilter, completion: searchResultsViewController.receiveOfferings)
