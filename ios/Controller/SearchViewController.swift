@@ -19,7 +19,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     @IBOutlet weak var searchButton: UIButton!
     
     let occupantNumbers = Array(1...8)
-    let searchModel:SearchModel = SearchModel()
     var pickedPlace:GMSPlace?
     
     override func viewDidLoad() {
@@ -101,8 +100,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     gearshift: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
-                // TODO: Is it safe to assume that the search results view already exists when this callback fires?
-                self.searchModel.getFilteredOfferings(filter: newFilter, completion: searchResultsViewController.receiveOfferings)
             }
         }
     }

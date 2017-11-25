@@ -12,6 +12,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var offerings:[Offering] = []
     var searchFilter:Filter?
+    let searchModel:SearchModel = SearchModel()
     @IBOutlet weak var searchResultsTable: UITableView!
     
     override func viewDidLoad() {
@@ -19,7 +20,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
 
-        // Do any additional setup after loading the view.
+        self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
     }
 
     override func didReceiveMemoryWarning() {
