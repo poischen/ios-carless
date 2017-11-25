@@ -97,7 +97,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     city: pickedPlace!.addressComponents![0].name,
                     maxConsumption: nil,
                     minHP: nil,
-                    gearshift: nil
+                    gearshift: nil,
+                    brands: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
             }

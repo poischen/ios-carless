@@ -45,6 +45,11 @@ class SearchModel {
                 return gearshift.contains {$0.name == offering.gear}
             })
         }
+        if let brands = filter.brands {
+            filterFunctions.append({offering in
+                return brands.contains {$0.name == offering.brand}
+            })
+        }
         return filterFunctions
     }
     

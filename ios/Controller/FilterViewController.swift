@@ -227,10 +227,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if var currentSearchFilter = self.searchFilter {
                     currentSearchFilter.maxConsumption = Int(self.maxConsumptionSlider.value)
                     currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
-                    currentSearchFilter.gearshifts = self.gears.filter({gear in return gear.isSelected})
-                    print(currentSearchFilter.gearshifts)
+                    currentSearchFilter.gearshifts = self.gears.filter {return $0.isSelected}
+                    currentSearchFilter.brands = self.brands.filter {return $0.isSelected}
                     searchResultsController.searchFilter = currentSearchFilter
-                    self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
+                    //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }
             }
         }
