@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Engine {
+class Fuel {
     let name: String
     var isSelected: Bool
     

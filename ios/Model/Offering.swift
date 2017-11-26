@@ -19,8 +19,9 @@ class Offering {
     let pictureURL: String
     let seats: Int
     let type: String
+    let featuresIDs: [Int]?
     
-    init(brand: String, consumption: Int, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String) {
+    init(brand: String, consumption: Int, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String, featuresIDs: [Int]?) {
         self.brand = brand
         self.consumption = consumption
         self.description = description
@@ -30,9 +31,9 @@ class Offering {
         self.latitude = latitude
         self.longitude = longitude
         self.pictureURL = pictureURL
-        print(pictureURL)
         self.seats = seats
         self.type = type
         self.location = location
+        self.featuresIDs = featuresIDs
     }
 }

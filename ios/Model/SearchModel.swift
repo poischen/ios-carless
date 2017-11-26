@@ -50,6 +50,11 @@ class SearchModel {
                 return brands.contains {$0.name == offering.brand}
             })
         }
+        if let engines = filter.engines {
+            filterFunctions.append({offering in
+                return engines.contains {$0.name == offering.fuel}
+            })
+        }
         return filterFunctions
     }
     

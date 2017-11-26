@@ -20,20 +20,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var minHorsepowerSlider: UISlider!
     
     @IBOutlet weak var pickExtraTable: UITableView!
-    @IBOutlet weak var pickEngineTable: UITableView!
+    @IBOutlet weak var pickFuelTable: UITableView!
     @IBOutlet weak var pickBrandTable: UITableView!
     @IBOutlet weak var pickGearTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
-    var extras = [Feature]()
+    var features = [Feature]()
     
-    var engines = [
-        Engine(name: "diesel"),
-        Engine(name: "benzine"),
-        Engine(name: "electric"),
-        Engine(name: "hybrid"),
-        Engine(name: "natural gas"),
-        Engine(name: "hydrogen")
+    var fuel = [
+        Fuel(name: "diesel"),
+        Fuel(name: "benzine"),
+        Fuel(name: "electric"),
+        Fuel(name: "hybrid"),
+        Fuel(name: "natural gas"),
+        Fuel(name: "hydrogen")
     ] // TODO: move to better location
     
     var brands:[Brand] = [
@@ -53,8 +53,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        pickEngineTable.delegate = self
-        pickEngineTable.dataSource = self
+        pickFuelTable.delegate = self
+        pickFuelTable.dataSource = self
         pickExtraTable.delegate = self
         pickExtraTable.dataSource = self
         pickBrandTable.delegate = self
@@ -62,13 +62,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickGearTable.dataSource = self
         pickGearTable.delegate = self
         
-        notificationCenter.addObserver(
+        /* notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
             object:nil,
             queue:nil,
-            using:receiveExtras
-        )
-        storageAPI.getExtras()
+            using:receiveFeatures
+        )*/
+        storageAPI.getFeatures(completion: self.receiveFeatures)
         
         // TESTING
     }
@@ -109,9 +109,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         switch tableView {
         case self.pickExtraTable:
-            count = extras.count
-        case self.pickEngineTable:
-            count = engines.count
+            count = features.count
+        case self.pickFuelTable:
+            count = fuel.count
         case self.pickBrandTable:
             count = brands.count
         case self.pickGearTable:
@@ -133,13 +133,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         switch tableView {
         case self.pickExtraTable:
             let cellIdentifier = "ExtraTableViewCell"
-            let extra = extras[indexPath.row]
+            let extra = self.features[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = extra.name
             returnCell = cell
-        case self.pickEngineTable:
+        case self.pickFuelTable:
             let cellIdentifier = "EngineTableViewCell"
-            let engine = engines[indexPath.row]
+            let engine = fuel[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = engine.name
             returnCell = cell
@@ -171,20 +171,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         switch tableView {
         case self.pickExtraTable:
-            let extra = self.extras[indexPath.row]
-            if (extra.isSelected){
+            let feature = self.features[indexPath.row]
+            if (feature.isSelected){
                 pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
             } else {
                 pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
-            extra.toggleSelected()
-        case self.pickEngineTable:
-            let engine = self.engines[indexPath.row]
+            feature.toggleSelected()
+        case self.pickFuelTable:
+            let engine = self.fuel[indexPath.row]
             // TODO: avoid code duplication here
             if (engine.isSelected){
-                pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+                pickFuelTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
             } else {
-                pickEngineTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+                pickFuelTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             engine.toggleSelected()
         case self.pickBrandTable:
@@ -209,14 +209,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     // TODO: also hardcode the extras as it's unlikely that new ones will be created?
-    func receiveExtras(notification: Notification) -> Void {
-        guard let userInfo = notification.userInfo,
-            let receivedExtras  = userInfo["extras"] as? [Feature] else {
-                print("No userInfo found in notification")
-                return
-        }
-        
-        self.extras = receivedExtras
+    func receiveFeatures(features: [Feature]) -> Void {
+        self.features = features
         self.pickExtraTable.reloadData()
     }
     
@@ -229,6 +223,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
                     currentSearchFilter.gearshifts = self.gears.filter {return $0.isSelected}
                     currentSearchFilter.brands = self.brands.filter {return $0.isSelected}
+                    currentSearchFilter.engines = self.fuel.filter {return $0.isSelected}
                     searchResultsController.searchFilter = currentSearchFilter
                     //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }
