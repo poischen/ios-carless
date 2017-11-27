@@ -55,7 +55,22 @@ class SearchModel {
                 return engines.contains {$0.name == offering.fuel}
             })
         }
+        if let featureIDs = filter.featureIDs {
+            filterFunctions.append({offering in
+                if let offeringFeatureIDs = offering.featuresIDs {
+                    return self.arrayContainsArray(array: offeringFeatureIDs, shouldContain: featureIDs)
+                } else {
+                    // offering has no features -> can't match
+                    return false
+                }
+            })
+        }
         return filterFunctions
+    }
+    
+    func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
+        let selfSet = Set(array)
+        return !shouldContain.contains { !selfSet.contains($0) }
     }
     
 }

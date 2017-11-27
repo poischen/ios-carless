@@ -224,6 +224,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     currentSearchFilter.gearshifts = self.gears.filter {return $0.isSelected}
                     currentSearchFilter.brands = self.brands.filter {return $0.isSelected}
                     currentSearchFilter.engines = self.fuel.filter {return $0.isSelected}
+                    currentSearchFilter.featureIDs = self.features.reduce([]) {result, feature in
+                        if (feature.isSelected){
+                            return result! + [feature.id]
+                        } else {
+                            return result
+                        }
+                    }
                     searchResultsController.searchFilter = currentSearchFilter
                     //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }

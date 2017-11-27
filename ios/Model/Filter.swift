@@ -17,8 +17,9 @@ struct Filter {
     var gearshifts: [Gear]?
     var brands: [Brand]?
     var engines: [Fuel]?
+    var featureIDs: [Int]?
     
-    init(maxPrice: Int?, minSeats: Int?, city: String?, maxConsumption: Int?, minHP: Int?, gearshift: [Gear]?, brands: [Brand]?, engines: [Fuel]?) {
+    init(maxPrice: Int?, minSeats: Int?, city: String?, maxConsumption: Int?, minHP: Int?, gearshift: [Gear]?, brands: [Brand]?, engines: [Fuel]?, featureIDs: [Int]?) {
         self.maxPrice = maxPrice
         self.minSeats = minSeats
         self.city = city

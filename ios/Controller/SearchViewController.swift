@@ -99,7 +99,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     minHP: nil,
                     gearshift: nil,
                     brands: nil,
-                    engines: nil
+                    engines: nil,
+                    featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
             }
