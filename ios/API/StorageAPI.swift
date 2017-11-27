@@ -40,7 +40,8 @@ final class StorageAPI {
                 for (rawOfferingID, rawOfferingData) in receivedData {
                     let offeringData:NSDictionary = rawOfferingData as! NSDictionary
                     // TODO: Shorthand for this?
-                    guard
+                    // TODO: Which way of error handling to prefer here?
+                    /*guard
                         let offeringID:Int = rawOfferingID as? Int,
                         let offeringBrand:String = offeringData["brand"] as? String,
                         let offeringConsumption = offeringData["consumption"] as? Int,
@@ -54,9 +55,22 @@ final class StorageAPI {
                         let offeringPictureURL = offeringData["picture"] as? String,
                         let offeringSeats = offeringData["seats"] as? Int,
                         let offeringType = offeringData["type"] as? String else {
-                            print("error")
-                            return
-                    }
+                            print("error in constructOfferings")
+                            return*/
+                    
+                    let offeringID:Int = Int(rawOfferingID as! String)!
+                    let offeringBrand:String = offeringData["brand"] as! String
+                    let offeringConsumption = offeringData["consumption"] as! Int
+                    let offeringDescription = offeringData["description"] as! String
+                    let offeringFuel = offeringData["fuel"] as! String
+                    let offeringGear = offeringData["gear"] as! String
+                    let offeringHP = offeringData["hp"] as! Int
+                    let offeringLatitude = offeringData["latitude"] as! Float
+                    let offeringLocation = offeringData["location"] as! String
+                    let offeringLongitude = offeringData["longitude"] as! Float
+                    let offeringPictureURL = offeringData["picture"] as! String
+                    let offeringSeats = offeringData["seats"] as! Int
+                    let offeringType = offeringData["type"] as! String
                     
                     let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
                     // TODO: What to do if an offering has no features?
@@ -121,10 +135,12 @@ final class StorageAPI {
                 }
                 if (resultOfferingsFeatures[offeringID] != nil){
                     // not the first feature -> add to feature list for this offering
-                    resultOfferingsFeatures[offeringID]!.append(featureID)
+                    let prevOfferingFeatures = resultOfferingsFeatures[offeringID]!
+                    let newOfferingFeatures = prevOfferingFeatures + [featureID]
+                    resultOfferingsFeatures[offeringID] = newOfferingFeatures
                 } else {
                     // first feature for this offering -> initialise array
-                    resultOfferingsFeatures[offeringID]! = [featureID]
+                    resultOfferingsFeatures[offeringID] = [featureID]
                 }
             }
             completion(resultOfferingsFeatures)
