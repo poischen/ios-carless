@@ -20,6 +20,11 @@
 		2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97B1FA8AA2D0013D67E /* Profil.png */; };
 		2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */; };
 		2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */; };
+		778099381FCF16FA00AAD783 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778099371FCF16FA00AAD783 /* ChatViewController.swift */; };
+		7780993A1FCF2A1200AAD783 /* DBProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778099391FCF2A1100AAD783 /* DBProvider.swift */; };
+		7780993C1FCF2BC300AAD783 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780993B1FCF2BC300AAD783 /* Constants.swift */; };
+		7780993E1FCF392A00AAD783 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780993D1FCF392A00AAD783 /* User.swift */; };
+		77A1D79A1FCB27B800CC8090 /* ChatStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */; };
 		98A0BF636A32E59CD6D576BF /* Pods_iosUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8616A41DB9F1CCF915A5821D /* Pods_iosUITests.framework */; };
 		F86E4277C19ADAD120D813E9 /* Pods_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A7B27F1D2E2B54D94B6B03 /* Pods_iosTests.framework */; };
 		FC3950E4A25D7C3533839C03 /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAB4EE63B31075B3AFDEC81 /* Pods_ios.framework */; };
@@ -64,6 +69,11 @@
 		2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HomePicture.jpg; sourceTree = "<group>"; };
 		2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hintergrund.jpg; sourceTree = "<group>"; };
 		3B72885CBF880C627F6B01F6 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
+		778099371FCF16FA00AAD783 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		778099391FCF2A1100AAD783 /* DBProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBProvider.swift; sourceTree = "<group>"; };
+		7780993B1FCF2BC300AAD783 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7780993D1FCF392A00AAD783 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatStoryboard.storyboard; sourceTree = "<group>"; };
 		8616A41DB9F1CCF915A5821D /* Pods_iosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA968DE14609EF2A73A6C38 /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		8EAB4EE63B31075B3AFDEC81 /* Pods_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +136,9 @@
 		2AD4E9461FA8A2250013D67E /* ios */ = {
 			isa = PBXGroup;
 			children = (
+				778099361FCF161A00AAD783 /* Controller */,
+				778099351FCF161300AAD783 /* View */,
+				778099341FCF160A00AAD783 /* Model */,
 				2AD4E97A1FA8AA100013D67E /* PictureFiles */,
 				2AD4E9471FA8A2250013D67E /* AppDelegate.swift */,
 				2AD4E9491FA8A2250013D67E /* ViewController.swift */,
@@ -136,6 +149,8 @@
 				2AD4E9781FA8A5AF0013D67E /* GoogleService-Info.plist */,
 				2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */,
 				2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */,
+				77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */,
+				778099391FCF2A1100AAD783 /* DBProvider.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -166,6 +181,30 @@
 				2AD4E97B1FA8AA2D0013D67E /* Profil.png */,
 			);
 			path = PictureFiles;
+			sourceTree = "<group>";
+		};
+		778099341FCF160A00AAD783 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7780993B1FCF2BC300AAD783 /* Constants.swift */,
+				7780993D1FCF392A00AAD783 /* User.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		778099351FCF161300AAD783 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		778099361FCF161A00AAD783 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				778099371FCF16FA00AAD783 /* ChatViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 		7ECCD950BF8E10D14DF6A571 /* Frameworks */ = {
@@ -308,6 +347,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */,
+				77A1D79A1FCB27B800CC8090 /* ChatStoryboard.storyboard in Resources */,
 				2AD4E9551FA8A2250013D67E /* LaunchScreen.storyboard in Resources */,
 				2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
@@ -421,12 +461,16 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQMessagesViewController/JSQMessagesViewController.framework",
+				"${BUILT_PRODUCTS_DIR}/JSQSystemSoundPlayer/JSQSystemSoundPlayer.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQMessagesViewController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JSQSystemSoundPlayer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,6 +539,10 @@
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
+				778099381FCF16FA00AAD783 /* ChatViewController.swift in Sources */,
+				7780993E1FCF392A00AAD783 /* User.swift in Sources */,
+				7780993C1FCF2BC300AAD783 /* Constants.swift in Sources */,
+				7780993A1FCF2A1200AAD783 /* DBProvider.swift in Sources */,
 				2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
