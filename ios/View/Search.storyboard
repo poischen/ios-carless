@@ -95,11 +95,11 @@
                     </view>
                     <navigationItem key="navigationItem" title="Find your ride" id="sNO-V5-iSd"/>
                     <connections>
-                        <outlet property="endTimePicker" destination="xui-St-a0Z" id="mkN-YJ-d2l"/>
+                        <outlet property="endTimePicker" destination="xui-St-a0Z" id="jem-Qm-1dh"/>
                         <outlet property="nameLabel" destination="dyB-bf-rp1" id="9Ln-Xa-OrM"/>
                         <outlet property="occupantsPicker" destination="XbY-N5-yO1" id="EjF-pi-l1V"/>
                         <outlet property="searchButton" destination="JM7-CF-QwS" id="Tvp-B4-Iua"/>
-                        <outlet property="startTimePicker" destination="aWz-dc-kfg" id="t1U-Ad-6gE"/>
+                        <outlet property="startTimePicker" destination="aWz-dc-kfg" id="ocP-sh-0lv"/>
                         <segue destination="Jrx-et-awz" kind="show" identifier="showSearchResults" id="4fO-Ws-Ssu"/>
                     </connections>
                 </viewController>
@@ -548,6 +548,6 @@
         <image name="Cars" width="250" height="250"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AsX-Ef-7wB"/>
+        <segue reference="4fO-Ws-Ssu"/>
     </inferredMetricsTieBreakers>
 </document>

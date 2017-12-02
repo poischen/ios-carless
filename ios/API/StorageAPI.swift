@@ -158,15 +158,20 @@ final class StorageAPI {
             var resultRentings:[Renting] = [Renting]()
             for (rawRentingID, rawRentingData) in receivedData {
                 let rentingData:NSDictionary = rawRentingData as! NSDictionary
-                guard
+                /* guard
                     let rentingID:Int = rawRentingID as? Int,
                     let rentingStartDateString:String = rentingData["startDate"] as? String,
                     let rentingEndDateString:String = rentingData["endDate"] as? String,
                     let rentingUserID:String = rentingData["userId"] as? String,
                     let rentingOfferingID:Int = rentingData["inseratId"] as? Int else {
-                        print("error")
+                        print("error in getRentings")
                         return
-                }
+                } */
+                let rentingID:Int = Int(String(describing: rawRentingID))!
+                let rentingStartDateString:String = rentingData["startDate"] as! String
+                let rentingEndDateString:String = rentingData["endDate"] as! String
+                let rentingUserID:String = rentingData["userId"] as! String
+                let rentingOfferingID:Int = rentingData["inseratId"] as! Int
                 let newRenting = Renting(id: rentingID, inseratID: rentingOfferingID, userID: rentingUserID, startDate: self.stringToDate(dateString: rentingStartDateString), endDate: self.stringToDate(dateString: rentingEndDateString))
                 resultRentings.append(newRenting)
             }
@@ -177,9 +182,10 @@ final class StorageAPI {
     }
     
     func stringToDate(dateString: String) -> Date {
-        let formatter = DateFormatter()
+        var formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"
-        return formatter.date(from: dateString)!
+        let newDate:Date =  formatter.date(from: dateString)!
+        return newDate
     }
 }
 

@@ -12,6 +12,7 @@ import GooglePlacePicker
 
 class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,  GMSAutocompleteViewControllerDelegate {
     
+    
     @IBOutlet weak var startTimePicker: UIDatePicker!
     @IBOutlet weak var endTimePicker: UIDatePicker!
     @IBOutlet weak var occupantsPicker: UIPickerView!
@@ -25,6 +26,10 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         super.viewDidLoad()
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
+        
+        // only make dates in the future pickable (from tomorrow on, one day = 86400 seconds)
+        startTimePicker.minimumDate = Date() + 86400
+        endTimePicker.minimumDate = Date() + 86400
     }
     
     override func didReceiveMemoryWarning() {
@@ -101,7 +106,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     brands: nil,
                     engines: nil,
                     featureIDs: nil,
-                    dateInterval: nil
+                    dateInterval: DateInterval(start: startTimePicker.date, end: endTimePicker.date)
                 )
                 searchResultsViewController.searchFilter = newFilter
             }

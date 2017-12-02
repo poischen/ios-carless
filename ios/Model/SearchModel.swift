@@ -18,15 +18,17 @@ class SearchModel {
     }
     
     func getFilteredOfferings(filter: Filter, completion: @escaping (_ offerings: [Offering]) -> Void) {
-        storageAPI.getOfferings(completion: {offerings in
-            let filteredOfferings = self.filterToFilterFunctions(filter: filter).reduce(offerings) { accu, currFilter in
-                return accu.filter(currFilter)
-            }
-            completion(filteredOfferings)
+        self.storageAPI.getOfferings(completion: {offerings in
+            self.storageAPI.getRentings(completion: {rentings in
+                let filteredOfferings = self.filterToFilterFunctions(filter: filter, rentings: rentings).reduce(offerings) { accu, currFilter in
+                    return accu.filter(currFilter)
+                }
+                completion(filteredOfferings)
+            })
         });
     }
     
-    func filterToFilterFunctions(filter: Filter) -> [(_ offering: Offering) -> Bool] {
+    func filterToFilterFunctions(filter: Filter, rentings: [Renting]) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
         if let minSeats = filter.minSeats {
             filterFunctions.append({$0.seats >= minSeats})
@@ -65,6 +67,11 @@ class SearchModel {
                 }
             })
         }
+        if let desiredDateInterval = filter.dateInterval {
+            filterFunctions.append({offering in
+                self.filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desiredDateInterval)
+            })
+        }
         return filterFunctions
     }
     
@@ -101,6 +108,7 @@ class SearchModel {
         })
     }
     
+    // TODO: remove
     func testFilterOfferingByDate(){
         // TESTING
         let offering = Offering(id: 1, brand: "BMW", consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil);
