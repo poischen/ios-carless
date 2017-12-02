@@ -45,7 +45,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.seatsLabel.text = String(offering.seats) + " seats"
         cell.gearshiftLabel.text = offering.gear
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
-        //cell.locationLabel.text = offering.location
+        // cell.locationLabel.text = offering.location
         // TODO: make location and price dynamic
         cell.locationLabel.text = offering.location
         cell.priceLabel.text = "10€ per day"

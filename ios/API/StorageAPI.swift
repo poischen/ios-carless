@@ -57,22 +57,25 @@ final class StorageAPI {
                         let offeringType = offeringData["type"] as? String else {
                             print("error in constructOfferings")
                             return*/
+                    guard
+                        let offeringID:Int = Int(rawOfferingID as! String) as? Int,
+                        let offeringBrand:String = offeringData["brand"] as? String,
+                        let offeringConsumption = offeringData["consumption"] as? Int,
+                        let offeringDescription = offeringData["description"] as? String,
+                        let offeringFuel = offeringData["fuel"] as? String,
+                        let offeringGear = offeringData["gear"] as? String,
+                        let offeringHP = offeringData["hp"] as? Int,
+                        let offeringLatitude = offeringData["latitude"] as? Float,
+                        let offeringLocation = offeringData["location"] as? String,
+                        let offeringLongitude = offeringData["longitude"] as? Float,
+                        let offeringPictureURL = offeringData["picture"] as? String,
+                        let offeringSeats = offeringData["seats"] as? Int,
+                        let offeringType = offeringData["type"] as? String else {
+                            print("error in constructOfferings")
+                            return
+                    }
                     
-                    let offeringID:Int = Int(rawOfferingID as! String)!
-                    let offeringBrand:String = offeringData["brand"] as! String
-                    let offeringConsumption = offeringData["consumption"] as! Int
-                    let offeringDescription = offeringData["description"] as! String
-                    let offeringFuel = offeringData["fuel"] as! String
-                    let offeringGear = offeringData["gear"] as! String
-                    let offeringHP = offeringData["hp"] as! Int
-                    let offeringLatitude = offeringData["latitude"] as! Float
-                    let offeringLocation = offeringData["location"] as! String
-                    let offeringLongitude = offeringData["longitude"] as! Float
-                    let offeringPictureURL = offeringData["picture"] as! String
-                    let offeringSeats = offeringData["seats"] as! Int
-                    let offeringType = offeringData["type"] as! String
-                    
-                    let newOffering:Offering = Offering(brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
+                    let newOffering:Offering = Offering(id: offeringID, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
                     // TODO: What to do if an offering has no features?
                     resultOfferings.append(newOffering)
                 }
@@ -147,6 +150,36 @@ final class StorageAPI {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.fireBaseDBAccess.child("renting").observeSingleEvent(of: .value, with: { (snapshot) in
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            var resultRentings:[Renting] = [Renting]()
+            for (rawRentingID, rawRentingData) in receivedData {
+                let rentingData:NSDictionary = rawRentingData as! NSDictionary
+                guard
+                    let rentingID:Int = rawRentingID as? Int,
+                    let rentingStartDateString:String = rentingData["startDate"] as? String,
+                    let rentingEndDateString:String = rentingData["endDate"] as? String,
+                    let rentingUserID:String = rentingData["userId"] as? String,
+                    let rentingOfferingID:Int = rentingData["inseratId"] as? Int else {
+                        print("error")
+                        return
+                }
+                let newRenting = Renting(id: rentingID, inseratID: rentingOfferingID, userID: rentingUserID, startDate: self.stringToDate(dateString: rentingStartDateString), endDate: self.stringToDate(dateString: rentingEndDateString))
+                resultRentings.append(newRenting)
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func stringToDate(dateString: String) -> Date {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM-dd-yyyy"
+        return formatter.date(from: dateString)!
     }
 }
 
