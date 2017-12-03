@@ -63,14 +63,17 @@ class DBProvider {
     }
     
     
-    func getUsers(){
+    func getUsers() {
         
+        //watching, observing database
         //see all the values in Users Reference
         usersRef.observeSingleEvent(of: DataEventType.value){
             (snapshot: DataSnapshot) in
+           
+            //empty array of users
             var users = [User]();
             
-            //testing if it is NSDictionary
+            //testing if value is type of NSDictionary
             if let theUsers = snapshot.value as? NSDictionary {
                 
                 //filter for every key, value pair inside of the dictionary 
@@ -78,10 +81,13 @@ class DBProvider {
                     
                     if let userData = value as? NSDictionary{
                         
+                        // fetch the data as String
                         if let email = userData[Constants.EMAIL] as? String {
                             
                             let id = key as! String;
                             let newUser = User(id: id, name: email);
+                            
+                            //append it in the empy array
                             users.append(newUser);
                         }
                     }

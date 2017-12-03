@@ -13,16 +13,21 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet weak var myTV: UITableView!
     
+    private let CHAT_SEGUE = "ChatSegue";
+    
     //Array of Users to store all of the users
     private var users = [User]();
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Fetch Data has to know that we have confirmed to the protocol
+        //chatVC deals with the function dataReceived(); 
         DBProvider.Instance.delegate = self;
         DBProvider.Instance.getUsers();
     }
     
+    //what is done when data is received
     func dataReceived(users: [User]) {
         self.users = users;
         
@@ -46,10 +51,16 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         return cell;
     }
+    
+    //open chat window
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: CHAT_SEGUE, sender: nil);
+    }
 
     //go back to the View Controller before (there's none for now)
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil);
     }
+    
     
 }

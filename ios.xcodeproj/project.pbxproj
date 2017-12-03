@@ -25,6 +25,7 @@
 		7780993C1FCF2BC300AAD783 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780993B1FCF2BC300AAD783 /* Constants.swift */; };
 		7780993E1FCF392A00AAD783 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780993D1FCF392A00AAD783 /* User.swift */; };
 		77A1D79A1FCB27B800CC8090 /* ChatStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */; };
+		77BA52231FD4399B0067D3E6 /* ChatWindowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77BA52221FD4399B0067D3E6 /* ChatWindowVC.swift */; };
 		98A0BF636A32E59CD6D576BF /* Pods_iosUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8616A41DB9F1CCF915A5821D /* Pods_iosUITests.framework */; };
 		F86E4277C19ADAD120D813E9 /* Pods_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A7B27F1D2E2B54D94B6B03 /* Pods_iosTests.framework */; };
 		FC3950E4A25D7C3533839C03 /* Pods_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8EAB4EE63B31075B3AFDEC81 /* Pods_ios.framework */; };
@@ -74,6 +75,7 @@
 		7780993B1FCF2BC300AAD783 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		7780993D1FCF392A00AAD783 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatStoryboard.storyboard; sourceTree = "<group>"; };
+		77BA52221FD4399B0067D3E6 /* ChatWindowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatWindowVC.swift; sourceTree = "<group>"; };
 		8616A41DB9F1CCF915A5821D /* Pods_iosUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iosUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DA968DE14609EF2A73A6C38 /* Pods-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-iosTests/Pods-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		8EAB4EE63B31075B3AFDEC81 /* Pods_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -203,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				778099371FCF16FA00AAD783 /* ChatViewController.swift */,
+				77BA52221FD4399B0067D3E6 /* ChatWindowVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -544,6 +547,7 @@
 				7780993C1FCF2BC300AAD783 /* Constants.swift in Sources */,
 				7780993A1FCF2A1200AAD783 /* DBProvider.swift in Sources */,
 				2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */,
+				77BA52231FD4399B0067D3E6 /* ChatWindowVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -711,7 +715,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 998SP95RH3;
+				DEVELOPMENT_TEAM = TRZFF8P7QE;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
@@ -727,7 +731,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 998SP95RH3;
+				DEVELOPMENT_TEAM = TRZFF8P7QE;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
