@@ -18,9 +18,19 @@ final class StorageAPI {
     private let fireBaseDBAccess: DatabaseReference!
     private let notificationCenter: NotificationCenter
     
+    // DB references
+    private let offeringsDBReference: DatabaseReference
+    private let rentingsDBReference: DatabaseReference
+    private let featuresDBReference: DatabaseReference
+    private let offeringsFeaturesDBReference: DatabaseReference
+    
     private init() {
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
+        self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
+        self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
+        self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
+        self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -34,31 +44,15 @@ final class StorageAPI {
     // TODO: only call when necessary and not (for some reason) when the app starts
     func constructOfferings(features: [Feature], offeringsFeatures: [Int: [Int]], completion: @escaping (_ offerings: [Offering]) -> Void){
         // TODO: only get offerings that match certain criteria
-            self.fireBaseDBAccess.child("inserat").observeSingleEvent(of: .value, with: {snapshot in
+            self.offeringsDBReference.observeSingleEvent(of: .value, with: {snapshot in
                 let receivedData = snapshot.valueInExportFormat() as! NSDictionary
                 var resultOfferings:[Offering] = [Offering]()
                 for (rawOfferingID, rawOfferingData) in receivedData {
                     let offeringData:NSDictionary = rawOfferingData as! NSDictionary
                     // TODO: Shorthand for this?
                     // TODO: Which way of error handling to prefer here?
-                    /*guard
-                        let offeringID:Int = rawOfferingID as? Int,
-                        let offeringBrand:String = offeringData["brand"] as? String,
-                        let offeringConsumption = offeringData["consumption"] as? Int,
-                        let offeringDescription = offeringData["description"] as? String,
-                        let offeringFuel = offeringData["fuel"] as? String,
-                        let offeringGear = offeringData["gear"] as? String,
-                        let offeringHP = offeringData["hp"] as? Int,
-                        let offeringLatitude = offeringData["latitude"] as? Float,
-                        let offeringLocation = offeringData["location"] as? String,
-                        let offeringLongitude = offeringData["longitude"] as? Float,
-                        let offeringPictureURL = offeringData["picture"] as? String,
-                        let offeringSeats = offeringData["seats"] as? Int,
-                        let offeringType = offeringData["type"] as? String else {
-                            print("error in constructOfferings")
-                            return*/
                     guard
-                        let offeringID:Int = Int(rawOfferingID as! String) as? Int,
+                        let offeringID:String = rawOfferingID as? String,
                         let offeringBasePrice = offeringData["price"] as? Int,
                         let offeringBrand:String = offeringData["brand"] as? String,
                         let offeringConsumption = offeringData["consumption"] as? Int,
@@ -76,56 +70,39 @@ final class StorageAPI {
                             return
                     }
                     
-                    let newOffering:Offering = Offering(id: offeringID, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
+                    let newOffering:Offering = Offering(id: Int(offeringID)!, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!])
                     // TODO: What to do if an offering has no features?
                     resultOfferings.append(newOffering)
                 }
                 completion(resultOfferings)
-                /* let filteredOfferings =
-                 self.notificationCenter.post(
-                 name: Notification.Name(rawValue:"sendFilteredCars"),
-                 object: nil,
-                 userInfo: ["cars":filteredOfferings]
-                 ) */
             }) { (error) in
                 print(error.localizedDescription)
             }
     }
     
-    func filterOfferings(filter: Filter) {
-        // TODO: implement
-        /* let filteredOfferings =
-        self.notificationCenter.post(
-            name: Notification.Name(rawValue:"sendFilteredCars"),
-            object: nil,
-            userInfo: ["cars":filteredOfferings]
-        ) */
-    }
-    
     func getFeatures(completion: @escaping (_ features: [Feature]) -> Void){
-        self.fireBaseDBAccess.child("features").observeSingleEvent(of: .value, with: { (snapshot) in
+        self.featuresDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultExtras:[Feature] = [Feature]()
             for (featureIDRaw, featureNameRaw) in receivedData {
-                let featureName:String = featureNameRaw as! String
-                let featureID:String = featureIDRaw as! String // TODO: solve the conversion problem here
+                guard
+                    let featureName:String = featureNameRaw as? String,
+                    let featureID:String = featureIDRaw as? String else { // TODO: solve the conversion problem here
+                        print("error in getFeatures")
+                        return
+                }
                 
                 let newFeature:Feature = Feature(name: featureName, id: Int(featureID)!)
                 resultExtras.append(newFeature)
             }
             completion(resultExtras)
-            /* self.notificationCenter.post(
-                name: Notification.Name(rawValue:"sendExtras"),
-                object: nil,
-                userInfo: ["extras":resultExtras]
-            )*/
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
     func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [Int: [Int]]) -> Void){
-        self.fireBaseDBAccess.child("inserat_features").observeSingleEvent(of: .value, with: { (snapshot) in
+        self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultOfferingsFeatures:[Int: [Int]] = [Int: [Int]]() // Map with offering ID as key and array of feature IDs a value
             for (_, associationRaw) in receivedData {
@@ -154,26 +131,21 @@ final class StorageAPI {
     }
     
     func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
-        self.fireBaseDBAccess.child("renting").observeSingleEvent(of: .value, with: { (snapshot) in
+        self.rentingsDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultRentings:[Renting] = [Renting]()
             for (rawRentingID, rawRentingData) in receivedData {
                 let rentingData:NSDictionary = rawRentingData as! NSDictionary
-                /* guard
-                    let rentingID:Int = rawRentingID as? Int,
+                guard
+                    let rentingID:String = rawRentingID as? String,
                     let rentingStartDateString:String = rentingData["startDate"] as? String,
                     let rentingEndDateString:String = rentingData["endDate"] as? String,
                     let rentingUserID:String = rentingData["userId"] as? String,
                     let rentingOfferingID:Int = rentingData["inseratId"] as? Int else {
                         print("error in getRentings")
                         return
-                } */
-                let rentingID:Int = Int(String(describing: rawRentingID))!
-                let rentingStartDateString:String = rentingData["startDate"] as! String
-                let rentingEndDateString:String = rentingData["endDate"] as! String
-                let rentingUserID:String = rentingData["userId"] as! String
-                let rentingOfferingID:Int = rentingData["inseratId"] as! Int
-                let newRenting = Renting(id: rentingID, inseratID: rentingOfferingID, userID: rentingUserID, startDate: self.stringToDate(dateString: rentingStartDateString), endDate: self.stringToDate(dateString: rentingEndDateString))
+                }
+                let newRenting = Renting(id: Int(rentingID)!, inseratID: rentingOfferingID, userID: rentingUserID, startDate: self.stringToDate(dateString: rentingStartDateString), endDate: self.stringToDate(dateString: rentingEndDateString))
                 resultRentings.append(newRenting)
             }
             completion(resultRentings)
