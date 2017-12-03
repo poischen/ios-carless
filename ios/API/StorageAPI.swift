@@ -51,21 +51,22 @@ final class StorageAPI {
                     let offeringData:NSDictionary = rawOfferingData as! NSDictionary
                     // TODO: Shorthand for this?
                     // TODO: Which way of error handling to prefer here?
+                    // TODO: necessary to get description from DB?
                     guard
                         let offeringID:String = rawOfferingID as? String,
-                        let offeringBasePrice = offeringData["price"] as? Int,
-                        let offeringBrand:String = offeringData["brand"] as? String,
-                        let offeringConsumption = offeringData["consumption"] as? Int,
-                        let offeringDescription = offeringData["description"] as? String,
-                        let offeringFuel = offeringData["fuel"] as? String,
-                        let offeringGear = offeringData["gear"] as? String,
-                        let offeringHP = offeringData["hp"] as? Int,
-                        let offeringLatitude = offeringData["latitude"] as? Float,
-                        let offeringLocation = offeringData["location"] as? String,
-                        let offeringLongitude = offeringData["longitude"] as? Float,
-                        let offeringPictureURL = offeringData["picture"] as? String,
-                        let offeringSeats = offeringData["seats"] as? Int,
-                        let offeringType = offeringData["type"] as? String else {
+                        let offeringBasePrice = offeringData[DBConstants.PROPERTY_NAME_OFFERING_PRICE] as? Int,
+                        let offeringBrand:String = offeringData[DBConstants.PROPERTY_NAME_OFFERING_BRAND] as? String,
+                        let offeringConsumption = offeringData[DBConstants.PROPERTY_NAME_OFFERING_CONSUMPTION] as? Int,
+                        let offeringDescription = offeringData[DBConstants.PROPERTY_NAME_OFFERING_DESCRIPTION] as? String,
+                        let offeringFuel = offeringData[DBConstants.PROPERTY_NAME_OFFERING_FUEL] as? String,
+                        let offeringGear = offeringData[DBConstants.PROPERTY_NAME_OFFERING_GEAR] as? String,
+                        let offeringHP = offeringData[DBConstants.PROPERTY_NAME_OFFERING_HORSEPOWER] as? Int,
+                        let offeringLatitude = offeringData[DBConstants.PROPERTY_NAME_OFFERING_LATITUDE] as? Float,
+                        let offeringLocation = offeringData[DBConstants.PROPERTY_NAME_OFFERING_CITY] as? String,
+                        let offeringLongitude = offeringData[DBConstants.PROPERTY_NAME_OFFERING_LONGITUDE] as? Float,
+                        let offeringPictureURL = offeringData[DBConstants.PROPERTY_NAME_OFFERING_PICTURE_URL] as? String,
+                        let offeringSeats = offeringData[DBConstants.PROPERTY_NAME_OFFERING_SEATS] as? Int,
+                        let offeringType = offeringData[DBConstants.PROPERTY_NAME_OFFERING_TYPE] as? String else {
                             print("error in constructOfferings")
                             return
                     }
@@ -109,8 +110,8 @@ final class StorageAPI {
                 let association:NSDictionary = associationRaw as! NSDictionary
                 // TODO: Shorthand for this?
                 guard
-                    let featureID:Int = association["feature"] as? Int,
-                    let offeringID:Int = association["inserat"] as? Int else {
+                    let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
+                    let offeringID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? Int else {
                         print("error")
                         return
                 }
@@ -138,10 +139,10 @@ final class StorageAPI {
                 let rentingData:NSDictionary = rawRentingData as! NSDictionary
                 guard
                     let rentingID:String = rawRentingID as? String,
-                    let rentingStartDateString:String = rentingData["startDate"] as? String,
-                    let rentingEndDateString:String = rentingData["endDate"] as? String,
-                    let rentingUserID:String = rentingData["userId"] as? String,
-                    let rentingOfferingID:Int = rentingData["inseratId"] as? Int else {
+                    let rentingStartDateString:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_START_DATE] as? String,
+                    let rentingEndDateString:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_END_DATE] as? String,
+                    let rentingUserID:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_USER_ID] as? String,
+                    let rentingOfferingID:Int = rentingData[DBConstants.PROPERTY_NAME_RENTING_OFFERING_ID] as? Int else {
                         print("error in getRentings")
                         return
                 }
