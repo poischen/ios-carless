@@ -31,6 +31,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func dataReceived(users: [User]) {
         self.users = users;
         
+        //get the name of current user
+        
+        
         myTV.reloadData();
     }
 
