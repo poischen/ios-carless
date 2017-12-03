@@ -184,7 +184,8 @@ final class StorageAPI {
     func stringToDate(dateString: String) -> Date {
         var formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"
-        let newDate:Date =  formatter.date(from: dateString)!
+        // adding one hour as the date formatter always parses the day before at 11 PM for some reason
+        let newDate:Date = formatter.date(from: dateString)! + 3600 // TODO: find different fix for this
         return newDate
     }
 }

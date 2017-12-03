@@ -23,6 +23,9 @@
                                 <date key="date" timeIntervalSinceReferenceDate="531171072.73155397">
                                     <!--2017-10-31 19:31:12 +0000-->
                                 </date>
+                                <connections>
+                                    <action selector="startTimeChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="0tr-CM-VkU"/>
+                                </connections>
                             </datePicker>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="xui-St-a0Z">
                                 <rect key="frame" x="45" y="327" width="284" height="88"/>

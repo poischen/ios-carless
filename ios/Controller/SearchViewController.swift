@@ -92,6 +92,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         
     }
     
+    @IBAction func startTimeChanged(_ sender: Any) {
+        // prevent the user from creating reverse date intervals
+        self.endTimePicker.minimumDate = self.startTimePicker.date
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
             // next screen: search results

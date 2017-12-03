@@ -30,6 +30,7 @@ class SearchModel {
     
     func filterToFilterFunctions(filter: Filter, rentings: [Renting]) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
+        // TODO: find most efficient order for filter functions
         if let minSeats = filter.minSeats {
             filterFunctions.append({$0.seats >= minSeats})
         }
