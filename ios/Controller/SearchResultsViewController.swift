@@ -48,7 +48,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // cell.locationLabel.text = offering.location
         // TODO: make location and price dynamic
         cell.locationLabel.text = offering.location
-        cell.priceLabel.text = "10€ per day"
+        cell.priceLabel.text = "from " + String(offering.basePrice) + "€ per day"
         print(offering.pictureURL)
         let url = URL(string: offering.pictureURL)
         let data = try? Data(contentsOf: url!)

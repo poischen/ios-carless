@@ -8,6 +8,7 @@
 
 class Offering {
     let id: Int
+    let basePrice: Int
     let brand: String
     let consumption: Int
     let description: String
@@ -22,7 +23,8 @@ class Offering {
     let type: String
     let featuresIDs: [Int]?
     
-    init(id: Int, brand: String, consumption: Int, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String, featuresIDs: [Int]?) {
+    init(id: Int, basePrice: Int, brand: String, consumption: Int, description: String, fuel: String, gear: String, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, seats: Int, type: String, featuresIDs: [Int]?) {
+        self.basePrice = basePrice
         self.id = id
         self.brand = brand
         self.consumption = consumption

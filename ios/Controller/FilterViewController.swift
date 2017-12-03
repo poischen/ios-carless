@@ -83,10 +83,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         maxPriceLabel.text = String(Int(maxPriceSlider.value)) + "€"
     }
     
-    @IBAction func maxDistanceChanged(_ sender: Any) {
-        maxDistanceLabel.text = String(Int(maxDistanceSlider.value)) + " km"
-    }
-    
     @IBAction func maxMileageChanged(_ sender: Any) {
         maxConsumptionLabel.text = String(Int(maxConsumptionSlider.value)) + "l/100km"
     }
@@ -231,6 +227,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             return result
                         }
                     }
+                    currentSearchFilter.maxPrice = Int(self.maxPriceSlider.value)
                     searchResultsController.searchFilter = currentSearchFilter
                     //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }

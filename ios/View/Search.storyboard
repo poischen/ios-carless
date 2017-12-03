@@ -149,7 +149,6 @@
                                                 <rect key="frame" x="22" y="169" width="321" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
-                                                    <action selector="maxDistanceChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="rb6-nh-fhZ"/>
                                                     <action selector="maxHorsepowerChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="67j-rR-7nU"/>
                                                 </connections>
                                             </slider>

@@ -59,6 +59,7 @@ final class StorageAPI {
                             return*/
                     guard
                         let offeringID:Int = Int(rawOfferingID as! String) as? Int,
+                        let offeringBasePrice = offeringData["price"] as? Int,
                         let offeringBrand:String = offeringData["brand"] as? String,
                         let offeringConsumption = offeringData["consumption"] as? Int,
                         let offeringDescription = offeringData["description"] as? String,
@@ -75,7 +76,7 @@ final class StorageAPI {
                             return
                     }
                     
-                    let newOffering:Offering = Offering(id: offeringID, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
+                    let newOffering:Offering = Offering(id: offeringID, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[offeringID])
                     // TODO: What to do if an offering has no features?
                     resultOfferings.append(newOffering)
                 }
