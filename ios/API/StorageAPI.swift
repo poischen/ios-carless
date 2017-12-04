@@ -23,6 +23,7 @@ final class StorageAPI {
     private let rentingsDBReference: DatabaseReference
     private let featuresDBReference: DatabaseReference
     private let offeringsFeaturesDBReference: DatabaseReference
+    private let vehicleTypesDBReference: DatabaseReference
     
     private init() {
         fireBaseDBAccess = Database.database().reference()
@@ -31,6 +32,7 @@ final class StorageAPI {
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
+        self.vehicleTypesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_VEHICLE_TYPES)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -150,6 +152,27 @@ final class StorageAPI {
                 resultRentings.append(newRenting)
             }
             completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getVehicleTypes(completion: @escaping (_ vehicleTypes: [VehicleType]) -> Void){
+        self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            var resultVehicleTypes:[VehicleType] = [VehicleType]()
+            for (vehicleTypeIDRaw, featureNameRaw) in receivedData {
+                guard
+                    let featureName:String = featureNameRaw as? String,
+                    let featureID:String = featureIDRaw as? String else { // TODO: solve the conversion problem here
+                        print("error in getFeatures")
+                        return
+                }
+                
+                let newFeature:Feature = Feature(name: featureName, id: Int(featureID)!)
+                resultExtras.append(newFeature)
+            }
+            completion(resultExtras)
         }) { (error) in
             print(error.localizedDescription)
         }

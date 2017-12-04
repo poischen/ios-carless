@@ -10,6 +10,7 @@
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
 		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		1922178D1FBDA5BE00D7FDFE /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1922178C1FBDA5BE00D7FDFE /* Fuel.swift */; };
+		19380CBA1FD5A29B0057A6D2 /* CarType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19380CB91FD5A29A0057A6D2 /* CarType.swift */; };
 		194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769221FC8480000AB02E4 /* SearchResultsViewController.swift */; };
 		194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */; };
 		1949C5941FC9D05800C5FD91 /* Gear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1949C5931FC9D05800C5FD91 /* Gear.swift */; };
@@ -63,6 +64,7 @@
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		1922178C1FBDA5BE00D7FDFE /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
+		19380CB91FD5A29A0057A6D2 /* CarType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarType.swift; sourceTree = "<group>"; };
 		194769221FC8480000AB02E4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		1949C5931FC9D05800C5FD91 /* Gear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gear.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				19CE072B1FC41C250087E958 /* Brand.swift */,
 				1949C5931FC9D05800C5FD91 /* Gear.swift */,
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
+				19380CB91FD5A29A0057A6D2 /* CarType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
+				19380CBA1FD5A29B0057A6D2 /* CarType.swift in Sources */,
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,

@@ -12,8 +12,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBOutlet weak var maxPriceLabel: UILabel!
     @IBOutlet weak var maxPriceSlider: UISlider!
-    @IBOutlet weak var maxDistanceLabel: UILabel!
-    @IBOutlet weak var maxDistanceSlider: UISlider!
     @IBOutlet weak var maxConsumptionLabel: UILabel!
     @IBOutlet weak var maxConsumptionSlider: UISlider!
     @IBOutlet weak var minHorsepowerLabel: UILabel!
@@ -23,9 +21,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickFuelTable: UITableView!
     @IBOutlet weak var pickBrandTable: UITableView!
     @IBOutlet weak var pickGearTable: UITableView!
+    @IBOutlet weak var pickVehicleTypeTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
     var features = [Feature]()
+    var vehicleTypes = [VehicleType]()
     
     var fuel = [
         Fuel(name: "diesel"),
@@ -61,6 +61,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickBrandTable.dataSource = self
         pickGearTable.dataSource = self
         pickGearTable.delegate = self
+        pickVehicleTypeTable.delegate = self
+        pickVehicleTypeTable.dataSource = self
         
         /* notificationCenter.addObserver(
             forName:Notification.Name(rawValue:"sendExtras"),
@@ -112,6 +114,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             count = brands.count
         case self.pickGearTable:
             count = gears.count
+        case self.pickVehicleTypeTable:
+            count = vehicleTypes.count;
         default:
             count = nil
         }
@@ -129,27 +133,33 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         switch tableView {
         case self.pickExtraTable:
             let cellIdentifier = "ExtraTableViewCell"
-            let extra = self.features[indexPath.row]
+            let extra:Feature = self.features[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = extra.name
             returnCell = cell
         case self.pickFuelTable:
             let cellIdentifier = "EngineTableViewCell"
-            let engine = fuel[indexPath.row]
+            let engine:Fuel = fuel[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = engine.name
             returnCell = cell
         case self.pickBrandTable:
             let cellIdentifier = "BrandTableViewCell"
-            let brand = brands[indexPath.row]
+            let brand:Brand = brands[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = brand.name
             returnCell = cell
         case self.pickGearTable:
             let cellIdentifier = "GearTableViewCell"
-            let gear = gears[indexPath.row]
+            let gear:Gear = gears[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = gear.name
+            returnCell = cell
+        case self.pickVehicleTypeTable:
+            let cellIdentifier = "VehicleTypeTableViewCell"
+            let carType:VehicleType = vehicleTypes[indexPath.row]
+            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+            cell!.textLabel!.text = carType.name
             returnCell = cell
         default:
             returnCell = nil
@@ -199,6 +209,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 pickGearTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
             gear.toggleSelected()
+        case self.pickVehicleTypeTable:
+            let carType:VehicleType = self.vehicleTypes[indexPath.row]
+            if (carType.isSelected){
+                pickVehicleTypeTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
+            } else {
+                pickVehicleTypeTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
+            }
         default:
             return
         }
