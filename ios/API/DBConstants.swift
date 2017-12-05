@@ -29,6 +29,7 @@ class DBConstants {
     static let PROPERTY_NAME_OFFERING_PICTURE_URL = "picture"
     static let PROPERTY_NAME_OFFERING_SEATS = "seats"
     static let PROPERTY_NAME_OFFERING_TYPE = "type"
+    static let PROPERTY_NAME_OFFERING_VEHICLE_TYPE_ID = "vehicleTypeID"
     
     // constants for offering's features
     static let PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE = "feature"

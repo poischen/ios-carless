@@ -250,6 +250,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                             return result
                         }
                     }
+                    currentSearchFilter.vehicleTypeIDs = self.vehicleTypes.reduce([]) {result, vehicleType in
+                        if (vehicleType.isSelected){
+                            return result! + [vehicleType.id]
+                        } else {
+                            return result
+                        }
+                    }
                     currentSearchFilter.maxPrice = Int(self.maxPriceSlider.value)
                     searchResultsController.searchFilter = currentSearchFilter
                     //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)

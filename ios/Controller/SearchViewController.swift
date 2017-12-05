@@ -111,7 +111,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     brands: nil,
                     engines: nil,
                     featureIDs: nil,
-                    dateInterval: DateInterval(start: startTimePicker.date, end: endTimePicker.date)
+                    dateInterval: DateInterval(start: startTimePicker.date, end: endTimePicker.date),
+                    vehicleTypeIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
             }

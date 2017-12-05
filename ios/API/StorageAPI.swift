@@ -68,12 +68,13 @@ final class StorageAPI {
                         let offeringLongitude = offeringData[DBConstants.PROPERTY_NAME_OFFERING_LONGITUDE] as? Float,
                         let offeringPictureURL = offeringData[DBConstants.PROPERTY_NAME_OFFERING_PICTURE_URL] as? String,
                         let offeringSeats = offeringData[DBConstants.PROPERTY_NAME_OFFERING_SEATS] as? Int,
-                        let offeringType = offeringData[DBConstants.PROPERTY_NAME_OFFERING_TYPE] as? String else {
+                        let offeringType = offeringData[DBConstants.PROPERTY_NAME_OFFERING_TYPE] as? String,
+                        let offeringVehicleTypeID = offeringData[DBConstants.PROPERTY_NAME_OFFERING_VEHICLE_TYPE_ID] as? Int else {
                             print("error in constructOfferings")
                             return
                     }
                     
-                    let newOffering:Offering = Offering(id: Int(offeringID)!, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!])
+                    let newOffering:Offering = Offering(id: Int(offeringID)!, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!], vehicleTypeID: offeringVehicleTypeID)
                     // TODO: What to do if an offering has no features?
                     resultOfferings.append(newOffering)
                 }

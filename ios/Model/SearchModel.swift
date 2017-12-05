@@ -31,6 +31,11 @@ class SearchModel {
     func filterToFilterFunctions(filter: Filter, rentings: [Renting]) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
         // TODO: find most efficient order for filter functions
+        if let vehicleTypeIDs = filter.vehicleTypeIDs {
+            filterFunctions.append({offering in
+                return vehicleTypeIDs.contains {$0 == offering.vehicleTypeID}
+            })
+        }
         if let maxPrice = filter.maxPrice {
             filterFunctions.append({$0.basePrice <= maxPrice})
         }
@@ -115,7 +120,7 @@ class SearchModel {
     // TODO: remove
     func testFilterOfferingByDate(){
         // TESTING
-        let offering = Offering(id: 1, basePrice: 10, brand: "BMW", consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil);
+        let offering = Offering(id: 1, basePrice: 10, brand: "BMW", consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil, vehicleTypeID: 0);
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"
         let testDate11 = formatter.date(from: "01-01-2018")
