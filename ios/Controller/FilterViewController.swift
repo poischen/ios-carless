@@ -71,6 +71,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             using:receiveFeatures
         )*/
         storageAPI.getFeatures(completion: self.receiveFeatures)
+        storageAPI.getVehicleTypes(completion: self.receiveVehicleTypes)
         
         // TESTING
     }
@@ -216,15 +217,20 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 pickVehicleTypeTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
             }
+            carType.toggleSelected()
         default:
             return
         }
     }
     
-    // TODO: also hardcode the extras as it's unlikely that new ones will be created?
     func receiveFeatures(features: [Feature]) -> Void {
         self.features = features
         self.pickExtraTable.reloadData()
+    }
+    
+    func receiveVehicleTypes(vehicleTypes: [VehicleType]) -> Void {
+        self.vehicleTypes = vehicleTypes
+        self.pickVehicleTypeTable.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

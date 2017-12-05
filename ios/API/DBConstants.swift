@@ -41,6 +41,6 @@ class DBConstants {
     static let PROPERTY_NAME_RENTING_OFFERING_ID = "inseratId"
     
     // constants for vehicle types
-    
-    
+    static let PROPERTY_NAME_VEHICLE_TYPE_NAME = "type"
+    static let PROPERTY_NAME_VEHICLE_TYPE_ICON_URL = "icon_dl"
 }

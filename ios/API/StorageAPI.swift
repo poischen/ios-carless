@@ -161,18 +161,20 @@ final class StorageAPI {
         self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultVehicleTypes:[VehicleType] = [VehicleType]()
-            for (vehicleTypeIDRaw, featureNameRaw) in receivedData {
+            for (vehicleTypeIDRaw, vehicleTypeDataRaw) in receivedData {
+                let vehicleTypeData:NSDictionary = vehicleTypeDataRaw as! NSDictionary
                 guard
-                    let featureName:String = featureNameRaw as? String,
-                    let featureID:String = featureIDRaw as? String else { // TODO: solve the conversion problem here
+                    let vehicleTypeName:String = vehicleTypeData[DBConstants.PROPERTY_NAME_VEHICLE_TYPE_NAME] as? String,
+                    let vehicleTypeIconURL:String = vehicleTypeData[DBConstants.PROPERTY_NAME_VEHICLE_TYPE_ICON_URL] as? String,
+                    let vehicleTypeID:String = vehicleTypeIDRaw as? String else {
                         print("error in getFeatures")
                         return
                 }
                 
-                let newFeature:Feature = Feature(name: featureName, id: Int(featureID)!)
-                resultExtras.append(newFeature)
+                let newVehicleType:VehicleType = VehicleType(id: Int(vehicleTypeID)!, name: vehicleTypeName, iconURL: vehicleTypeIconURL)
+                resultVehicleTypes.append(newVehicleType)
             }
-            completion(resultExtras)
+            completion(resultVehicleTypes)
         }) { (error) in
             print(error.localizedDescription)
         }
