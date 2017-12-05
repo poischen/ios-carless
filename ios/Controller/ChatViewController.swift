@@ -34,6 +34,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         //get the name of current user
         
         
+        
+        
         myTV.reloadData();
     }
 

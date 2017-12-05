@@ -87,7 +87,7 @@ class DBProvider {
                             let id = key as! String;
                             let newUser = User(id: id, name: email);
                             
-                            //append it in the empy array
+                            //append it in the empty array
                             users.append(newUser);
                         }
                     }

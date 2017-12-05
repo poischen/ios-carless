@@ -20,6 +20,7 @@
 		2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97B1FA8AA2D0013D67E /* Profil.png */; };
 		2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */; };
 		2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */; };
+		7734A99C1FD6E2FB0013A923 /* AuthProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734A99B1FD6E2FB0013A923 /* AuthProvider.swift */; };
 		778099381FCF16FA00AAD783 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778099371FCF16FA00AAD783 /* ChatViewController.swift */; };
 		7780993A1FCF2A1200AAD783 /* DBProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 778099391FCF2A1100AAD783 /* DBProvider.swift */; };
 		7780993C1FCF2BC300AAD783 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7780993B1FCF2BC300AAD783 /* Constants.swift */; };
@@ -70,6 +71,7 @@
 		2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HomePicture.jpg; sourceTree = "<group>"; };
 		2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hintergrund.jpg; sourceTree = "<group>"; };
 		3B72885CBF880C627F6B01F6 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
+		7734A99B1FD6E2FB0013A923 /* AuthProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthProvider.swift; sourceTree = "<group>"; };
 		778099371FCF16FA00AAD783 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		778099391FCF2A1100AAD783 /* DBProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBProvider.swift; sourceTree = "<group>"; };
 		7780993B1FCF2BC300AAD783 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */,
 				77A1D7991FCB27B800CC8090 /* ChatStoryboard.storyboard */,
 				778099391FCF2A1100AAD783 /* DBProvider.swift */,
+				7734A99B1FD6E2FB0013A923 /* AuthProvider.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 			files = (
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
+				7734A99C1FD6E2FB0013A923 /* AuthProvider.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
 				778099381FCF16FA00AAD783 /* ChatViewController.swift in Sources */,
 				7780993E1FCF392A00AAD783 /* User.swift in Sources */,
