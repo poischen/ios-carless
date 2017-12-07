@@ -53,17 +53,25 @@ class SearchModel {
         }
         if let gearshift = filter.gearshifts {
             filterFunctions.append({offering in
-                return gearshift.contains {$0.name == offering.gear}
+                //return gearshift.contains {$0.name == offering.gearID}
+                // TODO
+                return true
             })
         }
         if let brands = filter.brands {
             filterFunctions.append({offering in
-                return brands.contains {$0.name == offering.brand}
+                //return brands.contains {$0.name == offering.brandID}
+                // TODO
+                return true
             })
         }
         if let engines = filter.engines {
             filterFunctions.append({offering in
-                return engines.contains {$0.name == offering.fuel} 
+                return engines.contains {engine in
+                    //$0.name == offering.fuelID
+                    // TODO
+                    return true
+                }
             })
         }
         if let featureIDs = filter.featureIDs {
@@ -118,9 +126,10 @@ class SearchModel {
     }
     
     // TODO: remove
+    /*
     func testFilterOfferingByDate(){
         // TESTING
-        let offering = Offering(id: 1, basePrice: 10, brand: "BMW", consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil, vehicleTypeID: 0);
+        let offering = Offering(id: 1, brand: "BMW", basePrice: 10, consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil, vehicleTypeID: 0);
         let formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"
         let testDate11 = formatter.date(from: "01-01-2018")
@@ -169,7 +178,7 @@ class SearchModel {
         print("test6:" + String(filterOfferingByDate(offering: offering, rentings: rentings4, desiredDateInterval: desired4)) + "(should be false)")
         // one day overlap at start and end of desired
         print("test7:" + String(filterOfferingByDate(offering: offering, rentings: rentings5, desiredDateInterval: desired5)) + "(should be true)")
-    }
+    }*/
     
     func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
         let selfSet = Set(array)

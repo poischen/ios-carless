@@ -37,8 +37,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     ] // TODO: move to better location
     
     var brands:[Brand] = [
-        Brand(name: "BMW"),
-        Brand(name: "Audi")
+        Brand(id: 0, name: "BMW"),
+        Brand(id: 1, name: "Audi")
     ]
     
     var gears:[Gear] = [

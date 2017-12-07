@@ -40,10 +40,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         let offering = offerings[indexPath.row]
         
-        cell.fuelLabel.text = offering.fuel
-        cell.modelLabel.text = offering.brand + " " + offering.type
+        cell.fuelLabel.text = String(offering.fuelID)
+        cell.modelLabel.text = String(offering.brandID) + " " + offering.type
         cell.seatsLabel.text = String(offering.seats) + " seats"
-        cell.gearshiftLabel.text = offering.gear
+        cell.gearshiftLabel.text = String(offering.gearID)
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
         // cell.locationLabel.text = offering.location
         // TODO: make location and price dynamic

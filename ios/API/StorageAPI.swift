@@ -109,9 +109,9 @@ final class StorageAPI {
                             return
                     }
                     
-                    let newOffering:Offering = Offering(id: Int(offeringID)!, basePrice: offeringBasePrice, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!], vehicleTypeID: offeringVehicleTypeID)
+                    /* let newOffering:Offering = Offering(id: Int(offeringID)!, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, basePrice: offeringBasePrice, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!], vehicleTypeID: offeringVehicleTypeID) */
                     // TODO: What to do if an offering has no features?
-                    resultOfferings.append(newOffering)
+                    //resultOfferings.append(newOffering)
                 }
                 completion(resultOfferings)
             }) { (error) in
