@@ -123,15 +123,17 @@ final class StorageAPI {
         self.featuresDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultExtras:[Feature] = [Feature]()
-            for (featureIDRaw, featureNameRaw) in receivedData {
+            for (featureIDRaw, rawFeatureData) in receivedData {
+                let featureData:NSDictionary = rawFeatureData as! NSDictionary
+                // TODO: Shorthand for this?
                 guard
-                    let featureName:String = featureNameRaw as? String,
-                    let featureID:String = featureIDRaw as? String else { // TODO: solve the conversion problem here
+                    let featureName:String = featureData[DBConstants.PRORPERTY_NAME_FEATURE_NAME] as? String,
+                    let featureIconURL:String = featureData[DBConstants.PRORPERTY_NAME_FEATURE_ICON_URL] as? String,
+                    let featureID:String = featureIDRaw as? String else {
                         print("error in getFeatures")
                         return
                 }
-                
-                let newFeature:Feature = Feature(name: featureName, id: Int(featureID)!)
+                let newFeature:Feature = Feature(id: Int(featureID)!, name: featureName, iconURL: featureIconURL)
                 resultExtras.append(newFeature)
             }
             completion(resultExtras)
@@ -214,6 +216,10 @@ final class StorageAPI {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func testQueries() {
+        
     }
     
     func stringToDate(dateString: String) -> Date {

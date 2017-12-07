@@ -11,11 +11,13 @@ import Foundation
 class Feature {
     let name: String
     let id: Int
+    let iconURL: String
     var isSelected: Bool
     
-    init(name: String, id: Int) {
+    init(id: Int, name: String, iconURL: String) {
         self.name = name
         self.id = id
+        self.iconURL = iconURL
         self.isSelected = false
     }
     
