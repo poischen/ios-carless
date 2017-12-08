@@ -10,5 +10,5 @@ import Foundation
 
 protocol DictionaryConvertible {
     associatedtype convertTo
-    static func dictionaryToArray(dictionary: NSDictionary)->[convertTo]
+    static func dictionaryToArray(dictionary: NSDictionary)->[convertTo] // TODO: return optional array
 }

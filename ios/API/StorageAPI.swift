@@ -218,8 +218,14 @@ final class StorageAPI {
         }
     }
     
-    func testQueries() {
-        
+    func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
+        self.fireBaseDBAccess.child("brands").observeSingleEvent(of: .value, with: { (snapshot) in
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            let resultBrands:[Brand] = Brand.dictionaryToArray(dictionary: receivedData)
+            completion(resultBrands)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func stringToDate(dateString: String) -> Date {

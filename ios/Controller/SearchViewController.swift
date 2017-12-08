@@ -30,6 +30,12 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         // only make dates in the future pickable (from tomorrow on, one day = 86400 seconds)
         startTimePicker.minimumDate = Date() + 86400
         endTimePicker.minimumDate = Date() + 86400
+        
+        // TESTING
+        var db = StorageAPI.shared
+        db.getBrands(completion: {brands in
+            print(brands)
+        })
     }
     
     override func didReceiveMemoryWarning() {

@@ -15,11 +15,11 @@ class Brand: DictionaryConvertible {
         for (brandIDRaw, brandDataRaw) in dictionary {
             if let brandData:NSDictionary = brandDataRaw as? NSDictionary {
                 guard let brandName = brandData["brand"] as? String,
-                    let brandID:Int = brandIDRaw as? Int else {
+                    let brandIDString:String = brandIDRaw as? String else {
                     print("invalid brandName or brandID in Brand")
                     return []
                 }
-                let newBrand:Brand = Brand(id: brandID, name: brandName)
+                let newBrand:Brand = Brand(id: Int(brandIDString)!, name: brandName)
                 resultBrands.append(newBrand)
             } else {
                 print("invalid brandData in Brand")
