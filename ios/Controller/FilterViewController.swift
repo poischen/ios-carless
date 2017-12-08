@@ -77,6 +77,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // restore UI state when the filter view is opened again
         if let currentMaxPrice = self.searchFilter?.maxPrice {
             self.maxPriceSlider.setValue(Float(currentMaxPrice), animated: false)
             self.maxPriceLabel.text = String(currentMaxPrice) + "€"
@@ -88,6 +89,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let maxConsumption = self.searchFilter?.maxConsumption {
             self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
             self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
+        }
+        if let brands = self.searchFilter?.brands {
+            self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
+            for brand in brands {
+                pickBrandTable.cellForRow(at: IndexPath(row: brand.id, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
+                self.brands[brand.id].isSelected = true
+            }
         }
     }
 
@@ -102,7 +110,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func maxMileageChanged(_ sender: Any) {
-        maxConsumptionLabel.text = String(Int(maxConsumptionSlider.value)) + "l/100km"
+        maxConsumptionLabel.text = String(Int(maxConsumptionSlider.value)) + " l/100km"
     }
     
     @IBAction func maxHorsepowerChanged(_ sender: Any) {
@@ -241,6 +249,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func receiveFeatures(features: [Feature]) -> Void {
         self.features = features
         self.pickExtraTable.reloadData()
+        // restore selected features here as they can only be restored after receiving them from the DB -> viewWillAppear doesn't work
+        if let featureIDs = self.searchFilter?.featureIDs {
+            for featureID in featureIDs {
+                pickExtraTable.cellForRow(at: IndexPath(row: featureID, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
+                self.features[featureID].isSelected = true
+            }
+        }
     }
     
     func receiveVehicleTypes(vehicleTypes: [VehicleType]) -> Void {
@@ -273,6 +288,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                         }
                     }
                     currentSearchFilter.maxPrice = Int(self.maxPriceSlider.value)
+                    self.searchFilter = currentSearchFilter
                     searchResultsController.searchFilter = currentSearchFilter
                     //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
                 }
