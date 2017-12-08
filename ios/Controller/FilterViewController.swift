@@ -75,6 +75,21 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         
         // TESTING
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if let currentMaxPrice = self.searchFilter?.maxPrice {
+            self.maxPriceSlider.setValue(Float(currentMaxPrice), animated: false)
+            self.maxPriceLabel.text = String(currentMaxPrice) + "€"
+        }
+        if let currentMinHP = self.searchFilter?.minHP {
+            self.minHorsepowerSlider.setValue(Float(currentMinHP), animated: false)
+            self.minHorsepowerLabel.text = String(currentMinHP) + " hp"
+        }
+        if let maxConsumption = self.searchFilter?.maxConsumption {
+            self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
+            self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
+        }
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

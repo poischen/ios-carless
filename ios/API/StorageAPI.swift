@@ -196,7 +196,7 @@ final class StorageAPI {
     }
     
     func getVehicleTypes(completion: @escaping (_ vehicleTypes: [VehicleType]) -> Void){
-        self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
+        /* self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultVehicleTypes:[VehicleType] = [VehicleType]()
             for (vehicleTypeIDRaw, vehicleTypeDataRaw) in receivedData {
@@ -215,7 +215,8 @@ final class StorageAPI {
             completion(resultVehicleTypes)
         }) { (error) in
             print(error.localizedDescription)
-        }
+        }*/
+        completion([])
     }
     
     func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
