@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9491FA8A2250013D67E /* ViewController.swift */; };
 		2AD4E94D1FA8A2250013D67E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E94B1FA8A2250013D67E /* Main.storyboard */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
-		2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AD4E9471FA8A2250013D67E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AD4E9491FA8A2250013D67E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				2AD4E9561FA8A2250013D67E /* Info.plist */,
 				2AD4E9781FA8A5AF0013D67E /* GoogleService-Info.plist */,
 				2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */,
-				2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */,
 			);
 			path = ios;
 			sourceTree = "<group>";
@@ -495,7 +492,6 @@
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
 				2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
-				2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,9 +32,10 @@ class ViewController: UIViewController {
         signup()
     }
     
-    @IBAction func logoutButton (_ sender: Any) {
+    @IBAction func logoutButton(_ sender: Any) {
         logout()
     }
+    
     
 
     
@@ -120,8 +121,11 @@ class ViewController: UIViewController {
         if Auth.auth().currentUser != nil {
             do {
                 try Auth.auth().signOut()
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignUp")
+                let vc = UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "Main")
                 present(vc, animated: true, completion: nil)
+             
+            
+                
                 
             } catch let error as NSError {
                 print (error.localizedDescription)
