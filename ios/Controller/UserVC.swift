@@ -35,7 +35,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         //get the name of current user
         for user in users {
             if user.id == StorageAPI.shared.userID() {
-                
+                StorageAPI.shared.userName = user.name;
             }
         }
         

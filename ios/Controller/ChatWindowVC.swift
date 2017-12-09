@@ -23,8 +23,8 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         
         picker.delegate = self;
        
-        self.senderId = "1";
-        self.senderDisplayName = "rihanna";
+        self.senderId = StorageAPI.shared.userID();
+        self.senderDisplayName = StorageAPI.shared.userName;
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -74,8 +74,7 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text));
-        collectionView.reloadData();
+        MessageHandler._shared.sendMessage(senderID: senderId, senderName: senderDisplayName, text: text);
         
         //remove text from textfield
         finishSendingMessage();

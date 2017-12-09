@@ -35,6 +35,8 @@ final class StorageAPI {
     //value will not be instantiated until it is needed
     weak var delegate: FetchData?;
     
+    var userName = "";
+    
     //returns Project URL from Firebase
     var dbRef: DatabaseReference {
         return Database.database().reference();
