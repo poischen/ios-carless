@@ -11,7 +11,7 @@ import JSQMessagesViewController
 import MobileCoreServices
 import AVKit
 
-class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private var messages = [JSQMessage]();
     
@@ -22,9 +22,12 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         super.viewDidLoad()
         
         picker.delegate = self;
+        MessageHandler._shared.delegate = self;
        
         self.senderId = StorageAPI.shared.userID();
         self.senderDisplayName = StorageAPI.shared.userName;
+        
+        MessageHandler._shared.observeMessages();
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -118,6 +121,11 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         }
         
         self.dismiss(animated: true, completion: nil);
+        collectionView.reloadData();
+    }
+    
+    func messageReceived(senderID: String, text: String) {
+        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text));
         collectionView.reloadData();
     }
     
