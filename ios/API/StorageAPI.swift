@@ -71,77 +71,36 @@ final class StorageAPI {
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
-        self.getFeatures(completion: {features in
-            self.getOfferingsFeatures(completion: {offeringsFeatures in
-                self.constructOfferings(features: features, offeringsFeatures: offeringsFeatures, completion: completion)
-            })
-        })
-    }
-    
-    // TODO: only call when necessary and not (for some reason) when the app starts
-    func constructOfferings(features: [Feature], offeringsFeatures: [Int: [Int]], completion: @escaping (_ offerings: [Offering]) -> Void){
-        // TODO: only get offerings that match certain criteria
-            self.offeringsDBReference.observeSingleEvent(of: .value, with: {snapshot in
-                let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-                var resultOfferings:[Offering] = [Offering]()
-                for (rawOfferingID, rawOfferingData) in receivedData {
-                    let offeringData:NSDictionary = rawOfferingData as! NSDictionary
-                    // TODO: Shorthand for this?
-                    // TODO: Which way of error handling to prefer here?
-                    // TODO: necessary to get description from DB?
-                    guard
-                        let offeringID:String = rawOfferingID as? String,
-                        let offeringBasePrice = offeringData[DBConstants.PROPERTY_NAME_OFFERING_PRICE] as? Int,
-                        let offeringBrand:String = offeringData[DBConstants.PROPERTY_NAME_OFFERING_BRAND] as? String,
-                        let offeringConsumption = offeringData[DBConstants.PROPERTY_NAME_OFFERING_CONSUMPTION] as? Int,
-                        let offeringDescription = offeringData[DBConstants.PROPERTY_NAME_OFFERING_DESCRIPTION] as? String,
-                        let offeringFuel = offeringData[DBConstants.PROPERTY_NAME_OFFERING_FUEL] as? String,
-                        let offeringGear = offeringData[DBConstants.PROPERTY_NAME_OFFERING_GEAR] as? String,
-                        let offeringHP = offeringData[DBConstants.PROPERTY_NAME_OFFERING_HORSEPOWER] as? Int,
-                        let offeringLatitude = offeringData[DBConstants.PROPERTY_NAME_OFFERING_LATITUDE] as? Float,
-                        let offeringLocation = offeringData[DBConstants.PROPERTY_NAME_OFFERING_CITY] as? String,
-                        let offeringLongitude = offeringData[DBConstants.PROPERTY_NAME_OFFERING_LONGITUDE] as? Float,
-                        let offeringPictureURL = offeringData[DBConstants.PROPERTY_NAME_OFFERING_PICTURE_URL] as? String,
-                        let offeringSeats = offeringData[DBConstants.PROPERTY_NAME_OFFERING_SEATS] as? Int,
-                        let offeringType = offeringData[DBConstants.PROPERTY_NAME_OFFERING_TYPE] as? String,
-                        let offeringVehicleTypeID = offeringData[DBConstants.PROPERTY_NAME_OFFERING_VEHICLE_TYPE_ID] as? Int else {
-                            print("error in constructOfferings")
-                            return
-                    }
-                    
-                    /* let newOffering:Offering = Offering(id: Int(offeringID)!, brand: offeringBrand, consumption: offeringConsumption, description: offeringDescription, fuel: offeringFuel, gear: offeringGear, basePrice: offeringBasePrice, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, seats: offeringSeats, type: offeringType, featuresIDs: offeringsFeatures[Int(offeringID)!], vehicleTypeID: offeringVehicleTypeID) */
-                    // TODO: What to do if an offering has no features?
-                    //resultOfferings.append(newOffering)
-                }
-                completion(resultOfferings)
-            }) { (error) in
-                print(error.localizedDescription)
+        self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultOfferings:[Offering] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let offering = Offering.init(id: Int(child.key)!, dict: dict)! // TODO: catch nil here
+                resultOfferings.append(offering)
             }
-    }
-    
-    func getFeatures(completion: @escaping (_ features: [Feature]) -> Void){
-        self.featuresDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultExtras:[Feature] = [Feature]()
-            for (featureIDRaw, rawFeatureData) in receivedData {
-                let featureData:NSDictionary = rawFeatureData as! NSDictionary
-                // TODO: Shorthand for this?
-                guard
-                    let featureName:String = featureData[DBConstants.PRORPERTY_NAME_FEATURE_NAME] as? String,
-                    let featureIconURL:String = featureData[DBConstants.PRORPERTY_NAME_FEATURE_ICON_URL] as? String,
-                    let featureID:String = featureIDRaw as? String else {
-                        print("error in getFeatures")
-                        return
-                }
-                let newFeature:Feature = Feature(id: Int(featureID)!, name: featureName, iconURL: featureIconURL)
-                resultExtras.append(newFeature)
-            }
-            completion(resultExtras)
+            completion(resultOfferings)
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
+    func getFeatures(completion: @escaping (_ features: [Feature]) -> Void){
+        self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultFeatures:[Feature] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let feature = Feature.init(id: Int(child.key)!, dict: dict)!
+                resultFeatures.append(feature)
+            }
+            completion(resultFeatures)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
     func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [Int: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
@@ -172,22 +131,13 @@ final class StorageAPI {
     }
     
     func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
-        self.rentingsDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultRentings:[Renting] = [Renting]()
-            for (rawRentingID, rawRentingData) in receivedData {
-                let rentingData:NSDictionary = rawRentingData as! NSDictionary
-                guard
-                    let rentingID:String = rawRentingID as? String,
-                    let rentingStartDateString:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_START_DATE] as? String,
-                    let rentingEndDateString:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_END_DATE] as? String,
-                    let rentingUserID:String = rentingData[DBConstants.PROPERTY_NAME_RENTING_USER_ID] as? String,
-                    let rentingOfferingID:Int = rentingData[DBConstants.PROPERTY_NAME_RENTING_OFFERING_ID] as? Int else {
-                        print("error in getRentings")
-                        return
-                }
-                let newRenting = Renting(id: Int(rentingID)!, inseratID: rentingOfferingID, userID: rentingUserID, startDate: self.stringToDate(dateString: rentingStartDateString), endDate: self.stringToDate(dateString: rentingEndDateString))
-                resultRentings.append(newRenting)
+        self.rentingsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                resultRentings.append(renting)
             }
             completion(resultRentings)
         }) { (error) in
@@ -196,46 +146,43 @@ final class StorageAPI {
     }
     
     func getVehicleTypes(completion: @escaping (_ vehicleTypes: [VehicleType]) -> Void){
-        /* self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultVehicleTypes:[VehicleType] = [VehicleType]()
-            for (vehicleTypeIDRaw, vehicleTypeDataRaw) in receivedData {
-                let vehicleTypeData:NSDictionary = vehicleTypeDataRaw as! NSDictionary
-                guard
-                    let vehicleTypeName:String = vehicleTypeData[DBConstants.PROPERTY_NAME_VEHICLE_TYPE_NAME] as? String,
-                    let vehicleTypeIconURL:String = vehicleTypeData[DBConstants.PROPERTY_NAME_VEHICLE_TYPE_ICON_URL] as? String,
-                    let vehicleTypeID:String = vehicleTypeIDRaw as? String else {
-                        print("error in getFeatures")
-                        return
-                }
-                
-                let newVehicleType:VehicleType = VehicleType(id: Int(vehicleTypeID)!, name: vehicleTypeName, iconURL: vehicleTypeIconURL)
-                resultVehicleTypes.append(newVehicleType)
+        self.fireBaseDBAccess.child("types").observeSingleEvent(of: .value, with: { snapshot in
+            var resultTypes:[VehicleType] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let type = VehicleType.init(id: Int(child.key)!, dict: dict)!
+                resultTypes.append(type)
             }
-            completion(resultVehicleTypes)
+            completion(resultTypes)
         }) { (error) in
             print(error.localizedDescription)
-        }*/
+        }
         completion([])
     }
     
     func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
-        self.fireBaseDBAccess.child("brands").observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            let resultBrands:[Brand] = Brand.dictionaryToArray(dictionary: receivedData)
+        self.fireBaseDBAccess.child("brands").observeSingleEvent(of: .value, with: { snapshot in
+            var resultBrands:[Brand] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let brand = Brand.init(id: Int(child.key)!, dict: dict)!
+                resultBrands.append(brand)
+            }
             completion(resultBrands)
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
-    func stringToDate(dateString: String) -> Date {
+    /*func stringToDate(dateString: String) -> Date {
         var formatter = DateFormatter()
         formatter.dateFormat = "MM-dd-yyyy"
         // adding one hour as the date formatter always parses the day before at 11 PM for some reason
         let newDate:Date = formatter.date(from: dateString)! + 3600 // TODO: find different fix for this
         return newDate
-    }
+    }*/
     
     //stores User in Database
     //User is not being saved for now (Video 6 of the Tutorial)

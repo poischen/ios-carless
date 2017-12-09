@@ -8,13 +8,27 @@
 
 import Foundation
 
-class Fuel {
+class Fuel: DictionaryConvertible {
     let name: String
     var isSelected: Bool
+    let id: Int
     
-    init(name: String) {
+    convenience required init?(id: Int, dict: [String : AnyObject]) {
+        guard let fuelName = dict["fuel"] as? String else {
+                return nil
+        }
+        self.init(id: id, name: fuelName)
+    }
+    
+    var dict: [String : AnyObject] {
+        // TODO
+        return [:]
+    }
+    
+    init(id: Int, name: String) {
         self.name = name
         self.isSelected = false
+        self.id = id
     }
     
     func toggleSelected() {

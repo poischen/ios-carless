@@ -24,27 +24,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickVehicleTypeTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
-    var features = [Feature]()
-    var vehicleTypes = [VehicleType]()
-    
-    var fuel = [
-        Fuel(name: "diesel"),
-        Fuel(name: "benzine"),
-        Fuel(name: "electric"),
-        Fuel(name: "hybrid"),
-        Fuel(name: "natural gas"),
-        Fuel(name: "hydrogen")
-    ] // TODO: move to better location
-    
-    var brands:[Brand] = [
-        Brand(id: 0, name: "BMW"),
-        Brand(id: 1, name: "Audi")
-    ]
-    
-    var gears:[Gear] = [
-        Gear(name: "shift"),
-        Gear(name: "automatic")
-    ]
+    var features:[Feature] = [Feature]()
+    var vehicleTypes:[VehicleType] = [VehicleType]()
+    var fuel:[Fuel] = [Fuel]()
+    var brands:[Brand] = [Brand]()
+    var gears:[Gear] = [Gear]()
     
     let notificationCenter: NotificationCenter = NotificationCenter.default
     let storageAPI: StorageAPI = StorageAPI.shared
@@ -72,6 +56,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         )*/
         storageAPI.getFeatures(completion: self.receiveFeatures)
         storageAPI.getVehicleTypes(completion: self.receiveVehicleTypes)
+        storageAPI.getBrands(completion: {brands in print(brands)})
         
         // TESTING
     }

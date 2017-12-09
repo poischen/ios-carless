@@ -9,7 +9,15 @@
 import Foundation
 
 class Brand: DictionaryConvertible {
-    typealias convertTo = Brand
+    convenience required init?(id: Int, dict: [String : AnyObject]) {
+        guard let brandName = dict["brand"] as? String else {
+            return nil
+        }
+        self.init(id: id, name: brandName)
+    }
+    
+    
+    /* typealias convertTo = Brand
     static func dictionaryToArray(dictionary: NSDictionary) -> [Brand] {
         var resultBrands:[Brand] = []
         for (brandIDRaw, brandDataRaw) in dictionary {
@@ -27,7 +35,9 @@ class Brand: DictionaryConvertible {
             }
         }
         return resultBrands
-    }
+    } */
+    
+    
     
     let id: Int
     let name: String
@@ -37,6 +47,12 @@ class Brand: DictionaryConvertible {
         self.id = id
         self.name = name
         self.isSelected = false
+    }
+    
+    var dict: [String : AnyObject] {
+        return [
+            "brand": self.name as AnyObject
+        ]
     }
     
     func toggleSelected() {

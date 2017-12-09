@@ -9,6 +9,6 @@
 import Foundation
 
 protocol DictionaryConvertible {
-    associatedtype convertTo
-    static func dictionaryToArray(dictionary: NSDictionary)->[convertTo] // TODO: return optional array
+    init?(id: Int, dict: [String:AnyObject])
+    var dict:[String:AnyObject] { get }
 }
