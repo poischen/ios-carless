@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseAuth
 
 protocol FetchData: class {
     func dataReceived(users: [User]);
@@ -265,6 +266,13 @@ final class StorageAPI {
             self.delegate?.dataReceived(users: users);
         }
     }
+    
+    
+    //gets UserID in Firebase
+    func userID() -> String {
+        return Auth.auth().currentUser!.uid;
+    }
+    
     
 }
 

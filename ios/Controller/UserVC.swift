@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FetchData {
     
     
@@ -32,6 +33,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.users = users;
         
         //get the name of current user
+        for user in users {
+            if user.id == StorageAPI.shared.userID() {
+                
+            }
+        }
         
         
         
@@ -67,5 +73,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         dismiss(animated: true, completion: nil);
     }
     
+ 
     
 }
