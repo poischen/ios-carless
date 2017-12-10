@@ -16,10 +16,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var searchResultsTable: UITableView!
     
     var fuels:[Fuel] = [Fuel]()
-    var brands:[Brand] = [Brand]()
+    var brands:[Brand]?
     var gears:[Gear] = [Gear]()
     
     let storageAPI = StorageAPI.shared
+    let dbMapping = DBMapping.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.dataSource = self
 
         self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
-        //self.storageAPI.getFuels(completion: <#T##([Fuel]) -> Void#>)
+        self.dbMapping.fillBrandCache(completion: {
+            self.searchResultsTable.reloadData()
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,8 +50,17 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         let offering = offerings[indexPath.row]
         
+        //cell.modelLabel.text = offering.type
+        
+        if let offeringsBrand = self.dbMapping.mapBrandIDToBrand(id: offering.brandID) {
+            cell.modelLabel.text = offeringsBrand.name + " " + offering.type
+        } else {
+            cell.modelLabel.text = "loading"
+        }
+        
+        //         cell.modelLabel.text = String(offering.brandID) + " " + offering.type
+
         cell.fuelLabel.text = String(offering.fuelID)
-        cell.modelLabel.text = String(offering.brandID) + " " + offering.type
         cell.seatsLabel.text = String(offering.seats) + " seats"
         cell.gearshiftLabel.text = String(offering.gearID)
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
@@ -76,7 +88,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             self.offerings = offerings
             self.searchResultsTable.reloadData()
+            
         }
+    }
+    
+    func receiveBrands(brands: [Brand]) {
+        self.brands = brands
+        self.searchResultsTable.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

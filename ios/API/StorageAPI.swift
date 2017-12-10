@@ -17,7 +17,7 @@ protocol FetchData: class {
 
 
 // singleton class for access to Firebase and maybe to local storage in the future
-// TODO: implement some kind of caching
+// TODO: don't use forced typecasting -> handle errors gracefully
 
 final class StorageAPI {
     static let shared = StorageAPI()
@@ -64,6 +64,7 @@ final class StorageAPI {
     }
     
     private init() {
+        Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
@@ -177,6 +178,18 @@ final class StorageAPI {
                 resultBrands.append(brand)
             }
             completion(resultBrands)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // get brand by ID e.g. for displaying the brand's name
+    func getBrandByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
+        self.brandsDBReference.queryOrdered(byChild: "brand").queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
+            let child = snapshot.children.nextObject() as! DataSnapshot
+            let dict = child.value as! [String:AnyObject]
+            let brand = Brand.init(id: Int(child.key)!, dict: dict)!
+            completion(brand)
         }) { (error) in
             print(error.localizedDescription)
         }
