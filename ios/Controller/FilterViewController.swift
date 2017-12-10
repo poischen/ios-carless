@@ -26,7 +26,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var features:[Feature] = [Feature]()
     var vehicleTypes:[VehicleType] = [VehicleType]()
-    var fuel:[Fuel] = [Fuel]()
+    var fuels:[Fuel] = [Fuel]()
     var brands:[Brand] = [Brand]()
     var gears:[Gear] = [Gear]()
     
@@ -48,15 +48,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickVehicleTypeTable.delegate = self
         pickVehicleTypeTable.dataSource = self
         
-        /* notificationCenter.addObserver(
-            forName:Notification.Name(rawValue:"sendExtras"),
-            object:nil,
-            queue:nil,
-            using:receiveFeatures
-        )*/
         storageAPI.getFeatures(completion: self.receiveFeatures)
         storageAPI.getVehicleTypes(completion: self.receiveVehicleTypes)
-        storageAPI.getBrands(completion: {brands in print(brands)})
+        storageAPI.getBrands(completion: self.receiveBrands)
+        storageAPI.getFuels(completion: self.receiveFuels)
+        storageAPI.getGears(completion: self.receiveGears)
         
         // TESTING
     }
@@ -118,7 +114,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case self.pickExtraTable:
             count = features.count
         case self.pickFuelTable:
-            count = fuel.count
+            count = fuels.count
         case self.pickBrandTable:
             count = brands.count
         case self.pickGearTable:
@@ -148,7 +144,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             returnCell = cell
         case self.pickFuelTable:
             let cellIdentifier = "EngineTableViewCell"
-            let engine:Fuel = fuel[indexPath.row]
+            let engine:Fuel = fuels[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = engine.name
             returnCell = cell
@@ -194,7 +190,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
             feature.toggleSelected()
         case self.pickFuelTable:
-            let engine = self.fuel[indexPath.row]
+            let engine = self.fuels[indexPath.row]
             // TODO: avoid code duplication here
             if (engine.isSelected){
                 pickFuelTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
@@ -248,6 +244,21 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickVehicleTypeTable.reloadData()
     }
     
+    func receiveFuels(fuels: [Fuel]) -> Void {
+        self.fuels = fuels
+        self.pickFuelTable.reloadData()
+    }
+    
+    func receiveBrands(brands: [Brand]) -> Void {
+        self.brands = brands
+        self.pickBrandTable.reloadData()
+    }
+    
+    func receiveGears(gears: [Gear]) -> Void {
+        self.gears = gears
+        self.pickGearTable.reloadData()
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "applyFilters") {
             // next screen: search results
@@ -257,7 +268,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                     currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
                     currentSearchFilter.gearshifts = self.gears.filter {return $0.isSelected}
                     currentSearchFilter.brands = self.brands.filter {return $0.isSelected}
-                    currentSearchFilter.engines = self.fuel.filter {return $0.isSelected}
+                    currentSearchFilter.engines = self.fuels.filter {return $0.isSelected}
                     currentSearchFilter.featureIDs = self.features.reduce([]) {result, feature in
                         if (feature.isSelected){
                             return result! + [feature.id]

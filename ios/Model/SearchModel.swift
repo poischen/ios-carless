@@ -19,12 +19,13 @@ class SearchModel {
     
     func getFilteredOfferings(filter: Filter, completion: @escaping (_ offerings: [Offering]) -> Void) {
         self.storageAPI.getOfferings(completion: {offerings in
-            self.storageAPI.getRentings(completion: {rentings in
+            /* self.storageAPI.getRentings(completion: {rentings in
                 let filteredOfferings = self.filterToFilterFunctions(filter: filter, rentings: rentings).reduce(offerings) { accu, currFilter in
                     return accu.filter(currFilter)
                 }
                 completion(filteredOfferings)
-            })
+            })*/
+            completion(offerings)
         });
     }
     
@@ -74,7 +75,7 @@ class SearchModel {
                 }
             })
         }
-        if let featureIDs = filter.featureIDs {
+        /* if let featureIDs = filter.featureIDs {
             filterFunctions.append({offering in
                 if let offeringFeatureIDs = offering.featuresIDs {
                     return self.arrayContainsArray(array: offeringFeatureIDs, shouldContain: featureIDs)
@@ -83,7 +84,7 @@ class SearchModel {
                     return false
                 }
             })
-        }
+        } */
         if let desiredDateInterval = filter.dateInterval {
             filterFunctions.append({offering in
                 self.filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desiredDateInterval)

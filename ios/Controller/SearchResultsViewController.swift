@@ -15,12 +15,19 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     let searchModel:SearchModel = SearchModel()
     @IBOutlet weak var searchResultsTable: UITableView!
     
+    var fuels:[Fuel] = [Fuel]()
+    var brands:[Brand] = [Brand]()
+    var gears:[Gear] = [Gear]()
+    
+    let storageAPI = StorageAPI.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
 
         self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
+        //self.storageAPI.getFuels(completion: <#T##([Fuel]) -> Void#>)
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,6 +87,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 filterViewController.searchFilter = self.searchFilter
             }
         }
+    }
+    
+    func receiveFuels(fuels: [Fuel]) {
+        
     }
 
 }

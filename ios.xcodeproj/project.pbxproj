@@ -17,9 +17,9 @@
 		196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196FD4E81FAFBFE2000875AE /* Search.storyboard */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
-		196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */; };
 		196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewController.swift */; };
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
+		19A3B0521FDC19F80021458C /* DBMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3B0511FDC19F80021458C /* DBMapping.swift */; };
 		19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A7FA791FD2D2C900FA7C8D /* Renting.swift */; };
 		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
 		19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CB76FB1FD44E8C00B291CE /* DBConstants.swift */; };
@@ -77,9 +77,9 @@
 		196FD4E81FAFBFE2000875AE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
-		196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewController.swift; sourceTree = "<group>"; };
 		196FD4F21FAFC46E000875AE /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
+		19A3B0511FDC19F80021458C /* DBMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMapping.swift; sourceTree = "<group>"; };
 		19A7FA791FD2D2C900FA7C8D /* Renting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renting.swift; sourceTree = "<group>"; };
 		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
 		19CB76FB1FD44E8C00B291CE /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
@@ -167,7 +167,6 @@
 				7734A99D1FD6F2150013A923 /* ChatViewController.swift */,
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
 				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
-				196FD4EC1FAFC0F0000875AE /* CarTableViewController.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
 			);
 			path = Controller;
@@ -188,6 +187,7 @@
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
 				19380CB91FD5A29A0057A6D2 /* VehicleType.swift */,
 				19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */,
+				19A3B0511FDC19F80021458C /* DBMapping.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				196FD4EF1FAFC0F0000875AE /* CarTableViewController.swift in Sources */,
+				19A3B0521FDC19F80021458C /* DBMapping.swift in Sources */,
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				7734A99E1FD6F2150013A923 /* ChatViewController.swift in Sources */,
 				7734A9A41FD6F2750013A923 /* User.swift in Sources */,

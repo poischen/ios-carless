@@ -30,6 +30,9 @@ final class StorageAPI {
     private let featuresDBReference: DatabaseReference
     private let offeringsFeaturesDBReference: DatabaseReference
     private let vehicleTypesDBReference: DatabaseReference
+    private let gearsDBReference: DatabaseReference
+    private let brandsDBReference: DatabaseReference
+    private let fuelDBReference: DatabaseReference
     
     //value will not be instantiated until it is needed
     weak var delegate: FetchData?;
@@ -68,6 +71,9 @@ final class StorageAPI {
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
         self.vehicleTypesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_VEHICLE_TYPES)
+        self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
+        self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
+        self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -146,7 +152,7 @@ final class StorageAPI {
     }
     
     func getVehicleTypes(completion: @escaping (_ vehicleTypes: [VehicleType]) -> Void){
-        self.fireBaseDBAccess.child("types").observeSingleEvent(of: .value, with: { snapshot in
+        self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultTypes:[VehicleType] = []
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
@@ -162,7 +168,7 @@ final class StorageAPI {
     }
     
     func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
-        self.fireBaseDBAccess.child("brands").observeSingleEvent(of: .value, with: { snapshot in
+        self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Brand] = []
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
@@ -171,6 +177,36 @@ final class StorageAPI {
                 resultBrands.append(brand)
             }
             completion(resultBrands)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getFuels(completion: @escaping (_ fuels: [Fuel]) -> Void){
+        self.fireBaseDBAccess.child("fuel").observeSingleEvent(of: .value, with: { snapshot in
+            var resultFuels:[Fuel] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let fuel = Fuel.init(id: Int(child.key)!, dict: dict)!
+                resultFuels.append(fuel)
+            }
+            completion(resultFuels)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getGears(completion: @escaping (_ fuels: [Gear]) -> Void){
+        self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultGears:[Gear] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let gear = Gear.init(id: Int(child.key)!, dict: dict)!
+                resultGears.append(gear)
+            }
+            completion(resultGears)
         }) { (error) in
             print(error.localizedDescription)
         }
