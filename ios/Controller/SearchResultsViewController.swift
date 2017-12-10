@@ -28,7 +28,14 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.dataSource = self
 
         self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
-        self.dbMapping.fillBrandCache(completion: {
+        self.dbMapping.fillBrandsCache(completion: {
+            self.searchResultsTable.reloadData()
+        })
+        self.dbMapping.fillGearsCache(completion: {
+            self.searchResultsTable.reloadData()
+        })
+        self.dbMapping.fillFuelsCache(completion: {
+            print("fired")
             self.searchResultsTable.reloadData()
         })
     }
@@ -58,17 +65,26 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.modelLabel.text = "loading"
         }
         
+        if let offeringsGear = self.dbMapping.mapGearIDToGear(id: offering.gearID) {
+            cell.gearshiftLabel.text = offeringsGear.name
+        } else {
+            cell.gearshiftLabel.text = "loading"
+        }
+        
+        if let offeringsFuel = self.dbMapping.mapFuelIDToFuel(id: offering.fuelID) {
+            cell.fuelLabel.text = offeringsFuel.name
+        } else {
+            cell.fuelLabel.text = "loading"
+        }
+        
         //         cell.modelLabel.text = String(offering.brandID) + " " + offering.type
 
-        cell.fuelLabel.text = String(offering.fuelID)
         cell.seatsLabel.text = String(offering.seats) + " seats"
-        cell.gearshiftLabel.text = String(offering.gearID)
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
         // cell.locationLabel.text = offering.location
         // TODO: make location and price dynamic
         cell.locationLabel.text = offering.location
         cell.priceLabel.text = "from " + String(offering.basePrice) + "€ per day"
-        print(offering.pictureURL)
         let url = URL(string: offering.pictureURL)
         let data = try? Data(contentsOf: url!)
         let image: UIImage = UIImage(data: data!)!
