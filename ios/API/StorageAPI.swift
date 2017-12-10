@@ -63,6 +63,10 @@ final class StorageAPI {
         return storageRef.child(Constants.IMAGE_STORAGE);
     }
     
+    var videoStorageRef: StorageReference {
+        return storageRef.child(Constants.VIDEO_STORAGE);
+    }
+    
     private init() {
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default

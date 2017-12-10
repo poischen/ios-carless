@@ -111,13 +111,14 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            let img = JSQPhotoMediaItem(image: pic);
-            self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img));
+            let data = UIImageJPEGRepresentation(pic, 0.01);
+            
+            MessageHandler._shared.sendMedia(image: data, video: nil, senderID: senderId, senderName: senderDisplayName);
             
         } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
             
-            let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true);
-            messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video));
+            MessageHandler._shared.sendMedia(image: nil, video: vidUrl, senderID: senderId, senderName: senderDisplayName);
+        
         }
         
         self.dismiss(animated: true, completion: nil);

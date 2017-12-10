@@ -27,6 +27,40 @@ class MessageHandler {
         StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
     }
     
+    func sendMediaMessage(senderID: String, senderName: String, url: String) {
+        let data: Dictionary<String, Any> = [Constants.SENDER_ID: senderID, Constants.SENDER_NAME: senderName, Constants.URL: url];
+        
+        StorageAPI.shared.mediaMessagesRef.childByAutoId().setValue(data);
+    }
+    
+    func sendMedia(image: Data?, video: URL?, senderID: String, senderName: String) {
+        
+        if image != nil {
+            
+            StorageAPI.shared.imageStorageRef.child(senderID + "\(NSUUID().uuidString).jpg").putData(image!, metadata: nil) { (metadata: StorageMetadata?, err: Error?) in
+                
+                if err != nil {
+                    //TODO: inform user if image wasn't uploaded
+                    
+                } else {
+                  self.sendMediaMessage(senderID: senderID, senderName: senderName, url: String (describing: metadata!.downloadURL()!));
+                }
+            }
+            
+                } else {
+            StorageAPI.shared.videoStorageRef.child(senderID + "\(NSUUID().uuidString)").putFile(from: video!, metadata: nil) { (metadata: StorageMetadata?, err: Error?) in
+                
+                if err != nil {
+                    //TODO: inform user if video wasn't uploaded
+                    
+                } else {
+                    self.sendMediaMessage(senderID: senderID, senderName: senderName, url: String (describing: metadata!.downloadURL()!));
+                }
+            }
+            
+        }
+    }
+    
     func observeMessages() {
         StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
