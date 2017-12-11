@@ -71,13 +71,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
             self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
         }
-        /* if let brands = self.searchFilter?.brands {
-            self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
-            for brand in brands {
-                pickBrandTable.cellForRow(at: IndexPath(row: brand.id, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
-                self.brands[brand.id].isSelected = true
-            }
-        } */
     }
 
     override func didReceiveMemoryWarning() {
@@ -237,6 +230,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.features = features
         self.pickExtraTable.reloadData()
         // restore selected features here as they can only be restored after receiving them from the DB -> viewWillAppear doesn't work
+        // TODO: move to viewWillAppear somehow
         if let featureIDs = self.searchFilter?.featureIDs {
             for featureID in featureIDs {
                 pickExtraTable.cellForRow(at: IndexPath(row: featureID, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
@@ -258,6 +252,14 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func receiveBrands(brands: [Brand]) -> Void {
         self.brands = brands
         self.pickBrandTable.reloadData()
+        
+        if let brands = self.searchFilter?.brandIDs {
+            //self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
+             for i in 0..<brands.count {
+                pickBrandTable.cellForRow(at: IndexPath(row: i, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
+                self.brands.filter{$0.id == brands[i]}[0].isSelected = true
+             }
+        }
     }
     
     func receiveGears(gears: [Gear]) -> Void {
