@@ -123,9 +123,9 @@ final class StorageAPI {
                 }
                 if (resultOfferingsFeatures[offeringID] != nil){
                     // not the first feature -> add to feature list for this offering
-                    let prevOfferingFeatures = resultOfferingsFeatures[offeringID]!
-                    let newOfferingFeatures = prevOfferingFeatures + [featureID]
-                    resultOfferingsFeatures[offeringID] = newOfferingFeatures
+                    var prevOfferingFeatures = resultOfferingsFeatures[offeringID]!
+                    prevOfferingFeatures.append(featureID)
+                    resultOfferingsFeatures[offeringID] = prevOfferingFeatures
                 } else {
                     // first feature for this offering -> initialise array
                     resultOfferingsFeatures[offeringID] = [featureID]

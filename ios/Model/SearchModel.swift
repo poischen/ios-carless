@@ -19,75 +19,61 @@ class SearchModel {
     
     func getFilteredOfferings(filter: Filter, completion: @escaping (_ offerings: [Offering]) -> Void) {
         self.storageAPI.getOfferings(completion: {offerings in
-            /* self.storageAPI.getRentings(completion: {rentings in
-                let filteredOfferings = self.filterToFilterFunctions(filter: filter, rentings: rentings).reduce(offerings) { accu, currFilter in
-                    return accu.filter(currFilter)
-                }
-                completion(filteredOfferings)
-            })*/
-            completion(offerings)
+            self.storageAPI.getRentings(completion: {rentings in
+                self.storageAPI.getOfferingsFeatures(completion: {offeringsFeatures in
+                    let filterFunctions = self.filterToFilterFunctions(filter: filter, rentings: rentings, offeringsFeatures: offeringsFeatures)
+                    let filteredOfferings = filterFunctions.reduce(offerings) { accu, currFilter in
+                        return accu.filter(currFilter)
+                    }
+                    completion(filteredOfferings)
+                })
+            })
         });
     }
     
-    func filterToFilterFunctions(filter: Filter, rentings: [Renting]) -> [(_ offering: Offering) -> Bool] {
+    func filterToFilterFunctions(filter: Filter, rentings: [Renting], offeringsFeatures: [Int:[Int]]) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
         // TODO: find most efficient order for filter functions
-        if let vehicleTypeIDs = filter.vehicleTypeIDs {
-            filterFunctions.append({offering in
-                return vehicleTypeIDs.contains {$0 == offering.vehicleTypeID}
-            })
-        }
-        if let maxPrice = filter.maxPrice {
-            filterFunctions.append({$0.basePrice <= maxPrice})
-        }
-        if let minSeats = filter.minSeats {
-            filterFunctions.append({$0.seats >= minSeats})
-        }
-        if let city = filter.city {
-            filterFunctions.append({$0.location == city})
+        if let brandIDs = filter.brandIDs {
+            filterFunctions.append {brandIDs.contains($0.brandID)}
         }
         if let maxConsumption = filter.maxConsumption {
             filterFunctions.append({$0.consumption <= maxConsumption})
         }
+        if let fuelIDs = filter.fuelIDs {
+            filterFunctions.append {fuelIDs.contains($0.fuelID)}
+        }
+        if let gearIDs = filter.gearIDs {
+            filterFunctions.append {gearIDs.contains($0.gearID)}
+        }
         if let minHP = filter.minHP {
-            filterFunctions.append({$0.hp >= minHP})
+            filterFunctions.append {$0.hp >= minHP}
         }
-        if let gearshift = filter.gearshifts {
-            filterFunctions.append({offering in
-                //return gearshift.contains {$0.name == offering.gearID}
-                // TODO
-                return true
-            })
+        if let location = filter.location {
+            filterFunctions.append {$0.location == location}
         }
-        if let brands = filter.brands {
-            filterFunctions.append({offering in
-                //return brands.contains {$0.name == offering.brandID}
-                // TODO
-                return true
-            })
+        if let maxPrice = filter.maxPrice {
+            filterFunctions.append {$0.basePrice <= maxPrice}
         }
-        if let engines = filter.engines {
-            filterFunctions.append({offering in
-                return engines.contains {engine in
-                    //$0.name == offering.fuelID
-                    // TODO
-                    return true
-                }
-            })
+        if let minSeats = filter.minSeats {
+            filterFunctions.append {$0.seats >= minSeats}
         }
-        /* if let featureIDs = filter.featureIDs {
-            filterFunctions.append({offering in
-                if let offeringFeatureIDs = offering.featuresIDs {
-                    return self.arrayContainsArray(array: offeringFeatureIDs, shouldContain: featureIDs)
-                } else {
-                    // offering has no features -> can't match
-                    return false
-                }
-            })
-        } */
+        if let vehicleTypeIDs = filter.vehicleTypeIDs {
+            filterFunctions.append {vehicleTypeIDs.contains($0.vehicleTypeID)}
+        }
         if let desiredDateInterval = filter.dateInterval {
             filterFunctions.append({offering in
                 self.filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desiredDateInterval)
+            })
+        }
+        if let featureIDs = filter.featureIDs {
+            filterFunctions.append({offering in
+                if let currentOfferingsFeatures = offeringsFeatures[offering.id] {
+                    //offering has features -> test whether it has  all desired features
+                    return self.arrayContainsArray(array: currentOfferingsFeatures, shouldContain: featureIDs)
+                } else {
+                    return false
+                }
             })
         }
         return filterFunctions

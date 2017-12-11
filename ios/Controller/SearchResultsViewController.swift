@@ -35,7 +35,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.searchResultsTable.reloadData()
         })
         self.dbMapping.fillFuelsCache(completion: {
-            print("fired")
             self.searchResultsTable.reloadData()
         })
     }

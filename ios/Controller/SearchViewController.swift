@@ -108,17 +108,17 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(
+                    brandIDs: nil,
+                    maxConsumption: nil,
+                    fuelIDs: nil,
+                    gearIDs: nil,
+                    minHP: nil,
+                    location: pickedPlace!.addressComponents![0].name,
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
-                    city: pickedPlace!.addressComponents![0].name,
-                    maxConsumption: nil,
-                    minHP: nil,
-                    gearshift: nil,
-                    brands: nil,
-                    engines: nil,
-                    featureIDs: nil,
+                    vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: startTimePicker.date, end: endTimePicker.date),
-                    vehicleTypeIDs: nil
+                    featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
             }

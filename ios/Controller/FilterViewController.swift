@@ -71,13 +71,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
             self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
         }
-        if let brands = self.searchFilter?.brands {
+        /* if let brands = self.searchFilter?.brands {
             self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
             for brand in brands {
                 pickBrandTable.cellForRow(at: IndexPath(row: brand.id, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
                 self.brands[brand.id].isSelected = true
             }
-        }
+        } */
     }
 
     override func didReceiveMemoryWarning() {
@@ -266,23 +266,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
                 if var currentSearchFilter = self.searchFilter {
                     currentSearchFilter.maxConsumption = Int(self.maxConsumptionSlider.value)
                     currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
-                    currentSearchFilter.gearshifts = self.gears.filter {return $0.isSelected}
-                    currentSearchFilter.brands = self.brands.filter {return $0.isSelected}
-                    currentSearchFilter.engines = self.fuels.filter {return $0.isSelected}
-                    currentSearchFilter.featureIDs = self.features.reduce([]) {result, feature in
-                        if (feature.isSelected){
-                            return result! + [feature.id]
-                        } else {
-                            return result
-                        }
-                    }
-                    currentSearchFilter.vehicleTypeIDs = self.vehicleTypes.reduce([]) {result, vehicleType in
-                        if (vehicleType.isSelected){
-                            return result! + [vehicleType.id]
-                        } else {
-                            return result
-                        }
-                    }
+                    currentSearchFilter.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
+                    currentSearchFilter.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
+                    currentSearchFilter.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
+                    currentSearchFilter.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
+                    currentSearchFilter.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
                     currentSearchFilter.maxPrice = Int(self.maxPriceSlider.value)
                     self.searchFilter = currentSearchFilter
                     searchResultsController.searchFilter = currentSearchFilter
