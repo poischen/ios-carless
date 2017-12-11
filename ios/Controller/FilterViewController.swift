@@ -134,6 +134,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         var returnCell: UITableViewCell?
         
         // TODO: avoid code duplication here by merging Engine, Feature and Gear?
+        // TODO: gracefully handle errors here
         
         switch tableView {
         case self.pickExtraTable:
@@ -141,30 +142,55 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let extra:Feature = self.features[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = extra.name
+            if (extra.isSelected){
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }
             returnCell = cell
         case self.pickFuelTable:
             let cellIdentifier = "EngineTableViewCell"
-            let engine:Fuel = fuels[indexPath.row]
+            let fuel:Fuel = fuels[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = engine.name
+            cell!.textLabel!.text = fuel.name
+            if (fuel.isSelected){
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }
             returnCell = cell
         case self.pickBrandTable:
             let cellIdentifier = "BrandTableViewCell"
             let brand:Brand = brands[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = brand.name
+            if (brand.isSelected){
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }
             returnCell = cell
         case self.pickGearTable:
             let cellIdentifier = "GearTableViewCell"
             let gear:Gear = gears[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = gear.name
+            if (gear.isSelected){
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }
             returnCell = cell
         case self.pickVehicleTypeTable:
             let cellIdentifier = "VehicleTypeTableViewCell"
             let carType:VehicleType = vehicleTypes[indexPath.row]
             let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
             cell!.textLabel!.text = carType.name
+            if (carType.isSelected){
+                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
+            } else {
+                cell!.accessoryType = UITableViewCellAccessoryType.none
+            }
             returnCell = cell
         default:
             returnCell = nil
@@ -183,45 +209,25 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         switch tableView {
         case self.pickExtraTable:
             let feature = self.features[indexPath.row]
-            if (feature.isSelected){
-                pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            } else {
-                pickExtraTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
             feature.toggleSelected()
+            self.pickExtraTable.reloadRows(at: [indexPath], with: .none)
         case self.pickFuelTable:
             let engine = self.fuels[indexPath.row]
             // TODO: avoid code duplication here
-            if (engine.isSelected){
-                pickFuelTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            } else {
-                pickFuelTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
             engine.toggleSelected()
+            self.pickFuelTable.reloadRows(at: [indexPath], with: .none)
         case self.pickBrandTable:
             let brand = self.brands[indexPath.row]
-            if (brand.isSelected){
-                pickBrandTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            } else {
-                pickBrandTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
             brand.toggleSelected()
+            self.pickBrandTable.reloadRows(at: [indexPath], with: .none)
         case self.pickGearTable:
             let gear = self.gears[indexPath.row]
-            if (gear.isSelected){
-                pickGearTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            } else {
-                pickGearTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
             gear.toggleSelected()
+            self.pickGearTable.reloadRows(at: [indexPath], with: .none)
         case self.pickVehicleTypeTable:
             let carType:VehicleType = self.vehicleTypes[indexPath.row]
-            if (carType.isSelected){
-                pickVehicleTypeTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.none
-            } else {
-                pickVehicleTypeTable.cellForRow(at: indexPath)?.accessoryType = UITableViewCellAccessoryType.checkmark
-            }
             carType.toggleSelected()
+            self.pickVehicleTypeTable.reloadRows(at: [indexPath], with: .none)
         default:
             return
         }
