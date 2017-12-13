@@ -40,7 +40,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        // empty offerings to prevent showing an offering that doesn't fir the search filter in the background of the "no cars found" popup
+        // empty offerings to prevent showing an offering that doesn't fit the search filter in the background of the "no cars found" popup
         // offerings will be filled again if the search is successfull
         if (self.offerings.count > 0){
             self.offerings = []

@@ -158,7 +158,7 @@
                                                 <rect key="frame" x="22" y="169" width="321" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <connections>
-                                                    <action selector="maxHorsepowerChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="67j-rR-7nU"/>
+                                                    <action selector="minHorsepowerChanged:" destination="o0c-hY-NhQ" eventType="valueChanged" id="67j-rR-7nU"/>
                                                 </connections>
                                             </slider>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="max consumption:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QkV-gN-izg">

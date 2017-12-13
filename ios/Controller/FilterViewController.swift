@@ -60,7 +60,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // restore UI state when the filter view is opened again
-        /* if let currentMaxPrice = self.searchFilter?.maxPrice {
+        if let currentMaxPrice = self.searchFilter?.maxPrice {
             self.maxPriceSlider.setValue(Float(currentMaxPrice), animated: false)
             self.maxPriceLabel.text = String(currentMaxPrice) + "€"
         }
@@ -71,7 +71,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let maxConsumption = self.searchFilter?.maxConsumption {
             self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
             self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
-        } */
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,6 +82,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     @IBAction func maxPriceChanged(_ sender: Any) {
         maxPriceLabel.text = String(Int(maxPriceSlider.value)) + "€"
+        if self.searchFilter != nil {
+            self.searchFilter!.maxPrice = Int(self.maxPriceSlider.value)
+        }
     }
     
     @IBAction func maxConsumptionChanged(_ sender: Any) {
@@ -91,8 +94,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    @IBAction func maxHorsepowerChanged(_ sender: Any) {
+    @IBAction func minHorsepowerChanged(_ sender: Any) {
         minHorsepowerLabel.text = String(Int(minHorsepowerSlider.value)) + " hp"
+        if self.searchFilter != nil {
+            self.searchFilter!.minHP = Int(self.minHorsepowerSlider.value)
+        }
     }
 
     
@@ -208,23 +214,28 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             let feature = self.features[indexPath.row]
             feature.toggleSelected()
             self.pickExtraTable.reloadRows(at: [indexPath], with: .none)
+            self.updateSelectedFeaturesInFilter()
         case self.pickFuelTable:
             let engine = self.fuels[indexPath.row]
             // TODO: avoid code duplication here
             engine.toggleSelected()
             self.pickFuelTable.reloadRows(at: [indexPath], with: .none)
+            self.updateSelectedFuelsInFilter()
         case self.pickBrandTable:
             let brand = self.brands[indexPath.row]
             brand.toggleSelected()
             self.pickBrandTable.reloadRows(at: [indexPath], with: .none)
+            self.updateSelectedBrandsInFilter()
         case self.pickGearTable:
             let gear = self.gears[indexPath.row]
             gear.toggleSelected()
             self.pickGearTable.reloadRows(at: [indexPath], with: .none)
+            self.updateSelectedGearsInFilter()
         case self.pickVehicleTypeTable:
             let carType:VehicleType = self.vehicleTypes[indexPath.row]
             carType.toggleSelected()
             self.pickVehicleTypeTable.reloadRows(at: [indexPath], with: .none)
+            self.updateSelectedVehicleTypesInFilter()
         default:
             return
         }
@@ -271,16 +282,47 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickGearTable.reloadData()
     }
     
+    func updateSelectedFeaturesInFilter(){
+        if self.searchFilter != nil {
+            self.searchFilter!.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
+        }
+    }
+    
+    func updateSelectedBrandsInFilter(){
+        if self.searchFilter != nil {
+            self.searchFilter!.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
+        }
+    }
+    
+    func updateSelectedGearsInFilter(){
+        if self.searchFilter != nil {
+            self.searchFilter!.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
+        }
+    }
+    
+    func updateSelectedVehicleTypesInFilter(){
+        if self.searchFilter != nil {
+            self.searchFilter!.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
+        }
+    }
+    
+    func updateSelectedFuelsInFilter(){
+        if self.searchFilter != nil {
+            self.searchFilter!.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
+        }
+    }
+    
+    // TODO: remove?
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if self.searchFilter != nil {
             self.searchFilter?.maxConsumption = Int(self.maxConsumptionSlider.value)
             self.searchFilter?.minHP = Int(self.minHorsepowerSlider.value)
-            self.searchFilter?.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
-            self.searchFilter?.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
-            self.searchFilter?.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
-            self.searchFilter?.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
-            self.searchFilter?.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
             self.searchFilter?.maxPrice = Int(self.maxPriceSlider.value)
+            self.updateSelectedFeaturesInFilter()
+            self.updateSelectedBrandsInFilter()
+            self.updateSelectedGearsInFilter()
+            self.updateSelectedVehicleTypesInFilter()
+            self.updateSelectedFuelsInFilter()
         }
     }
 
