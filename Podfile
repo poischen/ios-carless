@@ -15,6 +15,7 @@ target 'ios' do
     pod 'GooglePlaces'
     pod 'GooglePlacePicker'
     pod 'JSQMessagesViewController'
+    pod 'SDWebImage'
 
   target 'iosTests' do
     inherit! :search_paths
