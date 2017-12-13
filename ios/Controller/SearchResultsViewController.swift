@@ -127,6 +127,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if (segue.identifier == "showFilter") {
             // next screen: filter
             if let filterViewController = segue.destination as? FilterViewController {
+                // set filter screen's default values here
+                if self.searchFilter != nil {
+                    self.searchFilter!.maxPrice = 100
+                    self.searchFilter!.maxConsumption = 10
+                    self.searchFilter!.minHP = 50
+                }
+                
                 // pass current filter to the filter screen to be able to modify it there
                 filterViewController.searchFilter = self.searchFilter
             }
