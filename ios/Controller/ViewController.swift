@@ -83,6 +83,7 @@ class ViewController: UIViewController {
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                     self.present(vc!, animated: true, completion: nil)
                     
+                    
                 } else {
                     
                     //Tells the user that there is an error and then gets firebase to tell them the error
@@ -117,6 +118,8 @@ class ViewController: UIViewController {
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                 self.present(vc!, animated: true, completion: nil)
+                
+                StorageAPI.shared.saveUser(withID: user!.uid, email: self.email.text!, password: self.password.text!);
 
                 
             } else {

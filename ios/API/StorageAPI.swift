@@ -232,7 +232,6 @@ final class StorageAPI {
     }
     
     //stores User in Database
-    //User is not being saved for now (Video 6 of the Tutorial)
     func saveUser(withID: String, email: String, password: String){
         let data: Dictionary<String, Any> = [Constants.EMAIL: email, Constants.PASSWORD: password];
         
