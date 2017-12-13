@@ -51,6 +51,12 @@ class ViewController: UIViewController {
         self.present(vc, animated: true, completion: nil)
     }
     
+    
+    @IBAction func skipButton(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+        self.present(vc!, animated: true, completion: nil)
+    }
+    
     //function
     func login() {
         if self.email.text == "" || self.password.text == "" {
