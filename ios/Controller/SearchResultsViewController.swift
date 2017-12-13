@@ -100,7 +100,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if (offerings.count <= 0) {
             let alertController = UIAlertController(title: "Sorry", message: "We couln't find a car for you. :(", preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "back to search", style: .cancel, handler: {alterAction in
-                self.performSegue(withIdentifier: "backToSearch", sender: nil)
+                self.navigationController?.popViewController(animated: true)
             })
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
