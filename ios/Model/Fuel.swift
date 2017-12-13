@@ -12,12 +12,14 @@ class Fuel: DictionaryConvertible {
     let name: String
     var isSelected: Bool
     let id: Int
+    let iconURL: String
     
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let fuelName = dict["fuel"] as? String else {
+        guard let fuelName = dict["fuel"] as? String,
+              let fuelIconURL = dict["icon_dl"] as? String else {
                 return nil
         }
-        self.init(id: id, name: fuelName)
+        self.init(id: id, name: fuelName, iconURL: fuelIconURL)
     }
     
     var dict: [String : AnyObject] {
@@ -25,10 +27,11 @@ class Fuel: DictionaryConvertible {
         return [:]
     }
     
-    init(id: Int, name: String) {
+    init(id: Int, name: String, iconURL: String) {
         self.name = name
         self.isSelected = false
         self.id = id
+        self.iconURL = iconURL
     }
     
     func toggleSelected() {

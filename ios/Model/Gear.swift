@@ -13,20 +13,23 @@ import Foundation
 
 class Gear: DictionaryConvertible {
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let gearName = dict["gear"] as? String else {
+        guard let gearName = dict["gear"] as? String,
+              let gearIconURL = dict["icon_dl"] as? String else {
             return nil
         }
-        self.init(id: id, name: gearName)
+        self.init(id: id, name: gearName, iconURL: gearIconURL)
     }
     
     let name: String
     var isSelected: Bool
     let id: Int
+    let iconURL: String
     
-    init(id:Int, name: String) {
+    init(id:Int, name: String, iconURL: String) {
         self.id = id
         self.isSelected = false
         self.name = name
+        self.iconURL = iconURL
     }
     
     var dict: [String : AnyObject] {
