@@ -58,8 +58,9 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         // restore UI state when the filter view is opened again
-        if let currentMaxPrice = self.searchFilter?.maxPrice {
+        /* if let currentMaxPrice = self.searchFilter?.maxPrice {
             self.maxPriceSlider.setValue(Float(currentMaxPrice), animated: false)
             self.maxPriceLabel.text = String(currentMaxPrice) + "€"
         }
@@ -70,7 +71,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let maxConsumption = self.searchFilter?.maxConsumption {
             self.maxConsumptionSlider.setValue(Float(maxConsumption), animated: false)
             self.maxConsumptionLabel.text = String(maxConsumption) + " l/100km"
-        }
+        } */
     }
 
     override func didReceiveMemoryWarning() {
@@ -83,8 +84,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         maxPriceLabel.text = String(Int(maxPriceSlider.value)) + "€"
     }
     
-    @IBAction func maxMileageChanged(_ sender: Any) {
+    @IBAction func maxConsumptionChanged(_ sender: Any) {
         maxConsumptionLabel.text = String(Int(maxConsumptionSlider.value)) + " l/100km"
+        if self.searchFilter != nil {
+            self.searchFilter!.maxConsumption = Int(self.maxConsumptionSlider.value)
+        }
     }
     
     @IBAction func maxHorsepowerChanged(_ sender: Any) {
@@ -268,23 +272,15 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "applyFilters") {
-            // next screen: search results
-            if let searchResultsController = segue.destination as? SearchResultsViewController {
-                if var currentSearchFilter = self.searchFilter {
-                    currentSearchFilter.maxConsumption = Int(self.maxConsumptionSlider.value)
-                    currentSearchFilter.minHP = Int(self.minHorsepowerSlider.value)
-                    currentSearchFilter.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
-                    currentSearchFilter.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
-                    currentSearchFilter.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
-                    currentSearchFilter.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
-                    currentSearchFilter.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
-                    currentSearchFilter.maxPrice = Int(self.maxPriceSlider.value)
-                    self.searchFilter = currentSearchFilter
-                    searchResultsController.searchFilter = currentSearchFilter
-                    //self.searchModel.getFilteredOfferings(filter: currentSearchFilter, completion: searchResultsController.receiveOfferings)
-                }
-            }
+        if self.searchFilter != nil {
+            self.searchFilter?.maxConsumption = Int(self.maxConsumptionSlider.value)
+            self.searchFilter?.minHP = Int(self.minHorsepowerSlider.value)
+            self.searchFilter?.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
+            self.searchFilter?.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
+            self.searchFilter?.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
+            self.searchFilter?.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
+            self.searchFilter?.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
+            self.searchFilter?.maxPrice = Int(self.maxPriceSlider.value)
         }
     }
 

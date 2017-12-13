@@ -27,7 +27,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
 
-        self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
         self.dbMapping.fillBrandsCache(completion: {
             self.searchResultsTable.reloadData()
         })
@@ -37,6 +36,11 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         self.dbMapping.fillFuelsCache(completion: {
             self.searchResultsTable.reloadData()
         })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
     }
 
     override func didReceiveMemoryWarning() {
@@ -121,9 +125,4 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
-    
-    func receiveFuels(fuels: [Fuel]) {
-        
-    }
-
 }

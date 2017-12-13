@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Filter {
+class Filter {
     var brandIDs: [Int]?
     var maxConsumption: Int?
     var fuelIDs: [Int]?
