@@ -10,24 +10,22 @@ import Foundation
 
 class Renting: DictionaryConvertible {
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let rentingEndDateString = dict["endDate"] as? String,
+        guard let rentingEndDateTimestamp = dict["endDate"] as? Int,
               let rentingInseratID = dict["inseratId"] as? Int,
-              let rentingStartDateString = dict["startDate"] as? String,
+              let rentingStartDateTimestamp = dict["startDate"] as? Int,
               let rentingUserId = dict["userId"] as? String else {
             return nil
         }
-        if let startDate = Renting.stringToDate(dateString: rentingStartDateString), let endDate = Renting.stringToDate(dateString: rentingEndDateString) {
-            self.init(id: id, inseratID: rentingInseratID, userID: rentingUserId, startDate: startDate, endDate: endDate)
-        } else {
-            return nil
-        }
+        let startDate = Renting.intTimestampToDate(timestamp: rentingStartDateTimestamp)
+        let endDate = Renting.intTimestampToDate(timestamp: rentingEndDateTimestamp)
+        self.init(id: id, inseratID: rentingInseratID, userID: rentingUserId, startDate: startDate, endDate: endDate)
     }
     
     var dict: [String : AnyObject] {
         return [
-            "endDate": Renting.dateToString(date: self.endDate) as AnyObject,
+            "endDate": Renting.dateToIntTimestamp(date: self.endDate) as AnyObject,
             "inseratId": self.inseratID as AnyObject,
-            "startDate": Renting.dateToString(date: self.startDate) as AnyObject,
+            "startDate": Renting.dateToIntTimestamp(date: self.startDate) as AnyObject,
             "userId": self.userID as AnyObject
         ]
     }
@@ -46,20 +44,11 @@ class Renting: DictionaryConvertible {
         self.endDate = endDate
     }
     
-    static func stringToDate(dateString: String) -> Date? {
-        var formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        // adding one hour as the date formatter always parses the day before at 11 PM for some reason
-        if let parsedDate:Date = formatter.date(from: dateString) {
-            return parsedDate + 3600
-        } else {
-            return nil
-        }
+    static func intTimestampToDate(timestamp: Int) -> Date {
+        return Date(timeIntervalSince1970: TimeInterval(timestamp))
     }
     
-    static func dateToString(date: Date) -> String {
-        var formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        return formatter.string(from: date)
+    static func dateToIntTimestamp(date: Date) -> Int {
+        return Int(date.timeIntervalSince1970)
     }
 }
