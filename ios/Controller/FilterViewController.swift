@@ -24,6 +24,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickVehicleTypeTable: UITableView!
     @IBOutlet weak var applyFilterButton: UIButton!
     
+    // TODO: use optionals here?
+    // TODO: use Map for
     var features:[Feature] = [Feature]()
     var vehicleTypes:[VehicleType] = [VehicleType]()
     var fuels:[Fuel] = [Fuel]()
@@ -37,6 +39,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // TODO: Does this belong in viewDidLoad?
+        
         pickFuelTable.delegate = self
         pickFuelTable.dataSource = self
         pickExtraTable.delegate = self
@@ -48,17 +57,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickVehicleTypeTable.delegate = self
         pickVehicleTypeTable.dataSource = self
         
+        // get data from DB, receiving functions also restore the view state from the filter object
         storageAPI.getFeatures(completion: self.receiveFeatures)
         storageAPI.getVehicleTypes(completion: self.receiveVehicleTypes)
         storageAPI.getBrands(completion: self.receiveBrands)
         storageAPI.getFuels(completion: self.receiveFuels)
         storageAPI.getGears(completion: self.receiveGears)
         
-        // TESTING
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         // restore UI state when the filter view is opened again
         if let currentMaxPrice = self.searchFilter?.maxPrice {
             self.maxPriceSlider.setValue(Float(currentMaxPrice), animated: false)
@@ -244,12 +249,13 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func receiveFeatures(features: [Feature]) -> Void {
         self.features = features
         self.pickExtraTable.reloadData()
-        // restore selected features here as they can only be restored after receiving them from the DB -> viewWillAppear doesn't work
-        // TODO: move to viewWillAppear somehow
-        if let featureIDs = self.searchFilter?.featureIDs {
-            for featureID in featureIDs {
-                pickExtraTable.cellForRow(at: IndexPath(row: featureID, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
-                self.features[featureID].isSelected = true
+
+        if let selectedFeatureIDs = self.searchFilter?.vehicleTypeIDs {
+            for selectedFeatureID in selectedFeatureIDs {
+                let featureWithSelectedID = self.features.filter{$0.id == selectedFeatureID}
+                if featureWithSelectedID.count == 1 {
+                    featureWithSelectedID[0].isSelected = true
+                }
             }
         }
     }
@@ -257,22 +263,41 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func receiveVehicleTypes(vehicleTypes: [VehicleType]) -> Void {
         self.vehicleTypes = vehicleTypes
         self.pickVehicleTypeTable.reloadData()
+        
+        if let selectedVehicleTypeIDs = self.searchFilter?.vehicleTypeIDs {
+            for selectedVehicleTypeID in selectedVehicleTypeIDs {
+                let vehicleTypeWithSelectedID = self.vehicleTypes.filter{$0.id == selectedVehicleTypeID}
+                if vehicleTypeWithSelectedID.count == 1 {
+                    vehicleTypeWithSelectedID[0].isSelected = true
+                }
+            }
+        }
     }
     
     func receiveFuels(fuels: [Fuel]) -> Void {
         self.fuels = fuels
         self.pickFuelTable.reloadData()
+        
+        if let selectedFuelIDs = self.searchFilter?.fuelIDs {
+            for selectedFuelID in selectedFuelIDs {
+                let fuelWithSelectedID = self.fuels.filter{$0.id == selectedFuelID}
+                if fuelWithSelectedID.count == 1 {
+                    fuelWithSelectedID[0].isSelected = true
+                }
+            }
+        }
     }
     
     func receiveBrands(brands: [Brand]) -> Void {
         self.brands = brands
-        self.pickBrandTable.reloadData()
+        self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
         
-        if let brands = self.searchFilter?.brandIDs {
-            //self.pickBrandTable.reloadData() // added because table cells seem to be not available at this point until the table is reloaded
-             for i in 0..<brands.count {
-                pickBrandTable.cellForRow(at: IndexPath(row: i, section: 0))?.accessoryType = UITableViewCellAccessoryType.checkmark
-                self.brands.filter{$0.id == brands[i]}[0].isSelected = true
+        if let selectedBrandIDs = self.searchFilter?.brandIDs {
+             for selectedBrandID in selectedBrandIDs {
+                let brandWithSelectedID = self.brands.filter{$0.id == selectedBrandID}
+                if brandWithSelectedID.count == 1 {
+                    brandWithSelectedID[0].isSelected = true
+                }
              }
         }
     }
@@ -280,6 +305,15 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func receiveGears(gears: [Gear]) -> Void {
         self.gears = gears
         self.pickGearTable.reloadData()
+        
+        if let selectedGearIDs = self.searchFilter?.gearIDs {
+            for selectedGearID in selectedGearIDs {
+                let gearWithSelectedID = self.gears.filter{$0.id == selectedGearID}
+                if gearWithSelectedID.count == 1 {
+                    gearWithSelectedID[0].isSelected = true
+                }
+            }
+        }
     }
     
     func updateSelectedFeaturesInFilter(){
