@@ -70,7 +70,7 @@ class SearchModel {
             filterFunctions.append({offering in
                 if let currentOfferingsFeatures = offeringsFeatures[offering.id] {
                     //offering has features -> test whether it has  all desired features
-                    return self.arrayContainsArray(array: currentOfferingsFeatures, shouldContain: featureIDs)
+                    return SearchModel.arrayContainsArray(array: currentOfferingsFeatures, shouldContain: featureIDs)
                 } else {
                     return false
                 }
@@ -88,12 +88,7 @@ class SearchModel {
                 return false
             } else {
                 let rentingDateInterval = DateInterval(start: renting.startDate, end: renting.endDate)
-                if (rentingDateInterval.intersects(desiredDateInterval)){
-                    return false
-                } else {
-                    return true
-                }
-                
+                return !rentingDateInterval.intersects(desiredDateInterval)
             }
         })
     }
@@ -186,11 +181,10 @@ class SearchModel {
         print("test7:" + String(filterOfferingByDate(offering: offering, rentings: rentings5, desiredDateInterval: desired5)) + "(should be true)")
     }*/
     
-    func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
+    // HELPER FUNCTIONS
+    
+    static func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
         let selfSet = Set(array)
         return !shouldContain.contains { !selfSet.contains($0) }
     }
-    
-    
-    
 }
