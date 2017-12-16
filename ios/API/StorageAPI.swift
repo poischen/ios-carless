@@ -232,8 +232,8 @@ final class StorageAPI {
     }
     
     //stores User in Database
-    func saveUser(withID: String, email: String, password: String){
-        let data: Dictionary<String, Any> = [Constants.EMAIL: email, Constants.PASSWORD: password];
+    func saveUser(withID: String, name: String, password: String){
+        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.PASSWORD: password];
         
         usersRef.child(withID).setValue(data);
     }
@@ -257,7 +257,7 @@ final class StorageAPI {
                     if let userData = value as? NSDictionary{
                         
                         // fetch the data as String
-                        if let email = userData[Constants.EMAIL] as? String {
+                        if let email = userData[Constants.NAME] as? String {
                             
                             let id = key as! String;
                             let newUser = User(id: id, name: email);
