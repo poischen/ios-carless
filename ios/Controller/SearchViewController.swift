@@ -27,15 +27,9 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
-        // only make dates in the future pickable (from tomorrow on, one day = 86400 seconds)
-        startTimePicker.minimumDate = Date() + 86400
+        // only make dates in the future pickable
+        startTimePicker.minimumDate = Date() + 1800 // adding 1800 and then do modulo to get a XX:30 time
         endTimePicker.minimumDate = Date() + 86400
-        
-        // TESTING
-        var db = StorageAPI.shared
-        db.getBrands(completion: {brands in
-            print(brands)
-        })
     }
     
     override func didReceiveMemoryWarning() {
@@ -117,10 +111,13 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
-                    dateInterval: DateInterval(start: startTimePicker.date, end: endTimePicker.date),
+                    startDateRaw: self.startTimePicker.date,
+                    endDateRaw: self.endTimePicker.date,
                     featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
+                
+                print(startTimePicker.date)
             }
         }
     }

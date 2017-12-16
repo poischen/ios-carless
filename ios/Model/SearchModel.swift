@@ -84,6 +84,25 @@ class SearchModel {
         let rentingsOfDesiredCar = rentings.filter {$0.inseratID == offering.id}
         return rentingsOfDesiredCar.reduce(true, {prevResult, renting in
             if (prevResult == false){
+                // already found intersection of renting times -> renting not possible
+                return false
+            } else {
+                let rentingDateInterval = DateInterval(start: renting.startDate, end: renting.endDate)
+                if (rentingDateInterval.intersects(desiredDateInterval)){
+                    return false
+                } else {
+                    return true
+                }
+                
+            }
+        })
+    }
+    
+    /* func filterOfferingByDateOld(offering: Offering, rentings: [Renting], desiredDateInterval: DateInterval) -> Bool{
+        // TODO: filter rentings beforehand
+        let rentingsOfDesiredCar = rentings.filter {$0.inseratID == offering.id}
+        return rentingsOfDesiredCar.reduce(true, {prevResult, renting in
+            if (prevResult == false){
                 // already found intersection of reting times -> renting not possible
                 return false
             } else {
@@ -110,7 +129,7 @@ class SearchModel {
                 
             }
         })
-    }
+    } */
     
     // TODO: remove
     /*
@@ -171,5 +190,7 @@ class SearchModel {
         let selfSet = Set(array)
         return !shouldContain.contains { !selfSet.contains($0) }
     }
+    
+    
     
 }
