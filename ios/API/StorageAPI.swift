@@ -232,8 +232,8 @@ final class StorageAPI {
     }
     
     //stores User in Database
-    func saveUser(withID: String, name: String, password: String){
-        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.PASSWORD: password];
+    func saveUser(withID: String, name: String, email: String, password: String){
+        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.EMAIL: email, Constants.PASSWORD: password];
         
         usersRef.child(withID).setValue(data);
     }
