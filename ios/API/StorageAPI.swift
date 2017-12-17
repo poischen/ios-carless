@@ -64,19 +64,28 @@ final class StorageAPI {
     }
     
     private init() {
-        // diabled because of caching problems
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
-        self.rentingsDBReference.keepSynced(true) // TODO: find another solution, maybe switch on here and then switch off after the first DB query
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
         self.vehicleTypesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_VEHICLE_TYPES)
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
+        
+        // tryong to avoid caching problems by keeping references synced until queried for the first time
+        // TODO: find better solution?
+        self.offeringsDBReference.keepSynced(true)
+        self.rentingsDBReference.keepSynced(true)
+        self.featuresDBReference.keepSynced(true)
+        self.offeringsFeaturesDBReference.keepSynced(true)
+        self.vehicleTypesDBReference.keepSynced(true)
+        self.gearsDBReference.keepSynced(true)
+        self.brandsDBReference.keepSynced(true)
+        self.fuelDBReference.keepSynced(true)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -89,6 +98,7 @@ final class StorageAPI {
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)
+            self.offeringsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -104,6 +114,7 @@ final class StorageAPI {
                 resultFeatures.append(feature)
             }
             completion(resultFeatures)
+            self.featuresDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -134,6 +145,7 @@ final class StorageAPI {
                 }
             }
             completion(resultOfferingsFeatures)
+            self.offeringsFeaturesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -149,6 +161,7 @@ final class StorageAPI {
                 resultRentings.append(renting)
             }
             completion(resultRentings)
+            self.rentingsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -164,6 +177,7 @@ final class StorageAPI {
                 resultTypes.append(type)
             }
             completion(resultTypes)
+            self.vehicleTypesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -180,6 +194,7 @@ final class StorageAPI {
                 resultBrands.append(brand)
             }
             completion(resultBrands)
+            self.brandsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -192,13 +207,14 @@ final class StorageAPI {
             let dict = child.value as! [String:AnyObject]
             let brand = Brand.init(id: Int(child.key)!, dict: dict)!
             completion(brand)
+            self.brandsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
     }
     
     func getFuels(completion: @escaping (_ fuels: [Fuel]) -> Void){
-        self.fireBaseDBAccess.child("fuel").observeSingleEvent(of: .value, with: { snapshot in
+        self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFuels:[Fuel] = []
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
@@ -207,6 +223,7 @@ final class StorageAPI {
                 resultFuels.append(fuel)
             }
             completion(resultFuels)
+            self.fuelDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -222,6 +239,7 @@ final class StorageAPI {
                 resultGears.append(gear)
             }
             completion(resultGears)
+            self.gearsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
