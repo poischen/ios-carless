@@ -26,6 +26,8 @@
 		19CE072C1FC41C250087E958 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE072B1FC41C250087E958 /* Brand.swift */; };
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
 		19EE2B931FD9F05B004674F0 /* DictionaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */; };
+		19F0EFAB1FE69BB1001F34CE /* Offering.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19F0EFAA1FE69BB1001F34CE /* Offering.storyboard */; };
+		19F0EFAD1FE69C5D001F34CE /* OfferingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19F0EFAC1FE69C5D001F34CE /* OfferingViewController.swift */; };
 		2A0B9A981FAA7CC300D03D76 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E94A1FA8A2250013D67E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9491FA8A2250013D67E /* ViewController.swift */; };
@@ -86,6 +88,8 @@
 		19CE072B1FC41C250087E958 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		19D4126A1FB707D500794F1F /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertible.swift; sourceTree = "<group>"; };
+		19F0EFAA1FE69BB1001F34CE /* Offering.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Offering.storyboard; sourceTree = "<group>"; };
+		19F0EFAC1FE69C5D001F34CE /* OfferingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfferingViewController.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		2A0B9A971FAA7CC300D03D76 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +160,7 @@
 				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				196FD4E81FAFBFE2000875AE /* Search.storyboard */,
 				194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */,
+				19F0EFAA1FE69BB1001F34CE /* Offering.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -168,6 +173,7 @@
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
 				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
+				19F0EFAC1FE69C5D001F34CE /* OfferingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -411,6 +417,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19F0EFAB1FE69BB1001F34CE /* Offering.storyboard in Resources */,
 				2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */,
 				2AD4E9551FA8A2250013D67E /* LaunchScreen.storyboard in Resources */,
 				2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */,
@@ -622,6 +629,7 @@
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
+				19F0EFAD1FE69C5D001F34CE /* OfferingViewController.swift in Sources */,
 				19EE2B931FD9F05B004674F0 /* DictionaryConvertible.swift in Sources */,
 				190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */,
 				199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */,

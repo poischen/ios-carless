@@ -64,11 +64,13 @@ final class StorageAPI {
     }
     
     private init() {
+        // diabled because of caching problems
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
         notificationCenter = NotificationCenter.default
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
+        self.rentingsDBReference.keepSynced(true) // TODO: find another solution, maybe switch on here and then switch off after the first DB query
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
         self.vehicleTypesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_VEHICLE_TYPES)

@@ -103,6 +103,15 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedOffering = self.offerings[indexPath.row]
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+            viewController.offeringToShow = selectedOffering
+            self.present(viewController, animated: true, completion: nil)
+        }
+    }
+    
     func receiveOfferings(_ offerings: [Offering]) {
         if (offerings.count <= 0) {
             let alertController = UIAlertController(title: "Sorry", message: "We couln't find a car for you. :(", preferredStyle: .alert)
