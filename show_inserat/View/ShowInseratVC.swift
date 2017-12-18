@@ -86,7 +86,8 @@ class ShowInseratVC: UIViewController, UICollectionViewDataSource, UICollectionV
         frame.size.height = contentSize.height
         offerDescriptionTextView.frame = frame
         
-        let aspectRatioTextViewConstraint = NSLayoutConstraint(item: offerDescriptionTextView, attribute: .height, relatedBy: .equal, toItem: offerDescriptionTextView, attribute: .width, multiplier: offerDescriptionTextView.bounds.height/offerDescriptionTextView.bounds.width, constant: 1)        offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
+        let aspectRatioTextViewConstraint = NSLayoutConstraint(item: offerDescriptionTextView, attribute: .height, relatedBy: .equal, toItem: offerDescriptionTextView, attribute: .width, multiplier: offerDescriptionTextView.bounds.height/offerDescriptionTextView.bounds.width, constant: 1)
+        offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
         
         //set feature area---------------------------------------------------
         //features = displayingOffering.getFeatures() //TODO
