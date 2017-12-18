@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_show_inseratVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_show_inseratVersionString[];
+FOUNDATION_EXPORT double Pods_iosUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_iosUITestsVersionString[];
 

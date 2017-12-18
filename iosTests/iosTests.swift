@@ -9,7 +9,7 @@
 import XCTest
 @testable import show_inserat
 
-class show_inseratTests: XCTestCase {
+class iosTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
