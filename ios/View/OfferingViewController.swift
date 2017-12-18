@@ -11,12 +11,12 @@ import Kingfisher
 import Cosmos
 import MapKit
 
-class ShowInseratVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class OfferingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     //TODO use DB-Data instead of Dummys
     let displayingOffering = Offering(id: 1, basePrice: 120, brand: "BMW", name: "X5", consumption: 7, description: "I am a Description.\n\nWeit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.\n\nRent this car, it's georgious!", fuel: "gas", gear: "manual", hp: 230, latitude: 11.581981, location: "Munich", longitude: 48.135125, pictureURL: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fcar.jpg?alt=media&token=168e6d4e-ee84-4f56-817b-b7ec1971d6ba", seats: 5, type: "SUV", featuresIDs: [1, 2, 3], vehicleTypeID: 5, vehicleType: "SUV")
     
-    let lessor = UserProfile(id: "profile123", name: "Markus", profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", rating: 3.5)
+    let lessor = Profile(id: "profile123", name: "Markus", profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", rating: 3.5)
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]
@@ -34,6 +34,9 @@ class ShowInseratVC: UIViewController, UICollectionViewDataSource, UICollectionV
     var features: [String] = []
     let regionRadius: CLLocationDistance = 2000
     @IBOutlet weak var carLocationMap: MKMapView!
+    @IBOutlet weak var pickUpLabel: UILabel!
+    @IBOutlet weak var returnLabel: UILabel!
+    
     @IBAction func chatButton(_ sender: UIButton) {
         //TODO: Controller.chat()
     }
@@ -107,7 +110,13 @@ class ShowInseratVC: UIViewController, UICollectionViewDataSource, UICollectionV
         let carLocation = CarLocation(locationName: displayingOffering.location, discipline: "default", coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: longitude))
         carLocationMap.addAnnotation(carLocation)
         
-        //TODO Labels with pickup time
+        let scale = MKScaleView(mapView: carLocationMap)
+        scale.scaleVisibility = .visible
+        view.addSubview(scale)
+        
+        //TODO get time from offering object
+        //pickUpLabel.text = Offering.pickuptime
+        //returnLabel.text = Offering.returntime
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,7 +134,7 @@ class ShowInseratVC: UIViewController, UICollectionViewDataSource, UICollectionV
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         if collectionView == self.basicDataCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectinViewCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell
             
             let basicDetail = basicDetails[indexPath.row]
             cell.displayContent(image: basicDetail, despcription: basicDetail)

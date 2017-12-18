@@ -14,7 +14,7 @@ class CarLocation: NSObject, MKAnnotation {
     let coordinate: CLLocationCoordinate2D
     
     init(locationName: String, discipline: String, coordinate: CLLocationCoordinate2D) {
-        self.title = "Fetch your car here"
+        self.title = "Get your car here"
         self.locationName = locationName
         self.coordinate = coordinate
         

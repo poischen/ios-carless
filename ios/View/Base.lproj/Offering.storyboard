@@ -12,10 +12,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Show InseratVC-->
+        <!--Offering View Controller-->
         <scene sceneID="KGk-9m-GFP">
             <objects>
-                <viewController id="EVs-0x-oZU" customClass="ShowInseratVC" customModule="show_inserat" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="EVs-0x-oZU" customClass="OfferingViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pRc-0p-GAb">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -67,7 +67,7 @@
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         </collectionViewFlowLayout>
                                                         <cells>
-                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="basicDetailsCollectionViewCell" id="fnG-Yj-lUJ" customClass="BasicDataCollectinViewCell" customModule="show_inserat" customModuleProvider="target">
+                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="basicDetailsCollectionViewCell" id="fnG-Yj-lUJ" customClass="BasicDataCollectionViewCell" customModule="ios" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="70" height="85"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -520,8 +520,8 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="per day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxT-eK-SbD">
-                                                        <rect key="frame" x="215" y="7" width="42.5" height="21"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="per day" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vxT-eK-SbD">
+                                                        <rect key="frame" x="215" y="7" width="54" height="21"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="21" id="nVG-FJ-S3x"/>
                                                             <constraint firstAttribute="width" constant="42.5" id="usc-EI-0lS"/>
@@ -625,6 +625,8 @@
                         <outlet property="lessorProfileImageView" destination="WX1-F0-jWM" id="EhS-Id-4aQ"/>
                         <outlet property="lessorRateView" destination="DwQ-6y-FxU" id="CFJ-eh-ERX"/>
                         <outlet property="offerDescriptionTextView" destination="eZs-Er-qLa" id="2Q1-I5-HRw"/>
+                        <outlet property="pickUpLabel" destination="pEH-0w-VUY" id="x5J-4c-w0c"/>
+                        <outlet property="returnLabel" destination="yAh-IE-lYS" id="v4D-nL-gUr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bX7-nC-ZKO" userLabel="First Responder" sceneMemberID="firstResponder"/>

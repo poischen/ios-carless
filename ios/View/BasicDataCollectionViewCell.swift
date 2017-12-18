@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BasicDataCollectinViewCell: UICollectionViewCell {
+class BasicDataCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var basicDetailImageView: UIImageView!
     @IBOutlet var basicDetailLabel: UILabel!
