@@ -133,18 +133,21 @@
                                     <action selector="Button:" destination="7tC-DY-h2g" eventType="touchUpInside" id="gOc-x0-lvh"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-QW-59L">
-                                <rect key="frame" x="42" y="492" width="290" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-QW-59L">
+                                <rect key="frame" x="76" y="602" width="63" height="55"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Search"/>
+                                <state key="normal" title="Search" image="Search"/>
                                 <connections>
                                     <action selector="searchButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="Rrb-E6-PXv"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kdG-ox-EXe">
-                                <rect key="frame" x="42" y="530" width="290" height="35"/>
+                                <rect key="frame" x="255" y="608" width="54" height="43"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Chat"/>
+                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <state key="normal" image="Chat">
+                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                </state>
                                 <connections>
                                     <action selector="chatButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="maV-y9-PCd"/>
                                 </connections>
@@ -161,8 +164,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Chat" width="256" height="256"/>
         <image name="Hintergrund.jpg" width="210" height="315"/>
         <image name="HomePicture.jpg" width="1920" height="1080"/>
         <image name="Profil.png" width="500" height="500"/>
+        <image name="Search" width="384" height="384"/>
     </resources>
 </document>
