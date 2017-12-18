@@ -9,9 +9,14 @@
 import Foundation
 
 class VehicleType: DictionaryConvertible {
+    
+    // constants for the dictionary keys
+    static let VEHICLETYPE_ICON_URL_KEY = "icon_dl"
+    static let VEHICLETYPE_NAME_KEY = "type"
+    
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let typeName = dict["type"] as? String,
-              let typeIconURL = dict["icon_dl"] as? String else {
+        guard let typeName = dict[VehicleType.VEHICLETYPE_NAME_KEY] as? String,
+              let typeIconURL = dict[VehicleType.VEHICLETYPE_ICON_URL_KEY] as? String else {
                 return nil
         }
         self.init(id: id, name: typeName, iconURL: typeIconURL)
@@ -19,8 +24,8 @@ class VehicleType: DictionaryConvertible {
     
     var dict: [String : AnyObject] {
         return [
-            "icon_dl": self.iconURL as AnyObject,
-            "type": self.name as AnyObject
+            VehicleType.VEHICLETYPE_ICON_URL_KEY: self.iconURL as AnyObject,
+            VehicleType.VEHICLETYPE_NAME_KEY: self.name as AnyObject
         ]
     }
     

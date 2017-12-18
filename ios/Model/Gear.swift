@@ -12,9 +12,14 @@ import Foundation
 // TODO: more sophisticated object needed here?
 
 class Gear: DictionaryConvertible {
+    
+    // constants for the dictionary keys
+    static let GEAR_NAME_KEY = "gear"
+    static let GEAR_ICON_URL_KEY = "icon_dl"
+    
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let gearName = dict["gear"] as? String,
-              let gearIconURL = dict["icon_dl"] as? String else {
+        guard let gearName = dict[Gear.GEAR_NAME_KEY] as? String,
+              let gearIconURL = dict[Gear.GEAR_ICON_URL_KEY] as? String else {
             return nil
         }
         self.init(id: id, name: gearName, iconURL: gearIconURL)
@@ -34,7 +39,8 @@ class Gear: DictionaryConvertible {
     
     var dict: [String : AnyObject] {
         return [
-            "gear": self.name as AnyObject,
+            Gear.GEAR_NAME_KEY: self.name as AnyObject,
+            Gear.GEAR_ICON_URL_KEY: self.iconURL as AnyObject
         ]
     }
     

@@ -9,11 +9,18 @@
 import Foundation
 
 class Renting: DictionaryConvertible {
+    
+    // constants for the dictionary keys
+    static let RENTING_END_TIMESTAMP_KEY = "endDate"
+    static let RENTING_OFFERING_ID_KEY = "inseratId"
+    static let RENTING_START_TIMESTAMP_KEY = "startDate"
+    static let RENTING_USER_ID_KEY = "userId"
+    
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let rentingEndDateTimestamp = dict["endDate"] as? Int,
-              let rentingInseratID = dict["inseratId"] as? Int,
-              let rentingStartDateTimestamp = dict["startDate"] as? Int,
-              let rentingUserId = dict["userId"] as? String else {
+        guard let rentingEndDateTimestamp = dict[Renting.RENTING_END_TIMESTAMP_KEY] as? Int,
+              let rentingInseratID = dict[Renting.RENTING_OFFERING_ID_KEY] as? Int,
+              let rentingStartDateTimestamp = dict[Renting.RENTING_START_TIMESTAMP_KEY] as? Int,
+              let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String else {
             return nil
         }
         let startDate = Renting.intTimestampToDate(timestamp: rentingStartDateTimestamp)
@@ -23,10 +30,10 @@ class Renting: DictionaryConvertible {
     
     var dict: [String : AnyObject] {
         return [
-            "endDate": Renting.dateToIntTimestamp(date: self.endDate) as AnyObject,
-            "inseratId": self.inseratID as AnyObject,
-            "startDate": Renting.dateToIntTimestamp(date: self.startDate) as AnyObject,
-            "userId": self.userID as AnyObject
+            Renting.RENTING_END_TIMESTAMP_KEY: Renting.dateToIntTimestamp(date: self.endDate) as AnyObject,
+            Renting.RENTING_OFFERING_ID_KEY: self.inseratID as AnyObject,
+            Renting.RENTING_START_TIMESTAMP_KEY: Renting.dateToIntTimestamp(date: self.startDate) as AnyObject,
+            Renting.RENTING_USER_ID_KEY: self.userID as AnyObject
         ]
     }
     

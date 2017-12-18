@@ -9,35 +9,16 @@
 import Foundation
 
 class Brand: DictionaryConvertible {
+    
+    // constants for the dictionary keys
+    static let BRAND_NAME_KEY = "brand"
+    
     convenience required init?(id: Int, dict: [String : AnyObject]) {
-        guard let brandName = dict["brand"] as? String else {
+        guard let brandName = dict[Brand.BRAND_NAME_KEY] as? String else {
             return nil
         }
         self.init(id: id, name: brandName)
     }
-    
-    
-    /* typealias convertTo = Brand
-    static func dictionaryToArray(dictionary: NSDictionary) -> [Brand] {
-        var resultBrands:[Brand] = []
-        for (brandIDRaw, brandDataRaw) in dictionary {
-            if let brandData:NSDictionary = brandDataRaw as? NSDictionary {
-                guard let brandName = brandData["brand"] as? String,
-                    let brandIDString:String = brandIDRaw as? String else {
-                    print("invalid brandName or brandID in Brand")
-                    return []
-                }
-                let newBrand:Brand = Brand(id: Int(brandIDString)!, name: brandName)
-                resultBrands.append(newBrand)
-            } else {
-                print("invalid brandData in Brand")
-                return []
-            }
-        }
-        return resultBrands
-    } */
-    
-    
     
     let id: Int
     let name: String
@@ -51,7 +32,7 @@ class Brand: DictionaryConvertible {
     
     var dict: [String : AnyObject] {
         return [
-            "brand": self.name as AnyObject
+            Brand.BRAND_NAME_KEY: self.name as AnyObject
         ]
     }
     
