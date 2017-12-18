@@ -39,9 +39,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
         
-        
-        
-        
         myTV.reloadData();
     }
 
@@ -58,6 +55,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath);
         
+        
         cell.textLabel?.text = users[indexPath.row].name;
         
         return cell;
@@ -65,7 +63,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //open chat window
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: CHAT_SEGUE, sender: nil);
+        performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
     }
 
     //go back to the View Controller before (there's none for now)

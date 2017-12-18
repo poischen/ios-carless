@@ -19,11 +19,11 @@ class MessageHandler {
     static let _shared = MessageHandler()
     private init() {}
     
-    weak var delegate: MessageReceivedDelegate?;
+    weak var delegate: MessageReceivedDelegate?
     
-    func sendMessage(senderID: String, senderName: String, text: String){
+    func sendMessage(senderID: String, senderName: String, text: String, receiverID: String){
         
-        let data: Dictionary<String, Any> = [Constants.SENDER_ID: senderID, Constants.SENDER_NAME: senderName, Constants.TEXT: text];
+        let data: Dictionary<String, Any> = [Constants.SENDER_ID: senderID, Constants.SENDER_NAME: senderName, Constants.TEXT: text, Constants.RECEIVER_ID: receiverID];
         
         StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
     }

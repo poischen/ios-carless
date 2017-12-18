@@ -257,10 +257,10 @@ final class StorageAPI {
                     if let userData = value as? NSDictionary{
                         
                         // fetch the data as String
-                        if let email = userData[Constants.NAME] as? String {
+                        if let name = userData[Constants.NAME] as? String {
                             
                             let id = key as! String;
-                            let newUser = User(id: id, name: email);
+                            let newUser = User(id: id, name: name);
                             
                             //append it in the empty array
                             users.append(newUser);

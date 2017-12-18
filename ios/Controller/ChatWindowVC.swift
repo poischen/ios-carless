@@ -14,6 +14,8 @@ import SDWebImage
 
 class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    private var users = [User]();
+    
     private var messages = [JSQMessage]();
     
     //pick images to send
@@ -85,11 +87,14 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        MessageHandler._shared.sendMessage(senderID: senderId, senderName: senderDisplayName, text: text);
+        // TODO  wrong for now
+       let receiverID = StorageAPI.shared.userID()
+        MessageHandler._shared.sendMessage(senderID: senderId, senderName: senderDisplayName, text: text, receiverID: receiverID);
         
         //remove text from textfield
         finishSendingMessage();
     }
+    
     
     //Sending media button
     override func didPressAccessoryButton(_ sender: UIButton!) {
