@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VehicleType: DictionaryConvertible {
+class VehicleType: DictionaryConvertible, SelectableItem {
     
     // constants for the dictionary keys
     static let VEHICLETYPE_ICON_URL_KEY = "icon_dl"
@@ -39,9 +39,5 @@ class VehicleType: DictionaryConvertible {
         self.id = id
         self.iconURL = iconURL
         self.isSelected = false
-    }
-    
-    func toggleSelected() {
-        self.isSelected = !self.isSelected
     }
 }

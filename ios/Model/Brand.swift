@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Brand: DictionaryConvertible {
+class Brand: DictionaryConvertible, SelectableItem {
     
     // constants for the dictionary keys
     static let BRAND_NAME_KEY = "brand"
@@ -34,9 +34,5 @@ class Brand: DictionaryConvertible {
         return [
             Brand.BRAND_NAME_KEY: self.name as AnyObject
         ]
-    }
-    
-    func toggleSelected() {
-        self.isSelected = !self.isSelected
     }
 }

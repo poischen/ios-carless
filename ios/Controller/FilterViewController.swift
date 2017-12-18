@@ -144,6 +144,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         // TODO: avoid code duplication here by merging Engine, Feature and Gear?
         // TODO: gracefully handle errors here
         
+        var cellContent:SelectableItem
+        
         switch tableView {
         case self.pickExtraTable:
             let cellIdentifier = "ExtraTableViewCell"
@@ -211,39 +213,34 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        // TODO: avoid code duplication here by merging Engine, Feature and Gear
-
+        // TODO: is it possible to avoid the code duplication here?
+        
         
         switch tableView {
-        case self.pickExtraTable:
-            let feature = self.features[indexPath.row]
-            feature.toggleSelected()
-            self.pickExtraTable.reloadRows(at: [indexPath], with: .none)
-            self.updateSelectedFeaturesInFilter()
-        case self.pickFuelTable:
-            let engine = self.fuels[indexPath.row]
-            // TODO: avoid code duplication here
-            engine.toggleSelected()
-            self.pickFuelTable.reloadRows(at: [indexPath], with: .none)
-            self.updateSelectedFuelsInFilter()
-        case self.pickBrandTable:
-            let brand = self.brands[indexPath.row]
-            brand.toggleSelected()
-            self.pickBrandTable.reloadRows(at: [indexPath], with: .none)
-            self.updateSelectedBrandsInFilter()
-        case self.pickGearTable:
-            let gear = self.gears[indexPath.row]
-            gear.toggleSelected()
-            self.pickGearTable.reloadRows(at: [indexPath], with: .none)
-            self.updateSelectedGearsInFilter()
-        case self.pickVehicleTypeTable:
-            let carType:VehicleType = self.vehicleTypes[indexPath.row]
-            carType.toggleSelected()
-            self.pickVehicleTypeTable.reloadRows(at: [indexPath], with: .none)
-            self.updateSelectedVehicleTypesInFilter()
-        default:
-            return
+            case self.pickExtraTable:
+                var feature = self.features[indexPath.row]
+                feature.toggleSelected()
+                self.updateSelectedFeaturesInFilter()
+            case self.pickFuelTable:
+                var engine = self.fuels[indexPath.row]
+                engine.toggleSelected()
+                self.updateSelectedFuelsInFilter()
+            case self.pickBrandTable:
+                var brand = self.brands[indexPath.row]
+                brand.toggleSelected()
+                self.updateSelectedBrandsInFilter()
+            case self.pickGearTable:
+                var gear = self.gears[indexPath.row]
+                gear.toggleSelected()
+                self.updateSelectedGearsInFilter()
+            case self.pickVehicleTypeTable:
+                var carType:VehicleType = self.vehicleTypes[indexPath.row]
+                carType.toggleSelected()
+                self.updateSelectedVehicleTypesInFilter()
+            default:
+                return
         }
+        tableView.reloadRows(at: [indexPath], with: .none) // reload rows to reflect new selected status (show checkmark)
     }
     
     func receiveFeatures(features: [Feature]) -> Void {
@@ -315,6 +312,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
+    
+    // TODO: Do these methods belong in the model (-> filter class)?
     
     func updateSelectedFeaturesInFilter(){
         if self.searchFilter != nil {

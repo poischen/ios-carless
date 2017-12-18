@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Feature: DictionaryConvertible {
+class Feature: DictionaryConvertible, SelectableItem {
     
     // constants for the dictionary keys
     static let FEATURE_NAME_KEY = "type"
@@ -39,9 +39,5 @@ class Feature: DictionaryConvertible {
         self.id = id
         self.iconURL = iconURL
         self.isSelected = false
-    }
-    
-    func toggleSelected() {
-        self.isSelected = !self.isSelected
     }
 }

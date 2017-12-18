@@ -11,7 +11,7 @@ import Foundation
 // TODO: let gear, engine and feature inherit from one class or union these classes?
 // TODO: more sophisticated object needed here?
 
-class Gear: DictionaryConvertible {
+class Gear: DictionaryConvertible, SelectableItem {
     
     // constants for the dictionary keys
     static let GEAR_NAME_KEY = "gear"
@@ -42,9 +42,5 @@ class Gear: DictionaryConvertible {
             Gear.GEAR_NAME_KEY: self.name as AnyObject,
             Gear.GEAR_ICON_URL_KEY: self.iconURL as AnyObject
         ]
-    }
-    
-    func toggleSelected() {
-        self.isSelected = !self.isSelected
     }
 }

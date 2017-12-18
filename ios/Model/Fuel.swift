@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Fuel: DictionaryConvertible {
+class Fuel: DictionaryConvertible, SelectableItem {
     
     // constants for the dictionary keys
     static let FUEL_NAME_KEY = "fuel"
@@ -39,9 +39,5 @@ class Fuel: DictionaryConvertible {
         self.isSelected = false
         self.id = id
         self.iconURL = iconURL
-    }
-    
-    func toggleSelected() {
-        self.isSelected = !self.isSelected
     }
 }
