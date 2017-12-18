@@ -12,6 +12,7 @@ class DBMapping {
     static let shared = DBMapping()
 
     // TODO: necessary to store brands here when DB already caches?
+    // TODO: use maps here?
     
     let storageAPI = StorageAPI.shared
     var brands:[Brand]?

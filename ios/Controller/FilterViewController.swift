@@ -25,7 +25,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var applyFilterButton: UIButton!
     
     // TODO: use optionals here?
-    // TODO: use Map for
+    // TODO: use Map for this?
     var features:[Feature] = [Feature]()
     var vehicleTypes:[VehicleType] = [VehicleType]()
     var fuels:[Fuel] = [Fuel]()
@@ -138,9 +138,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // TODO: avoid code duplication here by merging Engine, Feature and Gear?
-        // TODO: gracefully handle errors here
-        
         var cellContent:SelectableItem
         var cellIdentifier:String
         
@@ -158,6 +155,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             cellIdentifier = "GearTableViewCell"
             cellContent = gears[indexPath.row]
         default: // covers pickVehicleTypeTable
+            // TODO: better way to provide an exhaustive switch here?
             cellIdentifier = "VehicleTypeTableViewCell"
             cellContent = vehicleTypes[indexPath.row]
         }
@@ -174,10 +172,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        // TODO: is it possible to avoid the code duplication here?
-        
-        
         switch tableView {
             case self.pickExtraTable:
                 var feature = self.features[indexPath.row]
