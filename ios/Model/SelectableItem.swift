@@ -10,7 +10,7 @@ import Foundation
 
 protocol SelectableItem {
     var isSelected:Bool {get set}
-    var name:String {get set}
+    var name:String {get}
 }
 
 extension SelectableItem {

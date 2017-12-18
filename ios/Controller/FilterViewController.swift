@@ -138,77 +138,39 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var returnCell: UITableViewCell?
-        
         // TODO: avoid code duplication here by merging Engine, Feature and Gear?
         // TODO: gracefully handle errors here
         
         var cellContent:SelectableItem
+        var cellIdentifier:String
         
         switch tableView {
         case self.pickExtraTable:
-            let cellIdentifier = "ExtraTableViewCell"
-            let extra:Feature = self.features[indexPath.row]
-            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = extra.name
-            if (extra.isSelected){
-                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.none
-            }
-            returnCell = cell
+            cellIdentifier = "ExtraTableViewCell"
+            cellContent = self.features[indexPath.row]
         case self.pickFuelTable:
-            let cellIdentifier = "EngineTableViewCell"
-            let fuel:Fuel = fuels[indexPath.row]
-            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = fuel.name
-            if (fuel.isSelected){
-                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.none
-            }
-            returnCell = cell
+            cellIdentifier = "EngineTableViewCell"
+            cellContent = fuels[indexPath.row]
         case self.pickBrandTable:
-            let cellIdentifier = "BrandTableViewCell"
-            let brand:Brand = brands[indexPath.row]
-            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = brand.name
-            if (brand.isSelected){
-                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.none
-            }
-            returnCell = cell
+            cellIdentifier = "BrandTableViewCell"
+            cellContent = brands[indexPath.row]
         case self.pickGearTable:
-            let cellIdentifier = "GearTableViewCell"
-            let gear:Gear = gears[indexPath.row]
-            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = gear.name
-            if (gear.isSelected){
-                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.none
-            }
-            returnCell = cell
-        case self.pickVehicleTypeTable:
-            let cellIdentifier = "VehicleTypeTableViewCell"
-            let carType:VehicleType = vehicleTypes[indexPath.row]
-            let cell:UITableViewCell? = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-            cell!.textLabel!.text = carType.name
-            if (carType.isSelected){
-                cell!.accessoryType = UITableViewCellAccessoryType.checkmark
-            } else {
-                cell!.accessoryType = UITableViewCellAccessoryType.none
-            }
-            returnCell = cell
-        default:
-            returnCell = nil
+            cellIdentifier = "GearTableViewCell"
+            cellContent = gears[indexPath.row]
+        default: // covers pickVehicleTypeTable
+            cellIdentifier = "VehicleTypeTableViewCell"
+            cellContent = vehicleTypes[indexPath.row]
         }
-
         
-        returnCell!.selectionStyle = UITableViewCellSelectionStyle.none
-        return returnCell!
+        let returnCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
+        returnCell.textLabel!.text = cellContent.name
+        if (cellContent.isSelected){
+            returnCell.accessoryType = UITableViewCellAccessoryType.checkmark
+        } else {
+            returnCell.accessoryType = UITableViewCellAccessoryType.none
+        }
+        returnCell.selectionStyle = UITableViewCellSelectionStyle.none
+        return returnCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
