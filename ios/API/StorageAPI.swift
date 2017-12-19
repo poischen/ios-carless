@@ -200,14 +200,16 @@ final class StorageAPI {
         }
     }
     
-    // get brand by ID e.g. for displaying the brand's name
-    func getBrandByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
-        self.brandsDBReference.queryOrdered(byChild: "brand").queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
-            let child = snapshot.children.nextObject() as! DataSnapshot
-            let dict = child.value as! [String:AnyObject]
-            let brand = Brand.init(id: Int(child.key)!, dict: dict)!
-            completion(brand)
-            //self.brandsDBReference.keepSynced(false) // fix for caching problems
+    func getBrandsAsMap(completion: @escaping (_ brands: [Int:Brand]) -> Void){
+        self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultBrands:[Int:Brand] = [:]
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let brand = Brand.init(id: Int(child.key)!, dict: dict)!
+                resultBrands.updateValue(brand, forKey: brand.id)
+            }
+            completion(resultBrands)
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -216,6 +218,7 @@ final class StorageAPI {
     func getFuels(completion: @escaping (_ fuels: [Fuel]) -> Void){
         self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFuels:[Fuel] = []
+            // TODO: avoid code duplication here
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
@@ -229,7 +232,22 @@ final class StorageAPI {
         }
     }
     
-    func getGears(completion: @escaping (_ fuels: [Gear]) -> Void){
+    func getFuelsAsMap(completion: @escaping (_ fuels: [Int:Fuel]) -> Void){
+        self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultFuels:[Int:Fuel] = [:]
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let fuel = Fuel.init(id: Int(child.key)!, dict: dict)!
+                resultFuels.updateValue(fuel, forKey: fuel.id)
+            }
+            completion(resultFuels)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getGears(completion: @escaping (_ gears: [Gear]) -> Void){
         self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultGears:[Gear] = []
             for childRaw in snapshot.children {
@@ -245,13 +263,20 @@ final class StorageAPI {
         }
     }
     
-    /*func stringToDate(dateString: String) -> Date {
-        var formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        // adding one hour as the date formatter always parses the day before at 11 PM for some reason
-        let newDate:Date = formatter.date(from: dateString)! + 3600 // TODO: find different fix for this
-        return newDate
-    }*/
+    func getGearsAsMap(completion: @escaping (_ gears: [Int:Gear]) -> Void){
+        self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultGears:[Int:Gear] = [:]
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let gear = Gear.init(id: Int(child.key)!, dict: dict)!
+                resultGears.updateValue(gear, forKey: gear.id)
+            }
+            completion(resultGears)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     
     //stores User in Database
     //User is not being saved for now (Video 6 of the Tutorial)

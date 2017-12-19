@@ -15,38 +15,37 @@ class DBMapping {
     // TODO: use maps here?
     
     let storageAPI = StorageAPI.shared
-    var brands:[Brand]?
-    var gears:[Gear]?
-    var fuels:[Fuel]?
+    var brands:[Int:Brand]? // unsing dictionaries here as the main operation on the brands, gears and fuels will be getting an item that has a certain ID
+    var gears:[Int:Gear]?
+    var fuels:[Int:Fuel]?
     
-    func fillBrandsCache(completion: () -> Void){
-        self.storageAPI.getBrands(completion: {brands in
-            self.brands = brands
+    func fillBrandsCache(completion: @escaping () -> Void){
+        self.storageAPI.getBrandsAsMap(completion: {brandsMap in
+            self.brands = brandsMap
+            completion()
         })
-        completion()
     }
     
     func fillGearsCache(completion: () -> Void){
-        self.storageAPI.getGears(completion: {gears in
-            self.gears = gears
+        self.storageAPI.getGearsAsMap(completion: {gearsMap in
+            self.gears = gearsMap
         })
         completion()
     }
     
-    func fillFuelsCache(completion: () -> Void){
-        self.storageAPI.getFuels(completion: {fuels in
-            self.fuels = fuels
+    func fillFuelsCache(completion: @escaping () -> Void){
+        self.storageAPI.getFuelsAsMap(completion: {fuelsMap in
+            self.fuels = fuelsMap
+            completion()
         })
-        completion()
     }
         
     func mapBrandIDToBrand(id: Int) ->  Brand? {
         if let brands = self.brands {
-            let matchingBrands = brands.filter {$0.id == id}
-            if matchingBrands.count == 1 {
-                return matchingBrands[0]
+            if let matchingBrand = brands[id] {
+                return matchingBrand
             } else {
-                // returns nil if more than one or no brand has been found
+                // returns nil if no brand has been found
                 return nil
             }
         } else {
@@ -57,11 +56,10 @@ class DBMapping {
     
     func mapGearIDToGear(id: Int) ->  Gear? {
         if let gears = self.gears {
-            let matchingGears = gears.filter {$0.id == id}
-            if matchingGears.count == 1 {
-                return matchingGears[0]
+            if let matchingGear = gears[id] {
+                return matchingGear
             } else {
-                // returns nil if more than one or no gear has been found
+                // returns nil if no gear has been found
                 return nil
             }
         } else {
@@ -72,11 +70,10 @@ class DBMapping {
     
     func mapFuelIDToFuel(id: Int) ->  Fuel? {
         if let fuels = self.fuels {
-            let matchingFuels = fuels.filter {$0.id == id}
-            if matchingFuels.count == 1 {
-                return matchingFuels[0]
+            if let matchingFuel = fuels[id] {
+                return matchingFuel
             } else {
-                // returns nil if more than one or no fuel has been found
+                // returns nil if no fuel has been found
                 return nil
             }
         } else {

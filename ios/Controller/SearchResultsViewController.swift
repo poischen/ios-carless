@@ -15,11 +15,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     let searchModel:SearchModel = SearchModel()
     @IBOutlet weak var searchResultsTable: UITableView!
     
-    var fuels:[Fuel] = [Fuel]()
-    var brands:[Brand]?
-    var gears:[Gear] = [Gear]()
-    
-    let storageAPI = StorageAPI.shared
     let dbMapping = DBMapping.shared
     
     override func viewDidLoad() {
@@ -28,6 +23,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.dataSource = self
 
         self.dbMapping.fillBrandsCache(completion: {
+            print("cache filled")
             self.searchResultsTable.reloadData()
         })
         self.dbMapping.fillGearsCache(completion: {
@@ -67,9 +63,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         let offering = offerings[indexPath.row]
         
-        //cell.modelLabel.text = offering.type
-        
         if let offeringsBrand = self.dbMapping.mapBrandIDToBrand(id: offering.brandID) {
+            print("setting brand")
             cell.modelLabel.text = offeringsBrand.name + " " + offering.type
         } else {
             cell.modelLabel.text = "loading"
@@ -87,12 +82,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.fuelLabel.text = "loading"
         }
         
-        //         cell.modelLabel.text = String(offering.brandID) + " " + offering.type
-
         cell.seatsLabel.text = String(offering.seats) + " seats"
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
-        // cell.locationLabel.text = offering.location
-        // TODO: make location and price dynamic
         cell.locationLabel.text = offering.location
         cell.priceLabel.text = "from " + String(offering.basePrice) + "€ per day"
         let url = URL(string: offering.pictureURL)
@@ -124,11 +115,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.offerings = offerings
             self.searchResultsTable.reloadData()
         }
-    }
-    
-    func receiveBrands(brands: [Brand]) {
-        self.brands = brands
-        self.searchResultsTable.reloadData()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
