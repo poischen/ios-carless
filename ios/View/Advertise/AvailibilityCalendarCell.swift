@@ -7,7 +7,9 @@
 //
 
 import UIKit
+import JTAppleCalendar
 
-class AvailibilityCalendarCell: JTAppleCell {
+class AvailibilityCalendarCell: JTAppleCell{
+    @IBOutlet weak var dateLabel: UILabel!
     
 }

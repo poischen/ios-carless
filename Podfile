@@ -9,6 +9,7 @@ target 'ios' do
 
   # Pods for show_inserat
   pod 'Kingfisher', '~> 3.13.x'
+  pod 'JTAppleCalendar', '~> 7.0'
   pod 'Cosmos', '~> 11.0'
 
   target 'iosTests' do

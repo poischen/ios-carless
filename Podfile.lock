@@ -1,15 +1,18 @@
 PODS:
   - Cosmos (11.0.3)
+  - JTAppleCalendar (7.1.4)
   - Kingfisher (3.13.1)
 
 DEPENDENCIES:
   - Cosmos (~> 11.0)
+  - JTAppleCalendar (~> 7.0)
   - Kingfisher (~> 3.13.x)
 
 SPEC CHECKSUMS:
   Cosmos: eb506859929f4add2d2aec822a27efb2f718a95d
+  JTAppleCalendar: aaeee95e939e0b0a381fb51eb77738bd26bb10f6
   Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
 
-PODFILE CHECKSUM: 4a490c79a386af61319d282f8737805cc9899a6b
+PODFILE CHECKSUM: e0261c1c80713d0ee26d8f2c39ad661962d7f4aa
 
 COCOAPODS: 1.3.1
