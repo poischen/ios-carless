@@ -32,24 +32,8 @@ class ViewController: UIViewController {
         signup()
     }
     
-    @IBAction func logoutButton (_ sender: Any) {
-        logout()
-    }
     
-    // temporary link, remove later
-    @IBAction func searchButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Search")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-
-    
-    @IBAction func chatButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
-        self.present(vc, animated: true, completion: nil)
-    }
+  
     
     
     @IBAction func skipButton(_ sender: Any) {
@@ -134,22 +118,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    func logout() {
-        if Auth.auth().currentUser != nil {
-            do {
-                try Auth.auth().signOut()
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignUp")
-                present(vc, animated: true, completion: nil)
-                
-            } catch let error as NSError {
-                print (error.localizedDescription)
-            }
-        }
-    
-    }
-    
-    
     
 
 }
