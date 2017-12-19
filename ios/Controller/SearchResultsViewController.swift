@@ -62,7 +62,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "SearchResultsCell"
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? SearchResultsTableViewCell else {
-            fatalError("The dequeued cell is not an instance of CarTableViewCell.")
+            fatalError("The dequeued cell is not an instance of SearchResultsTableViewCell.")
         }
         
         let offering = offerings[indexPath.row]

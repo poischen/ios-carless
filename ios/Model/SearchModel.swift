@@ -9,11 +9,9 @@
 import Foundation
 
 class SearchModel {
-    private let notificationCenter: NotificationCenter
     private let storageAPI: StorageAPI
     
     init() {
-        self.notificationCenter = NotificationCenter.default
         self.storageAPI = StorageAPI.shared
     }
     
@@ -128,6 +126,7 @@ class SearchModel {
     
     // HELPER FUNCTIONS
     
+    // TODO: is this function necessary? we could just use sets for the data
     static func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
         let selfSet = Set(array)
         return !shouldContain.contains { !selfSet.contains($0) }

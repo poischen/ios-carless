@@ -87,14 +87,13 @@ class DBMapping {
     
     /*
      not using this version as I thought there's no way to be sure when the callback in the cell rendering method will fire
-     it could be after the function has finished running and I don't know whether chaning a cell's value after returning it will have any effect O:-)
+     it could be after the function has finished running and I don't know whether changing a cell's value after returning it will have any effect O:-)
+     But it looks like I was wrong, trying this again soon. */
      
-     func mapGearIDToGear(id: Int, completion: @escaping (_ gear: Gear) -> Void) {
-        self.storageAPI.getGears(completion: {gears in
-            let matchingGears = gears.filter {$0.id == id}
-            if matchingGears.count == 1 {
-                completion(matchingGears[0])
-            }
+    /*func getFilteredOfferingsWithExtraInfo(filter: Filter, completion: @escaping (_ offerings: [Offering]) -> Void) {
+        let searchModel = SearchModel()
+        searchModel.getFilteredOfferings(filter: filter, completion: {offerings in
+            
         })
-    } */
+    }*/
 }
