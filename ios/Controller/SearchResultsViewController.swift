@@ -123,8 +123,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         } else {
             self.offerings = offerings
             self.searchResultsTable.reloadData()
-            
-            print(offerings[0].dict)
         }
     }
     

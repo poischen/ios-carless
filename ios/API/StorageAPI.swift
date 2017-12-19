@@ -98,7 +98,7 @@ final class StorageAPI {
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)
-            self.offeringsDBReference.keepSynced(false) // fix for caching problems
+            //self.offeringsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -114,7 +114,7 @@ final class StorageAPI {
                 resultFeatures.append(feature)
             }
             completion(resultFeatures)
-            self.featuresDBReference.keepSynced(false) // fix for caching problems
+            //self.featuresDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -145,7 +145,7 @@ final class StorageAPI {
                 }
             }
             completion(resultOfferingsFeatures)
-            self.offeringsFeaturesDBReference.keepSynced(false) // fix for caching problems
+            //self.offeringsFeaturesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -161,7 +161,7 @@ final class StorageAPI {
                 resultRentings.append(renting)
             }
             completion(resultRentings)
-            self.rentingsDBReference.keepSynced(false) // fix for caching problems
+            //self.rentingsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -177,7 +177,7 @@ final class StorageAPI {
                 resultTypes.append(type)
             }
             completion(resultTypes)
-            self.vehicleTypesDBReference.keepSynced(false) // fix for caching problems
+            //self.vehicleTypesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -194,7 +194,7 @@ final class StorageAPI {
                 resultBrands.append(brand)
             }
             completion(resultBrands)
-            self.brandsDBReference.keepSynced(false) // fix for caching problems
+            //self.brandsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -207,7 +207,7 @@ final class StorageAPI {
             let dict = child.value as! [String:AnyObject]
             let brand = Brand.init(id: Int(child.key)!, dict: dict)!
             completion(brand)
-            self.brandsDBReference.keepSynced(false) // fix for caching problems
+            //self.brandsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -223,7 +223,7 @@ final class StorageAPI {
                 resultFuels.append(fuel)
             }
             completion(resultFuels)
-            self.fuelDBReference.keepSynced(false) // fix for caching problems
+            //self.fuelDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -239,7 +239,7 @@ final class StorageAPI {
                 resultGears.append(gear)
             }
             completion(resultGears)
-            self.gearsDBReference.keepSynced(false) // fix for caching problems
+            //self.gearsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }

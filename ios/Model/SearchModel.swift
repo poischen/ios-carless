@@ -126,61 +126,6 @@ class SearchModel {
         })
     } */
     
-    // TODO: remove
-    /*
-    func testFilterOfferingByDate(){
-        // TESTING
-        let offering = Offering(id: 1, brand: "BMW", basePrice: 10, consumption: 10, description: "yay", fuel: "Electric", gear: "Automatic", hp: 100, latitude: 10, location: "Berlin", longitude: 10, pictureURL: "yay", seats: 5, type: "asdf", featuresIDs: nil, vehicleTypeID: 0);
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM-dd-yyyy"
-        let testDate11 = formatter.date(from: "01-01-2018")
-        let testDate12 = formatter.date(from: "01-10-2018")
-        let testDate13 = formatter.date(from: "01-11-2018")
-        let testDate14 = formatter.date(from: "01-05-2018")
-        
-        let testDate21 = formatter.date(from: "01-10-2018")
-        let testDate22 = formatter.date(from: "01-20-2018")
-        let testDate23 = formatter.date(from: "01-30-2018")
-        
-        let desired = DateInterval(start: testDate11!, end: testDate12!)
-        let desired2 = DateInterval(start: testDate11!, end: testDate13!)
-        let desired3 = DateInterval(start: testDate11!, end: testDate11!)
-        let desired4 = DateInterval(start: testDate14!, end: testDate14!)
-        let desired5 = DateInterval(start: testDate21!, end: testDate22!)
-        
-        let rentings = [
-            Renting(id: 1, inseratID: 1, userID: "asdf", startDate: testDate21!, endDate: testDate22!)
-        ]
-        let rentings2 = [
-            Renting(id: 2, inseratID: 1, userID: "asdf", startDate: testDate11!, endDate: testDate11!)
-        ]
-        let rentings3 = [
-            Renting(id: 3, inseratID: 1, userID: "asdf", startDate: testDate14!, endDate: testDate14!)
-        ]
-        let rentings4 = [
-            Renting(id: 4, inseratID: 1, userID: "asdf", startDate: testDate11!, endDate: testDate12!)
-        ]
-        let rentings5 = [
-            Renting(id: 5, inseratID: 1, userID: "asdf", startDate: testDate11!, endDate: testDate12!),
-            Renting(id: 6, inseratID: 1, userID: "asdf", startDate: testDate22!, endDate: testDate23!)
-        ]
-        
-        // end day of desired is start date of renting
-        print("test1:" + String(filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desired)) + "(should be true)")
-        // intersection of more than one day
-        print("test2:" + String(filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desired2)) + "(should be false)")
-        // two one day bookings on the same day:
-        print("test3:" + String(filterOfferingByDate(offering: offering, rentings: rentings2, desiredDateInterval: desired3)) + "(should be false)")
-        // one day booking on the start day of desired
-        print("test4:" + String(filterOfferingByDate(offering: offering, rentings: rentings2, desiredDateInterval: desired)) + "(should be false)")
-        // one day reserved in the middle of desired
-        print("test5:" + String(filterOfferingByDate(offering: offering, rentings: rentings3, desiredDateInterval: desired)) + "(should be false)")
-        // one day desired in the middle of reserved
-        print("test6:" + String(filterOfferingByDate(offering: offering, rentings: rentings4, desiredDateInterval: desired4)) + "(should be false)")
-        // one day overlap at start and end of desired
-        print("test7:" + String(filterOfferingByDate(offering: offering, rentings: rentings5, desiredDateInterval: desired5)) + "(should be true)")
-    }*/
-    
     // HELPER FUNCTIONS
     
     static func arrayContainsArray(array: [Int], shouldContain: [Int]) -> Bool{
