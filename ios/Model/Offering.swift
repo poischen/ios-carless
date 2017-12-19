@@ -104,4 +104,19 @@ class Offering: DictionaryConvertible {
         self.vehicleTypeID = vehicleTypeID
         self.userUID = userUID
     }
+    
+    //Icons in program have the same name as the String of the detail
+    func getBasicDetails() -> [String] {
+        let seats = "\(self.seats)"
+        let gear = DBMapping.shared.mapGearIDToGear(id: gearID)
+        let fuel = DBMapping.shared.mapFuelIDToFuel(id: fuelID)
+        //TODO: get vehicletype from ID
+        let basicDetails = [seats, fuel!.name, gear!.name, "Compact"] as [Any]
+        return basicDetails as! [String]
+    }
+    
+    func  getBrand() -> String {
+        let brand = DBMapping.shared.mapBrandIDToBrand(id: brandID)
+        return brand!.name
+    }
 }
