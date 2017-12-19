@@ -25,3 +25,4 @@ class CarLocation: NSObject, MKAnnotation {
         return locationName
     }
 }
+

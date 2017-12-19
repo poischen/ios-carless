@@ -11,7 +11,9 @@ import Kingfisher
 import Cosmos
 import MapKit
 
-class OfferingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class OfferingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
+//UICollectionViewDelegate
+{
 
     //TODO use DB-Data instead of Dummys
     let displayingOffering = Offering(id: 1, basePrice: 120, brand: "BMW", name: "X5", consumption: 7, description: "I am a Description.\n\nWeit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.\n\nRent this car, it's georgious!", fuel: "gas", gear: "manual", hp: 230, latitude: 11.581981, location: "Munich", longitude: 48.135125, pictureURL: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fcar.jpg?alt=media&token=168e6d4e-ee84-4f56-817b-b7ec1971d6ba", seats: 5, type: "SUV", featuresIDs: [1, 2, 3], vehicleTypeID: 5, vehicleType: "SUV")
@@ -30,7 +32,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var lessorRateView: CosmosView!
     @IBOutlet weak var lessorProfileImageView: UIImageView!
     @IBOutlet weak var offerDescriptionTextView: UITextView!
-    @IBOutlet var featuresCollectionView: UICollectionView!
+    @IBOutlet weak var featuresCollectionView: UICollectionView!
     var features: [String] = []
     let regionRadius: CLLocationDistance = 2000
     @IBOutlet weak var carLocationMap: MKMapView!
@@ -46,7 +48,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+        
         //set car infos (image, name, basic details) area --------------------------------------------------
         //images using Kingfisher
         carImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
@@ -109,10 +111,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let carLocation = CarLocation(locationName: displayingOffering.location, discipline: "default", coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: longitude))
         carLocationMap.addAnnotation(carLocation)
-        
-        let scale = MKScaleView(mapView: carLocationMap)
-        scale.scaleVisibility = .visible
-        view.addSubview(scale)
+
         
         //TODO get time from offering object
         //pickUpLabel.text = Offering.pickuptime
@@ -124,17 +123,38 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         // Dispose of any resources that can be recreated.
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.basicDataCollectionView {
-            return basicDetails.count
-        }
-        return self.features.count
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 1
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
-    {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if (collectionView == self.basicDataCollectionView){
+            return basicDetails.count
+        } else {
+            return features.count
+        }
+    }
+    
+  /*  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                                 sizeForItemAt indexPath: IndexPath) -> CGSize{
+        if (collectionView == self.basicDataCollectionView){
+            return CGSize(70,85)
+        } else {
+            return CGSize(70,70)
+        }
+        
+    }*/
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
+        print("TEST")
+        
         if collectionView == self.basicDataCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell
+            print("func collectionView 1")
+            
+            let cell: BasicDataCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell
+            
+          /*  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell*/
+            
             
             let basicDetail = basicDetails[indexPath.row]
             cell.displayContent(image: basicDetail, despcription: basicDetail)
@@ -144,7 +164,11 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         }
             
         else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
+            print("func collectionView 2")
+            
+            let cell: FeaturesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
+            
+           // let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
             
             let feature = features[indexPath.row]
             cell.displayContent(image: feature)
@@ -172,6 +196,12 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         label.sizeToFit()
         
         return label.frame
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+        basicDataCollectionView.reloadData()
+        featuresCollectionView.reloadData()
     }
     
     //set car location
