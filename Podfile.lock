@@ -57,6 +57,9 @@ PODS:
   - JTAppleCalendar (7.1.4)
   - KeychainSwift (8.0.2)
   - Kingfisher (3.13.1)
+  - SDWebImage (4.2.2):
+    - SDWebImage/Core (= 4.2.2)
+  - SDWebImage/Core (4.2.2)
 
 DEPENDENCIES:
   - Cosmos (~> 11.0)
@@ -70,6 +73,7 @@ DEPENDENCIES:
   - JTAppleCalendar (~> 7.0)
   - KeychainSwift
   - Kingfisher (~> 3.13.x)
+  - SDWebImage
 
 SPEC CHECKSUMS:
   Cosmos: eb506859929f4add2d2aec822a27efb2f718a95d
@@ -90,7 +94,8 @@ SPEC CHECKSUMS:
   JTAppleCalendar: aaeee95e939e0b0a381fb51eb77738bd26bb10f6
   KeychainSwift: 213db04dfe7244988e61f77c72a2afb2f775954a
   Kingfisher: ed9707a409cc47fddafbcd12a43a9757e3600af5
+  SDWebImage: 89a9d32cd520bbb46eb14e541d5109b3564af198
 
-PODFILE CHECKSUM: 08b1f36746c06b28a032f37bbc8e5db943b80f88
+PODFILE CHECKSUM: 8705df9cb6f8435f8f60b460952562a0805b51dd
 
 COCOAPODS: 1.3.1

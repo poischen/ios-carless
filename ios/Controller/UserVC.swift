@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FetchData {
     
     
@@ -32,9 +33,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         self.users = users;
         
         //get the name of current user
-        
-        
-        
+        for user in users {
+            if user.id == StorageAPI.shared.userID() {
+                StorageAPI.shared.userName = user.name;
+            }
+        }
         
         myTV.reloadData();
     }
@@ -52,6 +55,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath);
         
+        
         cell.textLabel?.text = users[indexPath.row].name;
         
         return cell;
@@ -59,7 +63,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //open chat window
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: CHAT_SEGUE, sender: nil);
+        performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
     }
 
     //go back to the View Controller before (there's none for now)
@@ -67,5 +71,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         dismiss(animated: true, completion: nil);
     }
     
+ 
     
 }

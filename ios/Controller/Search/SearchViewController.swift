@@ -78,6 +78,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         dismiss(animated: true, completion: nil)
     }
     
+    
+    @IBAction func backButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil);
+    }
+    
     @IBAction func searchButtonClicked(_ sender: Any) {
         // only proceed to the search results if the user has picked a place
         if let userPickedPlace = pickedPlace {

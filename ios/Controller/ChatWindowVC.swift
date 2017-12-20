@@ -10,8 +10,11 @@ import UIKit
 import JSQMessagesViewController
 import MobileCoreServices
 import AVKit
+import SDWebImage
 
-class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    private var users = [User]();
     
     private var messages = [JSQMessage]();
     
@@ -22,15 +25,25 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
         super.viewDidLoad()
         
         picker.delegate = self;
+        MessageHandler._shared.delegate = self;
        
-        self.senderId = "1";
-        self.senderDisplayName = "rihanna";
+        self.senderId = StorageAPI.shared.userID();
+        self.senderDisplayName = StorageAPI.shared.userName;
+        
+        MessageHandler._shared.observeMessages();
+        MessageHandler._shared.observeMediaMessages();
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let bubbleFactory = JSQMessagesBubbleImageFactory();
-        //let message = messages[indexPath.item];
-        return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue);
+        let message = messages[indexPath.item];
+        
+        if message.senderId == self.senderId {
+           return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue);
+        } else {
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.green);
+        }
+       
     }
     
     //profile icon
@@ -74,12 +87,14 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text));
-        collectionView.reloadData();
+        // TODO  wrong for now
+       let receiverID = StorageAPI.shared.userID()
+        MessageHandler._shared.sendMessage(senderID: senderId, senderName: senderDisplayName, text: text, receiverID: receiverID);
         
         //remove text from textfield
         finishSendingMessage();
     }
+    
     
     //Sending media button
     override func didPressAccessoryButton(_ sender: UIButton!) {
@@ -109,17 +124,65 @@ class ChatWindowVC: JSQMessagesViewController, UIImagePickerControllerDelegate, 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            let img = JSQPhotoMediaItem(image: pic);
-            self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img));
+            let data = UIImageJPEGRepresentation(pic, 0.01);
+            
+            MessageHandler._shared.sendMedia(image: data, video: nil, senderID: senderId, senderName: senderDisplayName);
             
         } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
             
-            let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true);
-            messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video));
+            MessageHandler._shared.sendMedia(image: nil, video: vidUrl, senderID: senderId, senderName: senderDisplayName);
+        
         }
         
         self.dismiss(animated: true, completion: nil);
         collectionView.reloadData();
+    }
+    
+    func messageReceived(senderID: String, text: String) {
+        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text));
+        collectionView.reloadData();
+    }
+    
+    func mediaReceived(senderID: String, senderName: String, url: String) {
+        
+        if let mediaURL = URL(string: url){
+            
+            do {
+
+                let data = try Data(contentsOf: mediaURL);
+                
+                if let _ = UIImage(data: data){
+                    
+                    let _ = SDWebImageDownloader.shared().downloadImage(with: mediaURL, options: [], progress: nil, completed: { (image, data, error, finished) in
+                        
+                        DispatchQueue.main.async {
+                            let photo = JSQPhotoMediaItem(image: image);
+                            
+                            if senderID == self.senderId {
+                                photo?.appliesMediaViewMaskAsOutgoing = true;
+                            } else {
+                                photo?.appliesMediaViewMaskAsOutgoing = false;
+                            }
+                            
+                            self.messages.append(JSQMessage(senderId: senderID, displayName: senderName, media: photo));
+                            self.collectionView.reloadData();
+                        }
+                    })
+                } else {
+                    let video = JSQVideoMediaItem(fileURL: mediaURL, isReadyToPlay: true);
+                    if senderID == self.senderId {
+                        video?.appliesMediaViewMaskAsOutgoing = true;
+                    } else {
+                        video?.appliesMediaViewMaskAsOutgoing = false;
+                    }
+                    messages.append(JSQMessage(senderId: senderID, displayName: senderName, media: video));
+                    self.collectionView.reloadData();
+                }
+            } catch {
+                
+            }
+        }
+        
     }
     
     @IBAction func BackBtn2(_ sender: Any) {

@@ -32,23 +32,12 @@ class ViewController: UIViewController {
         signup()
     }
     
-    @IBAction func logoutButton (_ sender: Any) {
-        logout()
-    }
     
-    // temporary link, remove later
-    @IBAction func searchButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SearchNavigation")
-        self.present(vc, animated: true, completion: nil)
-    }
+  
     
-
-
-    @IBAction func chatButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
-        self.present(vc, animated: true, completion: nil)
+    
+    @IBAction func skipButton(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
     }
     
     
@@ -77,6 +66,7 @@ class ViewController: UIViewController {
                     //Go to the HomeViewController if the login is sucessful
                     let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                     self.present(vc!, animated: true, completion: nil)
+                    
                     
                 } else {
                     
@@ -112,6 +102,8 @@ class ViewController: UIViewController {
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                 self.present(vc!, animated: true, completion: nil)
+                
+                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, password: self.password.text!);
 
                 
             } else {
@@ -126,24 +118,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
-    func logout() {
-        if Auth.auth().currentUser != nil {
-            do {
-                try Auth.auth().signOut()
-                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SignUp")
-                present(vc, animated: true, completion: nil)
-                
-            } catch let error as NSError {
-                print (error.localizedDescription)
-            }
-        }
-    
-    }
-    
-    
-    
-    
     
 
 }

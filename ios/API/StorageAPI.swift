@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import FirebaseDatabase
 import FirebaseStorage
+import FirebaseAuth
 
 protocol FetchData: class {
     func dataReceived(users: [User]);
@@ -37,6 +38,8 @@ final class StorageAPI {
     //value will not be instantiated until it is needed
     weak var delegate: FetchData?;
     
+    var userName = "";
+    
     //returns Project URL from Firebase
     var dbRef: DatabaseReference {
         return Database.database().reference();
@@ -61,6 +64,10 @@ final class StorageAPI {
     
     var imageStorageRef: StorageReference {
         return storageRef.child(Constants.IMAGE_STORAGE);
+    }
+    
+    var videoStorageRef: StorageReference {
+        return storageRef.child(Constants.VIDEO_STORAGE);
     }
     
     private init() {
@@ -279,9 +286,8 @@ final class StorageAPI {
     }
     
     //stores User in Database
-    //User is not being saved for now (Video 6 of the Tutorial)
-    func saveUser(withID: String, email: String, password: String){
-        let data: Dictionary<String, Any> = [Constants.EMAIL: email, Constants.PASSWORD: password];
+    func saveUser(withID: String, name: String, email: String, password: String){
+        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.EMAIL: email, Constants.PASSWORD: password];
         
         usersRef.child(withID).setValue(data);
     }
@@ -305,10 +311,10 @@ final class StorageAPI {
                     if let userData = value as? NSDictionary{
                         
                         // fetch the data as String
-                        if let email = userData[Constants.EMAIL] as? String {
+                        if let name = userData[Constants.NAME] as? String {
                             
                             let id = key as! String;
-                            let newUser = User(id: id, name: email);
+                            let newUser = User(id: id, name: name);
                             
                             //append it in the empty array
                             users.append(newUser);
@@ -319,6 +325,13 @@ final class StorageAPI {
             self.delegate?.dataReceived(users: users);
         }
     }
+    
+    
+    //gets UserID in Firebase
+    func userID() -> String {
+        return Auth.auth().currentUser!.uid;
+    }
+    
     
 }
 
