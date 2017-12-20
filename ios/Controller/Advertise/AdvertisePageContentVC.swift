@@ -37,13 +37,7 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
         openCamera()
     }
     
-    
-    // Take Photo button click
-    @IBAction func takePhoto(sender: AnyObject) {
-        
-    }
-    
-    
+    //Camera stuff----------------------
     func openGallery()
     {
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
@@ -52,7 +46,6 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
             present(picker!, animated: true, completion: nil)
         }
     }
-    
     
     func openCamera()
     {
@@ -69,7 +62,6 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
@@ -81,6 +73,12 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
         dismiss(animated: true, completion: nil)
     }
     
+    
+    //TODO Take Photo button click
+    @IBAction func takePhoto(sender: AnyObject) {
+        
+    }
+    
     @IBAction func saveButt(sender: AnyObject) {
         let imageData = UIImageJPEGRepresentation(carImageView.image!, 0.6)
         let compressedJPGImage = UIImage(data: imageData!)
@@ -88,13 +86,15 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
         
     }
     
-    //Page 2: Vehicle Attributes--------------------------------------
+    //Page 2: Vehicle Attributes--------------------------------------------------------
     @IBOutlet weak var brandPicker: UIPickerView!
+    @IBOutlet weak var vehicleTypePicker: UIPickerView!
     @IBOutlet weak var seatsPicker: UIPickerView!
     @IBOutlet weak var fuelPicker: UIPickerView!
     @IBOutlet weak var gearPicker: UIPickerView!
     
     @IBOutlet weak var brandInput: UITextField!
+    @IBOutlet weak var vehicleTypeInput: UITextField!
     @IBOutlet weak var modelInput: UITextField!
     @IBOutlet weak var seatsInput: UITextField!
     @IBOutlet weak var fuelInput: UITextField!
@@ -104,79 +104,15 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
     var selectedSeats: String = ""
     var selectedFuel: String = ""
     var selectedGear: String = ""
+    var selectedVehicleType: String = ""
     
     //TODO: Use data from DB
     var brandsPickerContent = ["AC Cars", "Alfa Romeo", "Alpina", "Alpine", "Alvis", "Amphicar", "Aston Martin", "Audi", "Austin-Healey", "Bentley", "BMW", "Borgward", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daihatsu", "De Tomaso", "Delahaye", "DeLorean", "DKW", "Dodge", "Facel-Vega", "Ferrari", "Fiat", "Ford", "Honda", "Horch", "Hyundai", "Isuzu", "Iveco", "Jaguar", "Jeep", "Jensen", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lincoln", "Lloyd", "Lotus", "Maserati", "Maybach", "Mazda", "Mercedes-Benz", "MG", "Mitsubishi", "Morgan", "Nissan", "NSU", "Opel", "Peugeot", "Piaggio", "Porsche","Reliant", "Renault", "Rolls-Royce", "Rover", "Saab", "Sachsenring", "Seat","Škoda", "Subaru",  "Sunbeam", "Suzuki","Toyota", "Triumph", "TVR", "Volvo", "VW", "Wartburg"]
     var seatsPickerContent = ["1", "2", "3", "4", "5", "6", "7", "8", "more"]
     var fuelPickerContent = ["gas", "diesel", "electric", "hybrid", "other"]
     var gearPickerContent = ["shift", "automatic", "semi-automatic"]
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        var countrows : Int = brandsPickerContent.count
-        if (pickerView == seatsPicker) {
-            countrows = self.seatsPickerContent.count
-        } else if (pickerView == fuelPicker) {
-            countrows = self.fuelPickerContent.count
-        } else if (pickerView == gearPicker) {
-            countrows = self.gearPickerContent.count
-        }
-        
-        return countrows;
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if (pickerView == brandPicker) {
-            let titleRow = brandsPickerContent[row]
-            return titleRow
-        } else if (pickerView == seatsPicker){
-            let titleRow = seatsPickerContent[row]
-            return titleRow
-        } else if (pickerView == fuelPicker){
-            let titleRow = fuelPickerContent[row]
-            return titleRow
-        } else if (pickerView == gearPicker){
-            let titleRow = gearPickerContent[row]
-            return titleRow
-        }
-        return ""
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (pickerView == brandPicker) {
-            selectedBrand = self.brandsPickerContent[row]
-            self.brandInput.text = selectedBrand
-            self.brandPicker.isHidden = true
-        } else if (pickerView == seatsPicker){
-            selectedSeats = self.seatsPickerContent[row]
-            self.seatsInput.text = selectedSeats
-            self.seatsPicker.isHidden = true
-        } else if (pickerView == fuelPicker){
-            selectedFuel = self.fuelPickerContent[row]
-            self.fuelInput.text = selectedFuel
-            self.fuelPicker.isHidden = true
-        } else if (pickerView == seatsPicker){
-            selectedGear = self.gearPickerContent[row]
-            self.gearInput.text = selectedGear
-            self.gearPicker.isHidden = true
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if (textField == self.brandInput){
-            self.brandPicker.isHidden = false
-        } else if (textField == self.seatsInput){
-            self.seatsPicker.isHidden = false
-        } else if (textField == self.fuelInput){
-            self.fuelPicker.isHidden = false
-        } else if (textField == self.gearInput){
-            self.gearPicker.isHidden = false
-        }
-        
-    }
+    var vehicleTypeContent = ["Compact", "Convertible", "Coupé", "Estate", "Limousine", "Minivan", "SUV", "Other Car"]
+
     
     //Page 3: Vehicle Features / Extras-----------------------------
     var featuresCollectionView: UICollectionView!
@@ -205,10 +141,20 @@ class AdvertisePageContentVC: UIViewController, UIImagePickerControllerDelegate,
     //TODO Cellstyle
     //TODO CellView in PageView
     
+    
+    //Page 4: Aivailibility and basic price--------------------------------------
+    
+    
+    //Page 5: pick upd & return info--------------------------------------
+    
+    //Page 6: futher description--------------------------------------
+
+    
+    
     //Page 7: publish--------------------------------------
     @IBOutlet weak var publishButton: UIButton!
     
-    @IBAction func öublishButtonTest(_ sender: Any) {
+    @IBAction func publishNowButton(_ sender: Any) {
         let alertTest = UIAlertController(title: "Test", message: "This is a test", preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
         alertTest.addAction(ok)
@@ -223,6 +169,7 @@ extension AdvertisePageContentVC: UICollectionViewDelegate, UICollectionViewData
         return featuresImages.count
     }
     
+    //Collection view stuff-----------------------------------------
     //TODO
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = featuresCollectionView.dequeueReusableCell(withReuseIdentifier: "featureCell", for: indexPath) as! AdvertiseFeaturesCollectionViewCell
@@ -245,4 +192,85 @@ extension AdvertisePageContentVC: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
         return CGSize(width: (view.frame.width/4), height: 200)
     }
+    
+    //picker view stuff ------------------------------------------
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        var countrows : Int = brandsPickerContent.count
+        if (pickerView == seatsPicker) {
+            countrows = self.seatsPickerContent.count
+        } else if (pickerView == fuelPicker) {
+            countrows = self.fuelPickerContent.count
+        } else if (pickerView == gearPicker) {
+            countrows = self.gearPickerContent.count
+        } else if (pickerView == vehicleTypePicker) {
+            countrows = self.vehicleTypeContent.count
+        }
+        
+        return countrows;
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if (pickerView == brandPicker) {
+            let titleRow = brandsPickerContent[row]
+            return titleRow
+        } else if (pickerView == seatsPicker){
+            let titleRow = seatsPickerContent[row]
+            return titleRow
+        } else if (pickerView == fuelPicker){
+            let titleRow = fuelPickerContent[row]
+            return titleRow
+        } else if (pickerView == gearPicker){
+            let titleRow = gearPickerContent[row]
+            return titleRow
+        } else if (pickerView == vehicleTypePicker){
+            let titleRow = vehicleTypeContent[row]
+            return titleRow
+        }
+        return ""
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if (pickerView == brandPicker) {
+            selectedBrand = self.brandsPickerContent[row]
+            self.brandInput.text = selectedBrand
+            self.brandPicker.isHidden = true
+        } else if (pickerView == seatsPicker){
+            selectedSeats = self.seatsPickerContent[row]
+            self.seatsInput.text = selectedSeats
+            self.seatsPicker.isHidden = true
+        } else if (pickerView == fuelPicker){
+            selectedFuel = self.fuelPickerContent[row]
+            self.fuelInput.text = selectedFuel
+            self.fuelPicker.isHidden = true
+        } else if (pickerView == seatsPicker){
+            selectedGear = self.gearPickerContent[row]
+            self.gearInput.text = selectedGear
+            self.gearPicker.isHidden = true
+        } else if (pickerView == vehicleTypePicker){
+            selectedVehicleType = self.vehicleTypeContent[row]
+            self.vehicleTypeInput.text = selectedVehicleType
+            self.vehicleTypePicker.isHidden = true
+        }
+        
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == self.brandInput){
+            self.brandPicker.isHidden = false
+        } else if (textField == self.seatsInput){
+            self.seatsPicker.isHidden = false
+        } else if (textField == self.fuelInput){
+            self.fuelPicker.isHidden = false
+        } else if (textField == self.gearInput){
+            self.gearPicker.isHidden = false
+        } else if (textField == self.vehicleTypeInput) {
+            self.vehicleTypePicker.isHidden = false
+        }
+        
+    }
+    
 }

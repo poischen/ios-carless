@@ -44,12 +44,13 @@ class ViewController: UIViewController {
     }
     
 
-    
+
     @IBAction func chatButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
         self.present(vc, animated: true, completion: nil)
     }
+    
     
     //function
     func login() {

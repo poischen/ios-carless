@@ -4,13 +4,12 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     
     //Manage pageview for advertising a car --------------------------------------------------------------------
     lazy var AdvertisementViewControllersArray: [UIViewController] = {
-        return [self.ViewControllerInstance(name: "advertisePageController1"),
-                self.ViewControllerInstance(name: "advertisePageController2"),
-                self.ViewControllerInstance(name: "advertisePageController3"),
-                self.ViewControllerInstance(name: "advertisePageController4"),
-                self.ViewControllerInstance(name: "advertisePageController5"),
-                self.ViewControllerInstance(name: "advertisePageController6"),
-                self.ViewControllerInstance(name: "advertisePageController7")]
+        return [self.ViewControllerInstance(name: "advertisePage1"),
+                self.ViewControllerInstance(name: "advertisePage2"),
+                self.ViewControllerInstance(name: "advertisePage3"),
+                self.ViewControllerInstance(name: "advertisePage4"),
+                self.ViewControllerInstance(name: "advertisePage5"),
+                self.ViewControllerInstance(name: "advertisePage7")]
     }()
     
     private func ViewControllerInstance(name: String) -> UIViewController {

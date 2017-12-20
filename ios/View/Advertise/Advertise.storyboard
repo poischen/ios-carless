@@ -4,25 +4,24 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Advertise Page View Controller-->
+        <!--Advertise PagesVC-->
         <scene sceneID="G3y-cs-ha1">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="YnE-ab-HEt" customClass="AdvertisePageViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="AdvertisePages" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="YnE-ab-HEt" customClass="AdvertisePagesVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V3t-Lj-dB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-92" y="3"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="1sK-A5-16a">
             <objects>
-                <viewController restorationIdentifier="advertisePage1" storyboardIdentifier="advertisePage1" id="26O-3S-caA" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage1" storyboardIdentifier="advertisePage1" id="26O-3S-caA" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mxk-lE-02R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -37,12 +36,33 @@
                                         <rect key="frame" x="41.5" y="16.5" width="105" height="34"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <state key="normal" title="Open Gallery"/>
+                                        <connections>
+                                            <action selector="openGallery:" destination="26O-3S-caA" eventType="touchUpInside" id="ipo-iQ-0Xw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="qzj-RS-zq0" firstAttribute="centerX" secondItem="esb-bN-HoR" secondAttribute="centerX" id="eHb-O5-M2K"/>
                                     <constraint firstItem="qzj-RS-zq0" firstAttribute="centerY" secondItem="esb-bN-HoR" secondAttribute="centerY" id="hQt-dx-JBd"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbT-DV-lp4">
+                                <rect key="frame" x="187" y="400" width="187.5" height="66.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-IK-fcK">
+                                        <rect key="frame" x="38" y="16.5" width="112" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="Open Camera"/>
+                                        <connections>
+                                            <action selector="openCamera:" destination="26O-3S-caA" eventType="touchUpInside" id="YRE-Hq-d1K"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="bX7-IK-fcK" firstAttribute="centerX" secondItem="dbT-DV-lp4" secondAttribute="centerX" id="vRM-fd-22t"/>
+                                    <constraint firstItem="bX7-IK-fcK" firstAttribute="centerY" secondItem="dbT-DV-lp4" secondAttribute="centerY" id="z9j-ZA-04R"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kwy-oS-psT" userLabel="Page description">
@@ -69,21 +89,6 @@
                                     <constraint firstItem="4CG-No-Sgx" firstAttribute="top" secondItem="Kwy-oS-psT" secondAttribute="top" constant="10" id="wJI-6n-qjL"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dbT-DV-lp4">
-                                <rect key="frame" x="187" y="400" width="187.5" height="66.5"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-IK-fcK">
-                                        <rect key="frame" x="38" y="16.5" width="112" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                        <state key="normal" title="Open Camera"/>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="bX7-IK-fcK" firstAttribute="centerX" secondItem="dbT-DV-lp4" secondAttribute="centerX" id="vRM-fd-22t"/>
-                                    <constraint firstItem="bX7-IK-fcK" firstAttribute="centerY" secondItem="dbT-DV-lp4" secondAttribute="centerY" id="z9j-ZA-04R"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -106,15 +111,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bE8-wA-w8o"/>
                     </view>
+                    <connections>
+                        <outlet property="carImageView" destination="CZU-7N-Zcm" id="6Td-o2-jct"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pxG-38-tCW" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="669.60000000000002" y="8.5457271364317844"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="1W3-Ce-vzG">
             <objects>
-                <viewController restorationIdentifier="advertisePage2" storyboardIdentifier="advertisePage2" id="FVF-ID-eFr" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage2" storyboardIdentifier="advertisePage2" id="FVF-ID-eFr" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lYD-qN-Xyg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -132,7 +140,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseBrandTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XFZ-ue-9dW" userLabel="brandTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -140,6 +148,10 @@
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseBrandPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="Odl-oe-W5C" userLabel="Brand Picker View">
                                                 <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="FVF-ID-eFr" id="GVn-92-lIw"/>
+                                                    <outlet property="delegate" destination="FVF-ID-eFr" id="8Qt-1x-q0E"/>
+                                                </connections>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -165,7 +177,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseModelTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KjE-f3-teC" userLabel="modelTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -192,7 +204,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseVehicleTypeTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DcN-wg-uwD" userLabel="vehicletypeTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -200,6 +212,10 @@
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseVehicleTypePickerView" translatesAutoresizingMaskIntoConstraints="NO" id="0TB-r3-DNF" userLabel="Vehicle Type Picker View">
                                                 <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="FVF-ID-eFr" id="cgG-yQ-APP"/>
+                                                    <outlet property="delegate" destination="FVF-ID-eFr" id="aXO-tB-OAd"/>
+                                                </connections>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -225,7 +241,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseSeatsTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TD6-9J-V0P" userLabel="seatsTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -233,6 +249,10 @@
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseSeatsPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="0CI-CN-Ikq" userLabel="Seats Picker View">
                                                 <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="FVF-ID-eFr" id="Igz-IA-09a"/>
+                                                    <outlet property="delegate" destination="FVF-ID-eFr" id="7wE-s2-yVH"/>
+                                                </connections>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -258,7 +278,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisFuelTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Usr-zj-ZiC" userLabel="fuelTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -266,6 +286,10 @@
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseFuelPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="oq8-wv-qFR" userLabel="Fuel Picker View">
                                                 <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="FVF-ID-eFr" id="9Yg-Ax-Ssd"/>
+                                                    <outlet property="delegate" destination="FVF-ID-eFr" id="QAv-d4-Tzw"/>
+                                                </connections>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -291,7 +315,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisGearTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TE9-Wr-3Lc" userLabel="gearTextField">
-                                                <rect key="frame" x="124.5" y="20" width="230.5" height="30"/>
+                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -299,6 +323,10 @@
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseGearPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="hCN-Ys-ebq" userLabel="Gear Picker View">
                                                 <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="FVF-ID-eFr" id="cMc-DY-tPu"/>
+                                                    <outlet property="delegate" destination="FVF-ID-eFr" id="Kak-fS-wt6"/>
+                                                </connections>
                                             </pickerView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -385,16 +413,29 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="dy2-rM-DA3"/>
                     </view>
+                    <connections>
+                        <outlet property="brandInput" destination="XFZ-ue-9dW" id="6nG-lD-DFR"/>
+                        <outlet property="brandPicker" destination="Odl-oe-W5C" id="xIh-X2-EYq"/>
+                        <outlet property="fuelInput" destination="Usr-zj-ZiC" id="bFp-0V-73U"/>
+                        <outlet property="fuelPicker" destination="oq8-wv-qFR" id="Jv1-kO-ORD"/>
+                        <outlet property="gearInput" destination="TE9-Wr-3Lc" id="yxl-Fu-3mh"/>
+                        <outlet property="gearPicker" destination="hCN-Ys-ebq" id="OyL-pi-Wld"/>
+                        <outlet property="modelInput" destination="KjE-f3-teC" id="JGk-cQ-gyd"/>
+                        <outlet property="seatsInput" destination="TD6-9J-V0P" id="hyY-lO-XlH"/>
+                        <outlet property="seatsPicker" destination="0CI-CN-Ikq" id="6xe-h9-HNf"/>
+                        <outlet property="vehicleTypeInput" destination="DcN-wg-uwD" id="6qq-c6-4bk"/>
+                        <outlet property="vehicleTypePicker" destination="0TB-r3-DNF" id="auM-M1-prf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jpD-h9-6hi" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <pinchGestureRecognizer id="YWo-rm-Kvf"/>
             </objects>
             <point key="canvasLocation" x="1400.8" y="7.1964017991004505"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="aqF-7t-Tch">
             <objects>
-                <viewController restorationIdentifier="advertisePage3" storyboardIdentifier="advertisePage3" id="fex-8j-y2u" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage3" storyboardIdentifier="advertisePage3" id="fex-8j-y2u" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kpw-A6-MDE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -493,10 +534,10 @@
             </objects>
             <point key="canvasLocation" x="2104.8000000000002" y="5.8470764617691158"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="Td9-Jc-bjB">
             <objects>
-                <viewController restorationIdentifier="advertisePage5" storyboardIdentifier="advertisePage5" id="Naa-RR-YP8" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage4" storyboardIdentifier="advertisePage4" id="Naa-RR-YP8" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iRs-W2-LBG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -504,93 +545,122 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vRw-Sn-UQf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfv-gV-QJi">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-Fq-0CE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pick-up after:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nON-dx-HHx">
-                                                <rect key="frame" x="0.0" y="56" width="375" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="0gy-i5-DAh"/>
-                                                </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisePickUpField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-rJ-XEd" userLabel="pickUpTextField">
-                                                <rect key="frame" x="10" y="101" width="355" height="30"/>
-                                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ex9-y3-E7r" userLabel="PickUpPicker View">
-                                                <rect key="frame" x="10" y="8" width="355" height="216"/>
-                                            </pickerView>
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="gvO-zQ-nnJ">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
+                                            </mapView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="leading" secondItem="Zfv-gV-QJi" secondAttribute="leading" constant="10" id="5wA-QY-YdV"/>
-                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="centerY" secondItem="Zfv-gV-QJi" secondAttribute="centerY" id="BY0-LE-zvY"/>
-                                            <constraint firstAttribute="trailing" secondItem="Ex9-y3-E7r" secondAttribute="trailing" constant="10" id="Fp4-dO-eJP"/>
-                                            <constraint firstItem="nON-dx-HHx" firstAttribute="width" secondItem="Zfv-gV-QJi" secondAttribute="width" id="MRv-2l-RQh"/>
-                                            <constraint firstItem="Ex9-y3-E7r" firstAttribute="leading" secondItem="Zfv-gV-QJi" secondAttribute="leading" constant="10" id="MSV-xA-LZW"/>
-                                            <constraint firstAttribute="trailing" secondItem="ao7-rJ-XEd" secondAttribute="trailing" constant="10" id="YS5-E6-5sR"/>
-                                            <constraint firstItem="Ex9-y3-E7r" firstAttribute="centerX" secondItem="Zfv-gV-QJi" secondAttribute="centerX" id="g3S-y9-ld1"/>
-                                            <constraint firstItem="Ex9-y3-E7r" firstAttribute="centerY" secondItem="Zfv-gV-QJi" secondAttribute="centerY" id="gVE-FP-flU"/>
-                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="centerX" secondItem="Zfv-gV-QJi" secondAttribute="centerX" id="h0T-Bg-Kb5"/>
-                                            <constraint firstItem="nON-dx-HHx" firstAttribute="centerX" secondItem="Zfv-gV-QJi" secondAttribute="centerX" id="hBS-Xb-Azn"/>
-                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="top" secondItem="nON-dx-HHx" secondAttribute="bottom" constant="15" id="vC6-ol-3u1"/>
+                                            <constraint firstAttribute="trailing" secondItem="gvO-zQ-nnJ" secondAttribute="trailing" id="OYM-Rt-o1C"/>
+                                            <constraint firstItem="gvO-zQ-nnJ" firstAttribute="top" secondItem="R4q-Fq-0CE" secondAttribute="top" id="Uyz-cq-v0r"/>
+                                            <constraint firstItem="gvO-zQ-nnJ" firstAttribute="leading" secondItem="R4q-Fq-0CE" secondAttribute="leading" id="g8a-Dp-FeT"/>
+                                            <constraint firstAttribute="bottom" secondItem="gvO-zQ-nnJ" secondAttribute="bottom" id="sET-dy-Fp6"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7g2-r7-L3A">
-                                        <rect key="frame" x="0.0" y="233.5" width="375" height="233.5"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cGj-Z6-BcQ">
+                                        <rect key="frame" x="0.0" y="233.5" width="365" height="233.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return after:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-Px-bnL">
-                                                <rect key="frame" x="0.0" y="52" width="375" height="35"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfv-gV-QJi" userLabel="pick up">
+                                                <rect key="frame" x="0.0" y="-0.5" width="365" height="117"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Pick-up after:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nON-dx-HHx">
+                                                        <rect key="frame" x="0.0" y="48" width="122" height="21.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisePickUpField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-rJ-XEd" userLabel="pickUpTextField">
+                                                        <rect key="frame" x="128" y="43.5" width="237" height="30"/>
+                                                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ex9-y3-E7r" userLabel="PickUpPicker View">
+                                                        <rect key="frame" x="128" y="-49.5" width="237" height="216"/>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="Naa-RR-YP8" id="9uW-dA-kH6"/>
+                                                            <outlet property="delegate" destination="Naa-RR-YP8" id="8aF-Dl-0i8"/>
+                                                        </connections>
+                                                    </pickerView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="35" id="oQk-g4-5Lr"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ao7-rJ-XEd" secondAttribute="trailing" id="6hZ-41-M2R"/>
+                                                    <constraint firstItem="ao7-rJ-XEd" firstAttribute="centerY" secondItem="Zfv-gV-QJi" secondAttribute="centerY" id="BY0-LE-zvY"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Ex9-y3-E7r" secondAttribute="trailing" id="Fp4-dO-eJP"/>
+                                                    <constraint firstItem="nON-dx-HHx" firstAttribute="width" secondItem="Zfv-gV-QJi" secondAttribute="width" multiplier="1:3" id="MRv-2l-RQh"/>
+                                                    <constraint firstItem="ao7-rJ-XEd" firstAttribute="width" secondItem="Zfv-gV-QJi" secondAttribute="width" multiplier="0.65" id="WnS-3v-KZn"/>
+                                                    <constraint firstItem="nON-dx-HHx" firstAttribute="centerY" secondItem="Zfv-gV-QJi" secondAttribute="centerY" id="Yuu-9z-bVO"/>
+                                                    <constraint firstItem="Ex9-y3-E7r" firstAttribute="centerY" secondItem="Zfv-gV-QJi" secondAttribute="centerY" id="gVE-FP-flU"/>
+                                                    <constraint firstItem="Ex9-y3-E7r" firstAttribute="width" secondItem="Zfv-gV-QJi" secondAttribute="width" multiplier="0.65" id="mCu-wa-TwZ"/>
+                                                    <constraint firstItem="nON-dx-HHx" firstAttribute="leading" secondItem="Zfv-gV-QJi" secondAttribute="leading" id="zWz-lL-4u5"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseReturnTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJM-Yy-A1o" userLabel="returnTextField">
-                                                <rect key="frame" x="10" y="102" width="355" height="30"/>
-                                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
-                                                <nil key="textColor"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <textInputTraits key="textInputTraits"/>
-                                            </textField>
-                                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6C1-Lb-Rov" userLabel="Return Picker View">
-                                                <rect key="frame" x="10" y="8" width="355" height="216"/>
-                                            </pickerView>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7g2-r7-L3A" userLabel="return">
+                                                <rect key="frame" x="0.0" y="116.5" width="365" height="117"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return after:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-Px-bnL">
+                                                        <rect key="frame" x="0.0" y="47" width="121.5" height="23"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseReturnTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJM-Yy-A1o" userLabel="returnTextField">
+                                                        <rect key="frame" x="128" y="43.5" width="237" height="30"/>
+                                                        <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
+                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        <textInputTraits key="textInputTraits"/>
+                                                    </textField>
+                                                    <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6C1-Lb-Rov" userLabel="Return Picker View">
+                                                        <rect key="frame" x="128" y="-49.5" width="237" height="216"/>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="Naa-RR-YP8" id="a9j-tg-nkA"/>
+                                                            <outlet property="delegate" destination="Naa-RR-YP8" id="jXq-mD-lDG"/>
+                                                        </connections>
+                                                    </pickerView>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstItem="BXC-Px-bnL" firstAttribute="leading" secondItem="7g2-r7-L3A" secondAttribute="leading" id="9tY-gj-Vuz"/>
+                                                    <constraint firstAttribute="trailing" secondItem="rJM-Yy-A1o" secondAttribute="trailing" id="FLd-Da-aO5"/>
+                                                    <constraint firstItem="rJM-Yy-A1o" firstAttribute="centerY" secondItem="7g2-r7-L3A" secondAttribute="centerY" id="ILw-1e-821"/>
+                                                    <constraint firstAttribute="trailing" secondItem="6C1-Lb-Rov" secondAttribute="trailing" id="J0d-up-yza"/>
+                                                    <constraint firstItem="BXC-Px-bnL" firstAttribute="centerY" secondItem="7g2-r7-L3A" secondAttribute="centerY" id="h5O-iR-rrq"/>
+                                                    <constraint firstItem="6C1-Lb-Rov" firstAttribute="centerY" secondItem="7g2-r7-L3A" secondAttribute="centerY" id="i1Y-hW-fXt"/>
+                                                    <constraint firstItem="BXC-Px-bnL" firstAttribute="width" secondItem="7g2-r7-L3A" secondAttribute="width" multiplier="1:3" id="pY7-b6-L5w"/>
+                                                    <constraint firstItem="6C1-Lb-Rov" firstAttribute="width" secondItem="7g2-r7-L3A" secondAttribute="width" multiplier="0.65" id="rCF-Mi-Tdd"/>
+                                                    <constraint firstItem="rJM-Yy-A1o" firstAttribute="width" secondItem="7g2-r7-L3A" secondAttribute="width" multiplier="0.65" id="xfZ-0k-0nH"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="rJM-Yy-A1o" secondAttribute="trailing" constant="10" id="FLd-Da-aO5"/>
-                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="centerY" secondItem="7g2-r7-L3A" secondAttribute="centerY" id="ILw-1e-821"/>
-                                            <constraint firstAttribute="trailing" secondItem="6C1-Lb-Rov" secondAttribute="trailing" constant="10" id="J0d-up-yza"/>
-                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="top" secondItem="BXC-Px-bnL" secondAttribute="bottom" constant="15" id="K74-tw-fyT"/>
-                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="centerX" secondItem="7g2-r7-L3A" secondAttribute="centerX" id="Xmf-0C-bi8"/>
-                                            <constraint firstItem="6C1-Lb-Rov" firstAttribute="leading" secondItem="7g2-r7-L3A" secondAttribute="leading" constant="10" id="Zng-KB-ATv"/>
-                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="leading" secondItem="7g2-r7-L3A" secondAttribute="leading" constant="10" id="hEm-nT-2cc"/>
-                                            <constraint firstItem="6C1-Lb-Rov" firstAttribute="centerY" secondItem="7g2-r7-L3A" secondAttribute="centerY" id="i1Y-hW-fXt"/>
-                                            <constraint firstItem="BXC-Px-bnL" firstAttribute="centerX" secondItem="7g2-r7-L3A" secondAttribute="centerX" id="keE-U8-tm7"/>
-                                            <constraint firstItem="BXC-Px-bnL" firstAttribute="width" secondItem="7g2-r7-L3A" secondAttribute="width" id="pY7-b6-L5w"/>
-                                            <constraint firstItem="6C1-Lb-Rov" firstAttribute="centerX" secondItem="7g2-r7-L3A" secondAttribute="centerX" id="rpW-h2-dLj"/>
+                                            <constraint firstItem="7g2-r7-L3A" firstAttribute="top" secondItem="Zfv-gV-QJi" secondAttribute="bottom" id="4iJ-Ky-Pv7"/>
+                                            <constraint firstItem="7g2-r7-L3A" firstAttribute="leading" secondItem="cGj-Z6-BcQ" secondAttribute="leading" id="5Uh-11-AcT"/>
+                                            <constraint firstItem="Zfv-gV-QJi" firstAttribute="top" secondItem="cGj-Z6-BcQ" secondAttribute="top" id="E8f-Eh-tds"/>
+                                            <constraint firstItem="Zfv-gV-QJi" firstAttribute="width" secondItem="cGj-Z6-BcQ" secondAttribute="width" id="NMO-S3-GIU"/>
+                                            <constraint firstItem="Zfv-gV-QJi" firstAttribute="height" secondItem="cGj-Z6-BcQ" secondAttribute="height" multiplier="0.5" id="NRp-u4-asM"/>
+                                            <constraint firstItem="7g2-r7-L3A" firstAttribute="height" secondItem="cGj-Z6-BcQ" secondAttribute="height" multiplier="0.5" id="Xd9-vk-4LO"/>
+                                            <constraint firstItem="7g2-r7-L3A" firstAttribute="width" secondItem="cGj-Z6-BcQ" secondAttribute="width" id="o9z-YX-svq"/>
+                                            <constraint firstItem="Zfv-gV-QJi" firstAttribute="leading" secondItem="cGj-Z6-BcQ" secondAttribute="leading" id="ozL-3O-7dt"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Zfv-gV-QJi" firstAttribute="width" secondItem="vRw-Sn-UQf" secondAttribute="width" id="BbM-Yq-Fkc"/>
-                                    <constraint firstItem="7g2-r7-L3A" firstAttribute="height" secondItem="vRw-Sn-UQf" secondAttribute="height" multiplier="0.5" id="dCn-wh-4gJ"/>
-                                    <constraint firstItem="Zfv-gV-QJi" firstAttribute="leading" secondItem="vRw-Sn-UQf" secondAttribute="leading" id="duI-2L-RyB"/>
-                                    <constraint firstItem="7g2-r7-L3A" firstAttribute="width" secondItem="vRw-Sn-UQf" secondAttribute="width" id="htd-9E-a58"/>
-                                    <constraint firstItem="Zfv-gV-QJi" firstAttribute="height" secondItem="vRw-Sn-UQf" secondAttribute="height" multiplier="0.5" id="iOu-uP-Tw4"/>
-                                    <constraint firstItem="Zfv-gV-QJi" firstAttribute="top" secondItem="vRw-Sn-UQf" secondAttribute="top" id="q77-tx-xxK"/>
-                                    <constraint firstItem="7g2-r7-L3A" firstAttribute="leading" secondItem="vRw-Sn-UQf" secondAttribute="leading" id="tuB-J5-dLv"/>
-                                    <constraint firstItem="7g2-r7-L3A" firstAttribute="top" secondItem="Zfv-gV-QJi" secondAttribute="bottom" id="utr-C3-eoU"/>
+                                    <constraint firstItem="cGj-Z6-BcQ" firstAttribute="height" secondItem="vRw-Sn-UQf" secondAttribute="height" multiplier="0.5" id="8lu-Ex-LQx"/>
+                                    <constraint firstAttribute="trailing" secondItem="cGj-Z6-BcQ" secondAttribute="trailing" constant="10" id="CJl-mR-KyJ"/>
+                                    <constraint firstItem="R4q-Fq-0CE" firstAttribute="leading" secondItem="vRw-Sn-UQf" secondAttribute="leading" id="Fta-VU-rLG"/>
+                                    <constraint firstItem="cGj-Z6-BcQ" firstAttribute="top" secondItem="R4q-Fq-0CE" secondAttribute="bottom" id="a5T-Oa-MWK"/>
+                                    <constraint firstItem="cGj-Z6-BcQ" firstAttribute="leading" secondItem="vRw-Sn-UQf" secondAttribute="leading" id="hhe-xs-f9Y"/>
+                                    <constraint firstItem="R4q-Fq-0CE" firstAttribute="top" secondItem="vRw-Sn-UQf" secondAttribute="top" id="lFH-VR-5Y0"/>
+                                    <constraint firstItem="R4q-Fq-0CE" firstAttribute="width" secondItem="vRw-Sn-UQf" secondAttribute="width" id="lyn-Rj-1Ng"/>
+                                    <constraint firstItem="R4q-Fq-0CE" firstAttribute="height" secondItem="vRw-Sn-UQf" secondAttribute="height" multiplier="0.5" id="zJ0-Vq-chB"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E9O-1f-9x9" userLabel="Page description">
@@ -633,12 +703,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="36s-2Z-6ja" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3585" y="-15"/>
+            <point key="canvasLocation" x="3584.8000000000002" y="-15.742128935532236"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="yif-pt-ojM">
             <objects>
-                <viewController restorationIdentifier="advertisePage6" storyboardIdentifier="advertisePage6" id="FIr-Eh-Opg" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage5" storyboardIdentifier="advertisePage5" id="FIr-Eh-Opg" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JIP-Z9-gL8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -704,10 +774,10 @@
             </objects>
             <point key="canvasLocation" x="4421.6000000000004" y="-14.842578710644679"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="JKq-Df-rcI">
             <objects>
-                <viewController restorationIdentifier="advertisePage4" storyboardIdentifier="advertisePage4" id="Ysi-tN-v4c" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage6" storyboardIdentifier="advertisePage6" id="Ysi-tN-v4c" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E04-zH-5fE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -830,14 +900,35 @@
             </objects>
             <point key="canvasLocation" x="2810" y="-15"/>
         </scene>
-        <!--View Controller-->
+        <!--Advertise Page ContentVC-->
         <scene sceneID="aCH-sY-QMK">
             <objects>
-                <viewController restorationIdentifier="advertisePage7" storyboardIdentifier="advertisePage7" id="6ug-qW-kNe" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage7" storyboardIdentifier="advertisePage7" id="6ug-qW-kNe" customClass="AdvertisePageContentVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="07h-OK-rIn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Ol-Gv-aL7">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="467"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PMA-rI-QaI">
+                                        <rect key="frame" x="121" y="213" width="132" height="41"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                        <state key="normal" title="Publish now!">
+                                            <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="advertise:" destination="dTB-dA-W8j" eventType="touchUpInside" id="cfB-Fa-NJb"/>
+                                            <action selector="publishNowButton:" destination="6ug-qW-kNe" eventType="touchUpInside" id="Xub-py-CCo"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="PMA-rI-QaI" firstAttribute="centerX" secondItem="9Ol-Gv-aL7" secondAttribute="centerX" id="ENc-xD-HoM"/>
+                                    <constraint firstItem="PMA-rI-QaI" firstAttribute="centerY" secondItem="9Ol-Gv-aL7" secondAttribute="centerY" id="IoL-ai-TPj"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ZZ-rz-XIp" userLabel="Page description">
                                 <rect key="frame" x="0.0" y="467" width="375" height="200"/>
                                 <subviews>
@@ -863,27 +954,23 @@
                                     <constraint firstItem="F94-HD-NbK" firstAttribute="leading" secondItem="0ZZ-rz-XIp" secondAttribute="leading" constant="10" id="nGa-IA-Q2M"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PMA-rI-QaI">
-                                <rect key="frame" x="110" y="237" width="154" height="52"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <state key="normal" title="Advertise now">
-                                    <color key="titleColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="advertise:" destination="dTB-dA-W8j" eventType="touchUpInside" id="cfB-Fa-NJb"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="9Ol-Gv-aL7" firstAttribute="width" secondItem="07h-OK-rIn" secondAttribute="width" id="6bd-WC-Z7m"/>
                             <constraint firstItem="0ZZ-rz-XIp" firstAttribute="leading" secondItem="bmU-7g-Ph9" secondAttribute="leading" id="DlK-tJ-Dy1"/>
                             <constraint firstItem="0ZZ-rz-XIp" firstAttribute="height" secondItem="07h-OK-rIn" secondAttribute="height" multiplier="0.3" id="GY5-9R-mMM"/>
                             <constraint firstItem="0ZZ-rz-XIp" firstAttribute="bottom" secondItem="bmU-7g-Ph9" secondAttribute="bottom" id="ITl-j6-9sV"/>
+                            <constraint firstItem="9Ol-Gv-aL7" firstAttribute="leading" secondItem="bmU-7g-Ph9" secondAttribute="leading" id="UYW-45-2oc"/>
+                            <constraint firstItem="9Ol-Gv-aL7" firstAttribute="height" secondItem="07h-OK-rIn" secondAttribute="height" multiplier="0.7" id="ijA-jQ-EQD"/>
                             <constraint firstItem="0ZZ-rz-XIp" firstAttribute="trailing" secondItem="bmU-7g-Ph9" secondAttribute="trailing" id="kCQ-jX-rwa"/>
+                            <constraint firstItem="9Ol-Gv-aL7" firstAttribute="top" secondItem="07h-OK-rIn" secondAttribute="top" id="kcZ-Zz-C9u"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="bmU-7g-Ph9"/>
                     </view>
+                    <connections>
+                        <outlet property="publishButton" destination="PMA-rI-QaI" id="IuP-d5-2Hc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eDC-sM-ego" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dTB-dA-W8j" userLabel="Exit" sceneMemberID="exit"/>
