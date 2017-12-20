@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     
     
     @IBAction func skipButton(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+        _ = self.storyboard?.instantiateViewController(withIdentifier: "Home")
     }
     
     
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
                 self.present(vc!, animated: true, completion: nil)
                 
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, password: self.password.text!);
+                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808" );
 
                 
             } else {
