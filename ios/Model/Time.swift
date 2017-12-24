@@ -27,4 +27,11 @@ class Time {
             return nil
         }
     }
+    
+    func timeOfDayIsEarlierOrEqual(date: Date) -> Bool {
+        let calendar = Calendar.current
+        let dateHour = calendar.component(.hour, from: date)
+        let dateMinutes = calendar.component(.minute, from: date)
+        return (dateHour <= self.hours && dateMinutes <= self.minutes)
+    }
 }
