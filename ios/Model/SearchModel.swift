@@ -78,6 +78,8 @@ class SearchModel {
     }
     
     func filterOfferingByDate(offering: Offering, rentings: [Renting], desiredDateInterval: DateInterval) -> Bool{
+        // renting is not possible if the desired return time is later than the offering's return time
+        // or the desired renting time is earlier than the offering's renting time
         // TODO: filter rentings beforehand
         let rentingsOfDesiredCar = rentings.filter {$0.inseratID == offering.id}
         return rentingsOfDesiredCar.reduce(true, {prevResult, renting in
