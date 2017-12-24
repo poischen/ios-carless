@@ -12,11 +12,11 @@ import Cosmos
 import MapKit
 
 class OfferingViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
-//UICollectionViewDelegate
+    //UICollectionViewDelegate
 {
-
+    
     //TODO use DB-Data instead of Dummys
-    var displayingOffering = Offering(id: 1, brandID: 1, consumption: 1, description: "default", fuelID: 1, gearID: 1, hp: 1, latitude: 1.0, location: "default", longitude: 1.0, pictureURL: "default", basePrice: 1, seats: 1, type: "default", vehicleTypeID: 1, userUID: "default")
+    var displayingOffering = Offering(id: 1, brandID: 1, consumption: 1, description: "default", fuelID: 1, gearID: 1, hp: 1, latitude: 1.0, location: "default", longitude: 1.0, pictureURL: "default", basePrice: 1, seats: 1, type: "default", vehicleTypeID: 1, userUID: "default", pickupTime: Time(timestring: "10:10")!, returnTime: Time(timestring:"20:20")!)
     
     /*let displayingOffering = Offering(id: 1, basePrice: 120, brand: "BMW", name: "X5", consumptfion: 7, description: "I am a Description.\n\nWeit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.\n\nRent this car, it's georgious!", fuel: "gas", gear: "manual", hp: 230, latitude: 11.581981, location: "Munich", longitude: 48.135125, pictureURL: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fcar.jpg?alt=media&token=168e6d4e-ee84-4f56-817b-b7ec1971d6ba", seats: 5, type: "SUV", featuresIDs: [1, 2, 3], vehicleTypeID: 5, vehicleType: "SUV")*/
     
@@ -64,11 +64,13 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         carImageView.kf.setImage(with: CarImgUrl)
         
         //labels
-        carNameLabel.text = displayingOffering.getBrand() + " " + displayingOffering.type
+        //carNameLabel.text = displayingOffering.getBrand() + " " + displayingOffering.type
+        carNameLabel.text = "test"
         carHpConsumptionLabel.text = "\(displayingOffering.consumption)" + " l/100km, max. " + "\(displayingOffering.hp)" + " km/h."
         
         //detailicons
-        basicDetails = displayingOffering.getBasicDetails()
+        //basicDetails = displayingOffering.getBasicDetails()
+
         
         // Initialize the collection views, set the desired frames
         basicDataCollectionView.delegate = self
@@ -109,11 +111,11 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         let longitude = Double(displayingOffering.longitude)
         let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
         
-      //TODO  centerMapOnLocation(location: initialLocation)
+        //TODO  centerMapOnLocation(location: initialLocation)
         
         let carLocation = CarLocation(locationName: displayingOffering.location, discipline: "default", coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: longitude))
         carLocationMap.addAnnotation(carLocation)
-
+        
         
         //TODO get time from offering object
         //pickUpLabel.text = Offering.pickuptime
@@ -137,16 +139,16 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
         }
     }
     
-   /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                                 sizeForItemAt indexPath: IndexPath) -> CGSize{
-        if (collectionView == self.basicDataCollectionView){
-            return CGSize(70,85)
-        } else {
-            return CGSize(70,70)
-        }
-        
-    }*/
-
+    /* func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+     sizeForItemAt indexPath: IndexPath) -> CGSize{
+     if (collectionView == self.basicDataCollectionView){
+     return CGSize(70,85)
+     } else {
+     return CGSize(70,70)
+     }
+     
+     }*/
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell{
         print("TEST")
         
@@ -155,7 +157,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
             
             let cell: BasicDataCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell
             
-          /*  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell*/
+            /*  let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell*/
             
             
             let basicDetail = basicDetails[indexPath.row]
@@ -170,7 +172,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
             
             let cell: FeaturesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
             
-           // let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
+            // let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
             
             let feature = features[indexPath.row]
             cell.displayContent(image: feature)

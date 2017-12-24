@@ -24,27 +24,36 @@ class Offering: DictionaryConvertible {
     static let OFFERING_USER_UID_KEY = "uid"
     static let OFFERING_VEHICLE_TYPE_ID_KEY = "vehicleTypeID"
     static let OFFERING_LOCATION_KEY = "location"
-
+    static let OFFERING_PICKUP_TIME = "pickuptime"
+    static let OFFERING_RETURN_TIME = "returntime"
     
     convenience required init?(id: Int, dict: [String : AnyObject]) {
         guard let offeringBrandID = dict[Offering.OFFERING_BRAND_ID_KEY] as? Int,
-              let offeringConsumption = dict[Offering.OFFERING_CONSUMPTION_KEY] as? Int,
-              let offeringDescription = dict[Offering.OFFERING_DESCRIPTION_KEY] as? String,
-              let offeringFuelID = dict[Offering.OFFERING_FUEL_ID_KEY] as? Int,
-              let offeringGearID = dict[Offering.OFFERING_GEAR_ID_KEY] as? Int,
-              let offeringHP = dict[Offering.OFFERING_HP_KEY] as? Int,
-              let offeringLatitude = dict[Offering.OFFERING_LATITUDE_KEY] as? Float,
-              let offeringLocation = dict[Offering.OFFERING_LOCATION_KEY] as? String,
-              let offeringLongitude = dict[Offering.OFFERING_LONGITUDE_KEY] as? Float,
-              let offeringPictureURL = dict[Offering.OFFERING_PICTURE_URL_KEY] as? String,
-              let offeringPrice = dict[Offering.OFFERING_PRICE_KEY] as? Int,
-              let offeringSeats = dict[Offering.OFFERING_SEATS_KEY] as? Int,
-              let offeringType = dict[Offering.OFFERING_TYPE_KEY] as? String,
-              let offeringUserUID = dict[Offering.OFFERING_USER_UID_KEY] as? String,
-              let offeringVehicleTypeID = dict[Offering.OFFERING_VEHICLE_TYPE_ID_KEY] as? Int else {
-                  return nil
+            let offeringConsumption = dict[Offering.OFFERING_CONSUMPTION_KEY] as? Int,
+            let offeringDescription = dict[Offering.OFFERING_DESCRIPTION_KEY] as? String,
+            let offeringFuelID = dict[Offering.OFFERING_FUEL_ID_KEY] as? Int,
+            let offeringGearID = dict[Offering.OFFERING_GEAR_ID_KEY] as? Int,
+            let offeringHP = dict[Offering.OFFERING_HP_KEY] as? Int,
+            let offeringLatitude = dict[Offering.OFFERING_LATITUDE_KEY] as? Float,
+            let offeringLocation = dict[Offering.OFFERING_LOCATION_KEY] as? String,
+            let offeringLongitude = dict[Offering.OFFERING_LONGITUDE_KEY] as? Float,
+            let offeringPictureURL = dict[Offering.OFFERING_PICTURE_URL_KEY] as? String,
+            let offeringPrice = dict[Offering.OFFERING_PRICE_KEY] as? Int,
+            let offeringSeats = dict[Offering.OFFERING_SEATS_KEY] as? Int,
+            let offeringType = dict[Offering.OFFERING_TYPE_KEY] as? String,
+            let offeringUserUID = dict[Offering.OFFERING_USER_UID_KEY] as? String,
+            let offeringVehicleTypeID = dict[Offering.OFFERING_VEHICLE_TYPE_ID_KEY] as? Int,
+            let offeringPickupTimeRaw = dict[Offering.OFFERING_PICKUP_TIME] as? String,
+            let offeringReturnTimeRaw = dict[Offering.OFFERING_RETURN_TIME] as? String
+            else {
+                return nil
         }
-        self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID)
+        if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
+            self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTime, returnTime: offeringReturnTime)
+        } else {
+            return nil
+        }
+        
     }
     
     var dict: [String : AnyObject] {
@@ -83,10 +92,10 @@ class Offering: DictionaryConvertible {
     let type: String
     let vehicleTypeID: Int
     let userUID: String
+    let pickupTime: Time
+    let returnTime: Time
     
-    // TODO: add featureIDs back in
-    
-    init(id: Int, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String) {
+    init(id: Int, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: Time, returnTime: Time) {
         self.basePrice = basePrice
         self.id = id
         self.brandID = brandID
@@ -103,20 +112,7 @@ class Offering: DictionaryConvertible {
         self.location = location
         self.vehicleTypeID = vehicleTypeID
         self.userUID = userUID
-    }
-    
-    //Icons in program have the same name as the String of the detail
-    func getBasicDetails() -> [String] {
-        let seats = "\(self.seats)"
-        let gear = DBMapping.shared.mapGearIDToGear(id: gearID)
-        let fuel = DBMapping.shared.mapFuelIDToFuel(id: fuelID)
-        //TODO: get vehicletype from ID
-        let basicDetails = [seats, fuel!.name, gear!.name, "Compact"] as [Any]
-        return basicDetails as! [String]
-    }
-    
-    func  getBrand() -> String {
-        let brand = DBMapping.shared.mapBrandIDToBrand(id: brandID)
-        return brand!.name
+        self.pickupTime = pickupTime
+        self.returnTime = returnTime
     }
 }
