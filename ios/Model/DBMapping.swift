@@ -9,6 +9,8 @@
 import Foundation
 
 class DBMapping {
+    // THIS CLASS IS DEPRECTATED, please use the methods in StorageAPI to get brands, fuels and gears by ID
+    
     static let shared = DBMapping()
 
     // TODO: necessary to store brands here when DB already caches?

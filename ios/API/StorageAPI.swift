@@ -224,21 +224,19 @@ final class StorageAPI {
         }
     }
     
-    func getBrandsByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
+    func getBrandByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
         self.brandsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
                 if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let brandID = Int(child.key)!
+                    let brandID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
                     if let brand = Brand.init(id: brandID, dict: dict) {
                         completion(brand)
                     } else {
-                        print("error in get brandsByID")
-                        return
+                        print("error in get getBrandByID")
                     }
                 } else {
-                    print("error in get brandsByID")
-                    return
+                    print("error in get getBrandByID")
                 }
             } else {
                 print("no brand or more than one brand found")
@@ -265,6 +263,8 @@ final class StorageAPI {
         }
     }
     
+    // not using this anymore
+    // TODO: remove
     func getFuelsAsMap(completion: @escaping (_ fuels: [Int:Fuel]) -> Void){
         self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFuels:[Int:Fuel] = [:]
@@ -275,6 +275,28 @@ final class StorageAPI {
                 resultFuels.updateValue(fuel, forKey: fuel.id)
             }
             completion(resultFuels)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getFuelByID(id: Int, completion: @escaping (_ fuel: Fuel) -> Void){
+        self.fuelDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let fuelID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    if let fuel = Fuel.init(id: fuelID, dict: dict) {
+                        completion(fuel)
+                    } else {
+                        print("error in get getFuelByID")
+                    }
+                } else {
+                    print("error in get getFuelByID")
+                }
+            } else {
+                print("no fuel or more than one fuel found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -296,6 +318,8 @@ final class StorageAPI {
         }
     }
     
+    // not using this anymore
+    // TODO: remove
     func getGearsAsMap(completion: @escaping (_ gears: [Int:Gear]) -> Void){
         self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultGears:[Int:Gear] = [:]
@@ -306,6 +330,28 @@ final class StorageAPI {
                 resultGears.updateValue(gear, forKey: gear.id)
             }
             completion(resultGears)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getGearByID(id: Int, completion: @escaping (_ gear: Gear) -> Void){
+        self.gearsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let gearID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    if let gear = Gear.init(id: gearID, dict: dict) {
+                        completion(gear)
+                    } else {
+                        print("error in get getGearByID")
+                    }
+                } else {
+                    print("error in get getGearByID")
+                }
+            } else {
+                print("no gear or more than one gear found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }

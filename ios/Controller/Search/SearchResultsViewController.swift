@@ -16,6 +16,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let dbMapping = DBMapping.shared
+    let storageAPI = StorageAPI.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,12 +26,12 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         /* self.dbMapping.fillBrandsCache(completion: {
             self.searchResultsTable.reloadData()
         }) */
-        self.dbMapping.fillGearsCache(completion: {
+        /*self.dbMapping.fillGearsCache(completion: {
             self.searchResultsTable.reloadData()
-        })
-        self.dbMapping.fillFuelsCache(completion: {
+        }) */
+        /* self.dbMapping.fillFuelsCache(completion: {
             self.searchResultsTable.reloadData()
-        })
+        }) */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,21 +70,31 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             cell.modelLabel.text = "loading"
         } */
         cell.modelLabel.text = "loading"
-        StorageAPI.shared.getBrandsByID(id: offering.brandID, completion: {brand in
+        self.storageAPI.getBrandByID(id: offering.brandID, completion: {brand in
             cell.modelLabel.text = brand.name + " " + offering.type
         })
         
-        if let offeringsGear = self.dbMapping.mapGearIDToGear(id: offering.gearID) {
+        /* if let offeringsGear = self.dbMapping.mapGearIDToGear(id: offering.gearID) {
             cell.gearshiftLabel.text = offeringsGear.name
         } else {
             cell.gearshiftLabel.text = "loading"
-        }
+        } */
         
-        if let offeringsFuel = self.dbMapping.mapFuelIDToFuel(id: offering.fuelID) {
+        cell.gearshiftLabel.text = "loading"
+        self.storageAPI.getGearByID(id: offering.gearID, completion: {gear in
+            cell.gearshiftLabel.text = gear.name
+        })
+        
+        /* if let offeringsFuel = self.dbMapping.mapFuelIDToFuel(id: offering.fuelID) {
             cell.fuelLabel.text = offeringsFuel.name
         } else {
             cell.fuelLabel.text = "loading"
-        }
+        } */
+        
+        cell.fuelLabel.text = "loading"
+        self.storageAPI.getFuelByID(id: offering.fuelID, completion: {fuel in
+            cell.fuelLabel.text = fuel.name
+        })
         
         cell.seatsLabel.text = String(offering.seats) + " seats"
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
@@ -91,7 +102,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         cell.priceLabel.text = "from " + String(offering.basePrice) + "€ per day"
         let url = URL(string: offering.pictureURL)
         let data = try? Data(contentsOf: url!)
-        let image: UIImage = UIImage(data: data!)!
+        let image: UIImage = UIImage(data: data!)! // TODO: better error handling here
         cell.photo.image = image
         
         return cell
