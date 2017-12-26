@@ -207,6 +207,8 @@ final class StorageAPI {
         }
     }
     
+    // not using this anymore
+    // TODO: remove
     func getBrandsAsMap(completion: @escaping (_ brands: [Int:Brand]) -> Void){
         self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Int:Brand] = [:]
@@ -217,6 +219,30 @@ final class StorageAPI {
                 resultBrands.updateValue(brand, forKey: brand.id)
             }
             completion(resultBrands)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getBrandsByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
+        self.brandsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let brandID = Int(child.key)!
+                    if let brand = Brand.init(id: brandID, dict: dict) {
+                        completion(brand)
+                    } else {
+                        print("error in get brandsByID")
+                        return
+                    }
+                } else {
+                    print("error in get brandsByID")
+                    return
+                }
+            } else {
+                print("no brand or more than one brand found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }

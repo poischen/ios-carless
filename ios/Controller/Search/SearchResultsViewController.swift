@@ -22,10 +22,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
 
-        self.dbMapping.fillBrandsCache(completion: {
-            print("cache filled")
+        /* self.dbMapping.fillBrandsCache(completion: {
             self.searchResultsTable.reloadData()
-        })
+        }) */
         self.dbMapping.fillGearsCache(completion: {
             self.searchResultsTable.reloadData()
         })
@@ -63,12 +62,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         
         let offering = offerings[indexPath.row]
         
-        if let offeringsBrand = self.dbMapping.mapBrandIDToBrand(id: offering.brandID) {
+        /* if let offeringsBrand = self.dbMapping.mapBrandIDToBrand(id: offering.brandID) {
             print("setting brand")
             cell.modelLabel.text = offeringsBrand.name + " " + offering.type
         } else {
             cell.modelLabel.text = "loading"
-        }
+        } */
+        cell.modelLabel.text = "loading"
+        StorageAPI.shared.getBrandsByID(id: offering.brandID, completion: {brand in
+            cell.modelLabel.text = brand.name + " " + offering.type
+        })
         
         if let offeringsGear = self.dbMapping.mapGearIDToGear(id: offering.gearID) {
             cell.gearshiftLabel.text = offeringsGear.name
