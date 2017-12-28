@@ -152,6 +152,14 @@
                                     <action selector="chatButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="maV-y9-PCd"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="20G-o3-Kds">
+                                <rect key="frame" x="155" y="614" width="65" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Advertise"/>
+                                <connections>
+                                    <action selector="advertiseButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="2lJ-Tx-kAe"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="AMp-9V-bZc"/>

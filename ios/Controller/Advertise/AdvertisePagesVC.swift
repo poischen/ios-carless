@@ -9,11 +9,12 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                 self.ViewControllerInstance(name: "advertisePage3"),
                 self.ViewControllerInstance(name: "advertisePage4"),
                 self.ViewControllerInstance(name: "advertisePage5"),
+                self.ViewControllerInstance(name: "advertisePage6"),
                 self.ViewControllerInstance(name: "advertisePage7")]
     }()
     
     private func ViewControllerInstance(name: String) -> UIViewController {
-        return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: name)
+        return UIStoryboard(name: "Advertise", bundle: nil).instantiateViewController(withIdentifier: name)
     }
     
     override func viewDidLoad() {

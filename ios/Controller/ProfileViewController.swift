@@ -101,7 +101,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(vc, animated: true, completion: nil)
     }
     
-    
+    @IBAction func advertiseButton(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Advertise", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "AdvertisePages")
+        self.present(vc, animated: true, completion: nil)
+    }
     
     @IBAction func chatButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
