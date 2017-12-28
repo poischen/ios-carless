@@ -113,5 +113,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.present(vc, animated: true, completion: nil)
     }
 
-
+    @IBAction func rateButton(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
 }

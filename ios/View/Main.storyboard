@@ -160,6 +160,14 @@
                                     <action selector="advertiseButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="2lJ-Tx-kAe"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVI-Og-Zda">
+                                <rect key="frame" x="171" y="541" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Rate"/>
+                                <connections>
+                                    <action selector="rateButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="ief-1t-QBB"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="AMp-9V-bZc"/>
