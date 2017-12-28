@@ -10,13 +10,14 @@ import UIKit
 
 class RateViewController: UIViewController, UITextViewDelegate {
 
-    @IBOutlet weak var rateExplanation: UITextView!
+    @IBOutlet weak var ratingExplanation: UITextView!
+    @IBOutlet weak var ratingStars: RateStarControl!
     
     let maxExplanationLength = 300
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        rateExplanation.delegate = self
+        ratingExplanation.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -32,6 +33,10 @@ class RateViewController: UIViewController, UITextViewDelegate {
         return numberOfChars < maxExplanationLength
     }
 
+    @IBAction func saveRatingButtonClicked(_ sender: Any) {
+        let newRating = LessorRating(id: 5, userUID: "test", explanation: ratingExplanation.text, rating: ratingStars.rating)
+        StorageAPI.shared.saveLessorRating(rating: newRating)
+    }
     /*
     // MARK: - Navigation
 

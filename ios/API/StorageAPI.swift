@@ -34,6 +34,7 @@ final class StorageAPI {
     private let gearsDBReference: DatabaseReference
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
+    private let lessorRatings: DatabaseReference
     
     //value will not be instantiated until it is needed
     weak var delegate: FetchData?;
@@ -82,6 +83,7 @@ final class StorageAPI {
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_LESSOR_RATINGS)
         
         // tryong to avoid caching problems by keeping references synced until queried for the first time
         // TODO: find better solution?
@@ -93,6 +95,7 @@ final class StorageAPI {
         self.gearsDBReference.keepSynced(true)
         self.brandsDBReference.keepSynced(true)
         self.fuelDBReference.keepSynced(true)
+        self.lessorRatings.keepSynced(true)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -355,6 +358,12 @@ final class StorageAPI {
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func saveLessorRating(rating: LessorRating){
+        let ratingAsDict = rating.dict
+        self.lessorRatings.childByAutoId().setValue(ratingAsDict)
+        
     }
     
     //stores User in Database

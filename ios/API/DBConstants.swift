@@ -17,6 +17,7 @@ class DBConstants {
     static let PROPERTY_NAME_GEARS = "gear"
     static let PROPERTY_NAME_BRANDS = "brands"
     static let PROPERTY_NAME_FUELS = "fuel"
+    static let PROPERTY_NAME_LESSOR_RATINGS = "lessor_ratings"
     
     // constants for offerings
     static let PROPERTY_NAME_OFFERING_PRICE = "price"

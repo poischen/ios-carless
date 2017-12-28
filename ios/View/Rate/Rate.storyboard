@@ -84,12 +84,24 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cow-r1-oMz">
+                                <rect key="frame" x="16" y="587" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <state key="normal" title="Button">
+                                    <color key="titleColor" red="1" green="0.54141064080000001" blue="0.22546769559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="saveRatingButtonClicked:" destination="Ljw-1U-NAU" eventType="touchUpInside" id="gB8-c9-Y57"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="RUl-RX-I80"/>
                     </view>
                     <connections>
-                        <outlet property="rateExplanation" destination="we0-UB-TSN" id="qUe-uv-P2g"/>
+                        <outlet property="ratingExplanation" destination="we0-UB-TSN" id="qUe-uv-P2g"/>
+                        <outlet property="ratingStars" destination="CHU-WM-oxe" id="Ibw-OU-VQm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35u-Oj-NYA" userLabel="First Responder" sceneMemberID="firstResponder"/>
