@@ -42,10 +42,12 @@ final class StorageAPI {
     var userName = "";
     
     //returns Project URL from Firebase
+    // TODO: merge database references
     var dbRef: DatabaseReference {
         return Database.database().reference();
     }
     
+    // TODO: cache users?
     var usersRef: DatabaseReference{
         return dbRef.child(Constants.USERS);
     }
@@ -109,6 +111,28 @@ final class StorageAPI {
             }
             completion(resultOfferings)
             //self.offeringsDBReference.keepSynced(false) // fix for caching problems
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getOfferingByID(id: Int, completion: @escaping (_ offering: Offering) -> Void){
+        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let offeringID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    if let offering = Offering.init(id: offeringID, dict: dict) {
+                        completion(offering)
+                    } else {
+                        print("error in get getOfferingByID")
+                    }
+                } else {
+                    print("error in get getOfferingByID")
+                }
+            } else {
+                print("no offering or more than one offering found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -407,6 +431,24 @@ final class StorageAPI {
         }
     }
     
+    func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
+        self.usersRef.queryOrderedByKey().queryEqual(toValue: "b4nac5ozY7PPK61cRxRvtj2gCTH2").observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
+                        if let userName = userData[Constants.NAME] as? String {
+                            completion(User(id: UID, name: userName))
+                            return
+                        }
+                }
+                // retun not executed -> something went wrong -> print error
+                print("error in get getUserByUID")
+            } else {
+                print("no user or more than one user found")
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     
     //gets UserID in Firebase
     func userID() -> String {
