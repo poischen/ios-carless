@@ -15,9 +15,11 @@ class RateViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var ratingCarModel: UILabel!
     @IBOutlet weak var ratingLessorUsername: UILabel!
     
-    let maxExplanationLength = 300
+    private let minExplanationLength = 100
+    private let maxExplanationLength = 300
+    
     let rentingBeingRated: Renting? = Renting(id: 1, inseratID: 1, userID: "b4nac5ozY7PPK61cRxRvtj2gCTH2", startDate: Date(), endDate: Date()) // TODO: use renting here?
-    var lessorUser: User? = nil
+    private var lessorUser: User? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,8 +51,18 @@ class RateViewController: UIViewController, UITextViewDelegate {
 
     @IBAction func saveRatingButtonClicked(_ sender: Any) {
         if lessorUser != nil {
-            let newRating = LessorRating(id: 5, userUID: lessorUser!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
-            StorageAPI.shared.saveLessorRating(rating: newRating)
+            // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
+            if ratingExplanation.text.count >= minExplanationLength && ratingExplanation.text.count <= maxExplanationLength {
+                let newRating = LessorRating(id: 5, userUID: lessorUser!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
+                StorageAPI.shared.saveLessorRating(rating: newRating)
+            } else {
+                let alertController = UIAlertController(title: "Sorry", message: "Your explanation is too long or too short. :(", preferredStyle: .alert)
+                let defaultAction = UIAlertAction(title: "back", style: .cancel, handler: {alterAction in
+                    self.navigationController?.popViewController(animated: true)
+                })
+                alertController.addAction(defaultAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
         }
     }
     /*
