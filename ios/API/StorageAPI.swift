@@ -433,7 +433,7 @@ final class StorageAPI {
     }
     
     func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
-        self.usersRef.queryOrderedByKey().queryEqual(toValue: "b4nac5ozY7PPK61cRxRvtj2gCTH2").observeSingleEvent(of: .value, with: { snapshot in
+        self.usersRef.queryOrderedByKey().queryEqual(toValue: UID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
                         if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String {
