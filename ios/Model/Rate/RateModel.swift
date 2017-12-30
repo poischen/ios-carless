@@ -9,12 +9,23 @@
 import Foundation
 
 class RateModel {
-    static func getRatingInformationFromDB(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
+    static func getAdditionalInformationForLessorRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
         StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
             StorageAPI.shared.getUserByUID(UID: offering.userUID, completion: { lessorUser in
                 StorageAPI.shared.getBrandByID(id: offering.brandID, completion: { offeringBrand in
                     let offeringCarModelName = offeringBrand.name + " " + offering.type
                     completion(offeringCarModelName, lessorUser)
+                })
+            })
+        })
+    }
+    
+    static func getAdditionalInformationForLesseeRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lesseeUser: User) -> Void){
+        StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
+            StorageAPI.shared.getBrandByID(id: offering.brandID, completion: { offeringBrand in
+                let offeringCarModelName = offeringBrand.name + " " + offering.type
+                StorageAPI.shared.getUserByUID(UID: rentingBeingRated.userID, completion: { lesseeUser in
+                    completion(offeringCarModelName, lesseeUser)
                 })
             })
         })

@@ -5,6 +5,11 @@
 //  Created by Konrad Fischer on 28.12.17.
 //  Copyright © 2017 Hila Safi. All rights reserved.
 //
+/*
+ How to use this class:
+ - set retingBeingRated before showing the rating view
+ - set rateLessee to true before showing the view in case the view should be used to rate a lessee
+ */
 
 import UIKit
 
@@ -18,8 +23,9 @@ class RateViewController: UIViewController, UITextViewDelegate {
     private let minExplanationLength = 100
     private let maxExplanationLength = 300
     
-    let rentingBeingRated: Renting? = Renting(id: 1, inseratID: 1, userID: "b4nac5ozY7PPK61cRxRvtj2gCTH2", startDate: Date(), endDate: Date()) // TODO: use renting here?
-    private var lessorUser: User? = nil
+    var rentingBeingRated: Renting? = Renting(id: 1, inseratID: 1, userID: "namPnRH7EhYukwtiUvJArj1zAZz1", startDate: Date(), endDate: Date()) // TODO: set from profile // TODO: only here for testing
+    private var userBeingRated: User? = nil
+    var rateLessee: Bool = true // should the view to rate a lessee be shown (default: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,11 +36,20 @@ class RateViewController: UIViewController, UITextViewDelegate {
         super.viewWillAppear(animated)
         
         if (rentingBeingRated != nil){
-            RateModel.getRatingInformationFromDB(rentingBeingRated: rentingBeingRated!, completion: { (carModelName, lessorUser) in
-                self.ratingCarModel.text = carModelName
-                self.ratingLessorUsername.text = lessorUser.name
-                self.lessorUser = lessorUser
-            })
+            if (rateLessee){
+                RateModel.getAdditionalInformationForLesseeRating(rentingBeingRated: rentingBeingRated!, completion: { (carModelName, lesseeUser) in
+                    self.ratingCarModel.text = carModelName
+                    self.ratingLessorUsername.text = lesseeUser.name
+                    self.userBeingRated = lesseeUser
+                })
+            } else {
+                // rate a lessor
+                RateModel.getAdditionalInformationForLessorRating(rentingBeingRated: rentingBeingRated!, completion: { (carModelName, lessorUser) in
+                    self.ratingCarModel.text = carModelName
+                    self.ratingLessorUsername.text = lessorUser.name
+                    self.userBeingRated = lessorUser
+                })
+            }
         }
     }
 
@@ -50,10 +65,10 @@ class RateViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func saveRatingButtonClicked(_ sender: Any) {
-        if lessorUser != nil {
+        if userBeingRated != nil {
             // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
             if ratingExplanation.text.count >= minExplanationLength && ratingExplanation.text.count <= maxExplanationLength {
-                let newRating = LessorRating(id: 5, userUID: lessorUser!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
+                let newRating = LessorRating(id: 5, userUID: userBeingRated!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
                 StorageAPI.shared.saveLessorRating(rating: newRating)
             } else {
                 let alertController = UIAlertController(title: "Sorry", message: "Your explanation is too long or too short. :(", preferredStyle: .alert)
