@@ -21,7 +21,7 @@ class DBConstants {
     
     // constants for offering's features
     static let PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE = "feature"
-    static let PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING = "feature"
+    static let PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING = "inserat"
     
     //DBProvider
     static let USERS = "Users";

@@ -169,13 +169,12 @@ final class StorageAPI {
                         print("error in getOfferingsFeatures")
                         return
                 }
-                if (resultOfferingsFeatures[offeringID] != nil){
+                if var currentOfferingsFeatures = resultOfferingsFeatures[offeringID] {
                     // not the first feature -> add to feature list for this offering
-                    var prevOfferingFeatures = resultOfferingsFeatures[offeringID]!
-                    prevOfferingFeatures.append(featureID)
-                    resultOfferingsFeatures[offeringID] = prevOfferingFeatures
+                    currentOfferingsFeatures.append(featureID)
+                    resultOfferingsFeatures[offeringID] = currentOfferingsFeatures
                 } else {
-                    // first feature for this offering -> initialise array
+                    // first feature for this offering -> initialise features array
                     resultOfferingsFeatures[offeringID] = [featureID]
                 }
             }

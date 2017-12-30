@@ -10,6 +10,7 @@ import Foundation
 
 class DBMapping {
     // THIS CLASS IS DEPRECTATED, please use the methods in StorageAPI to get brands, fuels and gears by ID
+    // TODO: delete
     
     static let shared = DBMapping()
 
