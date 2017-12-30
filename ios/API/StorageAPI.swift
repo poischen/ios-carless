@@ -98,6 +98,7 @@ final class StorageAPI {
         self.brandsDBReference.keepSynced(true)
         self.fuelDBReference.keepSynced(true)
         self.lessorRatings.keepSynced(true)
+        self.usersRef.keepSynced(true)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -391,8 +392,8 @@ final class StorageAPI {
     }
     
     //stores User in Database
-    func saveUser(withID: String, name: String, email: String, password: String){
-        let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.PASSWORD: password];
+    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
+        let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg];
         
         usersRef.child(withID).setValue(data);
     }
@@ -416,10 +417,10 @@ final class StorageAPI {
                     if let userData = value as? NSDictionary{
                         
                         // fetch the data as String
-                        if let name = userData[DBConstants.NAME] as? String {
+                        if let name = userData[DBConstants.NAME] as? String, let rating = userData[DBConstants.RATING] as? Float, let profileImgUrl = userData[DBConstants.PROFILEIMG] as? String {
                             
                             let id = key as! String;
-                            let newUser = User(id: id, name: name);
+                            let newUser = User(id: id, name: name, rating: rating, profileImgUrl: profileImgUrl);
                             
                             //append it in the empty array
                             users.append(newUser);
@@ -435,8 +436,8 @@ final class StorageAPI {
         self.usersRef.queryOrderedByKey().queryEqual(toValue: "b4nac5ozY7PPK61cRxRvtj2gCTH2").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
-                        if let userName = userData[DBConstants.NAME] as? String {
-                            completion(User(id: UID, name: userName))
+                        if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String {
+                            completion(User(id: UID, name: userName, rating: userRating, profileImgUrl: userPic ))
                             return
                         }
                 }

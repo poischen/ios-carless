@@ -60,7 +60,6 @@
 		840D63CE1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63CC1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift */; };
 		840D63CF1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63CD1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift */; };
 		840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63D41FE9A746007A1F16 /* CarLocation.swift */; };
-		840D63D71FE9A753007A1F16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63D61FE9A753007A1F16 /* Profile.swift */; };
 		841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */; };
 		841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */; };
 		84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */; };
@@ -152,7 +151,6 @@
 		840D63CC1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicDataCollectionViewCell.swift; sourceTree = "<group>"; };
 		840D63CD1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeaturesCollectionViewCell.swift; sourceTree = "<group>"; };
 		840D63D41FE9A746007A1F16 /* CarLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarLocation.swift; sourceTree = "<group>"; };
-		840D63D61FE9A753007A1F16 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage1.swift; sourceTree = "<group>"; };
 		841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage2.swift; sourceTree = "<group>"; };
 		84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage3.swift; sourceTree = "<group>"; };
@@ -256,7 +254,6 @@
 			children = (
 				19714D3F1FF6416C00067565 /* Rate */,
 				840D63D41FE9A746007A1F16 /* CarLocation.swift */,
-				840D63D61FE9A753007A1F16 /* Profile.swift */,
 				7734A9A31FD6F2750013A923 /* User.swift */,
 				19CE072B1FC41C250087E958 /* Brand.swift */,
 				19D4126A1FB707D500794F1F /* Feature.swift */,
@@ -805,7 +802,7 @@
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
 				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
-				840D63D71FE9A753007A1F16 /* Profile.swift in Sources */,
+				840D63C41FE9A4C6007A1F16 /* AdvertisePageContentVC.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,
 				840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */,

@@ -20,7 +20,7 @@ class OfferingViewController: UIViewController, UICollectionViewDataSource, UICo
     
     /*let displayingOffering = Offering(id: 1, basePrice: 120, brand: "BMW", name: "X5", consumptfion: 7, description: "I am a Description.\n\nWeit hinten, hinter den Wortbergen, fern der Länder Vokalien und Konsonantien leben die Blindtexte. Abgeschieden wohnen sie in Buchstabhausen an der Küste des Semantik, eines großen Sprachozeans. Ein kleines Bächlein namens Duden fließt durch ihren Ort und versorgt sie mit den nötigen Regelialien. Es ist ein paradiesmatisches Land, in dem einem gebratene Satzteile in den Mund fliegen.\n\nRent this car, it's georgious!", fuel: "gas", gear: "manual", hp: 230, latitude: 11.581981, location: "Munich", longitude: 48.135125, pictureURL: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fcar.jpg?alt=media&token=168e6d4e-ee84-4f56-817b-b7ec1971d6ba", seats: 5, type: "SUV", featuresIDs: [1, 2, 3], vehicleTypeID: 5, vehicleType: "SUV")*/
     
-    let lessor = Profile(id: "profile123", name: "Markus", profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", rating: 3.5)
+    let lessor = User(id: "profile123", name: "Markus", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808")
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]

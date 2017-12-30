@@ -65,6 +65,8 @@ class DBConstants {
     static let EMAIL = "email";
     static let PASSWORD = "password";
     static let DATA = "data";
+    static let RATING = "rating";
+    static let PROFILEIMG = "profileImg";
     
     //messages
     static let TEXT = "text";
