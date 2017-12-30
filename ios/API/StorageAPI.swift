@@ -49,15 +49,15 @@ final class StorageAPI {
     
     // TODO: cache users?
     var usersRef: DatabaseReference{
-        return dbRef.child(Constants.USERS);
+        return dbRef.child(DBConstants.USERS);
     }
     
     var messagesRef: DatabaseReference {
-        return dbRef.child(Constants.MESSAGES);
+        return dbRef.child(DBConstants.MESSAGES);
     }
     
     var mediaMessagesRef: DatabaseReference{
-        return dbRef.child(Constants.MEDIA_MESSAGES);
+        return dbRef.child(DBConstants.MEDIA_MESSAGES);
     }
     
     //where media files are stored
@@ -66,11 +66,11 @@ final class StorageAPI {
     }
     
     var imageStorageRef: StorageReference {
-        return storageRef.child(Constants.IMAGE_STORAGE);
+        return storageRef.child(DBConstants.IMAGE_STORAGE);
     }
     
     var videoStorageRef: StorageReference {
-        return storageRef.child(Constants.VIDEO_STORAGE);
+        return storageRef.child(DBConstants.VIDEO_STORAGE);
     }
     
     private init() {
@@ -392,7 +392,7 @@ final class StorageAPI {
     
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, password: String){
-        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.EMAIL: email, Constants.PASSWORD: password];
+        let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.PASSWORD: password];
         
         usersRef.child(withID).setValue(data);
     }
@@ -416,7 +416,7 @@ final class StorageAPI {
                     if let userData = value as? NSDictionary{
                         
                         // fetch the data as String
-                        if let name = userData[Constants.NAME] as? String {
+                        if let name = userData[DBConstants.NAME] as? String {
                             
                             let id = key as! String;
                             let newUser = User(id: id, name: name);
@@ -435,7 +435,7 @@ final class StorageAPI {
         self.usersRef.queryOrderedByKey().queryEqual(toValue: "b4nac5ozY7PPK61cRxRvtj2gCTH2").observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
-                        if let userName = userData[Constants.NAME] as? String {
+                        if let userName = userData[DBConstants.NAME] as? String {
                             completion(User(id: UID, name: userName))
                             return
                         }
