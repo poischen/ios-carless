@@ -375,8 +375,8 @@
                     <size key="freeformSize" width="375" height="1200"/>
                     <connections>
                         <outlet property="brandsFilterStatusLabel" destination="LUe-0F-rJC" id="n4t-qK-V24"/>
-                        <outlet property="engineFilterStatusLabel" destination="tyC-Rp-jLQ" id="gUK-eC-9Am"/>
                         <outlet property="featuresFilterStatusLabel" destination="xfN-4x-5w0" id="uiD-1G-kBO"/>
+                        <outlet property="fuelFilterStatusLabel" destination="tyC-Rp-jLQ" id="gUK-eC-9Am"/>
                         <outlet property="gearFilterStatusLabel" destination="0XM-8W-gwG" id="LsN-Vm-91L"/>
                         <outlet property="maxConsumptionLabel" destination="3D5-ZF-LWz" id="JQl-gQ-agl"/>
                         <outlet property="maxConsumptionSlider" destination="B8N-G6-Xr2" id="9y5-RK-sAH"/>

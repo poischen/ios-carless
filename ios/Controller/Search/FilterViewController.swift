@@ -28,7 +28,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
 
     @IBOutlet weak var gearFilterStatusLabel: UILabel!
     @IBOutlet weak var vehicleTypeFilterStatusLabel: UILabel!
-    @IBOutlet weak var engineFilterStatusLabel: UILabel!
+    @IBOutlet weak var fuelFilterStatusLabel: UILabel!
     @IBOutlet weak var featuresFilterStatusLabel: UILabel!
     @IBOutlet weak var brandsFilterStatusLabel: UILabel!
     
@@ -283,11 +283,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let currentSearchFilter = self.searchFilter {
             let selectedFeatures = self.features.filter{$0.isSelected}
             if (selectedFeatures.count == 0){
-                // no features selected -> disable filter
+                // no features selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.featureIDs = nil
                 self.featuresFilterStatusLabel.text = self.filterDisabledText
             } else {
-                // features selected -> enable filter
+                // feature(s) selected -> enable filter and indicate to the user that the filter is enabled
                 currentSearchFilter.featureIDs = selectedFeatures.map{$0.id}
                 self.featuresFilterStatusLabel.text = self.filterEnabledText
             }
@@ -295,40 +295,62 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func updateSelectedBrandsInFilter(){
-        if self.searchFilter != nil {
-            self.searchFilter!.brandIDs = self.brands.filter{$0.isSelected}.map{$0.id}
+        if let currentSearchFilter = self.searchFilter {
+            let selectedBrands = self.brands.filter{$0.isSelected}
+            if (selectedBrands.count == 0){
+                // no brands selected -> disable filter and indicate to the user that the filter is disabled
+                currentSearchFilter.brandIDs = nil
+                self.brandsFilterStatusLabel.text = self.filterDisabledText
+            } else {
+                // brand(s) selected -> enable filter and indicate to the user that the filter is enabled
+                currentSearchFilter.brandIDs = selectedBrands.map{$0.id}
+                self.brandsFilterStatusLabel.text = self.filterEnabledText
+            }
         }
     }
     
     func updateSelectedGearsInFilter(){
-        if self.searchFilter != nil {
-            self.searchFilter!.gearIDs = self.gears.filter{$0.isSelected}.map{$0.id}
+        if let currentSearchFilter = self.searchFilter {
+            let selectedGears = self.gears.filter{$0.isSelected}
+            if (selectedGears.count == 0){
+                // no gears selected -> disable filter and indicate to the user that the filter is disabled
+                currentSearchFilter.gearIDs = nil
+                self.gearFilterStatusLabel.text = self.filterDisabledText
+            } else {
+                // gear(s) selected -> enable filter and indicate to the user that the filter is enabled
+                currentSearchFilter.gearIDs = selectedGears.map{$0.id}
+                self.gearFilterStatusLabel.text = self.filterEnabledText
+            }
         }
     }
     
     func updateSelectedVehicleTypesInFilter(){
-        if self.searchFilter != nil {
-            self.searchFilter!.vehicleTypeIDs = self.vehicleTypes.filter{$0.isSelected}.map{$0.id}
+        if let currentSearchFilter = self.searchFilter {
+            let selectedVehicleTypes = self.vehicleTypes.filter{$0.isSelected}
+            if (selectedVehicleTypes.count == 0){
+                // no vehicle types selected -> disable filter and indicate to the user that the filter is disabled
+                currentSearchFilter.vehicleTypeIDs = nil
+                self.vehicleTypeFilterStatusLabel.text = self.filterDisabledText
+            } else {
+                // vehicle type(s) selected -> enable filter and indicate to the user that the filter is enabled
+                currentSearchFilter.vehicleTypeIDs = selectedVehicleTypes.map{$0.id}
+                self.vehicleTypeFilterStatusLabel.text = self.filterEnabledText
+            }
         }
     }
     
     func updateSelectedFuelsInFilter(){
-        if self.searchFilter != nil {
-            self.searchFilter!.fuelIDs = self.fuels.filter{$0.isSelected}.map{$0.id}
-        }
-    }
-    
-    // TODO: remove?
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if self.searchFilter != nil {
-            self.searchFilter?.maxConsumption = Int(self.maxConsumptionSlider.value)
-            self.searchFilter?.minHP = Int(self.minHorsepowerSlider.value)
-            self.searchFilter?.maxPrice = Int(self.maxPriceSlider.value)
-            self.updateSelectedFeaturesInFilter()
-            self.updateSelectedBrandsInFilter()
-            self.updateSelectedGearsInFilter()
-            self.updateSelectedVehicleTypesInFilter()
-            self.updateSelectedFuelsInFilter()
+        if let currentSearchFilter = self.searchFilter {
+            let selectedFuels = self.fuels.filter{$0.isSelected}
+            if (selectedFuels.count == 0){
+                // no fuels selected -> disable filter and indicate to the user that the filter is disabled
+                currentSearchFilter.fuelIDs = nil
+                self.fuelFilterStatusLabel.text = self.filterDisabledText
+            } else {
+                // fuel(s) selected -> enable filter and indicate to the user that the filter is enabled
+                currentSearchFilter.fuelIDs = selectedFuels.map{$0.id}
+                self.fuelFilterStatusLabel.text = self.filterEnabledText
+            }
         }
     }
 
