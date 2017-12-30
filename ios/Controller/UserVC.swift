@@ -25,7 +25,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         //Fetch Data has to know that we have confirmed to the protocol
         //chatVC deals with the function dataReceived(); 
         StorageAPI.shared.delegate = self;
-        StorageAPI.shared.getUsers();
+        StorageAPI.shared.getUsers(completion: dataReceived);
     }
     
     //what is done when data is received

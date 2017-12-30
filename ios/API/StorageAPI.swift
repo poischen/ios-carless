@@ -398,7 +398,7 @@ final class StorageAPI {
         usersRef.child(withID).setValue(data);
     }
     
-    func getUsers() {
+  /*  func getUsers() {
         
         //watching, observing database
         //see all the values in Users Reference
@@ -420,7 +420,7 @@ final class StorageAPI {
                         if let name = userData[DBConstants.NAME] as? String, let rating = userData[DBConstants.RATING] as? Float, let profileImgUrl = userData[DBConstants.PROFILEIMG] as? String {
                             
                             let id = key as! String;
-                            let newUser = User(id: id, name: name, rating: rating, profileImgUrl: profileImgUrl);
+                            let newUser = User(id: id, name: name, rating: rating, profileImgUrl: profileImgUrl,);
                             
                             //append it in the empty array
                             users.append(newUser);
@@ -430,14 +430,32 @@ final class StorageAPI {
             }
             self.delegate?.dataReceived(users: users);
         }
+    }*/
+    
+    func getUsers(completion: @escaping (_ users: [User]) -> Void){
+        self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
+            var resultUsers:[User] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let user = User.init(id: child.key, dict: dict)!
+                resultUsers.append(user)
+            }
+            completion(resultUsers)
+            //self.gearsDBReference.keepSynced(false) // fix for caching problems
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
         self.usersRef.queryOrderedByKey().queryEqual(toValue: UID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
-                        if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String {
-                            completion(User(id: UID, name: userName, rating: userRating, profileImgUrl: userPic ))
+                        if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String,
+                            let numberOfRatings = userData[User.NUMBER_OF_RATINGS] as? Int,
+                        let email = userData[User.EMAIL] as? String {
+                            completion(User(id: UID, name: userName, email: email, rating: userRating, profileImgUrl: userPic, numberOfRatings: numberOfRatings ))
                             return
                         }
                 }
