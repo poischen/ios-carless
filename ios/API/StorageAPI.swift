@@ -85,7 +85,7 @@ final class StorageAPI {
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
-        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_LESSOR_RATINGS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         
         // tryong to avoid caching problems by keeping references synced until queried for the first time
         // TODO: find better solution?

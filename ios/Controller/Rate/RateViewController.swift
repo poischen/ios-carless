@@ -20,7 +20,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var ratingCarModel: UILabel!
     @IBOutlet weak var ratingLessorUsername: UILabel!
     
-    private let minExplanationLength = 100
+    private let minExplanationLength = 50
     private let maxExplanationLength = 300
     
     var rentingBeingRated: Renting? = Renting(id: 1, inseratID: 1, userID: "W7VPwDFSTyNwW0WJl38MhsVmcdX2", startDate: Date(), endDate: Date()) // TODO: set from profile, only here for testing
@@ -68,8 +68,9 @@ class RateViewController: UIViewController, UITextViewDelegate {
         if userBeingRated != nil {
             // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
             if ratingExplanation.text.count >= minExplanationLength && ratingExplanation.text.count <= maxExplanationLength {
-                //let newRating = Rating(userUID: userBeingRated!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
+                // save rating and update user's average rating
                 RateModel.saveRating(rating: ratingStars.rating, ratedUser: userBeingRated!, explanation: ratingExplanation.text)
+                goBackToProfile()
             } else {
                 let alertController = UIAlertController(title: "Sorry", message: "Your explanation is too long or too short. :(", preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "back", style: .cancel, handler: {alterAction in
@@ -79,6 +80,16 @@ class RateViewController: UIViewController, UITextViewDelegate {
                 self.present(alertController, animated: true, completion: nil)
             }
         }
+    }
+    
+    @IBAction func cancelButtonClicked(_ sender: Any) {
+        goBackToProfile()
+    }
+    
+    private func goBackToProfile(){
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Home")
+        self.present(vc, animated: true, completion: nil)
     }
     /*
     // MARK: - Navigation
