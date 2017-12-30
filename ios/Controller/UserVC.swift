@@ -19,6 +19,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Array of Users to store all of the users
     private var users = [User]();
     
+    private var selctedUser: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,12 +65,25 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //open chat window
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedUserObject = self.users[indexPath.row]
+        self.selctedUser = selectedUserObject.id
         performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
+        
     }
 
     //go back to the View Controller before (there's none for now)
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil);
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationNavigationController = segue.destination as! UINavigationController
+        let targetController = destinationNavigationController.topViewController
+            // next screen: search results
+            if let chatVC = targetController as? ChatWindowVC {
+                chatVC.receiverId = self.selctedUser
+            }
+        
     }
     
  
