@@ -30,4 +30,9 @@ class RateModel {
             })
         })
     }
+    
+    static func saveRating(rating: Int, ratedUser: User, explanation: String){
+        let newRating = Rating(userUID: ratedUser.id, explanation: explanation, rating: rating)
+        StorageAPI.shared.saveRating(rating: newRating)
+    }
 }

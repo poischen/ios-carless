@@ -68,8 +68,8 @@ class RateViewController: UIViewController, UITextViewDelegate {
         if userBeingRated != nil {
             // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
             if ratingExplanation.text.count >= minExplanationLength && ratingExplanation.text.count <= maxExplanationLength {
-                let newRating = LessorRating(id: 5, userUID: userBeingRated!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
-                StorageAPI.shared.saveLessorRating(rating: newRating)
+                let newRating = Rating(id: 5, userUID: userBeingRated!.id, explanation: ratingExplanation.text, rating: ratingStars.rating)
+                StorageAPI.shared.saveRating(rating: newRating)
             } else {
                 let alertController = UIAlertController(title: "Sorry", message: "Your explanation is too long or too short. :(", preferredStyle: .alert)
                 let defaultAction = UIAlertAction(title: "back", style: .cancel, handler: {alterAction in

@@ -385,7 +385,7 @@ final class StorageAPI {
         }
     }
     
-    func saveLessorRating(rating: LessorRating){
+    func saveRating(rating: Rating){
         let ratingAsDict = rating.dict
         self.lessorRatings.childByAutoId().setValue(ratingAsDict)
         
