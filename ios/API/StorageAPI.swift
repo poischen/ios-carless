@@ -388,7 +388,11 @@ final class StorageAPI {
     func saveRating(rating: Rating){
         let ratingAsDict = rating.dict
         self.lessorRatings.childByAutoId().setValue(ratingAsDict)
-        
+    }
+    
+    func updateUser(user: User){
+        let userAsDict = user.dict
+        self.usersRef.child(user.id).setValue(userAsDict)
     }
     
     //stores User in Database
