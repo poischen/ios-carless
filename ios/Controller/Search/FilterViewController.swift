@@ -10,6 +10,9 @@ import UIKit
 
 class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    let filterDisabledText = "Filter is disabled"
+    let filterEnabledText = "Filter is enabled"
+    
     @IBOutlet weak var maxPriceLabel: UILabel!
     @IBOutlet weak var maxPriceSlider: UISlider!
     @IBOutlet weak var maxConsumptionLabel: UILabel!
@@ -22,7 +25,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var pickBrandTable: UITableView!
     @IBOutlet weak var pickGearTable: UITableView!
     @IBOutlet weak var pickVehicleTypeTable: UITableView!
-    @IBOutlet weak var applyFilterButton: UIButton!
+
+    @IBOutlet weak var gearFilterStatusLabel: UILabel!
+    @IBOutlet weak var vehicleTypeFilterStatusLabel: UILabel!
+    @IBOutlet weak var engineFilterStatusLabel: UILabel!
+    @IBOutlet weak var featuresFilterStatusLabel: UILabel!
+    @IBOutlet weak var brandsFilterStatusLabel: UILabel!
     
     // TODO: use optionals here?
     // TODO: use Map for this?
@@ -203,7 +211,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.features = features
         self.pickExtraTable.reloadData()
 
-        if let selectedFeatureIDs = self.searchFilter?.vehicleTypeIDs {
+        if let selectedFeatureIDs = self.searchFilter?.featureIDs {
             for selectedFeatureID in selectedFeatureIDs {
                 let featureWithSelectedID = self.features.filter{$0.id == selectedFeatureID}
                 if featureWithSelectedID.count == 1 {
@@ -272,8 +280,17 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     // TODO: Do these methods belong in the model (-> filter class)?
     
     func updateSelectedFeaturesInFilter(){
-        if self.searchFilter != nil {
-            self.searchFilter!.featureIDs = self.features.filter{$0.isSelected}.map{$0.id}
+        if let currentSearchFilter = self.searchFilter {
+            let selectedFeatures = self.features.filter{$0.isSelected}
+            if (selectedFeatures.count == 0){
+                // no features selected -> disable filter
+                currentSearchFilter.featureIDs = nil
+                self.featuresFilterStatusLabel.text = self.filterDisabledText
+            } else {
+                // features selected -> enable filter
+                currentSearchFilter.featureIDs = selectedFeatures.map{$0.id}
+                self.featuresFilterStatusLabel.text = self.filterEnabledText
+            }
         }
     }
     

@@ -166,7 +166,7 @@ final class StorageAPI {
                 guard
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
                     let offeringID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? Int else {
-                        print("error")
+                        print("error in getOfferingsFeatures")
                         return
                 }
                 if (resultOfferingsFeatures[offeringID] != nil){
