@@ -93,6 +93,7 @@ final class StorageAPI {
         self.gearsDBReference.keepSynced(true)
         self.brandsDBReference.keepSynced(true)
         self.fuelDBReference.keepSynced(true)
+        self.usersRef.keepSynced(true)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
