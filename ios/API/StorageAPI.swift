@@ -19,6 +19,7 @@ protocol FetchData: class {
 
 // singleton class for access to Firebase and maybe to local storage in the future
 // TODO: don't use forced typecasting -> handle errors gracefully
+// TODO: Is it OK that the StorageAPI relies on constants from the Model Classes?
 
 final class StorageAPI {
     static let shared = StorageAPI()
@@ -401,40 +402,6 @@ final class StorageAPI {
         usersRef.child(withID).setValue(data);
     }
     
-  /*  func getUsers() {
-        
-        //watching, observing database
-        //see all the values in Users Reference
-        usersRef.observeSingleEvent(of: DataEventType.value){
-            (snapshot: DataSnapshot) in
-            
-            //empty array of users
-            var users = [User]();
-            
-            //testing if value is type of NSDictionary
-            if let theUsers = snapshot.value as? NSDictionary {
-                
-                //filter for every key, value pair inside of the dictionary
-                for (key, value) in theUsers {
-                    
-                    if let userData = value as? NSDictionary{
-                        
-                        // fetch the data as String
-                        if let name = userData[DBConstants.NAME] as? String, let rating = userData[DBConstants.RATING] as? Float, let profileImgUrl = userData[DBConstants.PROFILEIMG] as? String {
-                            
-                            let id = key as! String;
-                            let newUser = User(id: id, name: name, rating: rating, profileImgUrl: profileImgUrl,);
-                            
-                            //append it in the empty array
-                            users.append(newUser);
-                        }
-                    }
-                }
-            }
-            self.delegate?.dataReceived(users: users);
-        }
-    }*/
-    
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
             var resultUsers:[User] = []
@@ -467,6 +434,38 @@ final class StorageAPI {
             } else {
                 print("no user or more than one user found")
             }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // gets the cars the rentings for a specific user (lessee view)
+    func getRentingsByUserUID(userUID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                resultRentings.append(renting)
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // get the rentings for a specific user (lessor view)
+    func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
+        self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultOfferings:[Offering] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let offering = Offering.init(id: Int(child.key)!, dict: dict)!
+                resultOfferings.append(offering)
+            }
+            completion(resultOfferings)
         }) { (error) in
             print(error.localizedDescription)
         }
