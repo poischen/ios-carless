@@ -114,10 +114,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
-            let newDate = Filter.setDatesHoursMinutes(originalDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
-            print(startTimeDatePicker.date)
-            print(startTimeTimePicker.date)
-            print(newDate)
+            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
+            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(
@@ -126,11 +124,11 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     fuelIDs: nil,
                     gearIDs: nil,
                     minHP: nil,
-                    location: pickedPlace!.addressComponents![0].name,
+                    location: pickedPlace!.addressComponents![0].name, // only use the city name for the search
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
-                    dateInterval: DateInterval(start: self.startTimeDatePicker.date, end: self.endTimeDatePicker.date),
+                    dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
                     featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
