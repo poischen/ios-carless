@@ -24,7 +24,6 @@ protocol FetchData: class {
 final class StorageAPI {
     static let shared = StorageAPI()
     private let fireBaseDBAccess: DatabaseReference!
-    private let notificationCenter: NotificationCenter
     
     // DB references
     private let offeringsDBReference: DatabaseReference
@@ -37,28 +36,19 @@ final class StorageAPI {
     private let fuelDBReference: DatabaseReference
     private let lessorRatings: DatabaseReference
     
-    //value will not be instantiated until it is needed
-    weak var delegate: FetchData?;
-    
     var userName = "";
-    
-    //returns Project URL from Firebase
-    // TODO: merge database references
-    var dbRef: DatabaseReference {
-        return Database.database().reference();
-    }
     
     // TODO: cache users?
     var usersRef: DatabaseReference{
-        return dbRef.child(DBConstants.USERS);
+        return fireBaseDBAccess.child(DBConstants.USERS);
     }
     
     var messagesRef: DatabaseReference {
-        return dbRef.child(DBConstants.MESSAGES);
+        return fireBaseDBAccess.child(DBConstants.MESSAGES);
     }
     
     var mediaMessagesRef: DatabaseReference{
-        return dbRef.child(DBConstants.MEDIA_MESSAGES);
+        return fireBaseDBAccess.child(DBConstants.MEDIA_MESSAGES);
     }
     
     //where media files are stored
@@ -77,7 +67,7 @@ final class StorageAPI {
     private init() {
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
-        notificationCenter = NotificationCenter.default
+        fireBaseDBAccess.keepSynced(true)
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
@@ -87,7 +77,7 @@ final class StorageAPI {
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
         self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
-        
+        /*
         // tryong to avoid caching problems by keeping references synced until queried for the first time
         // TODO: find better solution?
         self.offeringsDBReference.keepSynced(true)
@@ -99,7 +89,7 @@ final class StorageAPI {
         self.brandsDBReference.keepSynced(true)
         self.fuelDBReference.keepSynced(true)
         self.lessorRatings.keepSynced(true)
-        self.usersRef.keepSynced(true)
+        self.usersRef.keepSynced(true) */
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
