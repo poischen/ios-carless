@@ -17,6 +17,8 @@ class AdvertisePage7: UIViewController {
         let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
         alertTest.addAction(ok)
         present(alertTest, animated: true, completion: nil)
+        
+        //TODO; Init show inserat storyboard and pass Offer Object
     }
 
     override func viewDidLoad() {

@@ -59,6 +59,7 @@
 		840D63D71FE9A753007A1F16 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63D61FE9A753007A1F16 /* Profile.swift */; };
 		841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */; };
 		841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */; };
+		848486F01FFC4395008F7DAF /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848486EF1FFC4395008F7DAF /* Availibility.swift */; };
 		84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */; };
 		84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43771FF52CB600CB546C /* AdvertisePage4.swift */; };
 		84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */; };
@@ -147,6 +148,7 @@
 		840D63D61FE9A753007A1F16 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage1.swift; sourceTree = "<group>"; };
 		841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage2.swift; sourceTree = "<group>"; };
+		848486EF1FFC4395008F7DAF /* Availibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
 		84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage3.swift; sourceTree = "<group>"; };
 		84FD43771FF52CB600CB546C /* AdvertisePage4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage4.swift; sourceTree = "<group>"; };
 		84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage5.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				19A3B0511FDC19F80021458C /* DBMapping.swift */,
 				194C2E991FE7C44200E34EF8 /* SelectableItem.swift */,
 				191DABB01FF00F7000EB0070 /* Time.swift */,
+				848486EF1FFC4395008F7DAF /* Availibility.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -332,8 +335,6 @@
 			isa = PBXGroup;
 			children = (
 				840D63BD1FE9A4B7007A1F16 /* Advertise.storyboard */,
-				840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */,
-				840D63C51FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift */,
 			);
 			path = Advertise;
 			sourceTree = "<group>";
@@ -377,6 +378,8 @@
 				84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */,
 				84FD437B1FF52CDA00CB546C /* AdvertisePage6.swift */,
 				84FD437D1FF52CE600CB546C /* AdvertisePage7.swift */,
+				840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */,
+				840D63C51FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift */,
 			);
 			path = Advertise;
 			sourceTree = "<group>";
@@ -657,6 +660,8 @@
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -669,6 +674,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -752,6 +759,7 @@
 				84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
+				848486F01FFC4395008F7DAF /* Availibility.swift in Sources */,
 				84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */,
 				84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */,
 				19BF064C1FEA86A700E495C2 /* UserVC.swift in Sources */,
