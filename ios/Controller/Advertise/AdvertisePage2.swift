@@ -15,6 +15,7 @@ import UIKit
 class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var brandPicker: UIPickerView!
     @IBOutlet weak var vehicleTypePicker: UIPickerView!
@@ -50,8 +51,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        pageViewController = self.parent as! AdvertisePagesVC
     }
 
     override func didReceiveMemoryWarning() {

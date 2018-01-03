@@ -11,14 +11,15 @@ import UIKit
 class AdvertisePage6: UIViewController, UITextViewDelegate {
 
     var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var rentalDescriptionTextView: UITextView!
     var descriptionText: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        pageViewController = self.parent as! AdvertisePagesVC
     }
 
     override func didReceiveMemoryWarning() {

@@ -17,6 +17,7 @@ import GooglePlacePicker
 class AdvertisePage5: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -47,6 +48,9 @@ class AdvertisePage5: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pageViewController = self.parent as! AdvertisePagesVC
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()

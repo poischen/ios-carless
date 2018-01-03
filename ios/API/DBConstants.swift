@@ -29,6 +29,7 @@ class DBConstants {
     static let MEDIA_MESSAGES = "Media_Messages";
     static let IMAGE_STORAGE = "Image_Storage";
     static let VIDEO_STORAGE = "Video_Storage";
+    static let IMAGE_STORAGE_OFFER = "Image_Storage/offers";
     
     static let NAME = "name";
     static let EMAIL = "email";

@@ -11,8 +11,11 @@ import UIKit
 class AdvertisePage7: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var publishButton: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var progressLabel: UILabel!
     
     @IBAction func publishNow(_ sender: Any) {
         let alertTest = UIAlertController(title: "Test", message: "This is a test", preferredStyle: .alert)
@@ -20,12 +23,31 @@ class AdvertisePage7: UIViewController {
         alertTest.addAction(ok)
         present(alertTest, animated: true, completion: nil)
         
-        //TODO; Init show inserat storyboard and pass Offer Object
+        //upload car image
+        progressBar.isHidden = false
+        progressLabel.isHidden = false
+        storageAPI.uploadImage(pageViewController.carImage, ref: storageAPI.offerImageStorageRef, progressBar: progressBar, progressLabel: progressLabel,
+            completionBlock: { [weak self] (fileURL, errorMassage) in
+                guard let strongSelf = self else {
+                    return
+                }
+            print(fileURL)
+            print(errorMassage)
+                
+            //TODO
+            //store image url
+                //strongSelf.pageViewController ..... !
+                var fileURL = fileURL
+            //alert if not possible
+            //init offer dictionary
+            //write offer to db
+        })
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        pageViewController = self.parent as! AdvertisePagesVC
         // Do any additional setup after loading the view.
     }
 
@@ -34,3 +56,11 @@ class AdvertisePage7: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
+
+/* upload image
+ 
+ let imageName = "\(Date().timeIntervalSince1970).jpg"
+ storageAPI.uploadImage(image, imageName: imageName, ref: storageAPI.offerImageStorageRef)
+ //, progressBlock: <#T##(Double) -> Void#>, completionBlock: <#T##(URL?, String?) -> Void#>)
+ 
+ */

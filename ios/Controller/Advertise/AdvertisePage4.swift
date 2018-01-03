@@ -15,7 +15,8 @@ import JTAppleCalendar
 
 class AdvertisePage4: UIViewController {
 
-    var offeringDict: [String : AnyObject]!
+    var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var monthAndYear: UILabel!
@@ -31,6 +32,8 @@ class AdvertisePage4: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pageViewController = self.parent as! AdvertisePagesVC
         
         priceTextView.delegate = self
         

@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
+import UIKit
 
 protocol FetchData: class {
     func dataReceived(users: [User]);
@@ -62,6 +63,10 @@ final class StorageAPI {
     
     var videoStorageRef: StorageReference {
         return storageRef.child(DBConstants.VIDEO_STORAGE);
+    }
+    
+    var offerImageStorageRef: StorageReference {
+        return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
     }
     
     private init() {
@@ -466,6 +471,35 @@ final class StorageAPI {
         return Auth.auth().currentUser!.uid;
     }
     
+    //store an image to storage, return URL or Error Message
+    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView, progressLabel: UILabel, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
+        let imageName = "\(userID())_\(Date().timeIntervalSince1970).jpg"
+        let imageReference = ref.child(imageName)
+
+        if let imageData = UIImageJPEGRepresentation(image, 0.8) {
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            let uploadTask = imageReference.putData(imageData, metadata: metadata, completion: { (metadata, error) in
+                if let metadata = metadata {
+                    completionBlock(metadata.downloadURL(), nil)
+                } else {
+                    completionBlock(nil, error?.localizedDescription)
+                }
+            })
+            uploadTask.observe(.progress, handler: { (snapshot) in
+                guard let progress = snapshot.progress else {
+                    return
+                }
+                let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
+                progressBar.progress = percentage
+                let percentageInt = Int(percentage * 100)
+                progressLabel.text = "\(percentageInt) %"
+            })
+        } else {
+            completionBlock(nil, "Image couldn't be converted to Data.")
+        }
+    }
     
 }
 

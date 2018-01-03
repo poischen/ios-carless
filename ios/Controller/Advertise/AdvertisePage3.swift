@@ -15,6 +15,7 @@ import UIKit
 class AdvertisePage3: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     
@@ -43,6 +44,7 @@ class AdvertisePage3: UIViewController {
         featuresCollectionView.delegate = self
         featuresCollectionView.dataSource = self
         
+        pageViewController = self.parent as! AdvertisePagesVC
       /*  var nib = UINib(nibName: "UICollectionElementKindCell", bundle:nil)
         self.collectionView.registerNib(nib, forCellReuseIdentifier: "CollectionViewCell")*/
     }

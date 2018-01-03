@@ -1099,11 +1099,28 @@
                                             <action selector="publishNow:" destination="6ug-qW-kNe" eventType="touchUpInside" id="2HP-Z6-8TF"/>
                                         </connections>
                                     </button>
+                                    <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mfy-jU-G8N">
+                                        <rect key="frame" x="20" y="309" width="335" height="2"/>
+                                        <color key="progressTintColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="trackTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                                    </progressView>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 %" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RkF-Yw-0Xb">
+                                        <rect key="frame" x="20" y="319" width="335" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="RkF-Yw-0Xb" firstAttribute="leading" secondItem="9Ol-Gv-aL7" secondAttribute="leading" constant="20" id="4H5-sO-4hz"/>
+                                    <constraint firstAttribute="trailing" secondItem="RkF-Yw-0Xb" secondAttribute="trailing" constant="20" id="75R-qM-25e"/>
                                     <constraint firstItem="PMA-rI-QaI" firstAttribute="centerX" secondItem="9Ol-Gv-aL7" secondAttribute="centerX" id="ENc-xD-HoM"/>
+                                    <constraint firstItem="mfy-jU-G8N" firstAttribute="top" secondItem="PMA-rI-QaI" secondAttribute="bottom" constant="55" id="F0f-FW-dfD"/>
                                     <constraint firstItem="PMA-rI-QaI" firstAttribute="centerY" secondItem="9Ol-Gv-aL7" secondAttribute="centerY" id="IoL-ai-TPj"/>
+                                    <constraint firstItem="mfy-jU-G8N" firstAttribute="leading" secondItem="9Ol-Gv-aL7" secondAttribute="leading" constant="20" id="N84-sv-Rog"/>
+                                    <constraint firstItem="RkF-Yw-0Xb" firstAttribute="top" secondItem="mfy-jU-G8N" secondAttribute="bottom" constant="8" id="geP-Ie-jMk"/>
+                                    <constraint firstAttribute="trailing" secondItem="mfy-jU-G8N" secondAttribute="trailing" constant="20" id="wPF-tZ-omd"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0ZZ-rz-XIp" userLabel="Page description">
@@ -1146,6 +1163,8 @@
                         <viewLayoutGuide key="safeArea" id="bmU-7g-Ph9"/>
                     </view>
                     <connections>
+                        <outlet property="progressBar" destination="mfy-jU-G8N" id="B5k-Ac-sLQ"/>
+                        <outlet property="progressLabel" destination="RkF-Yw-0Xb" id="fFh-7E-zlq"/>
                         <outlet property="publishButton" destination="PMA-rI-QaI" id="h1t-Ft-7nP"/>
                     </connections>
                 </viewController>

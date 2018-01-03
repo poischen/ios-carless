@@ -2,6 +2,7 @@ import UIKit
 
 class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
+    //cache input for storing into db
     var offeringDict: [String : AnyObject] {
         return [
             Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
@@ -24,6 +25,7 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         ]
     }
     
+    var carImage: UIImage!
     
     //Manage pageview for advertising a car --------------------------------------------------------------------
     lazy var AdvertisementViewControllersArray: [UIViewController] = {
@@ -35,6 +37,22 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                 self.ViewControllerInstance(name: "advertisePage6"),
                 self.ViewControllerInstance(name: "advertisePage7")]
     }()
+    
+    /*
+     override func viewDidLoad() {
+     super.viewDidLoad()
+     self.delegate=self
+     self.dataSource=self
+     let childViewController=storyboard?.instantiateViewController(withIdentifier: "some identifier of view") as! ChildViewController
+     if let cid = challengeId{
+     print("Page Challenge id \(cid)")
+     childViewController.challengeId=cid
+     }
+ */
+   /*
+    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
+        
+    }*/
     
     private func ViewControllerInstance(name: String) -> UIViewController {
         return UIStoryboard(name: "Advertise", bundle: nil).instantiateViewController(withIdentifier: name)
