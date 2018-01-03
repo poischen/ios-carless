@@ -10,6 +10,8 @@ import UIKit
 
 class AdvertisePage6: UIViewController, UITextViewDelegate {
 
+    var pageViewController: AdvertisePagesVC!
+    
     @IBOutlet weak var rentalDescriptionTextView: UITextView!
     var descriptionText: String!
     

@@ -10,6 +10,8 @@ import UIKit
 
 class AdvertisePage7: UIViewController {
     
+    var pageViewController: AdvertisePagesVC!
+    
     @IBOutlet weak var publishButton: UIButton!
     
     @IBAction func publishNow(_ sender: Any) {

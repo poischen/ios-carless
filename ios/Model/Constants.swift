@@ -28,4 +28,23 @@ class Constants {
     static let SENDER_NAME = "sender_name";
     static let RECEIVER_ID = "receiver_id";
     static let URL = "url";
+    
+    // constants for offering dictionary keys
+    static let OFFERING_BRAND_ID_KEY = "brandID"
+    static let OFFERING_CONSUMPTION_KEY = "consumption"
+    static let OFFERING_DESCRIPTION_KEY = "description"
+    static let OFFERING_FUEL_ID_KEY = "fuelID"
+    static let OFFERING_GEAR_ID_KEY = "gearID"
+    static let OFFERING_HP_KEY = "hp"
+    static let OFFERING_LATITUDE_KEY = "latitude"
+    static let OFFERING_LONGITUDE_KEY = "longitude"
+    static let OFFERING_PICTURE_URL_KEY = "picture"
+    static let OFFERING_PRICE_KEY = "price"
+    static let OFFERING_SEATS_KEY = "seats"
+    static let OFFERING_TYPE_KEY = "type"
+    static let OFFERING_USER_UID_KEY = "uid"
+    static let OFFERING_VEHICLE_TYPE_ID_KEY = "vehicleTypeID"
+    static let OFFERING_LOCATION_KEY = "location"
+    static let OFFERING_PICKUP_TIME_KEY = "pickuptime"
+    static let OFFERING_RETURN_TIME_KEY = "returntime"
 }

@@ -15,6 +15,8 @@ import MapKit
 import GooglePlacePicker
 
 class AdvertisePage5: UIViewController {
+    
+    var pageViewController: AdvertisePagesVC!
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!

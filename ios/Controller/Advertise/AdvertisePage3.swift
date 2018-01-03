@@ -13,7 +13,9 @@ import UIKit
  */
 
 class AdvertisePage3: UIViewController {
-
+    
+    var pageViewController: AdvertisePagesVC!
+    
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     
     //TODO: Use data from DB

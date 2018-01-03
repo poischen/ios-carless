@@ -14,6 +14,8 @@ import UIKit
 
 class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    var pageViewController: AdvertisePagesVC!
+    
     @IBOutlet weak var brandPicker: UIPickerView!
     @IBOutlet weak var vehicleTypePicker: UIPickerView!
     @IBOutlet weak var seatsPicker: UIPickerView!

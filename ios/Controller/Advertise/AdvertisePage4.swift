@@ -15,6 +15,8 @@ import JTAppleCalendar
 
 class AdvertisePage4: UIViewController {
 
+    var offeringDict: [String : AnyObject]!
+    
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var monthAndYear: UILabel!
     @IBOutlet weak var priceTextView: UITextField!
