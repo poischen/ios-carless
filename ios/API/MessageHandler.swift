@@ -37,9 +37,11 @@ class MessageHandler {
             }
             let userMessagesRef = Database.database().reference().child("user-messages").child(StorageAPI.shared.userID())
             
-            //let messageID = ref.childByAutoId().key
             let messageID = ref.key
             userMessagesRef.updateChildValues([messageID: 1])
+            
+            let recipientUserMessageRef = Database.database().reference().child("user-messages").child(receiverID)
+            recipientUserMessageRef.updateChildValues([messageID: 1])
         }
     }
     
