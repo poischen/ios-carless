@@ -29,6 +29,8 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var seatsInput: UITextField!
     @IBOutlet weak var fuelInput: UITextField!
     @IBOutlet weak var gearInput: UITextField!
+    @IBOutlet weak var consumptionInput: UITextField!
+    @IBOutlet weak var speedInput: UITextField!
     
     var selectedBrand: String = ""
     var selectedSeats: String = ""

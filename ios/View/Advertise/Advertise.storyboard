@@ -109,16 +109,16 @@
                                 <rect key="frame" x="10" y="30" width="355" height="427"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eRu-em-Nyn" userLabel="Brand">
-                                        <rect key="frame" x="0.0" y="0.0" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brand:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNj-NQ-QZs" userLabel="Brand">
-                                                <rect key="frame" x="0.0" y="25" width="118" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="16" width="118" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseBrandTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XFZ-ue-9dW" userLabel="brandTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -128,7 +128,7 @@
                                                 </connections>
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseBrandPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="Odl-oe-W5C" userLabel="Brand Picker View">
-                                                <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <rect key="frame" x="142" y="-82" width="213" height="216"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="FVF-ID-eFr" id="ntH-10-RQp"/>
                                                     <outlet property="delegate" destination="FVF-ID-eFr" id="pgV-8H-eSS"/>
@@ -149,16 +149,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5VK-w1-bpd" userLabel="Model">
-                                        <rect key="frame" x="0.0" y="71" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="53.5" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Model:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XS0-Ra-ngM" userLabel="Model">
-                                                <rect key="frame" x="0.0" y="25" width="118" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="16" width="118" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseModelTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KjE-f3-teC" userLabel="modelTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseModelTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name of your car model" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KjE-f3-teC" userLabel="modelTextField">
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -176,16 +176,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0y-QU-Ogv" userLabel="Vehicle type">
-                                        <rect key="frame" x="0.0" y="142" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="107" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vehicle type:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbc-Jq-2XH" userLabel="Vehicle type">
-                                                <rect key="frame" x="0.0" y="24.5" width="118.5" height="21.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="15.5" width="118.5" height="21.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseVehicleTypeTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DcN-wg-uwD" userLabel="vehicletypeTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -195,7 +195,7 @@
                                                 </connections>
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseVehicleTypePickerView" translatesAutoresizingMaskIntoConstraints="NO" id="0TB-r3-DNF" userLabel="Vehicle Type Picker View">
-                                                <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <rect key="frame" x="142" y="-82" width="213" height="216"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="FVF-ID-eFr" id="R0Q-Ii-yjV"/>
                                                     <outlet property="delegate" destination="FVF-ID-eFr" id="LNu-Mg-MIa"/>
@@ -216,16 +216,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Cp8-wp-Exi" userLabel="Seats">
-                                        <rect key="frame" x="0.0" y="213" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="160.5" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Seats:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ae4-S3-K1N" userLabel="Seats">
-                                                <rect key="frame" x="0.0" y="25" width="118" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="16" width="118" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseSeatsTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TD6-9J-V0P" userLabel="seatsTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -235,7 +235,7 @@
                                                 </connections>
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseSeatsPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="0CI-CN-Ikq" userLabel="Seats Picker View">
-                                                <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <rect key="frame" x="142" y="-82" width="213" height="216"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="FVF-ID-eFr" id="Z4l-kW-sWr"/>
                                                     <outlet property="delegate" destination="FVF-ID-eFr" id="fEn-sI-xFK"/>
@@ -256,16 +256,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zJA-od-D2j" userLabel="Fuel">
-                                        <rect key="frame" x="0.0" y="284" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="214" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fuel:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5uJ-kF-6ja" userLabel="Fuel">
-                                                <rect key="frame" x="0.0" y="25" width="118" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="16" width="118" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisFuelTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Usr-zj-ZiC" userLabel="fuelTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -275,7 +275,7 @@
                                                 </connections>
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseFuelPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="oq8-wv-qFR" userLabel="Fuel Picker View">
-                                                <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <rect key="frame" x="142" y="-82" width="213" height="216"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="FVF-ID-eFr" id="8dE-BP-IIw"/>
                                                     <outlet property="delegate" destination="FVF-ID-eFr" id="Nxr-Mm-TQH"/>
@@ -296,16 +296,16 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a8s-8M-IsG" userLabel="Gear">
-                                        <rect key="frame" x="0.0" y="355" width="355" height="71"/>
+                                        <rect key="frame" x="0.0" y="267.5" width="355" height="53.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gear:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cdk-Uu-EZy" userLabel="Gear">
-                                                <rect key="frame" x="0.0" y="25" width="118" height="21"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <rect key="frame" x="0.0" y="16" width="118" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisGearTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TE9-Wr-3Lc" userLabel="gearTextField">
-                                                <rect key="frame" x="125" y="20" width="230" height="30"/>
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -315,7 +315,7 @@
                                                 </connections>
                                             </textField>
                                             <pickerView hidden="YES" contentMode="scaleToFill" restorationIdentifier="advertiseGearPickerView" translatesAutoresizingMaskIntoConstraints="NO" id="hCN-Ys-ebq" userLabel="Gear Picker View">
-                                                <rect key="frame" x="142" y="-73" width="213" height="216"/>
+                                                <rect key="frame" x="142" y="-82" width="213" height="216"/>
                                                 <connections>
                                                     <outlet property="dataSource" destination="FVF-ID-eFr" id="gkU-ej-RbN"/>
                                                     <outlet property="delegate" destination="FVF-ID-eFr" id="igf-S1-yg2"/>
@@ -335,32 +335,94 @@
                                             <constraint firstItem="cdk-Uu-EZy" firstAttribute="centerY" secondItem="a8s-8M-IsG" secondAttribute="centerY" id="rmt-Mi-InN"/>
                                         </constraints>
                                     </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qM2-KO-1hy" userLabel="Consumption">
+                                        <rect key="frame" x="0.0" y="321" width="355" height="53.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Consumption:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Usq-7R-u5T" userLabel="Consumption">
+                                                <rect key="frame" x="0.0" y="16" width="118.5" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseConsumptionTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="l per 100 km" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hqh-rL-G7c" userLabel="consumptionTextField">
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
+                                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Hqh-rL-G7c" firstAttribute="centerY" secondItem="qM2-KO-1hy" secondAttribute="centerY" id="9Tk-Sy-c24"/>
+                                            <constraint firstItem="Usq-7R-u5T" firstAttribute="leading" secondItem="qM2-KO-1hy" secondAttribute="leading" id="GCf-Ex-B7q"/>
+                                            <constraint firstItem="Usq-7R-u5T" firstAttribute="width" secondItem="qM2-KO-1hy" secondAttribute="width" multiplier="1:3" id="Qnj-gZ-M98"/>
+                                            <constraint firstItem="Usq-7R-u5T" firstAttribute="centerY" secondItem="qM2-KO-1hy" secondAttribute="centerY" id="Wr2-Nu-xHd"/>
+                                            <constraint firstAttribute="trailing" secondItem="Hqh-rL-G7c" secondAttribute="trailing" id="fxj-7M-WCM"/>
+                                            <constraint firstItem="Hqh-rL-G7c" firstAttribute="width" secondItem="qM2-KO-1hy" secondAttribute="width" multiplier="0.65" id="pwB-cM-SoB"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OD4-C6-7id" userLabel="Speed">
+                                        <rect key="frame" x="0.0" y="374.5" width="355" height="53.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max. speed:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oDm-fd-kvm" userLabel="Speed">
+                                                <rect key="frame" x="0.0" y="16" width="118.5" height="22"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseSpeedTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="km/h" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KoK-xI-MwV" userLabel="speedTextField">
+                                                <rect key="frame" x="125" y="11" width="230" height="30"/>
+                                                <color key="backgroundColor" red="1" green="0.40000000600000002" blue="0.40000000600000002" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
+                                                <nil key="textColor"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="oDm-fd-kvm" firstAttribute="width" secondItem="OD4-C6-7id" secondAttribute="width" multiplier="1:3" id="Dm0-DM-KqI"/>
+                                            <constraint firstItem="oDm-fd-kvm" firstAttribute="leading" secondItem="OD4-C6-7id" secondAttribute="leading" id="GWf-DS-EdS"/>
+                                            <constraint firstItem="KoK-xI-MwV" firstAttribute="centerY" secondItem="OD4-C6-7id" secondAttribute="centerY" id="ZQ5-GW-rXG"/>
+                                            <constraint firstAttribute="trailing" secondItem="KoK-xI-MwV" secondAttribute="trailing" id="lDR-OA-CHl"/>
+                                            <constraint firstItem="KoK-xI-MwV" firstAttribute="width" secondItem="OD4-C6-7id" secondAttribute="width" multiplier="0.65" id="paS-bQ-whf"/>
+                                            <constraint firstItem="oDm-fd-kvm" firstAttribute="centerY" secondItem="OD4-C6-7id" secondAttribute="centerY" id="uUt-ET-FlB"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="OD4-C6-7id" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="12A-Ez-ceg"/>
                                     <constraint firstAttribute="trailing" secondItem="o0y-QU-Ogv" secondAttribute="trailing" id="38Q-fZ-jak"/>
                                     <constraint firstAttribute="trailing" secondItem="5VK-w1-bpd" secondAttribute="trailing" id="6ku-5K-RHy"/>
                                     <constraint firstItem="a8s-8M-IsG" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="7cn-9N-fPG"/>
                                     <constraint firstAttribute="trailing" secondItem="a8s-8M-IsG" secondAttribute="trailing" id="8hf-ys-E57"/>
                                     <constraint firstAttribute="trailing" secondItem="Cp8-wp-Exi" secondAttribute="trailing" id="AAc-KU-0Su"/>
-                                    <constraint firstItem="zJA-od-D2j" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="Eci-6b-wuj"/>
+                                    <constraint firstAttribute="trailing" secondItem="qM2-KO-1hy" secondAttribute="trailing" id="Ao5-P9-Bej"/>
+                                    <constraint firstItem="zJA-od-D2j" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="Eci-6b-wuj"/>
                                     <constraint firstItem="a8s-8M-IsG" firstAttribute="top" secondItem="zJA-od-D2j" secondAttribute="bottom" id="H3C-p5-DV4"/>
                                     <constraint firstItem="eRu-em-Nyn" firstAttribute="top" secondItem="GZY-pY-Fdw" secondAttribute="top" id="H7w-XD-o9E"/>
+                                    <constraint firstItem="qM2-KO-1hy" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="IDz-P6-ae6"/>
                                     <constraint firstItem="o0y-QU-Ogv" firstAttribute="top" secondItem="5VK-w1-bpd" secondAttribute="bottom" id="KaB-VE-KTU"/>
-                                    <constraint firstItem="Cp8-wp-Exi" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="XNl-94-es9"/>
+                                    <constraint firstItem="Cp8-wp-Exi" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="XNl-94-es9"/>
                                     <constraint firstItem="eRu-em-Nyn" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="YVJ-dT-Y0z"/>
-                                    <constraint firstItem="eRu-em-Nyn" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="ZKV-8G-bMW"/>
+                                    <constraint firstItem="eRu-em-Nyn" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="ZKV-8G-bMW"/>
+                                    <constraint firstItem="OD4-C6-7id" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="dFh-oA-Sy8"/>
                                     <constraint firstItem="Cp8-wp-Exi" firstAttribute="bottom" secondItem="zJA-od-D2j" secondAttribute="top" id="dOG-8z-3WO"/>
+                                    <constraint firstItem="qM2-KO-1hy" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="e4P-kv-Qnv"/>
                                     <constraint firstAttribute="trailing" secondItem="eRu-em-Nyn" secondAttribute="trailing" id="eZ6-ws-ZFo"/>
-                                    <constraint firstItem="o0y-QU-Ogv" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="g2V-r2-8zi"/>
+                                    <constraint firstItem="o0y-QU-Ogv" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="g2V-r2-8zi"/>
                                     <constraint firstItem="5VK-w1-bpd" firstAttribute="top" secondItem="eRu-em-Nyn" secondAttribute="bottom" id="ido-A7-rrB"/>
                                     <constraint firstItem="5VK-w1-bpd" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="jit-FF-jSp"/>
+                                    <constraint firstItem="OD4-C6-7id" firstAttribute="top" secondItem="qM2-KO-1hy" secondAttribute="bottom" id="k9H-2d-IDO"/>
                                     <constraint firstItem="zJA-od-D2j" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="lFI-Sp-OhT"/>
                                     <constraint firstItem="o0y-QU-Ogv" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="mwW-wS-RdU"/>
+                                    <constraint firstItem="qM2-KO-1hy" firstAttribute="top" secondItem="a8s-8M-IsG" secondAttribute="bottom" id="ohH-lf-Nl4"/>
+                                    <constraint firstAttribute="trailing" secondItem="OD4-C6-7id" secondAttribute="trailing" id="pam-NF-5sb"/>
                                     <constraint firstAttribute="trailing" secondItem="zJA-od-D2j" secondAttribute="trailing" id="phe-JZ-YmH"/>
-                                    <constraint firstItem="5VK-w1-bpd" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="sOg-oB-YRr"/>
+                                    <constraint firstItem="5VK-w1-bpd" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="sOg-oB-YRr"/>
                                     <constraint firstItem="Cp8-wp-Exi" firstAttribute="leading" secondItem="GZY-pY-Fdw" secondAttribute="leading" id="t5H-Bw-JkN"/>
-                                    <constraint firstItem="a8s-8M-IsG" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:6" id="ue1-sQ-hpK"/>
+                                    <constraint firstItem="a8s-8M-IsG" firstAttribute="height" secondItem="GZY-pY-Fdw" secondAttribute="height" multiplier="1:8" id="ue1-sQ-hpK"/>
                                     <constraint firstItem="Cp8-wp-Exi" firstAttribute="top" secondItem="o0y-QU-Ogv" secondAttribute="bottom" id="ujv-TG-QAc"/>
                                 </constraints>
                             </view>
@@ -409,6 +471,7 @@
                     <connections>
                         <outlet property="brandInput" destination="XFZ-ue-9dW" id="6nG-lD-DFR"/>
                         <outlet property="brandPicker" destination="Odl-oe-W5C" id="xIh-X2-EYq"/>
+                        <outlet property="consumptionInput" destination="Hqh-rL-G7c" id="4Cl-0O-CaS"/>
                         <outlet property="fuelInput" destination="Usr-zj-ZiC" id="bFp-0V-73U"/>
                         <outlet property="fuelPicker" destination="oq8-wv-qFR" id="Jv1-kO-ORD"/>
                         <outlet property="gearInput" destination="TE9-Wr-3Lc" id="yxl-Fu-3mh"/>
@@ -416,6 +479,7 @@
                         <outlet property="modelInput" destination="KjE-f3-teC" id="JGk-cQ-gyd"/>
                         <outlet property="seatsInput" destination="TD6-9J-V0P" id="hyY-lO-XlH"/>
                         <outlet property="seatsPicker" destination="0CI-CN-Ikq" id="6xe-h9-HNf"/>
+                        <outlet property="speedInput" destination="KoK-xI-MwV" id="9DN-LJ-iRd"/>
                         <outlet property="vehicleTypeInput" destination="DcN-wg-uwD" id="6qq-c6-4bk"/>
                         <outlet property="vehicleTypePicker" destination="0TB-r3-DNF" id="auM-M1-prf"/>
                     </connections>
@@ -617,7 +681,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" layoutMarginsFollowReadableWidth="YES" text="Pick-up after:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nON-dx-HHx">
                                                         <rect key="frame" x="0.0" y="27.5" width="125.5" height="23"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -654,7 +718,7 @@
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return after:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXC-Px-bnL">
                                                         <rect key="frame" x="0.0" y="27" width="125" height="23"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -987,7 +1051,7 @@
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Price per day:   " textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FjO-rK-azo" userLabel="Price">
                                                 <rect key="frame" x="0.0" y="22.5" width="118" height="21.5"/>
-                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
