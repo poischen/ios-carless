@@ -37,6 +37,7 @@ class Filter {
     
     // HELPER FUNCTIONS
     
+    // TODO: remove, not needed anymore
     static func dateToNext30(date: Date) -> Date{
         var editedDate = date
         let calendar = Calendar.current
@@ -53,5 +54,18 @@ class Filter {
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         return calendar.date(from: components)!
+    }
+    
+    static func setDatesHoursMinutes(originalDate: Date, hoursMinutesDate: Date) -> Date{
+        let calendar = Calendar.current
+        let originalDateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: originalDate) // as no seconds are parsed the returned date will have "00" as value in the seconds attribute
+        let hoursMinutesDateComponents = calendar.dateComponents([.hour, .minute], from: hoursMinutesDate)
+        var mergedDateComponents = DateComponents()
+        mergedDateComponents.year = originalDateComponents.year
+        mergedDateComponents.month = originalDateComponents.month
+        mergedDateComponents.day = originalDateComponents.day
+        mergedDateComponents.hour = hoursMinutesDateComponents.hour
+        mergedDateComponents.minute = hoursMinutesDateComponents.minute
+        return calendar.date(from: mergedDateComponents)! // forcing optional unwrap as contstructing a date from components of dates should always work
     }
 }

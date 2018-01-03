@@ -13,11 +13,13 @@ import GooglePlacePicker
 class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource,  GMSAutocompleteViewControllerDelegate {
     
     
-    @IBOutlet weak var startTimePicker: UIDatePicker!
-    @IBOutlet weak var endTimePicker: UIDatePicker!
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var startTimeDatePicker: UIDatePicker!
+    @IBOutlet weak var startTimeTimePicker: UIDatePicker!
+    @IBOutlet weak var endTimeDatePicker: UIDatePicker!
+    @IBOutlet weak var endTimeTimePicker: UIDatePicker!
     
     let occupantNumbers = Array(1...8)
     var pickedPlace:GMSPlace?
@@ -27,9 +29,17 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
+        /*
         // only make dates in the future pickable
-        startTimePicker.minimumDate = Filter.dateToNext30(date: Date()) + 1800
-        endTimePicker.minimumDate = startTimePicker.date + 86400 // adding one day
+        startTimeDatePicker.minimumDate = Filter.dateToNext30(date: Date()) + 1800 // adding half an hour
+        endTimeDatePicker.minimumDate = startTimeDatePicker.date + 86400 // adding one day
+         */
+        startTimeDatePicker.minimumDate = Date() + 86400 // adding one day
+        endTimeDatePicker.minimumDate = Date() + 86400 // adding one day
+        startTimeTimePicker.date = Filter.dateToNext30(date: Date())
+        endTimeTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour
+        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,11 +109,13 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     @IBAction func startTimeChanged(_ sender: Any) {
         // prevent the user from creating reverse date intervals
-        self.endTimePicker.minimumDate = self.startTimePicker.date
+        self.endTimeDatePicker.minimumDate = self.startTimeDatePicker.date
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
+            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
+            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(
@@ -112,16 +124,16 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     fuelIDs: nil,
                     gearIDs: nil,
                     minHP: nil,
-                    location: pickedPlace!.addressComponents![0].name,
+                    location: pickedPlace!.addressComponents![0].name, // only use the city name for the search
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
-                    dateInterval: DateInterval(start: self.startTimePicker.date, end: self.endTimePicker.date),
+                    dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
                     featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
                 
-                print(startTimePicker.date)
+                print(startTimeDatePicker.date)
             }
         }
     }
