@@ -14,6 +14,8 @@ import UIKit
 
 class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    var pageViewController: AdvertisePagesVC!
+    
     @IBOutlet weak var brandPicker: UIPickerView!
     @IBOutlet weak var vehicleTypePicker: UIPickerView!
     @IBOutlet weak var seatsPicker: UIPickerView!
@@ -33,7 +35,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var selectedGear: String = ""
     var selectedVehicleType: String = ""
     
-    //TODO: Use Constants from DB
+    //TODO: Use Values from DB
     var brandsPickerContent = ["AC Cars", "Alfa Romeo", "Alpina", "Alpine", "Alvis", "Amphicar", "Aston Martin", "Audi", "Austin-Healey", "Bentley", "BMW", "Borgward", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daihatsu", "De Tomaso", "Delahaye", "DeLorean", "DKW", "Dodge", "Facel-Vega", "Ferrari", "Fiat", "Ford", "Honda", "Horch", "Hyundai", "Isuzu", "Iveco", "Jaguar", "Jeep", "Jensen", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lincoln", "Lloyd", "Lotus", "Maserati", "Maybach", "Mazda", "Mercedes-Benz", "MG", "Mitsubishi", "Morgan", "Nissan", "NSU", "Opel", "Peugeot", "Piaggio", "Porsche","Reliant", "Renault", "Rolls-Royce", "Rover", "Saab", "Sachsenring", "Seat","Škoda", "Subaru",  "Sunbeam", "Suzuki","Toyota", "Triumph", "TVR", "Volvo", "VW", "Wartburg"]
     var seatsPickerContent = ["1", "2", "3", "4", "5", "6", "7", "8", "more"]
     var fuelPickerContent = ["gas", "diesel", "electric", "hybrid", "other"]
@@ -160,7 +162,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             selectedFuel = self.fuelPickerContent[row]
             self.fuelInput.text = selectedFuel
             self.fuelPicker.isHidden = true
-        } else if (pickerView == seatsPicker){
+        } else if (pickerView == gearPicker){
             selectedGear = self.gearPickerContent[row]
             self.gearInput.text = selectedGear
             self.gearPicker.isHidden = true

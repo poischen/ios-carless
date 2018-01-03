@@ -14,11 +14,17 @@ import UIKit
 
 class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
     
+    var pageViewController: AdvertisePagesVC!
+    
     var picker: UIImagePickerController? = UIImagePickerController()
     
     @IBOutlet weak var carImageView: UIImageView!
     @IBAction func chooseImgButton(_ sender: Any) {
         chooseImage()
+    }
+    
+    func setPapa(papa: AdvertisePagesVC){
+        self.pageViewController = papa
     }
     
     //Camera stuff

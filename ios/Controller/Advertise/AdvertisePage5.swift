@@ -15,6 +15,8 @@ import MapKit
 import GooglePlacePicker
 
 class AdvertisePage5: UIViewController {
+    
+    var pageViewController: AdvertisePagesVC!
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -51,6 +53,8 @@ class AdvertisePage5: UIViewController {
         locationManager.requestLocation()
         
         searchBar.delegate = self
+        //pickUpPicker.delegate = self
+        //returnPicker.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -194,8 +198,10 @@ extension AdvertisePage5 : UIPickerViewDelegate, UIPickerViewDataSource {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if (textField == self.pickUpTextView){
             self.pickUpPicker.isHidden = false
+            print("began editing")
         } else if (textField == self.returnTextView){
             self.returnPicker.isHidden = false
+            print("began editing")
         }
     }
     

@@ -115,4 +115,5 @@ class Offering: DictionaryConvertible {
         self.pickupTime = pickupTime
         self.returnTime = returnTime
     }
+    
 }
