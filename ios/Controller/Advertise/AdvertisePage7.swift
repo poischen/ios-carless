@@ -34,11 +34,16 @@ class AdvertisePage7: UIViewController {
             print(fileURL)
             print(errorMassage)
                 
-            //TODO
             //store image url
-                //strongSelf.pageViewController ..... !
-                var fileURL = fileURL
-            //alert if not possible
+                if let imgURL: AnyObject = fileURL as? AnyObject {
+                    strongSelf.pageViewController.offeringDict.updateValue(imgURL, forKey: Offering.OFFERING_PICTURE_URL_KEY)
+                } else {
+                    let message: String = "\(errorMassage) Please try again later."
+                    let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    strongSelf.present(alert, animated: true, completion: nil)
+                }
+            //convert input values to DB-IDs
             //init offer dictionary
             //write offer to db
         })
@@ -48,6 +53,7 @@ class AdvertisePage7: UIViewController {
         super.viewDidLoad()
         
         pageViewController = self.parent as! AdvertisePagesVC
+        
         // Do any additional setup after loading the view.
     }
 

@@ -3,8 +3,7 @@ import UIKit
 class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
     //cache input for storing into db
-    var offeringDict: [String : AnyObject] {
-        return [
+    var offeringDict: [String : AnyObject] = [
             Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
             Offering.OFFERING_CONSUMPTION_KEY: 0 as AnyObject,
             Offering.OFFERING_DESCRIPTION_KEY: "empty" as AnyObject,
@@ -23,7 +22,6 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
             Offering.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
             Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
         ]
-    }
     
     var carImage: UIImage!
     

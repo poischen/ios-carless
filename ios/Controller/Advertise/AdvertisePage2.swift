@@ -151,6 +151,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return view
     }
     
+    //TODO convert values to DB-IDs
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == brandPicker) {
             selectedBrand = self.brandsPickerContent[row]
@@ -160,6 +161,13 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             selectedSeats = self.seatsPickerContent[row]
             self.seatsInput.text = selectedSeats
             self.seatsPicker.isHidden = true
+            
+            var seats: AnyObject = (seatsInput.text as? AnyObject)!
+            if (seats as! String == "more"){
+                seats = 9 as AnyObject
+            }
+            pageViewController.offeringDict.updateValue(seats, forKey: Offering.OFFERING_SEATS_KEY)
+            
         } else if (pickerView == fuelPicker){
             selectedFuel = self.fuelPickerContent[row]
             self.fuelInput.text = selectedFuel
@@ -190,5 +198,22 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
     }
-
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if (textField == self.consumptionInput){
+            let consumption: AnyObject = (consumptionInput.text as? AnyObject)!
+            pageViewController.offeringDict.updateValue(consumption, forKey: Offering.OFFERING_CONSUMPTION_KEY)
+        } else if (textField == self.speedInput){
+            let speed: AnyObject = (speedInput.text as? AnyObject)!
+            pageViewController.offeringDict.updateValue(speed, forKey: Offering.OFFERING_HP_KEY)
+        }
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    { if (textField == self.consumptionInput || textField == self.speedInput){
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
+    } else {return true}
+}
 }

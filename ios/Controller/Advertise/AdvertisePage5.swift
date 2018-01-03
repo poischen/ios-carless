@@ -173,7 +173,7 @@ extension AdvertisePage5 : CLLocationManagerDelegate {
     }
 }
 
-extension AdvertisePage5 : UIPickerViewDelegate, UIPickerViewDataSource {
+extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -208,5 +208,21 @@ extension AdvertisePage5 : UIPickerViewDelegate, UIPickerViewDataSource {
             print("began editing")
         }
     }
+    
+}
+
+//TODO: Use value from picker instead
+extension AdvertisePage5: UITextFieldDelegate {
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if (textField == self.pickUpTextView){
+            let pickUpTime: AnyObject = (pickUpTextView.text as? AnyObject)!
+            pageViewController.offeringDict.updateValue(pickUpTime, forKey: Offering.OFFERING_PICKUP_TIME_KEY)
+        } else if (textField == self.returnTextView){
+            let returnTime: AnyObject = (returnTextView.text as? AnyObject)!
+            pageViewController.offeringDict.updateValue(returnTime, forKey: Offering.OFFERING_RETURN_TIME_KEY)
+        }
+    }
+    
     
 }
