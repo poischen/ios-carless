@@ -24,6 +24,8 @@
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
 		196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewController.swift */; };
 		19714D411FF6419100067565 /* RateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19714D401FF6419100067565 /* RateModel.swift */; };
+		199A68651FFD027A00047E5D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68641FFD027A00047E5D /* CustomCell.swift */; };
+		199A68671FFD03FE00047E5D /* SearchTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68661FFD03FE00047E5D /* SearchTestViewController.swift */; };
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
 		19A3B0521FDC19F80021458C /* DBMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3B0511FDC19F80021458C /* DBMapping.swift */; };
 		19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3F8611FF5AAEE00FA2D95 /* Rating.swift */; };
@@ -107,6 +109,8 @@
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
 		196FD4F21FAFC46E000875AE /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		19714D401FF6419100067565 /* RateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateModel.swift; sourceTree = "<group>"; };
+		199A68641FFD027A00047E5D /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		199A68661FFD03FE00047E5D /* SearchTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTestViewController.swift; sourceTree = "<group>"; };
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		19A3B0511FDC19F80021458C /* DBMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMapping.swift; sourceTree = "<group>"; };
 		19A3F8611FF5AAEE00FA2D95 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
@@ -395,6 +399,7 @@
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
 				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
+				199A68661FFD03FE00047E5D /* SearchTestViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -420,6 +425,7 @@
 				196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */,
 				196FD4E81FAFBFE2000875AE /* Search.storyboard */,
 				194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */,
+				199A68641FFD027A00047E5D /* CustomCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -784,6 +790,7 @@
 				19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */,
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */,
+				199A68651FFD027A00047E5D /* CustomCell.swift in Sources */,
 				84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */,
 				19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
@@ -812,6 +819,7 @@
 				840D63C91FE9A534007A1F16 /* OfferingViewController.swift in Sources */,
 				841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */,
 				194C2E9A1FE7C44200E34EF8 /* SelectableItem.swift in Sources */,
+				199A68671FFD03FE00047E5D /* SearchTestViewController.swift in Sources */,
 				840D63CE1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
