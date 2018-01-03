@@ -4,23 +4,23 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
 
     var offeringDict: [String : AnyObject] {
         return [
-            Constants.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
-            Constants.OFFERING_CONSUMPTION_KEY: 0 as AnyObject,
-            Constants.OFFERING_DESCRIPTION_KEY: "empty" as AnyObject,
-            Constants.OFFERING_FUEL_ID_KEY: 0 as AnyObject,
-            Constants.OFFERING_GEAR_ID_KEY: 0 as AnyObject,
-            Constants.OFFERING_HP_KEY: 0 as AnyObject,
-            Constants.OFFERING_LATITUDE_KEY: 0.0 as AnyObject,
-            Constants.OFFERING_LOCATION_KEY: "empty" as AnyObject,
-            Constants.OFFERING_LONGITUDE_KEY: 0.0 as AnyObject,
-            Constants.OFFERING_PICTURE_URL_KEY: "empty" as AnyObject,
-            Constants.OFFERING_PRICE_KEY: 0 as AnyObject,
-            Constants.OFFERING_SEATS_KEY: 0 as AnyObject,
-            Constants.OFFERING_TYPE_KEY: 0 as AnyObject,
-            Constants.OFFERING_USER_UID_KEY: 0 as AnyObject,
-            Constants.OFFERING_VEHICLE_TYPE_ID_KEY: 0 as AnyObject,
-            Constants.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
-            Constants.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
+            Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
+            Offering.OFFERING_CONSUMPTION_KEY: 0 as AnyObject,
+            Offering.OFFERING_DESCRIPTION_KEY: "empty" as AnyObject,
+            Offering.OFFERING_FUEL_ID_KEY: 0 as AnyObject,
+            Offering.OFFERING_GEAR_ID_KEY: 0 as AnyObject,
+            Offering.OFFERING_HP_KEY: 0 as AnyObject,
+            Offering.OFFERING_LATITUDE_KEY: 0.0 as AnyObject,
+            Offering.OFFERING_LOCATION_KEY: "empty" as AnyObject,
+            Offering.OFFERING_LONGITUDE_KEY: 0.0 as AnyObject,
+            Offering.OFFERING_PICTURE_URL_KEY: "empty" as AnyObject,
+            Offering.OFFERING_PRICE_KEY: 0 as AnyObject,
+            Offering.OFFERING_SEATS_KEY: 0 as AnyObject,
+            Offering.OFFERING_TYPE_KEY: 0 as AnyObject,
+            Offering.OFFERING_USER_UID_KEY: 0 as AnyObject,
+            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: 0 as AnyObject,
+            Offering.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
+            Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
         ]
     }
     

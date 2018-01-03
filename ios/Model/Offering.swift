@@ -24,8 +24,8 @@ class Offering: DictionaryConvertible {
     static let OFFERING_USER_UID_KEY = "uid"
     static let OFFERING_VEHICLE_TYPE_ID_KEY = "vehicleTypeID"
     static let OFFERING_LOCATION_KEY = "location"
-    static let OFFERING_PICKUP_TIME = "pickuptime"
-    static let OFFERING_RETURN_TIME = "returntime"
+    static let OFFERING_PICKUP_TIME_KEY = "pickuptime"
+    static let OFFERING_RETURN_TIME_KEY = "returntime"
     
     convenience required init?(id: Int, dict: [String : AnyObject]) {
         guard let offeringBrandID = dict[Offering.OFFERING_BRAND_ID_KEY] as? Int,
@@ -43,8 +43,8 @@ class Offering: DictionaryConvertible {
             let offeringType = dict[Offering.OFFERING_TYPE_KEY] as? String,
             let offeringUserUID = dict[Offering.OFFERING_USER_UID_KEY] as? String,
             let offeringVehicleTypeID = dict[Offering.OFFERING_VEHICLE_TYPE_ID_KEY] as? Int,
-            let offeringPickupTimeRaw = dict[Offering.OFFERING_PICKUP_TIME] as? String,
-            let offeringReturnTimeRaw = dict[Offering.OFFERING_RETURN_TIME] as? String
+            let offeringPickupTimeRaw = dict[Offering.OFFERING_PICKUP_TIME_KEY] as? String,
+            let offeringReturnTimeRaw = dict[Offering.OFFERING_RETURN_TIME_KEY] as? String
             else {
                 return nil
         }
