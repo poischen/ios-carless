@@ -12,6 +12,10 @@ import JTAppleCalendar
 class SearchTestViewController: UIViewController {
 
     @IBOutlet weak var collectionView: JTAppleCalendarView!
+    @IBOutlet weak var year: UILabel!
+    @IBOutlet weak var month: UILabel!
+    
+    let formatter = DateFormatter()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +25,14 @@ class SearchTestViewController: UIViewController {
     }
     
     func setupCalendarView() {
+        // setup calendar spacing
         collectionView.minimumLineSpacing = 0
         collectionView.minimumInteritemSpacing = 0
+        
+        // initialise month and year labels
+        collectionView.visibleDates({visibleDates in
+            self.setupCalendarLabels(from: visibleDates)
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,16 +40,35 @@ class SearchTestViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func handleCellBackground(view: JTAppleCell?, cellState: CellState){
+        guard let validCell = view as? CustomCell else {
+            return
+        }
+        if validCell.isSelected {
+            validCell.selectedView.isHidden = false
+        } else {
+            validCell.selectedView.isHidden = true
+        }
     }
-    */
+    
+    func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
+        guard let validCell = view as? CustomCell else {
+            return
+        }
+        if cellState.dateBelongsTo == .thisMonth {
+            validCell.dateLabel.textColor = UIColor.black
+        } else {
+            validCell.dateLabel.textColor = UIColor.darkGray
+        }
+    }
+    
+    func setupCalendarLabels(from visibleDates: DateSegmentInfo){
+        let date = visibleDates.monthDates.first!.date
+        self.formatter.dateFormat = "yyyy"
+        self.year.text = self.formatter.string(from: date)
+        self.formatter.dateFormat = "MMMM"
+        self.month.text = self.formatter.string(from: date)
+    }
 
 }
 
@@ -66,23 +95,24 @@ extension SearchTestViewController: JTAppleCalendarViewDataSource{
 extension SearchTestViewController: JTAppleCalendarViewDelegate{
     // display the cell
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
+        // TODO: error handling
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.dateLabel.text = cellState.text
+        handleCellBackground(view: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState)
         return cell
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        guard let validCell = cell as? CustomCell else {
-            return
-        }
-        validCell.selectedView.isHidden = false
+        handleCellBackground(view: cell, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-            guard let validCell = cell as? CustomCell else {
-                return
-            }
-            validCell.selectedView.isHidden = true
+        handleCellBackground(view: cell, cellState: cellState)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+        setupCalendarLabels(from: visibleDates)
     }
 }
 
