@@ -26,7 +26,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         //Fetch Data has to know that we have confirmed to the protocol
         //chatVC deals with the function dataReceived(); 
-        StorageAPI.shared.delegate = self;
+        //StorageAPI.shared.delegate = self;
         StorageAPI.shared.getUsers(completion: dataReceived);
     }
     
@@ -58,7 +58,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath);
         
         
-        cell.textLabel?.text = users[indexPath.row].name;
+        cell.textLabel?.text = users[indexPath.row].name
+
         
         return cell;
     }
@@ -79,7 +80,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationNavigationController = segue.destination as! UINavigationController
         let targetController = destinationNavigationController.topViewController
-            // next screen: search results
             if let chatVC = targetController as? ChatWindowVC {
                 chatVC.receiverId = self.selctedUser
             }

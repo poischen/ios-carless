@@ -13,6 +13,7 @@ import AVKit
 import SDWebImage
 
 class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
     
     var receiverId: String = ""
     
@@ -26,31 +27,32 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        picker.delegate = self;
-        MessageHandler._shared.delegate = self;
+        picker.delegate = self
+        MessageHandler._shared.delegate = self
        
-        self.senderId = StorageAPI.shared.userID();
-        self.senderDisplayName = StorageAPI.shared.userName;
+        self.senderId = StorageAPI.shared.userID()
+        self.senderDisplayName = StorageAPI.shared.userName
         
-        MessageHandler._shared.observeMessages();
-        MessageHandler._shared.observeMediaMessages();
+        //MessageHandler._shared.observeMessages()
+        MessageHandler._shared.observeMediaMessages()
+        MessageHandler._shared.observeUserMessages()
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
-        let bubbleFactory = JSQMessagesBubbleImageFactory();
-        let message = messages[indexPath.item];
+        let bubbleFactory = JSQMessagesBubbleImageFactory()
+        let message = messages[indexPath.item]
         
         if message.senderId == self.senderId {
-           return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue);
+           return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue)
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.green);
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.green)
         }
        
     }
     
     //profile icon
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
-        return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "ProfilePic"), diameter: 30);
+        return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "ProfilePic"), diameter: 30)
     }
     
     //display messages
@@ -139,7 +141,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         collectionView.reloadData();
     }
     
-    func messageReceived(senderID: String, text: String) {
+    func messageReceived(senderID: String, receiverID: String, text: String) {
         messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text));
         collectionView.reloadData();
     }

@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 
 protocol MessageReceivedDelegate: class {
-    func messageReceived(senderID: String, text: String);
+    func messageReceived(senderID: String, receiverID: String, text: String);
     func mediaReceived(senderID: String, senderName: String, url: String);
 }
 
@@ -25,7 +26,21 @@ class MessageHandler {
         
         let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text, DBConstants.RECEIVER_ID: receiverID];
         
-        StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
+        //StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
+        
+        let ref = StorageAPI.shared.messagesRef
+        
+        ref.childByAutoId().updateChildValues(data) { (error, ref) in
+            if error != nil {
+                print(error)
+                return
+            }
+            let userMessagesRef = Database.database().reference().child("user-messages").child(StorageAPI.shared.userID())
+            
+            //let messageID = ref.childByAutoId().key
+            let messageID = ref.key
+            userMessagesRef.updateChildValues([messageID: 1])
+        }
     }
     
     func sendMediaMessage(senderID: String, senderName: String, url: String) {
@@ -62,14 +77,57 @@ class MessageHandler {
         }
     }
     
+    /*if let data = snapshot.value as? NSDictionary {
+        if let senderID = data[DBConstants.SENDER_ID] as? String{
+            if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                if let text = data[DBConstants.TEXT] as? String {
+                    self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                }
+            }
+        }
+    }*/
+    func observeUserMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let ref = Database.database().reference().child("user-messages").child(uid)
+        ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+            
+            let messageID = snapshot.key
+            let messagesRef = StorageAPI.shared.messagesRef.child(messageID)
+            
+            messagesRef.observeSingleEvent(of: .value, with: { snapshot in
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String{
+                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                            if let text = data[DBConstants.TEXT] as? String {
+                                self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                            }
+                        }
+                    }
+                }
+            })
+            
+        }
+    }
+    
     func observeMessages() {
         StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
-            if let data = snapshot.value as? NSDictionary {
+           /* if let dictionary = snapshot.value as? [String: AnyObject]{
+                let message = Message()
+                message.setValuesForKeys(dictionary)
+                self.messages.append(message)
+            }*/
+            
+           if let data = snapshot.value as? NSDictionary {
                 if let senderID = data[DBConstants.SENDER_ID] as? String{
+                    if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
                     if let text = data[DBConstants.TEXT] as? String {
-                        self.delegate?.messageReceived(senderID: senderID, text: text)
+                        self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
                     }
+                  }
                 }
             }
         }
@@ -92,4 +150,7 @@ class MessageHandler {
             }
         }
     }
+    
+
+    
 }

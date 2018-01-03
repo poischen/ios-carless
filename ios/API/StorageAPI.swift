@@ -36,8 +36,6 @@ final class StorageAPI {
     private let fuelDBReference: DatabaseReference
     private let lessorRatings: DatabaseReference
     
-    //value will not be instantiated until it is needed
-    weak var delegate: FetchData?;
     
     var userName = "";
     
@@ -399,39 +397,6 @@ final class StorageAPI {
         usersRef.child(withID).setValue(user.dict);
     }
     
-  /*  func getUsers() {
-        
-        //watching, observing database
-        //see all the values in Users Reference
-        usersRef.observeSingleEvent(of: DataEventType.value){
-            (snapshot: DataSnapshot) in
-            
-            //empty array of users
-            var users = [User]();
-            
-            //testing if value is type of NSDictionary
-            if let theUsers = snapshot.value as? NSDictionary {
-                
-                //filter for every key, value pair inside of the dictionary
-                for (key, value) in theUsers {
-                    
-                    if let userData = value as? NSDictionary{
-                        
-                        // fetch the data as String
-                        if let name = userData[DBConstants.NAME] as? String, let rating = userData[DBConstants.RATING] as? Float, let profileImgUrl = userData[DBConstants.PROFILEIMG] as? String {
-                            
-                            let id = key as! String;
-                            let newUser = User(id: id, name: name, rating: rating, profileImgUrl: profileImgUrl,);
-                            
-                            //append it in the empty array
-                            users.append(newUser);
-                        }
-                    }
-                }
-            }
-            self.delegate?.dataReceived(users: users);
-        }
-    }*/
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
