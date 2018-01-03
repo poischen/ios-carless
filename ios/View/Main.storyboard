@@ -88,10 +88,10 @@
             </objects>
             <point key="canvasLocation" x="-90.400000000000006" y="33.733133433283363"/>
         </scene>
-        <!--Profile View Controller-->
+        <!--Profile-->
         <scene sceneID="6oZ-7L-Uc9">
             <objects>
-                <viewController storyboardIdentifier="Home" id="dyd-1j-bhe" customClass="ProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Home" title="Profile" id="dyd-1j-bhe" customClass="ProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gs6-v9-yHc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -158,6 +158,14 @@
                                 <state key="normal" title="Advertise"/>
                                 <connections>
                                     <action selector="advertiseButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="2lJ-Tx-kAe"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kVI-Og-Zda">
+                                <rect key="frame" x="171" y="541" width="32" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Rate"/>
+                                <connections>
+                                    <action selector="rateButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="ief-1t-QBB"/>
                                 </connections>
                             </button>
                         </subviews>

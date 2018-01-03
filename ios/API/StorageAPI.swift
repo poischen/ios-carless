@@ -19,6 +19,7 @@ protocol FetchData: class {
 
 // singleton class for access to Firebase and maybe to local storage in the future
 // TODO: don't use forced typecasting -> handle errors gracefully
+// TODO: Is it OK that the StorageAPI relies on constants from the Model Classes?
 
 final class StorageAPI {
     static let shared = StorageAPI()
@@ -34,6 +35,7 @@ final class StorageAPI {
     private let gearsDBReference: DatabaseReference
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
+    private let lessorRatings: DatabaseReference
     
     //value will not be instantiated until it is needed
     weak var delegate: FetchData?;
@@ -41,20 +43,22 @@ final class StorageAPI {
     var userName = "";
     
     //returns Project URL from Firebase
+    // TODO: merge database references
     var dbRef: DatabaseReference {
         return Database.database().reference();
     }
     
+    // TODO: cache users?
     var usersRef: DatabaseReference{
-        return dbRef.child(Constants.USERS);
+        return dbRef.child(DBConstants.USERS);
     }
     
     var messagesRef: DatabaseReference {
-        return dbRef.child(Constants.MESSAGES);
+        return dbRef.child(DBConstants.MESSAGES);
     }
     
     var mediaMessagesRef: DatabaseReference{
-        return dbRef.child(Constants.MEDIA_MESSAGES);
+        return dbRef.child(DBConstants.MEDIA_MESSAGES);
     }
     
     //where media files are stored
@@ -63,11 +67,11 @@ final class StorageAPI {
     }
     
     var imageStorageRef: StorageReference {
-        return storageRef.child(Constants.IMAGE_STORAGE);
+        return storageRef.child(DBConstants.IMAGE_STORAGE);
     }
     
     var videoStorageRef: StorageReference {
-        return storageRef.child(Constants.VIDEO_STORAGE);
+        return storageRef.child(DBConstants.VIDEO_STORAGE);
     }
     
     private init() {
@@ -82,6 +86,7 @@ final class StorageAPI {
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         
         // tryong to avoid caching problems by keeping references synced until queried for the first time
         // TODO: find better solution?
@@ -93,6 +98,8 @@ final class StorageAPI {
         self.gearsDBReference.keepSynced(true)
         self.brandsDBReference.keepSynced(true)
         self.fuelDBReference.keepSynced(true)
+        self.lessorRatings.keepSynced(true)
+        self.usersRef.keepSynced(true)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -106,6 +113,28 @@ final class StorageAPI {
             }
             completion(resultOfferings)
             //self.offeringsDBReference.keepSynced(false) // fix for caching problems
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getOfferingByID(id: Int, completion: @escaping (_ offering: Offering) -> Void){
+        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let offeringID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    if let offering = Offering.init(id: offeringID, dict: dict) {
+                        completion(offering)
+                    } else {
+                        print("error in get getOfferingByID")
+                    }
+                } else {
+                    print("error in get getOfferingByID")
+                }
+            } else {
+                print("no offering or more than one offering found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -138,16 +167,15 @@ final class StorageAPI {
                 guard
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
                     let offeringID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? Int else {
-                        print("error")
+                        print("error in getOfferingsFeatures")
                         return
                 }
-                if (resultOfferingsFeatures[offeringID] != nil){
+                if var currentOfferingsFeatures = resultOfferingsFeatures[offeringID] {
                     // not the first feature -> add to feature list for this offering
-                    var prevOfferingFeatures = resultOfferingsFeatures[offeringID]!
-                    prevOfferingFeatures.append(featureID)
-                    resultOfferingsFeatures[offeringID] = prevOfferingFeatures
+                    currentOfferingsFeatures.append(featureID)
+                    resultOfferingsFeatures[offeringID] = currentOfferingsFeatures
                 } else {
-                    // first feature for this offering -> initialise array
+                    // first feature for this offering -> initialise features array
                     resultOfferingsFeatures[offeringID] = [featureID]
                 }
             }
@@ -357,47 +385,91 @@ final class StorageAPI {
         }
     }
     
+    func saveRating(rating: Rating){
+        let ratingAsDict = rating.dict
+        self.lessorRatings.childByAutoId().setValue(ratingAsDict)
+    }
+    
+    func updateUser(user: User){
+        let userAsDict = user.dict
+        self.usersRef.child(user.id).setValue(userAsDict)
+    }
+    
     //stores User in Database
-    func saveUser(withID: String, name: String, email: String, password: String){
-        let data: Dictionary<String, Any> = [Constants.NAME: name, Constants.EMAIL: email, Constants.PASSWORD: password];
+    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
+        let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg];
         
         usersRef.child(withID).setValue(data);
     }
     
-    func getUsers() {
-        
-        //watching, observing database
-        //see all the values in Users Reference
-        usersRef.observeSingleEvent(of: DataEventType.value){
-            (snapshot: DataSnapshot) in
-            
-            //empty array of users
-            var users = [User]();
-            
-            //testing if value is type of NSDictionary
-            if let theUsers = snapshot.value as? NSDictionary {
-                
-                //filter for every key, value pair inside of the dictionary
-                for (key, value) in theUsers {
-                    
-                    if let userData = value as? NSDictionary{
-                        
-                        // fetch the data as String
-                        if let name = userData[Constants.NAME] as? String {
-                            
-                            let id = key as! String;
-                            let newUser = User(id: id, name: name);
-                            
-                            //append it in the empty array
-                            users.append(newUser);
-                        }
-                    }
-                }
+    func getUsers(completion: @escaping (_ users: [User]) -> Void){
+        self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
+            var resultUsers:[User] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let user = User.init(id: child.key, dict: dict)!
+                resultUsers.append(user)
             }
-            self.delegate?.dataReceived(users: users);
+            completion(resultUsers)
+            //self.gearsDBReference.keepSynced(false) // fix for caching problems
+        }) { (error) in
+            print(error.localizedDescription)
         }
     }
     
+    func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
+        self.usersRef.queryOrderedByKey().queryEqual(toValue: UID).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
+                        if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String,
+                            let numberOfRatings = userData[User.NUMBER_OF_RATINGS] as? Int,
+                        let email = userData[User.EMAIL] as? String {
+                            completion(User(id: UID, name: userName, email: email, rating: userRating, profileImgUrl: userPic, numberOfRatings: numberOfRatings ))
+                            return
+                        }
+                }
+                // retun not executed -> something went wrong -> print error
+                print("error in get getUserByUID")
+            } else {
+                print("no user or more than one user found")
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // gets the cars the rentings for a specific user (lessee view)
+    func getRentingsByUserUID(userUID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                resultRentings.append(renting)
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // get the rentings for a specific user (lessor view)
+    func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
+        self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultOfferings:[Offering] = []
+            for childRaw in snapshot.children {
+                let child = childRaw as! DataSnapshot
+                let dict = child.value as! [String:AnyObject]
+                let offering = Offering.init(id: Int(child.key)!, dict: dict)!
+                resultOfferings.append(offering)
+            }
+            completion(resultOfferings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     
     //gets UserID in Firebase
     func userID() -> String {

@@ -17,38 +17,30 @@ class DBConstants {
     static let PROPERTY_NAME_GEARS = "gear"
     static let PROPERTY_NAME_BRANDS = "brands"
     static let PROPERTY_NAME_FUELS = "fuel"
-    
-    // constants for offerings
-    static let PROPERTY_NAME_OFFERING_PRICE = "price"
-    static let PROPERTY_NAME_OFFERING_BRAND = "brand"
-    static let PROPERTY_NAME_OFFERING_CONSUMPTION = "consumption"
-    static let PROPERTY_NAME_OFFERING_DESCRIPTION = "description"
-    static let PROPERTY_NAME_OFFERING_FUEL = "fuel"
-    static let PROPERTY_NAME_OFFERING_GEAR = "gear"
-    static let PROPERTY_NAME_OFFERING_HORSEPOWER = "hp"
-    static let PROPERTY_NAME_OFFERING_LATITUDE = "latitude"
-    static let PROPERTY_NAME_OFFERING_LONGITUDE = "longitude"
-    static let PROPERTY_NAME_OFFERING_CITY = "location"
-    static let PROPERTY_NAME_OFFERING_PICTURE_URL = "picture"
-    static let PROPERTY_NAME_OFFERING_SEATS = "seats"
-    static let PROPERTY_NAME_OFFERING_TYPE = "type"
-    static let PROPERTY_NAME_OFFERING_VEHICLE_TYPE_ID = "vehicleTypeID"
+    static let PROPERTY_NAME_RATINGS = "ratings"
     
     // constants for offering's features
     static let PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE = "feature"
-    static let PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING = "feature"
+    static let PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING = "inserat"
     
-    // constants for rentings
-    static let PROPERTY_NAME_RENTING_START_DATE = "startDate"
-    static let PROPERTY_NAME_RENTING_END_DATE = "endDate"
-    static let PROPERTY_NAME_RENTING_USER_ID = "userId"
-    static let PROPERTY_NAME_RENTING_OFFERING_ID = "inseratId"
+    //DBProvider
+    static let USERS = "Users";
+    static let MESSAGES = "Messages";
+    static let MEDIA_MESSAGES = "Media_Messages";
+    static let IMAGE_STORAGE = "Image_Storage";
+    static let VIDEO_STORAGE = "Video_Storage";
     
-    // constants for vehicle types
-    static let PROPERTY_NAME_VEHICLE_TYPE_NAME = "type"
-    static let PROPERTY_NAME_VEHICLE_TYPE_ICON_URL = "icon_dl"
+    static let NAME = "name";
+    static let EMAIL = "email";
+    static let PASSWORD = "password";
+    static let DATA = "data";
+    static let RATING = "rating";
+    static let PROFILEIMG = "profileImg";
     
-    // constants for features
-    static let PRORPERTY_NAME_FEATURE_NAME = "type"
-    static let PRORPERTY_NAME_FEATURE_ICON_URL = "icon_dl"
+    //messages
+    static let TEXT = "text";
+    static let SENDER_ID = "sender_id";
+    static let SENDER_NAME = "sender_name";
+    static let RECEIVER_ID = "receiver_id";
+    static let URL = "url";
 }

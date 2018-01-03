@@ -23,13 +23,13 @@ class MessageHandler {
     
     func sendMessage(senderID: String, senderName: String, text: String, receiverID: String){
         
-        let data: Dictionary<String, Any> = [Constants.SENDER_ID: senderID, Constants.SENDER_NAME: senderName, Constants.TEXT: text, Constants.RECEIVER_ID: receiverID];
+        let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text, DBConstants.RECEIVER_ID: receiverID];
         
         StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
     }
     
     func sendMediaMessage(senderID: String, senderName: String, url: String) {
-        let data: Dictionary<String, Any> = [Constants.SENDER_ID: senderID, Constants.SENDER_NAME: senderName, Constants.URL: url];
+        let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.URL: url];
         
         StorageAPI.shared.mediaMessagesRef.childByAutoId().setValue(data);
     }
@@ -66,8 +66,8 @@ class MessageHandler {
         StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
             if let data = snapshot.value as? NSDictionary {
-                if let senderID = data[Constants.SENDER_ID] as? String{
-                    if let text = data[Constants.TEXT] as? String {
+                if let senderID = data[DBConstants.SENDER_ID] as? String{
+                    if let text = data[DBConstants.TEXT] as? String {
                         self.delegate?.messageReceived(senderID: senderID, text: text)
                     }
                 }
@@ -80,10 +80,10 @@ class MessageHandler {
         StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
             if let data = snapshot.value as? NSDictionary {
-                if let id = data[Constants.SENDER_ID] as? String {
-                    if let name = data[Constants.SENDER_NAME] as?
+                if let id = data[DBConstants.SENDER_ID] as? String {
+                    if let name = data[DBConstants.SENDER_NAME] as?
                         String {
-                        if let fileURL = data[Constants.URL] as?
+                        if let fileURL = data[DBConstants.URL] as?
                         String {
                             self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL);
                         }
