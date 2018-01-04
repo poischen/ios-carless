@@ -11,26 +11,33 @@ import JTAppleCalendar
 
 class SearchTestViewController: UIViewController {
 
-    @IBOutlet weak var collectionView: JTAppleCalendarView!
+    @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var year: UILabel!
     @IBOutlet weak var month: UILabel!
     
+    var firstDate:Date?
+    var lastDate:Date?
+    var recursiveCall = false
+    
     let formatter = DateFormatter()
+    let currentCalendar = Calendar.current
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCalendarView()
+        calendarView.allowsMultipleSelection  = true
+        //calendarView.rangeSelectionWillBeUsed = true
 
         // Do any additional setup after loading the view.
     }
     
     func setupCalendarView() {
         // setup calendar spacing
-        collectionView.minimumLineSpacing = 0
-        collectionView.minimumInteritemSpacing = 0
+        calendarView.minimumLineSpacing = 0
+        calendarView.minimumInteritemSpacing = 0
         
         // initialise month and year labels
-        collectionView.visibleDates({visibleDates in
+        calendarView.visibleDates({visibleDates in
             self.setupCalendarLabels(from: visibleDates)
         })
     }
@@ -60,6 +67,19 @@ class SearchTestViewController: UIViewController {
         } else {
             validCell.dateLabel.textColor = UIColor.darkGray
         }
+    }
+    
+    func handleSelection(cell: JTAppleCell?, cellState: CellState) {
+        guard let myCustomCell = cell as? CustomCell else {
+            return
+        }
+        switch cellState.selectedPosition() {
+        case .full, .left, .right, .middle:
+            myCustomCell.selectedView.isHidden = false
+        default:
+            myCustomCell.selectedView.isHidden = true
+        }
+        
     }
     
     func setupCalendarLabels(from visibleDates: DateSegmentInfo){
@@ -98,22 +118,77 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
         // TODO: error handling
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.dateLabel.text = cellState.text
-        handleCellBackground(view: cell, cellState: cellState)
+        //handleCellBackground(view: cell, cellState: cellState)
+        handleSelection(cell: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
         return cell
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        handleCellBackground(view: cell, cellState: cellState)
+        handleSelection(cell: cell, cellState: cellState)
+        if recursiveCall == false {
+            if firstDate != nil {
+                // first date set
+                if lastDate != nil {
+                    // date range already set -> remove and set new first date
+                    calendarView.deselectDates(from: firstDate!, to: lastDate!, triggerSelectionDelegate: true)
+                    firstDate = date
+                    lastDate = nil
+                } else {
+                    // first date set, last date not set -> set last date and select cells in between
+                    lastDate = date
+                    recursiveCall = true
+                    calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                    recursiveCall = false
+                }
+            } else {
+                // first date not set yet -> set first date
+                firstDate = date
+            }
+        }
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        handleCellBackground(view: cell, cellState: cellState)
+        //handleCellBackground(view: cell, cellState: cellState)
+        handleSelection(cell: cell, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         setupCalendarLabels(from: visibleDates)
     }
+    
+    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        /*if firstDate == nil {
+            // first date not yet selected -> select it
+            firstDate = date
+            return true
+        } else {
+            // first date already selected
+            if lastDate == nil {
+                // last date not selected yet -> select it -> date range complete
+                lastDate = date
+                // also select all dates in between if the range consists of more than two days
+                let dateAfterFirstDate = currentCalendar.date(byAdding: .day, value: 1, to: firstDate!)
+                if (dateAfterFirstDate != lastDate){
+                    let dateBeforeLastDate = currentCalendar.date(byAdding: .day, value: -1, to: lastDate!)
+                    calendarView.selectDates(from: dateAfterFirstDate!, to: dateBeforeLastDate!, triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                }
+                return true
+            } else {
+                // first date and last date are already selected -> reset selection and select new first date
+                calendarView.deselectAllDates()
+                lastDate = nil
+                firstDate = date
+                return true
+            }
+        }*/
+        if cellState.dateBelongsTo == .thisMonth {
+            return true
+        } else {
+            return false
+        }
+    }
+
 }
 
 
