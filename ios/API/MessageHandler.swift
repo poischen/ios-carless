@@ -114,7 +114,7 @@ class MessageHandler {
         }
     }
     
-    func observeMessages() {
+    /*func observeMessages() {
         StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
            /* if let dictionary = snapshot.value as? [String: AnyObject]{
@@ -133,7 +133,7 @@ class MessageHandler {
                 }
             }
         }
-    }
+    }*/
     
     func observeMediaMessages() {
         
@@ -153,6 +153,6 @@ class MessageHandler {
         }
     }
     
-
+    
     
 }

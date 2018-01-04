@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, FetchData {
@@ -19,7 +20,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Array of Users to store all of the users
     private var users = [User]();
     
-    private var selctedUser: String = ""
+    var selctedUser: String = ""
+    static let sharedChat = ChatViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +67,15 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     //open chat window
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUserObject = self.users[indexPath.row]
         self.selctedUser = selectedUserObject.id
-        performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
+            let ref = Database.database().reference().child(DBConstants.USERS).child(self.selctedUser)
+            ref.observeSingleEvent(of: .value, with: {(snapshot) in
+                
+                self.performSegue(withIdentifier: self.CHAT_SEGUE, sender: nil)
+                })
+        
         
     }
 
@@ -85,6 +92,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         
     }
+    
     
  
     

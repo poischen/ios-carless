@@ -11,8 +11,15 @@ import JSQMessagesViewController
 import MobileCoreServices
 import AVKit
 import SDWebImage
+import Firebase
 
 class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    var user: User? {
+        didSet {
+            observeMessages()
+        }
+    }
 
     
     var receiverId: String = ""
@@ -36,6 +43,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         //MessageHandler._shared.observeMessages()
         MessageHandler._shared.observeMediaMessages()
         MessageHandler._shared.observeUserMessages()
+            
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -57,6 +65,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
     
     //display messages
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData {
+        
         return messages[indexPath.item];
     }
     
@@ -192,6 +201,16 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         dismiss(animated: true, completion: nil);
     }
     
- 
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
+            print(snapshot)
+        }
+    }
+    
 
 }
