@@ -38,8 +38,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         endTimeDatePicker.minimumDate = Date() + 86400 // adding one day
         startTimeTimePicker.date = Filter.dateToNext30(date: Date())
         endTimeTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour
-        
-
     }
     
     override func didReceiveMemoryWarning() {

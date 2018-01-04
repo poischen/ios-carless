@@ -73,13 +73,17 @@ class SearchTestViewController: UIViewController {
         guard let myCustomCell = cell as? CustomCell else {
             return
         }
-        switch cellState.selectedPosition() {
-        case .full, .left, .right, .middle:
-            myCustomCell.selectedView.isHidden = false
-        default:
+        if cellState.dateBelongsTo == .thisMonth {
+            // only mark month dates as selected to avoid cross month selection problems
+            switch cellState.selectedPosition() {
+            case .full, .left, .right, .middle:
+                myCustomCell.selectedView.isHidden = false
+            default:
+                myCustomCell.selectedView.isHidden = true
+            }
+        } else {
             myCustomCell.selectedView.isHidden = true
         }
-        
     }
     
     func setupCalendarLabels(from visibleDates: DateSegmentInfo){
@@ -135,11 +139,22 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
                     firstDate = date
                     lastDate = nil
                 } else {
-                    // first date set, last date not set -> set last date and select cells in between
-                    lastDate = date
-                    recursiveCall = true
-                    calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
-                    recursiveCall = false
+                    // first date set, last date not set
+                    if (date < firstDate!){
+                        // new date is before first date -> remove first date and set current date as new first date
+                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
+                        firstDate = date
+                        lastDate = nil // for safety :)
+                    } else {
+                        // new date is on or after first date -> set last date
+                        lastDate = date
+                        if (firstDate != lastDate) {
+                            // first date and last date are not on the same day -> select cells in between
+                            recursiveCall = true
+                            calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                            recursiveCall = false
+                        }
+                    }
                 }
             } else {
                 // first date not set yet -> set first date
@@ -188,6 +203,20 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
             return false
         }
     }
+    
+    /* func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        if let currentFirstDate = firstDate as? Date, let currentLastDate = lastDate as? Date {
+            // prevent user from de-selecting dates in the middle of a date interval
+            let dateRange = calendarView.generateDateRange(from: currentFirstDate, to: currentLastDate)
+            if dateRange.contains(date){
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return true
+        }
+    } */
 
 }
 
