@@ -36,7 +36,7 @@ class AdvertisePage7: UIViewController {
                 
             //store image url
                 if let imgURL: AnyObject = fileURL as? AnyObject {
-                    strongSelf.pageViewController.offeringDict.updateValue(imgURL, forKey: Offering.OFFERING_PICTURE_URL_KEY)
+                    strongSelf.pageViewController.advertiseModel.offeringDict.updateValue(imgURL, forKey: Offering.OFFERING_PICTURE_URL_KEY)
                 } else {
                     let message: String = "\(errorMassage) Please try again later."
                     let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)

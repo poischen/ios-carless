@@ -20,9 +20,9 @@ class AdvertisePage3: UIViewController {
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     
     //TODO: Use data from DB
-    var featuresImages = [UIImage(named: "navigation"), UIImage(named: "cruise_controll"), UIImage(named: "seat_heater"), UIImage(named: "infant_seat"), UIImage(named: "AC"), UIImage(named: "park_assistant"), UIImage(named: "front-camera"), UIImage(named: "back-camera"), UIImage(named: "cd_radio_mp3"), UIImage(named: "pre-heating"), UIImage(named: "wifi"), UIImage(named: "start_stop")]
+    /*var featuresImages = [UIImage(named: "navigation"), UIImage(named: "cruise_controll"), UIImage(named: "seat_heater"), UIImage(named: "infant_seat"), UIImage(named: "AC"), UIImage(named: "park_assistant"), UIImage(named: "front-camera"), UIImage(named: "back-camera"), UIImage(named: "cd_radio_mp3"), UIImage(named: "pre-heating"), UIImage(named: "wifi"), UIImage(named: "start_stop")]
     
-        var featuresLabels = ["Navigation", "Cruise controll", "Seat heater", "Infant seat", "AC", "Park assistant", "Front camera", "Back camera", "CD/Radio/Mp3", "Pre-heating", "Wifi", "Start/Stop"]
+        var featuresLabels = ["Navigation", "Cruise controll", "Seat heater", "Infant seat", "AC", "Park assistant", "Front camera", "Back camera", "CD/Radio/Mp3", "Pre-heating", "Wifi", "Start/Stop"]*/
     
  /*   func setupFeaturesCollectionView(){
         let layout = UICollectionViewFlowLayout()
@@ -56,7 +56,7 @@ class AdvertisePage3: UIViewController {
 
 extension AdvertisePage3: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return featuresImages.count
+        return pageViewController.advertiseModel.featuresImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -72,8 +72,8 @@ extension AdvertisePage3: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let featureCell = cell as! AdvertiseFeaturesCollectionViewCell
-        featureCell.featureIconImageView.image = featuresImages[indexPath.row]
-        featureCell.featureLabel.text = featuresLabels[indexPath.row]
+        featureCell.featureIconImageView.image = pageViewController.advertiseModel.featuresImages[indexPath.row]
+        featureCell.featureLabel.text = pageViewController.advertiseModel.featuresLabels[indexPath.row]
         featureCell.awakeFromNib()
     }
     

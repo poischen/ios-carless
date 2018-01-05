@@ -1,29 +1,22 @@
 import UIKit
 
 class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-
-    //cache input for storing into db
-    var offeringDict: [String : AnyObject] = [
-            Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
-            Offering.OFFERING_CONSUMPTION_KEY: 0 as AnyObject,
-            Offering.OFFERING_DESCRIPTION_KEY: "empty" as AnyObject,
-            Offering.OFFERING_FUEL_ID_KEY: 0 as AnyObject,
-            Offering.OFFERING_GEAR_ID_KEY: 0 as AnyObject,
-            Offering.OFFERING_HP_KEY: 0 as AnyObject,
-            Offering.OFFERING_LATITUDE_KEY: 0.0 as AnyObject,
-            Offering.OFFERING_LOCATION_KEY: "empty" as AnyObject,
-            Offering.OFFERING_LONGITUDE_KEY: 0.0 as AnyObject,
-            Offering.OFFERING_PICTURE_URL_KEY: "empty" as AnyObject,
-            Offering.OFFERING_PRICE_KEY: 0 as AnyObject,
-            Offering.OFFERING_SEATS_KEY: 0 as AnyObject,
-            Offering.OFFERING_TYPE_KEY: 0 as AnyObject,
-            Offering.OFFERING_USER_UID_KEY: 0 as AnyObject,
-            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: 0 as AnyObject,
-            Offering.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
-            Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
-        ]
     
     var carImage: UIImage!
+    let storageAPI = StorageAPI.shared
+    let advertiseModel = Advertise()
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        //load necessary information into model
+        storageAPI.getBrands(completion: advertiseModel.receiveBrands)
+        storageAPI.getFuels(completion: advertiseModel.receiveFuels)
+        storageAPI.getGears(completion: advertiseModel.receiveGears)
+        storageAPI.getVehicleTypes(completion: advertiseModel.receiveVehicleTypes)
+        storageAPI.getFeatures(completion: advertiseModel.receiveFeatures)
+    }
+    
     
     //Manage pageview for advertising a car --------------------------------------------------------------------
     lazy var AdvertisementViewControllersArray: [UIViewController] = {
@@ -35,22 +28,6 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                 self.ViewControllerInstance(name: "advertisePage6"),
                 self.ViewControllerInstance(name: "advertisePage7")]
     }()
-    
-    /*
-     override func viewDidLoad() {
-     super.viewDidLoad()
-     self.delegate=self
-     self.dataSource=self
-     let childViewController=storyboard?.instantiateViewController(withIdentifier: "some identifier of view") as! ChildViewController
-     if let cid = challengeId{
-     print("Page Challenge id \(cid)")
-     childViewController.challengeId=cid
-     }
- */
-   /*
-    func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        
-    }*/
     
     private func ViewControllerInstance(name: String) -> UIViewController {
         return UIStoryboard(name: "Advertise", bundle: nil).instantiateViewController(withIdentifier: name)
