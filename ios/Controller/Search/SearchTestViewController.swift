@@ -169,7 +169,6 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        //handleCellBackground(view: cell, cellState: cellState)
         handleSelection(cell: cell, cellState: cellState)
     }
     
@@ -178,30 +177,6 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        /*if firstDate == nil {
-            // first date not yet selected -> select it
-            firstDate = date
-            return true
-        } else {
-            // first date already selected
-            if lastDate == nil {
-                // last date not selected yet -> select it -> date range complete
-                lastDate = date
-                // also select all dates in between if the range consists of more than two days
-                let dateAfterFirstDate = currentCalendar.date(byAdding: .day, value: 1, to: firstDate!)
-                if (dateAfterFirstDate != lastDate){
-                    let dateBeforeLastDate = currentCalendar.date(byAdding: .day, value: -1, to: lastDate!)
-                    calendarView.selectDates(from: dateAfterFirstDate!, to: dateBeforeLastDate!, triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
-                }
-                return true
-            } else {
-                // first date and last date are already selected -> reset selection and select new first date
-                calendarView.deselectAllDates()
-                lastDate = nil
-                firstDate = date
-                return true
-            }
-        }*/
         if cellState.dateBelongsTo == .thisMonth {
             return true
         } else {
