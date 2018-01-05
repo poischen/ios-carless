@@ -95,12 +95,19 @@ class SearchTestViewController: UIViewController {
         self.formatter.dateFormat = "MMMM"
         self.month.text = self.formatter.string(from: date)
     }
+    
+    func updateCellVisuals(for cell: JTAppleCell, withState cellState: CellState){
+        handleSelection(cell: cell, cellState: cellState)
+        handleCellTextColor(view: cell, cellState: cellState)
+    }
 
 }
 
 extension SearchTestViewController: JTAppleCalendarViewDataSource{
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-
+        // TODO: error handling
+        //handleCellBackground(view: cell, cellState: cellState)
+        updateCellVisuals(for: cell, withState: cellState)
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
@@ -124,9 +131,7 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
         // TODO: error handling
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
         cell.dateLabel.text = cellState.text
-        //handleCellBackground(view: cell, cellState: cellState)
-        handleSelection(cell: cell, cellState: cellState)
-        handleCellTextColor(view: cell, cellState: cellState)
+        updateCellVisuals(for: cell, withState: cellState)
         return cell
     }
     
