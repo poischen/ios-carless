@@ -17,7 +17,9 @@ class SearchTestViewController: UIViewController {
     
     var firstDate:Date?
     var lastDate:Date?
-    var recursiveCall = false
+    var recursiveSelectionCall = false
+    var recursiveDeselectionCall = false
+    var datesToDeselect:[Date] = [Date]()
     
     let formatter = DateFormatter()
     let currentCalendar = Calendar.current
@@ -129,30 +131,33 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        handleSelection(cell: cell, cellState: cellState)
-        if recursiveCall == false {
-            if firstDate != nil {
+        handleSelection(cell: cell, cellState: cellState) // always recolor cell ...
+        if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
+            if let currentFirstDate = firstDate {
                 // first date set
                 if lastDate != nil {
                     // date range already set -> remove and set new first date
-                    calendarView.deselectDates(from: firstDate!, to: lastDate!, triggerSelectionDelegate: true)
+                    // deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also
+                    calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
                     firstDate = date
                     lastDate = nil
                 } else {
                     // first date set, last date not set
-                    if (date < firstDate!){
-                        // new date is before first date -> remove first date and set current date as new first date
-                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
-                        firstDate = date
+                    if (date < currentFirstDate){
+                        /* new date is before first date -> remove first date and set current date as new first date
+                        first deselect current date interval
+                        deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
+                        calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
+                        firstDate = date // deselection resets first date -> set after deselection
                         lastDate = nil // for safety :)
                     } else {
                         // new date is on or after first date -> set last date
                         lastDate = date
                         if (firstDate != lastDate) {
                             // first date and last date are not on the same day -> select cells in between
-                            recursiveCall = true
-                            calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
-                            recursiveCall = false
+                            recursiveSelectionCall = true // prevent endless recursion
+                            calendarView.selectDates(from: currentFirstDate, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                            recursiveSelectionCall = false
                         }
                     }
                 }
@@ -204,20 +209,25 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
         }
     }
     
-    /* func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        if let currentFirstDate = firstDate as? Date, let currentLastDate = lastDate as? Date {
-            // prevent user from de-selecting dates in the middle of a date interval
-            let dateRange = calendarView.generateDateRange(from: currentFirstDate, to: currentLastDate)
-            if dateRange.contains(date){
-                return false
-            } else {
-                return true
-            }
-        } else {
+    func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        // this function ensures that when one date from the current date interval is deselected all others are also
+        // -> deselecting one date from the current date interval is sufficient
+        if recursiveDeselectionCall == true {
+            // this is a reursive call -> only deselect cell and don't start a new recursive call
             return true
+        } else {
+            if let currentFistDate = firstDate, let currentLastDate = lastDate {
+                // deselect current date interval
+                recursiveDeselectionCall = true // prevent endless recursion
+                calendarView.deselectDates(from: currentFistDate, to: currentLastDate, triggerSelectionDelegate: true)
+                recursiveDeselectionCall = false
+                // unset first date and last date
+                firstDate = nil
+                lastDate = nil
+            }
+            return false
         }
-    } */
-
+    }
 }
 
 
