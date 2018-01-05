@@ -9,6 +9,8 @@
 import Foundation
 
 class SearchModel {
+    // TODO: make singleton or make mathods static?
+    
     private let storageAPI: StorageAPI
     
     init() {
