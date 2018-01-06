@@ -35,7 +35,6 @@ class AdvertisePage6: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView){
-        //descriptionText = textView.text
         pageViewController.advertiseModel.updateDict(input: textView.text as AnyObject, key: Offering.OFFERING_DESCRIPTION_KEY, needsConvertion: false, conversionType: "none")
     }
     

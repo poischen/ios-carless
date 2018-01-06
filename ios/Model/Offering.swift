@@ -48,6 +48,8 @@ class Offering {
             else {
                 return nil
         }
+        
+        //PROBLEM: Versuch "Time" in Firebase DB zu schreiben
         if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
             self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTime, returnTime: offeringReturnTime)
         } else {
@@ -72,7 +74,9 @@ class Offering {
             Offering.OFFERING_SEATS_KEY: self.seats as AnyObject,
             Offering.OFFERING_TYPE_KEY: self.type as AnyObject,
             Offering.OFFERING_USER_UID_KEY: self.userUID as AnyObject,
-            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: self.vehicleTypeID as AnyObject
+            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: self.vehicleTypeID as AnyObject,
+            Offering.OFFERING_PICKUP_TIME_KEY: self.pickupTime as AnyObject,
+            Offering.OFFERING_RETURN_TIME_KEY: self.returnTime as AnyObject
         ]
     }
     

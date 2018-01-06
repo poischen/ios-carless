@@ -103,7 +103,8 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: child.key, dict: dict)! // TODO: catch nil here
+                print(child.key)
+                let offering = Offering.init(id: String(child.key)!, dict: dict)! // TODO: catch nil here
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)

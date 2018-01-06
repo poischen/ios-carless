@@ -214,14 +214,14 @@ extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
 
 //TODO: Use value from picker instead
 extension AdvertisePage5: UITextFieldDelegate {
-    
+    //todo: convert format in extra methode
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.pickUpTextView){
             //let pickUpTime: AnyObject = (pickUpTextView.text as AnyObject)
             pageViewController.advertiseModel.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
         } else if (textField == self.returnTextView){
             //let returnTime: AnyObject = (returnTextView.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
         }
     }
     
