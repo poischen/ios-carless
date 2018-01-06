@@ -225,10 +225,21 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.consumptionInput){
             //let consumption: AnyObject = (consumptionInput.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: consumptionInput.text as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+            var consumptionInt: Int
+            consumptionInt = Int(consumptionInput.text!)!
+            
+            if consumptionInt != nil {
+                pageViewController.advertiseModel.updateDict(input: consumptionInt as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+            }
+            
         } else if (textField == self.speedInput){
             //let speed: AnyObject = (speedInput.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: speedInput.text as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+            let speedInt = Int(speedInput.text!)!
+            
+            if speedInt != nil {
+            pageViewController.advertiseModel.updateDict(input: speedInt as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+            }
+            
         } else if (textField == self.modelInput){
             //let model: AnyObject = (modelInput.text as AnyObject)
             pageViewController.advertiseModel.updateDict(input: modelInput.text as AnyObject, key: Offering.OFFERING_TYPE_KEY, needsConvertion: false, conversionType: "none")

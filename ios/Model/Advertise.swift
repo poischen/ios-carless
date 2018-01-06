@@ -45,15 +45,21 @@ class Advertise {
         Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
     ]
     
+    //TODO: evtl ummmodeln wegen ursprungstypen des AnyObjects
     func updateDict(input: AnyObject, key: String, needsConvertion: Bool, conversionType: String) -> Void {
         var input2Write: AnyObject = input
         if needsConvertion {
             if (conversionType == Advertise.ADVERTISE_CONVERSION_SEATS){
-                var seats = input
+                
+                var seats: String  = input as! String
+                
                 if (input as! String == "more"){
-                    seats = "9" as AnyObject
+                    seats = "9"
                 }
-                input2Write = seats
+                
+                let seatsInt: Int = Int(seats)!
+                input2Write = seatsInt as AnyObject
+                
             } else {
                 
                 let inputString = input as! String

@@ -81,10 +81,15 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         
         //Store data
         selectedLattitude =  String (place.coordinate.latitude)
-        pageViewController.advertiseModel.updateDict(input: selectedLattitude as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+        let selectedLattitudeFloat = Float(selectedLattitude)
+        if (selectedLattitudeFloat != nil) {
+        pageViewController.advertiseModel.updateDict(input: selectedLattitudeFloat as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+        }
         
         selectedLongitude =  String (place.coordinate.longitude)
-        pageViewController.advertiseModel.updateDict(input: selectedLongitude as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
+        let selectedLongitudeFloat = Float(selectedLongitude)
+        if (selectedLongitudeFloat != nil) {pageViewController.advertiseModel.updateDict(input: selectedLongitudeFloat as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
+        }
         
         for component in place.addressComponents! {
             if component.type == "locality" {

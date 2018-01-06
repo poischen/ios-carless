@@ -19,7 +19,9 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     
     func writeOfferToDB(){
         //TODO: fehlende Inputs abfangen
-        let offer: Offering = Offering(id: 0, dict: advertiseModel.brandsDict as [String : AnyObject])!
+        print("DICT IN WRITEOFFERTODB")
+        print(advertiseModel.offeringDict)
+        let offer = Offering(id: 0, dict: advertiseModel.offeringDict)!
         print(offer.dict)
         storageAPI.save(offer: offer)
     }

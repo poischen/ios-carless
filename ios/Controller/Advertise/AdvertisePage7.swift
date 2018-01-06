@@ -34,7 +34,8 @@ class AdvertisePage7: UIViewController {
                     //store image-url & user-id to offering
                     //init offer object
                     //write offer to db
-                    strongSelf.pageViewController.advertiseModel.updateDict(input: fileURL as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
+                    let imageUrl = fileURL?.absoluteString
+                    strongSelf.pageViewController.advertiseModel.updateDict(input: imageUrl as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
                     strongSelf.pageViewController.advertiseModel.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
                     print("OFFER DICT BEFORE PUBLISHING:")
                     print(strongSelf.pageViewController.advertiseModel.offeringDict)

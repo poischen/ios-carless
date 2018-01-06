@@ -157,6 +157,7 @@ extension AdvertisePage4: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-            pageViewController.advertiseModel.updateDict(input: textField.text as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
+        let priceInt = Int(textField.text!)!
+            pageViewController.advertiseModel.updateDict(input: priceInt as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
     }
 }
