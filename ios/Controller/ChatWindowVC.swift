@@ -15,13 +15,6 @@ import Firebase
 
 class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    var user: User? {
-        didSet {
-            observeMessages()
-        }
-    }
-
-    
     var receiverId: String = ""
     
     private var users = [User]();
@@ -151,8 +144,11 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
     }
     
     func messageReceived(senderID: String, receiverID: String, text: String) {
-        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text));
-        collectionView.reloadData();
+       if receiverId != senderId {
+        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text))
+            collectionView.reloadData()
+        }
+            
     }
     
     func mediaReceived(senderID: String, senderName: String, url: String) {
@@ -201,16 +197,51 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         dismiss(animated: true, completion: nil);
     }
     
-    func observeMessages() {
+    /*func observeMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
         
         let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
         userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
-            print(snapshot)
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: {snapshot in
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String{
+                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                            if let text = data[DBConstants.TEXT] as? String {
+                                MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                            }
+                        }
+                    }
+                }
+                
+            })
         }
-    }
+    }*/
+    
+    /*func observeMessages() {
+     StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+     
+     /* if let dictionary = snapshot.value as? [String: AnyObject]{
+     let message = Message()
+     message.setValuesForKeys(dictionary)
+     self.messages.append(message)
+     }*/
+     
+     if let data = snapshot.value as? NSDictionary {
+     if let senderID = data[DBConstants.SENDER_ID] as? String{
+     if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+     if let text = data[DBConstants.TEXT] as? String {
+     self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+     }
+     }
+     }
+     }
+     }
+     }*/
+    
     
 
 }

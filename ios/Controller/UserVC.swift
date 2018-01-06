@@ -19,6 +19,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //Array of Users to store all of the users
     private var users = [User]();
+    private var messages = [Message]();
     
     var selctedUser: String = ""
     static let sharedChat = ChatViewController()
@@ -59,20 +60,19 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath);
         
-        
         cell.textLabel?.text = users[indexPath.row].name
 
-        
         return cell;
     }
     
     //open chat window
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUserObject = self.users[indexPath.row]
+
         self.selctedUser = selectedUserObject.id
             let ref = Database.database().reference().child(DBConstants.USERS).child(self.selctedUser)
             ref.observeSingleEvent(of: .value, with: {(snapshot) in
-                
+               
                 self.performSegue(withIdentifier: self.CHAT_SEGUE, sender: nil)
                 })
         
@@ -89,10 +89,46 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let targetController = destinationNavigationController.topViewController
             if let chatVC = targetController as? ChatWindowVC {
                 chatVC.receiverId = self.selctedUser
+                observeMessages()
             }
         
     }
     
+    func observeMessages() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: {snapshot in
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String{
+                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                            if let text = data[DBConstants.TEXT] as? String {
+                                if receiverID == self.selctedUser {
+                                    MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            })
+        }
+    }
+    /*StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+    
+    if let data = snapshot.value as? NSDictionary {
+    if let id = data[DBConstants.SENDER_ID] as? String {
+    if let name = data[DBConstants.SENDER_NAME] as?
+    String {
+    if let fileURL = data[DBConstants.URL] as?
+    String {
+    self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL);
+    }*/
     
  
     

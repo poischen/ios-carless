@@ -32,7 +32,7 @@ class MessageHandler {
         
         ref.childByAutoId().updateChildValues(data) { (error, ref) in
             if error != nil {
-                print(error)
+               // print(error)
                 return
             }
             let userMessagesRef = Database.database().reference().child("user-messages").child(StorageAPI.shared.userID())
@@ -104,7 +104,7 @@ class MessageHandler {
                     if let senderID = data[DBConstants.SENDER_ID] as? String{
                         if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
                             if let text = data[DBConstants.TEXT] as? String {
-                                self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                                //self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
                             }
                         }
                     }
