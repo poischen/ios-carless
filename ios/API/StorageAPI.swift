@@ -103,7 +103,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: Int(child.key)!, dict: dict)! // TODO: catch nil here
+                let offering = Offering.init(id: child.key, dict: dict)! // TODO: catch nil here
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)
@@ -113,12 +113,12 @@ final class StorageAPI {
         }
     }
     
-    func getOfferingByID(id: Int, completion: @escaping (_ offering: Offering) -> Void){
-        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+    func getOfferingByID(id: String, completion: @escaping (_ offering: Offering) -> Void){
+        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
                 if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let offeringID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    let offeringID = child.key
                     if let offering = Offering.init(id: offeringID, dict: dict) {
                         completion(offering)
                     } else {
@@ -152,16 +152,16 @@ final class StorageAPI {
     }
     
     // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
-    func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [Int: [Int]]) -> Void){
+    func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [String: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultOfferingsFeatures:[Int: [Int]] = [Int: [Int]]() // Map with offering ID as key and array of feature IDs a value
+            var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
             for (_, associationRaw) in receivedData {
                 let association:NSDictionary = associationRaw as! NSDictionary
                 // TODO: Shorthand for this?
                 guard
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
-                    let offeringID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? Int else {
+                    let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
                         print("error in getOfferingsFeatures")
                         return
                 }
@@ -187,7 +187,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                let renting = Renting.init(id: child.key, dict: dict)!
                 resultRentings.append(renting)
             }
             completion(resultRentings)
@@ -391,13 +391,19 @@ final class StorageAPI {
     }
     
     //store offer in db
-    func save(offer: Offering){
+    func saveOffering(offer: Offering, completion: @escaping (_ offering: Offering) -> Void){
         let offerAsDict = offer.dict
-        
         let key = offeringsDBReference.childByAutoId().key
-        //TODO offer.id = key
         
-        self.offeringsDBReference.child(key).setValue(offerAsDict)
+        offer.id = key
+        
+        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) -> Void in
+            if ((error) != nil) {
+                //TODO: give feedback, dass alles im arsch is
+            } else {
+                completion(offer)
+            }
+        }
     }
     
     //stores User in Database
@@ -451,7 +457,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                let renting = Renting.init(id: child.key, dict: dict)!
                 resultRentings.append(renting)
             }
             completion(resultRentings)
@@ -467,7 +473,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: Int(child.key)!, dict: dict)!
+                let offering = Offering.init(id: child.key, dict: dict)!
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)

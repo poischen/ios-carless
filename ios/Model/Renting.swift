@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Renting: DictionaryConvertible {
+class Renting {
     
     // constants for the dictionary keys
     static let RENTING_END_TIMESTAMP_KEY = "endDate"
@@ -16,9 +16,9 @@ class Renting: DictionaryConvertible {
     static let RENTING_START_TIMESTAMP_KEY = "startDate"
     static let RENTING_USER_ID_KEY = "userId"
     
-    convenience required init?(id: Int, dict: [String : AnyObject]) {
+    convenience required init?(id: String?, dict: [String : AnyObject]) {
         guard let rentingEndDateTimestamp = dict[Renting.RENTING_END_TIMESTAMP_KEY] as? Int,
-              let rentingInseratID = dict[Renting.RENTING_OFFERING_ID_KEY] as? Int,
+              let rentingInseratID = dict[Renting.RENTING_OFFERING_ID_KEY] as? String,
               let rentingStartDateTimestamp = dict[Renting.RENTING_START_TIMESTAMP_KEY] as? Int,
               let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String else {
             return nil
@@ -37,13 +37,13 @@ class Renting: DictionaryConvertible {
         ]
     }
     
-    let id: Int
+    let id: String?
     let endDate: Date
     let startDate: Date
     let userID: String
-    let inseratID: Int
+    let inseratID: String
     
-    init(id: Int, inseratID: Int, userID: String, startDate: Date, endDate: Date) {
+    init(id: String?, inseratID: String, userID: String, startDate: Date, endDate: Date) {
         self.id = id
         self.inseratID = inseratID
         self.userID = userID

@@ -19,11 +19,14 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     
     func writeOfferToDB(){
         //TODO: fehlende Inputs abfangen
-        print("DICT IN WRITEOFFERTODB")
-        print(advertiseModel.offeringDict)
-        let offer = Offering(id: 0, dict: advertiseModel.offeringDict)!
-        print(offer.dict)
-        storageAPI.save(offer: offer)
+        let offer = Offering(id: "empty", dict: advertiseModel.offeringDict)!
+        storageAPI.saveOffering(offer: offer, completion: {offerWithID in
+            let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+            if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+                viewController.displayingOffering = offerWithID
+                self.present(viewController, animated: true, completion: nil)
+            }
+        })
     }
     
     //Manage pageview for advertising a car --------------------------------------------------------------------

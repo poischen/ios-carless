@@ -6,7 +6,7 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
-class Offering: DictionaryConvertible {
+class Offering {
     
     // constants for the dictionary keys
     static let OFFERING_BRAND_ID_KEY = "brandID"
@@ -27,7 +27,7 @@ class Offering: DictionaryConvertible {
     static let OFFERING_PICKUP_TIME_KEY = "pickuptime"
     static let OFFERING_RETURN_TIME_KEY = "returntime"
     
-    convenience required init?(id: Int, dict: [String : AnyObject]) {
+    convenience required init?(id: String?, dict: [String : AnyObject]) {
         guard let offeringBrandID = dict[Offering.OFFERING_BRAND_ID_KEY] as? Int,
             let offeringConsumption = dict[Offering.OFFERING_CONSUMPTION_KEY] as? Int,
             let offeringDescription = dict[Offering.OFFERING_DESCRIPTION_KEY] as? String,
@@ -76,26 +76,26 @@ class Offering: DictionaryConvertible {
         ]
     }
     
-    var id: Int
-    let basePrice: Int
-    let brandID: Int
-    let consumption: Int
-    let description: String
-    let fuelID: Int
-    let gearID: Int
-    let hp: Int
-    let latitude: Float
-    let location: String
-    let longitude: Float
-    let pictureURL: String
-    let seats: Int
-    let type: String
-    let vehicleTypeID: Int
-    let userUID: String
-    let pickupTime: Time
-    let returnTime: Time
+    var id: String?
+    var basePrice: Int
+    var brandID: Int
+    var consumption: Int
+    var description: String
+    var fuelID: Int
+    var gearID: Int
+    var hp: Int
+    var latitude: Float
+    var location: String
+    var longitude: Float
+    var pictureURL: String
+    var seats: Int
+    var type: String
+    var vehicleTypeID: Int
+    var userUID: String
+    var pickupTime: Time
+    var returnTime: Time
     
-    init(id: Int, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: Time, returnTime: Time) {
+    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: Time, returnTime: Time) {
         self.basePrice = basePrice
         self.id = id
         self.brandID = brandID
