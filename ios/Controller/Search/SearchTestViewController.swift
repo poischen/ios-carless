@@ -75,7 +75,7 @@ class SearchTestViewController: UIViewController {
         guard let myCustomCell = cell as? CustomCell else {
             return
         }
-        if cellState.dateBelongsTo == .thisMonth {
+        /* if cellState.dateBelongsTo == .thisMonth {
             // only mark month dates as selected to avoid cross month selection problems
             switch cellState.selectedPosition() {
             case .full, .left, .right, .middle:
@@ -85,7 +85,14 @@ class SearchTestViewController: UIViewController {
             }
         } else {
             myCustomCell.selectedView.isHidden = true
+        } */
+        switch cellState.selectedPosition() {
+        case .full, .left, .right, .middle:
+            myCustomCell.selectedView.isHidden = false
+        default:
+            myCustomCell.selectedView.isHidden = true
         }
+        
     }
     
     func setupCalendarLabels(from visibleDates: DateSegmentInfo){
@@ -182,11 +189,12 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        if cellState.dateBelongsTo == .thisMonth {
+        /* if cellState.dateBelongsTo == .thisMonth {
             return true
         } else {
             return false
-        }
+        } */
+        return true
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
