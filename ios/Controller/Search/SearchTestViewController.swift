@@ -159,7 +159,9 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
                         /* new date is before first date -> remove first date and set current date as new first date
                         first deselect current date interval
                         deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
-                        calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
+                        recursiveDeselectionCall = true
+                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
+                        recursiveDeselectionCall = false
                         firstDate = date // deselection resets first date -> set after deselection
                         lastDate = nil // for safety :)
                     } else {
