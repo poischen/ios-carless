@@ -76,7 +76,7 @@ class Offering: DictionaryConvertible {
         ]
     }
     
-    let id: Int
+    var id: Int
     let basePrice: Int
     let brandID: Int
     let consumption: Int

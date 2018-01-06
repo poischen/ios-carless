@@ -18,7 +18,10 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     }
     
     func writeOfferToDB(){
-        //TODO
+        //TODO: fehlende Inputs abfangen
+        let offer: Offering = Offering(id: 0, dict: advertiseModel.brandsDict as [String : AnyObject])!
+        print(offer.dict)
+        storageAPI.save(offer: offer)
     }
     
     //Manage pageview for advertising a car --------------------------------------------------------------------

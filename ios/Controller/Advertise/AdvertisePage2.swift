@@ -65,6 +65,9 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
         pageViewController = self.parent as! AdvertisePagesVC
+        modelInput.delegate = self
+        consumptionInput.delegate = self
+        speedInput.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -223,7 +226,6 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         if (textField == self.consumptionInput){
             //let consumption: AnyObject = (consumptionInput.text as AnyObject)
             pageViewController.advertiseModel.updateDict(input: consumptionInput.text as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
-            
         } else if (textField == self.speedInput){
             //let speed: AnyObject = (speedInput.text as AnyObject)
             pageViewController.advertiseModel.updateDict(input: speedInput.text as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
@@ -233,11 +235,20 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
-    { if (textField == self.consumptionInput || textField == self.speedInput){
+ /*   func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+       textField.resignFirstResponder()
+        return true
+    }
+*/
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (textField == self.speedInput){
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
-    } else {return true}
-}
+    } else {
+        return true
+    }
+        
+    }
 }

@@ -390,6 +390,16 @@ final class StorageAPI {
         self.usersRef.child(user.id).setValue(userAsDict)
     }
     
+    //store offer in db
+    func save(offer: Offering){
+        let offerAsDict = offer.dict
+        
+        let key = offeringsDBReference.childByAutoId().key
+        //TODO offer.id = key
+        
+        self.offeringsDBReference.child(key).setValue(offerAsDict)
+    }
+    
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
         let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg];

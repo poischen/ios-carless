@@ -38,6 +38,7 @@ class AdvertisePage7: UIViewController {
                     strongSelf.pageViewController.advertiseModel.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
                     print("OFFER DICT BEFORE PUBLISHING:")
                     print(strongSelf.pageViewController.advertiseModel.offeringDict)
+                    strongSelf.pageViewController.writeOfferToDB()
                     
                 } else {
                     let message: String = "\(errorMassage) Please try again later."

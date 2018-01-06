@@ -20,11 +20,18 @@ class AdvertisePage6: UIViewController, UITextViewDelegate {
         super.viewDidLoad()
         
         pageViewController = self.parent as! AdvertisePagesVC
+        rentalDescriptionTextView.delegate = self
+
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        return true
     }
     
     func textViewDidEndEditing(_ textView: UITextView){

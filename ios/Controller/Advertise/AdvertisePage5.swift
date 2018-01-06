@@ -58,8 +58,11 @@ class AdvertisePage5: UIViewController {
         locationManager.requestLocation()
         
         searchBar.delegate = self
-        //pickUpPicker.delegate = self
-        //returnPicker.delegate = self
+        pickUpPicker.delegate = self
+        returnPicker.delegate = self
+        
+        pickUpTextView.delegate = self
+        returnTextView.delegate = self
         
     }
 
@@ -84,7 +87,7 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         pageViewController.advertiseModel.updateDict(input: selectedLongitude as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
         
         for component in place.addressComponents! {
-            if component.type == "city" {
+            if component.type == "locality" {
                 selectedCity = component.name
                 pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
             }
@@ -173,7 +176,7 @@ extension AdvertisePage5 : CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error:: (error)")
+        print("error: (error)")
     }
 }
 
@@ -202,17 +205,6 @@ extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
             self.returnPicker.isHidden = true
         }
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if (textField == self.pickUpTextView){
-            self.pickUpPicker.isHidden = false
-            print("began editing")
-        } else if (textField == self.returnTextView){
-            self.returnPicker.isHidden = false
-            print("began editing")
-        }
-    }
-    
 }
 
 //TODO: Use value from picker instead
@@ -225,6 +217,14 @@ extension AdvertisePage5: UITextFieldDelegate {
         } else if (textField == self.returnTextView){
             //let returnTime: AnyObject = (returnTextView.text as AnyObject)
             pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if (textField == self.pickUpTextView){
+            self.pickUpPicker.isHidden = false
+        } else if (textField == self.returnTextView){
+            self.returnPicker.isHidden = false
         }
     }
     
