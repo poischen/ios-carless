@@ -16,6 +16,14 @@ import Kingfisher
  */
 
 class Advertise {
+    //constants for conversion input to id
+    static let ADVERTISE_CONVERSION_BRANDS = "brands"
+    static let ADVERTISE_CONVERSION_FUELS = "fuels"
+    static let ADVERTISE_CONVERSION_GEARS = "gears"
+    static let ADVERTISE_CONVERSION_VEHICLETYPES = "vehicleTypes"
+    static let ADVERTISE_CONVERSION_FEATURES = "features"
+    static let ADVERTISE_CONVERSION_SEATS = "seats"
+    
     //cache input for storing advertise data into db
     var offeringDict: [String : AnyObject] = [
         Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
@@ -36,6 +44,44 @@ class Advertise {
         Offering.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
         Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
     ]
+    
+    func updateDict(input: AnyObject, key: String, needsConvertion: Bool, conversionType: String) -> Void {
+        var input2Write: AnyObject = input
+        if needsConvertion {
+            if (conversionType == Advertise.ADVERTISE_CONVERSION_SEATS){
+                var seats = input
+                if (input as! String == "more"){
+                    seats = "9" as AnyObject
+                }
+                input2Write = seats
+            } else {
+                
+                let inputString = input as! String
+                
+                switch (conversionType) {
+                case Advertise.ADVERTISE_CONVERSION_BRANDS:
+                    input2Write = brandsDict[inputString] as AnyObject
+
+                case Advertise.ADVERTISE_CONVERSION_FUELS:
+                    input2Write = fuelsDict[inputString] as AnyObject
+
+                case Advertise.ADVERTISE_CONVERSION_GEARS:
+                    input2Write = gearsDict[inputString] as AnyObject
+                
+                case Advertise.ADVERTISE_CONVERSION_VEHICLETYPES:
+                    input2Write = vehicleTypesDict[inputString] as AnyObject
+                    
+                case Advertise.ADVERTISE_CONVERSION_FEATURES:
+                    input2Write = featuresDict[inputString] as AnyObject
+                //TODO! Liste, seperate DB Tabelle
+                    
+                default:
+                break
+                }
+            }
+        }
+        offeringDict.updateValue(input2Write, forKey: key)
+    }
     
     //values from DB
     var brands: [Brand]?
@@ -170,6 +216,6 @@ class Advertise {
             }
         }
     }
-
+    
 
 }

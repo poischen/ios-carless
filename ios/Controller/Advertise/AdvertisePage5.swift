@@ -78,13 +78,15 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         
         //Store data
         selectedLattitude =  String (place.coordinate.latitude)
-        print("Laltitude: " + selectedLattitude)
+        pageViewController.advertiseModel.updateDict(input: selectedLattitude as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+        
         selectedLongitude =  String (place.coordinate.longitude)
-        print("Longitude: " + selectedLongitude)
+        pageViewController.advertiseModel.updateDict(input: selectedLongitude as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
         
         for component in place.addressComponents! {
             if component.type == "city" {
                 selectedCity = component.name
+                pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
             }
         }
 
@@ -218,11 +220,11 @@ extension AdvertisePage5: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.pickUpTextView){
-            let pickUpTime: AnyObject = (pickUpTextView.text as? AnyObject)!
-            pageViewController.advertiseModel.offeringDict.updateValue(pickUpTime, forKey: Offering.OFFERING_PICKUP_TIME_KEY)
+            //let pickUpTime: AnyObject = (pickUpTextView.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
         } else if (textField == self.returnTextView){
-            let returnTime: AnyObject = (returnTextView.text as? AnyObject)!
-            pageViewController.advertiseModel.offeringDict.updateValue(returnTime, forKey: Offering.OFFERING_RETURN_TIME_KEY)
+            //let returnTime: AnyObject = (returnTextView.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
         }
     }
     

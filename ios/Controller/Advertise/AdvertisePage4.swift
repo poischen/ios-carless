@@ -155,4 +155,8 @@ extension AdvertisePage4: UITextFieldDelegate {
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+            pageViewController.advertiseModel.updateDict(input: textField.text as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
+    }
 }

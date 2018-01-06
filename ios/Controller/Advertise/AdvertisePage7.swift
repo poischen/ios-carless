@@ -18,11 +18,6 @@ class AdvertisePage7: UIViewController {
     @IBOutlet weak var progressLabel: UILabel!
     
     @IBAction func publishNow(_ sender: Any) {
-        let alertTest = UIAlertController(title: "Test", message: "This is a test", preferredStyle: .alert)
-        let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
-        alertTest.addAction(ok)
-        present(alertTest, animated: true, completion: nil)
-        
         //upload car image
         progressBar.isHidden = false
         progressLabel.isHidden = false
@@ -36,25 +31,28 @@ class AdvertisePage7: UIViewController {
                 
             //store image url
                 if let imgURL: AnyObject = fileURL as? AnyObject {
-                    strongSelf.pageViewController.advertiseModel.offeringDict.updateValue(imgURL, forKey: Offering.OFFERING_PICTURE_URL_KEY)
+                    //store image-url & user-id to offering
+                    //init offer object
+                    //write offer to db
+                    strongSelf.pageViewController.advertiseModel.updateDict(input: fileURL as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
+                    strongSelf.pageViewController.advertiseModel.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
+                    print("OFFER DICT BEFORE PUBLISHING:")
+                    print(strongSelf.pageViewController.advertiseModel.offeringDict)
+                    
                 } else {
                     let message: String = "\(errorMassage) Please try again later."
                     let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     strongSelf.present(alert, animated: true, completion: nil)
                 }
-            //convert input values to DB-IDs
-            //init offer dictionary
-            //write offer to db
+
         })
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         pageViewController = self.parent as! AdvertisePagesVC
-        
-        // Do any additional setup after loading the view.
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,11 +60,3 @@ class AdvertisePage7: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 }
-
-/* upload image
- 
- let imageName = "\(Date().timeIntervalSince1970).jpg"
- storageAPI.uploadImage(image, imageName: imageName, ref: storageAPI.offerImageStorageRef)
- //, progressBlock: <#T##(Double) -> Void#>, completionBlock: <#T##(URL?, String?) -> Void#>)
- 
- */

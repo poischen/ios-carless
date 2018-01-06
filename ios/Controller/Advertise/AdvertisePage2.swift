@@ -169,29 +169,37 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             selectedBrand = self.pageViewController.advertiseModel.brandsPickerContent[row]
             self.brandInput.text = selectedBrand
             self.brandPicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedBrand as AnyObject, key: Offering.OFFERING_BRAND_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_BRANDS)
+            
         } else if (pickerView == seatsPicker){
             selectedSeats = self.pageViewController.advertiseModel.seatsPickerContent[row]
             self.seatsInput.text = selectedSeats
             self.seatsPicker.isHidden = true
             
-            var seats: AnyObject = (seatsInput.text as? AnyObject)!
+            /*var seats: AnyObject = (seatsInput.text as AnyObject)
             if (seats as! String == "more"){
                 seats = 9 as AnyObject
-            }
-            pageViewController.advertiseModel.offeringDict.updateValue(seats, forKey: Offering.OFFERING_SEATS_KEY)
+            }*/
+            pageViewController.advertiseModel.updateDict(input: selectedSeats as AnyObject, key: Offering.OFFERING_SEATS_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_SEATS)
             
         } else if (pickerView == fuelPicker){
             selectedFuel = self.pageViewController.advertiseModel.fuelPickerContent[row]
             self.fuelInput.text = selectedFuel
             self.fuelPicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedFuel as AnyObject, key: Offering.OFFERING_FUEL_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_FUELS)
+            
         } else if (pickerView == gearPicker){
             selectedGear = self.pageViewController.advertiseModel.gearPickerContent[row]
             self.gearInput.text = selectedGear
             self.gearPicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedGear as AnyObject, key: Offering.OFFERING_GEAR_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_GEARS)
+            
         } else if (pickerView == vehicleTypePicker){
             selectedVehicleType = self.pageViewController.advertiseModel.vehicleTypeContent[row]
             self.vehicleTypeInput.text = selectedVehicleType
             self.vehicleTypePicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedVehicleType as AnyObject, key: Offering.OFFERING_VEHICLE_TYPE_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_VEHICLETYPES)
+            
         }
         
     }
@@ -213,11 +221,15 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.consumptionInput){
-            let consumption: AnyObject = (consumptionInput.text as? AnyObject)!
-            pageViewController.advertiseModel.offeringDict.updateValue(consumption, forKey: Offering.OFFERING_CONSUMPTION_KEY)
+            //let consumption: AnyObject = (consumptionInput.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: consumptionInput.text as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+            
         } else if (textField == self.speedInput){
-            let speed: AnyObject = (speedInput.text as? AnyObject)!
-            pageViewController.advertiseModel.offeringDict.updateValue(speed, forKey: Offering.OFFERING_HP_KEY)
+            //let speed: AnyObject = (speedInput.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: speedInput.text as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+        } else if (textField == self.modelInput){
+            //let model: AnyObject = (modelInput.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: modelInput.text as AnyObject, key: Offering.OFFERING_TYPE_KEY, needsConvertion: false, conversionType: "none")
         }
     }
     

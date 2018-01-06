@@ -17,6 +17,9 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         storageAPI.getFeatures(completion: advertiseModel.receiveFeatures)
     }
     
+    func writeOfferToDB(){
+        //TODO
+    }
     
     //Manage pageview for advertising a car --------------------------------------------------------------------
     lazy var AdvertisementViewControllersArray: [UIViewController] = {

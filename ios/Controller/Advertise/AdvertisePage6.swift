@@ -28,13 +28,13 @@ class AdvertisePage6: UIViewController, UITextViewDelegate {
     }
     
     func textViewDidEndEditing(_ textView: UITextView){
-        descriptionText = textView.text
-        print("end " + descriptionText)
+        //descriptionText = textView.text
+        pageViewController.advertiseModel.updateDict(input: textView.text as AnyObject, key: Offering.OFFERING_DESCRIPTION_KEY, needsConvertion: false, conversionType: "none")
     }
     
-    func textViewDidChange(_ textView: UITextView) {
+  /*  func textViewDidChange(_ textView: UITextView) {
         descriptionText = textView.text
-        print("change " + descriptionText)
-    }
+        pageViewController.advertiseModel.updateDict(input: descriptionText as AnyObject, key: Offering.OFFERING_DESCRIPTION_KEY, needsConvertion: false, conversionType: "none")
+    } */
    
 }
