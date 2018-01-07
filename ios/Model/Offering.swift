@@ -43,18 +43,20 @@ class Offering {
             let offeringType = dict[Offering.OFFERING_TYPE_KEY] as? String,
             let offeringUserUID = dict[Offering.OFFERING_USER_UID_KEY] as? String,
             let offeringVehicleTypeID = dict[Offering.OFFERING_VEHICLE_TYPE_ID_KEY] as? Int,
-            let offeringPickupTimeRaw = dict[Offering.OFFERING_PICKUP_TIME_KEY] as? String,
-            let offeringReturnTimeRaw = dict[Offering.OFFERING_RETURN_TIME_KEY] as? String
+            let offeringPickupTimeString = dict[Offering.OFFERING_PICKUP_TIME_KEY] as? String,
+            let offeringReturnTimeString = dict[Offering.OFFERING_RETURN_TIME_KEY] as? String
             else {
                 return nil
         }
         
         //PROBLEM: Versuch "Time" in Firebase DB zu schreiben
-        if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
+        // alte Version mit pickupTime und returnTime as Time
+        /*if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
             self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTime, returnTime: offeringReturnTime)
         } else {
             return nil
-        }
+        } */
+        self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTimeString, returnTime: offeringReturnTimeString)
         
     }
     
@@ -96,10 +98,10 @@ class Offering {
     var type: String
     var vehicleTypeID: Int
     var userUID: String
-    var pickupTime: Time
-    var returnTime: Time
+    var pickupTime: String
+    var returnTime: String
     
-    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: Time, returnTime: Time) {
+    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: String, returnTime: String) {
         self.basePrice = basePrice
         self.id = id
         self.brandID = brandID
