@@ -31,7 +31,7 @@ class SearchModel {
         });
     }
     
-    func filterToFilterFunctions(filter: Filter, rentings: [Renting], offeringsFeatures: [Int:[Int]]) -> [(_ offering: Offering) -> Bool] {
+    func filterToFilterFunctions(filter: Filter, rentings: [Renting], offeringsFeatures: [String:[Int]]) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
         // TODO: find most efficient order for filter functions
         if let brandIDs = filter.brandIDs {
@@ -68,9 +68,13 @@ class SearchModel {
         }
         if let featureIDs = filter.featureIDs {
             filterFunctions.append({offering in
-                if let currentOfferingsFeatures = offeringsFeatures[offering.id] {
-                    //offering has features -> test whether it has  all desired features
-                    return SearchModel.arrayContainsArray(array: currentOfferingsFeatures, shouldContain: featureIDs)
+                if let offeringID = offering.id {
+                    if let currentOfferingsFeatures = offeringsFeatures[offeringID] {
+                        //offering has features -> test whether it has  all desired features
+                        return SearchModel.arrayContainsArray(array: currentOfferingsFeatures, shouldContain: featureIDs)
+                    } else {
+                        return false
+                    }
                 } else {
                     return false
                 }
@@ -86,7 +90,13 @@ class SearchModel {
             return false
         }*/
         // TODO: filter rentings beforehand
-        let rentingsOfDesiredCar = rentings.filter {$0.inseratID == offering.id}
+        let rentingsOfDesiredCar = rentings.filter {renting in
+            if let rentingID = renting.id, let offeringID = offering.id {
+                return renting.inseratID == offeringID
+            } else {
+                return false
+            }
+        }
         return rentingsOfDesiredCar.reduce(true, {prevResult, renting in
             if (prevResult == false){
                 // already found intersection of renting times -> renting not possible

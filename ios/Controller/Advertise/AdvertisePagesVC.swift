@@ -2,6 +2,33 @@ import UIKit
 
 class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
+    var carImage: UIImage!
+    let storageAPI = StorageAPI.shared
+    let advertiseModel = Advertise()
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        //load necessary information into model
+        storageAPI.getBrands(completion: advertiseModel.receiveBrands)
+        storageAPI.getFuels(completion: advertiseModel.receiveFuels)
+        storageAPI.getGears(completion: advertiseModel.receiveGears)
+        storageAPI.getVehicleTypes(completion: advertiseModel.receiveVehicleTypes)
+        storageAPI.getFeatures(completion: advertiseModel.receiveFeatures)
+    }
+    
+    func writeOfferToDB(){
+        //TODO: fehlende Inputs abfangen
+        let offer = Offering(id: "empty", dict: advertiseModel.offeringDict)!
+        storageAPI.saveOffering(offer: offer, completion: {offerWithID in
+            let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+            if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+                viewController.displayingOffering = offerWithID
+                self.present(viewController, animated: true, completion: nil)
+            }
+        })
+    }
+    
     //Manage pageview for advertising a car --------------------------------------------------------------------
     lazy var AdvertisementViewControllersArray: [UIViewController] = {
         return [self.ViewControllerInstance(name: "advertisePage1"),
@@ -21,6 +48,7 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         super.viewDidLoad()
         self.dataSource = self
         self.delegate = self
+        
         if let firstViewController = AdvertisementViewControllersArray.first {
             setViewControllers([firstViewController], direction: .forward, animated: true, completion: nil)
         }
@@ -59,6 +87,7 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         
         return AdvertisementViewControllersArray[previousIndex]
     }
+
     
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let viewControllerIndex = AdvertisementViewControllersArray.index(of: viewController) else {

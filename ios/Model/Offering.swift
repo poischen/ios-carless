@@ -6,7 +6,7 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
-class Offering: DictionaryConvertible {
+class Offering {
     
     // constants for the dictionary keys
     static let OFFERING_BRAND_ID_KEY = "brandID"
@@ -24,10 +24,10 @@ class Offering: DictionaryConvertible {
     static let OFFERING_USER_UID_KEY = "uid"
     static let OFFERING_VEHICLE_TYPE_ID_KEY = "vehicleTypeID"
     static let OFFERING_LOCATION_KEY = "location"
-    static let OFFERING_PICKUP_TIME = "pickuptime"
-    static let OFFERING_RETURN_TIME = "returntime"
+    static let OFFERING_PICKUP_TIME_KEY = "pickuptime"
+    static let OFFERING_RETURN_TIME_KEY = "returntime"
     
-    convenience required init?(id: Int, dict: [String : AnyObject]) {
+    convenience required init?(id: String?, dict: [String : AnyObject]) {
         guard let offeringBrandID = dict[Offering.OFFERING_BRAND_ID_KEY] as? Int,
             let offeringConsumption = dict[Offering.OFFERING_CONSUMPTION_KEY] as? Int,
             let offeringDescription = dict[Offering.OFFERING_DESCRIPTION_KEY] as? String,
@@ -43,16 +43,20 @@ class Offering: DictionaryConvertible {
             let offeringType = dict[Offering.OFFERING_TYPE_KEY] as? String,
             let offeringUserUID = dict[Offering.OFFERING_USER_UID_KEY] as? String,
             let offeringVehicleTypeID = dict[Offering.OFFERING_VEHICLE_TYPE_ID_KEY] as? Int,
-            let offeringPickupTimeRaw = dict[Offering.OFFERING_PICKUP_TIME] as? String,
-            let offeringReturnTimeRaw = dict[Offering.OFFERING_RETURN_TIME] as? String
+            let offeringPickupTimeString = dict[Offering.OFFERING_PICKUP_TIME_KEY] as? String,
+            let offeringReturnTimeString = dict[Offering.OFFERING_RETURN_TIME_KEY] as? String
             else {
                 return nil
         }
-        if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
+        
+        //PROBLEM: Versuch "Time" in Firebase DB zu schreiben
+        // alte Version mit pickupTime und returnTime as Time
+        /*if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
             self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTime, returnTime: offeringReturnTime)
         } else {
             return nil
-        }
+        } */
+        self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTimeString, returnTime: offeringReturnTimeString)
         
     }
     
@@ -72,30 +76,32 @@ class Offering: DictionaryConvertible {
             Offering.OFFERING_SEATS_KEY: self.seats as AnyObject,
             Offering.OFFERING_TYPE_KEY: self.type as AnyObject,
             Offering.OFFERING_USER_UID_KEY: self.userUID as AnyObject,
-            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: self.vehicleTypeID as AnyObject
+            Offering.OFFERING_VEHICLE_TYPE_ID_KEY: self.vehicleTypeID as AnyObject,
+            Offering.OFFERING_PICKUP_TIME_KEY: self.pickupTime as AnyObject,
+            Offering.OFFERING_RETURN_TIME_KEY: self.returnTime as AnyObject
         ]
     }
     
-    let id: Int
-    let basePrice: Int
-    let brandID: Int
-    let consumption: Int
-    let description: String
-    let fuelID: Int
-    let gearID: Int
-    let hp: Int
-    let latitude: Float
-    let location: String
-    let longitude: Float
-    let pictureURL: String
-    let seats: Int
-    let type: String
-    let vehicleTypeID: Int
-    let userUID: String
-    let pickupTime: Time
-    let returnTime: Time
+    var id: String?
+    var basePrice: Int
+    var brandID: Int
+    var consumption: Int
+    var description: String
+    var fuelID: Int
+    var gearID: Int
+    var hp: Int
+    var latitude: Float
+    var location: String
+    var longitude: Float
+    var pictureURL: String
+    var seats: Int
+    var type: String
+    var vehicleTypeID: Int
+    var userUID: String
+    var pickupTime: String
+    var returnTime: String
     
-    init(id: Int, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: Time, returnTime: Time) {
+    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: String, returnTime: String) {
         self.basePrice = basePrice
         self.id = id
         self.brandID = brandID
@@ -115,4 +121,5 @@ class Offering: DictionaryConvertible {
         self.pickupTime = pickupTime
         self.returnTime = returnTime
     }
+    
 }

@@ -15,6 +15,9 @@ import MapKit
 import GooglePlacePicker
 
 class AdvertisePage5: UIViewController {
+    
+    var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
@@ -41,16 +44,26 @@ class AdvertisePage5: UIViewController {
     var selectedPickUpTime: String = ""
     var selectedReturnTime: String = ""
 
-    var timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]
+    //var timeContent: [String]?
+    /*var timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pageViewController = self.parent as! AdvertisePagesVC
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.requestLocation()
         
         searchBar.delegate = self
+        pickUpPicker.delegate = self
+        returnPicker.delegate = self
+        
+        pickUpTextView.delegate = self
+        returnTextView.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,13 +81,20 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         
         //Store data
         selectedLattitude =  String (place.coordinate.latitude)
-        print("Laltitude: " + selectedLattitude)
+        let selectedLattitudeFloat = Float(selectedLattitude)
+        if (selectedLattitudeFloat != nil) {
+        pageViewController.advertiseModel.updateDict(input: selectedLattitudeFloat as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+        }
+        
         selectedLongitude =  String (place.coordinate.longitude)
-        print("Longitude: " + selectedLongitude)
+        let selectedLongitudeFloat = Float(selectedLongitude)
+        if (selectedLongitudeFloat != nil) {pageViewController.advertiseModel.updateDict(input: selectedLongitudeFloat as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
+        }
         
         for component in place.addressComponents! {
-            if component.type == "city" {
+            if component.type == "locality" {
                 selectedCity = component.name
+                pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
             }
         }
 
@@ -161,33 +181,47 @@ extension AdvertisePage5 : CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error:: (error)")
+        print("error: (error)")
     }
 }
 
-extension AdvertisePage5 : UIPickerViewDelegate, UIPickerViewDataSource {
+extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return timeContent.count;
+        return pageViewController.advertiseModel.timeContent.count;
     }
     
      func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return timeContent[row]
+        return pageViewController.advertiseModel.timeContent[row]
      }
     
    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == pickUpPicker) {
-            selectedPickUpTime = self.timeContent[row]
+            selectedPickUpTime = self.pageViewController.advertiseModel.timeContent[row]
             self.pickUpTextView.text = selectedPickUpTime
             self.pickUpPicker.isHidden = true
         } else if (pickerView == returnPicker){
-            selectedReturnTime = self.timeContent[row]
+            selectedReturnTime = self.pageViewController.advertiseModel.timeContent[row]
             self.returnTextView.text = selectedReturnTime
             self.returnPicker.isHidden = true
+        }
+    }
+}
+
+//TODO: Use value from picker instead
+extension AdvertisePage5: UITextFieldDelegate {
+    //todo: convert format in extra methode
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if (textField == self.pickUpTextView){
+            //let pickUpTime: AnyObject = (pickUpTextView.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
+        } else if (textField == self.returnTextView){
+            //let returnTime: AnyObject = (returnTextView.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
         }
     }
     
@@ -198,5 +232,6 @@ extension AdvertisePage5 : UIPickerViewDelegate, UIPickerViewDataSource {
             self.returnPicker.isHidden = false
         }
     }
+    
     
 }

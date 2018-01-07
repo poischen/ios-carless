@@ -2,6 +2,12 @@
 
 firebase_functions/functions/node_modules/
 
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+Thumbs.db
+
 # Xcode
 #
 # gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore

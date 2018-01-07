@@ -8,12 +8,20 @@
 
 import UIKit
 
-class AdvertisePage6: UIViewController {
+class AdvertisePage6: UIViewController, UITextViewDelegate {
 
+    var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
+    
+    @IBOutlet weak var rentalDescriptionTextView: UITextView!
+    var descriptionText: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        pageViewController = self.parent as! AdvertisePagesVC
+        rentalDescriptionTextView.delegate = self
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,15 +29,18 @@ class AdvertisePage6: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
+    {
+        return true
     }
-    */
-
+    
+    func textViewDidEndEditing(_ textView: UITextView){
+        pageViewController.advertiseModel.updateDict(input: textView.text as AnyObject, key: Offering.OFFERING_DESCRIPTION_KEY, needsConvertion: false, conversionType: "none")
+    }
+    
+  /*  func textViewDidChange(_ textView: UITextView) {
+        descriptionText = textView.text
+        pageViewController.advertiseModel.updateDict(input: descriptionText as AnyObject, key: Offering.OFFERING_DESCRIPTION_KEY, needsConvertion: false, conversionType: "none")
+    } */
+   
 }

@@ -14,6 +14,9 @@ import UIKit
 
 class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
     
+    var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
+    
     var picker: UIImagePickerController? = UIImagePickerController()
     
     @IBOutlet weak var carImageView: UIImageView!
@@ -56,8 +59,9 @@ class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopov
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         
-        carImageView.image=image
-        //store UI Image
+        carImageView.image = image
+        pageViewController.carImage = image
+        
         picker.dismiss(animated:true, completion:nil)
     }
     
@@ -68,13 +72,11 @@ class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopov
     override func viewDidLoad() {
         super.viewDidLoad()
         picker?.delegate = self
-        
-        // Do any additional setup after loading the view.
+        pageViewController = self.parent as! AdvertisePagesVC
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }

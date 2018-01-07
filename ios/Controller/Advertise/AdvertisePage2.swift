@@ -14,6 +14,9 @@ import UIKit
 
 class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
+    var pageViewController: AdvertisePagesVC!
+    let storageAPI = StorageAPI.shared
+    
     @IBOutlet weak var brandPicker: UIPickerView!
     @IBOutlet weak var vehicleTypePicker: UIPickerView!
     @IBOutlet weak var seatsPicker: UIPickerView!
@@ -26,6 +29,8 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     @IBOutlet weak var seatsInput: UITextField!
     @IBOutlet weak var fuelInput: UITextField!
     @IBOutlet weak var gearInput: UITextField!
+    @IBOutlet weak var consumptionInput: UITextField!
+    @IBOutlet weak var speedInput: UITextField!
     
     var selectedBrand: String = ""
     var selectedSeats: String = ""
@@ -33,8 +38,8 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var selectedGear: String = ""
     var selectedVehicleType: String = ""
     
-    //TODO: Use Constants from DB
-    var brandsPickerContent = ["AC Cars", "Alfa Romeo", "Alpina", "Alpine", "Alvis", "Amphicar", "Aston Martin", "Audi", "Austin-Healey", "Bentley", "BMW", "Borgward", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daihatsu", "De Tomaso", "Delahaye", "DeLorean", "DKW", "Dodge", "Facel-Vega", "Ferrari", "Fiat", "Ford", "Honda", "Horch", "Hyundai", "Isuzu", "Iveco", "Jaguar", "Jeep", "Jensen", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lincoln", "Lloyd", "Lotus", "Maserati", "Maybach", "Mazda", "Mercedes-Benz", "MG", "Mitsubishi", "Morgan", "Nissan", "NSU", "Opel", "Peugeot", "Piaggio", "Porsche","Reliant", "Renault", "Rolls-Royce", "Rover", "Saab", "Sachsenring", "Seat","Škoda", "Subaru",  "Sunbeam", "Suzuki","Toyota", "Triumph", "TVR", "Volvo", "VW", "Wartburg"]
+    //TODO: Use Values from DB
+    /*var brandsPickerContent = ["AC Cars", "Alfa Romeo", "Alpina", "Alpine", "Alvis", "Amphicar", "Aston Martin", "Audi", "Austin-Healey", "Bentley", "BMW", "Borgward", "Bugatti", "Buick", "Cadillac", "Chevrolet", "Chrysler", "Citroën", "Dacia", "Daihatsu", "De Tomaso", "Delahaye", "DeLorean", "DKW", "Dodge", "Facel-Vega", "Ferrari", "Fiat", "Ford", "Honda", "Horch", "Hyundai", "Isuzu", "Iveco", "Jaguar", "Jeep", "Jensen", "Lada", "Lamborghini", "Lancia", "Land Rover", "Lincoln", "Lloyd", "Lotus", "Maserati", "Maybach", "Mazda", "Mercedes-Benz", "MG", "Mitsubishi", "Morgan", "Nissan", "NSU", "Opel", "Peugeot", "Piaggio", "Porsche","Reliant", "Renault", "Rolls-Royce", "Rover", "Saab", "Sachsenring", "Seat","Škoda", "Subaru",  "Sunbeam", "Suzuki","Toyota", "Triumph", "TVR", "Volvo", "VW", "Wartburg"]
     var seatsPickerContent = ["1", "2", "3", "4", "5", "6", "7", "8", "more"]
     var fuelPickerContent = ["gas", "diesel", "electric", "hybrid", "other"]
     var gearPickerContent = ["shift", "automatic", "semi-automatic"]
@@ -43,13 +48,26 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     var seatsPickerIcons = [UIImage(named:"1"), UIImage(named:"2"), UIImage(named:"3"), UIImage(named:"4"), UIImage(named:"5"), UIImage(named:"6"), UIImage(named:"7"), UIImage(named:"8"), UIImage(named:"9")]
     var fuelPickerIcons = [UIImage(named:"gas"), UIImage(named:"diesel"), UIImage(named:"electric"), UIImage(named:"hybrid"), UIImage(named:"other")]
     var gearPickerIcons = [UIImage(named:"manual"), UIImage(named:"automatic"), UIImage(named:"semi-automatic")]
-    var vehicleTypeIcons = [UIImage(named:"Compact"), UIImage(named:"Convertible"), UIImage(named:"Coupé"), UIImage(named:"Estate"), UIImage(named:"Limousine"), UIImage(named:"Minivan"), UIImage(named:"SUV"), UIImage(named:"Other Car")]
+    var vehicleTypeIcons = [UIImage(named:"Compact"), UIImage(named:"Convertible"), UIImage(named:"Coupé"), UIImage(named:"Estate"), UIImage(named:"Limousine"), UIImage(named:"Minivan"), UIImage(named:"SUV"), UIImage(named:"Other Car")]*/
+    
+    /*var brandsPickerContent: [String]?
+    var seatsPickerContent: [String]?
+    var fuelPickerContent: [String]?
+    var gearPickerContent: [String]?
+    var vehicleTypeContent: [String]?
+    
+    var seatsPickerIcons: [UIImage]?
+    var fuelPickerIcons: [UIImage]?
+    var gearPickerIcons: [UIImage]?
+    var vehicleTypeIcons: [UIImage]?*/
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        pageViewController = self.parent as! AdvertisePagesVC
+        modelInput.delegate = self
+        consumptionInput.delegate = self
+        speedInput.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,15 +91,15 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        var countrows : Int = brandsPickerContent.count
+        var countrows : Int = pageViewController.advertiseModel.brandsPickerContent.count
         if (pickerView == seatsPicker) {
-            countrows = self.seatsPickerContent.count
+            countrows = self.pageViewController.advertiseModel.seatsPickerContent.count
         } else if (pickerView == fuelPicker) {
-            countrows = self.fuelPickerContent.count
+            countrows = self.pageViewController.advertiseModel.fuelPickerContent.count
         } else if (pickerView == gearPicker) {
-            countrows = self.gearPickerContent.count
+            countrows = self.pageViewController.advertiseModel.gearPickerContent.count
         } else if (pickerView == vehicleTypePicker) {
-            countrows = self.vehicleTypeContent.count
+            countrows = self.pageViewController.advertiseModel.vehicleTypeContent.count
         }
         
         return countrows;
@@ -112,7 +130,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 15), size: CGSize(width: 30, height: 30)))
         let titleView = UILabel(frame: CGRect(origin: CGPoint(x: 40, y: 15), size: CGSize(width: 105, height: 32)))
         if (pickerView == brandPicker) {
-            let title: String = brandsPickerContent[row]
+            let title: String = pageViewController.advertiseModel.brandsPickerContent[row]
             titleView.text = title
             let image = UIImage(named:title)
             imageView.image = image
@@ -120,26 +138,27 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             view.addSubview(titleView)
             return view
         } else if (pickerView == seatsPicker){
-            titleView.text = seatsPickerContent[row]
-            imageView.image = seatsPickerIcons[row]
+            titleView.text = pageViewController.advertiseModel.seatsPickerContent[row]
+            imageView.image = pageViewController.advertiseModel.seatsPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == fuelPicker){
-            titleView.text = fuelPickerContent[row]
-            imageView.image = fuelPickerIcons[row]
+            titleView.text = pageViewController.advertiseModel.fuelPickerContent[row]
+            imageView.image = pageViewController.advertiseModel.fuelPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == gearPicker){
-            titleView.text = gearPickerContent[row]
-            imageView.image = gearPickerIcons[row]
+            titleView.text = pageViewController.advertiseModel.gearPickerContent[row]
+            imageView.image = pageViewController.advertiseModel.gearPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == vehicleTypePicker){
-            titleView.text = vehicleTypeContent[row]
-            imageView.image = vehicleTypeIcons[row]
+            titleView.text = pageViewController.advertiseModel.vehicleTypeContent[row]
+            imageView.image = pageViewController.advertiseModel.vehicleTypeIcons[row]
+//            imageView.image = pageViewController.advertiseModel.vehicleTypeIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
@@ -147,27 +166,43 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         return view
     }
     
+    //TODO convert values to DB-IDs
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == brandPicker) {
-            selectedBrand = self.brandsPickerContent[row]
+            selectedBrand = self.pageViewController.advertiseModel.brandsPickerContent[row]
             self.brandInput.text = selectedBrand
             self.brandPicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedBrand as AnyObject, key: Offering.OFFERING_BRAND_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_BRANDS)
+            
         } else if (pickerView == seatsPicker){
-            selectedSeats = self.seatsPickerContent[row]
+            selectedSeats = self.pageViewController.advertiseModel.seatsPickerContent[row]
             self.seatsInput.text = selectedSeats
             self.seatsPicker.isHidden = true
+            
+            /*var seats: AnyObject = (seatsInput.text as AnyObject)
+            if (seats as! String == "more"){
+                seats = 9 as AnyObject
+            }*/
+            pageViewController.advertiseModel.updateDict(input: selectedSeats as AnyObject, key: Offering.OFFERING_SEATS_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_SEATS)
+            
         } else if (pickerView == fuelPicker){
-            selectedFuel = self.fuelPickerContent[row]
+            selectedFuel = self.pageViewController.advertiseModel.fuelPickerContent[row]
             self.fuelInput.text = selectedFuel
             self.fuelPicker.isHidden = true
-        } else if (pickerView == seatsPicker){
-            selectedGear = self.gearPickerContent[row]
+            pageViewController.advertiseModel.updateDict(input: selectedFuel as AnyObject, key: Offering.OFFERING_FUEL_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_FUELS)
+            
+        } else if (pickerView == gearPicker){
+            selectedGear = self.pageViewController.advertiseModel.gearPickerContent[row]
             self.gearInput.text = selectedGear
             self.gearPicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedGear as AnyObject, key: Offering.OFFERING_GEAR_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_GEARS)
+            
         } else if (pickerView == vehicleTypePicker){
-            selectedVehicleType = self.vehicleTypeContent[row]
+            selectedVehicleType = self.pageViewController.advertiseModel.vehicleTypeContent[row]
             self.vehicleTypeInput.text = selectedVehicleType
             self.vehicleTypePicker.isHidden = true
+            pageViewController.advertiseModel.updateDict(input: selectedVehicleType as AnyObject, key: Offering.OFFERING_VEHICLE_TYPE_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_VEHICLETYPES)
+            
         }
         
     }
@@ -186,5 +221,45 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         }
         
     }
-
+    
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        if (textField == self.consumptionInput){
+            //let consumption: AnyObject = (consumptionInput.text as AnyObject)
+            var consumptionInt: Int
+            consumptionInt = Int(consumptionInput.text!)!
+            
+            if consumptionInt != nil {
+                pageViewController.advertiseModel.updateDict(input: consumptionInt as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+            }
+            
+        } else if (textField == self.speedInput){
+            //let speed: AnyObject = (speedInput.text as AnyObject)
+            let speedInt = Int(speedInput.text!)!
+            
+            if speedInt != nil {
+            pageViewController.advertiseModel.updateDict(input: speedInt as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+            }
+            
+        } else if (textField == self.modelInput){
+            //let model: AnyObject = (modelInput.text as AnyObject)
+            pageViewController.advertiseModel.updateDict(input: modelInput.text as AnyObject, key: Offering.OFFERING_TYPE_KEY, needsConvertion: false, conversionType: "none")
+        }
+    }
+    
+ /*   func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+       textField.resignFirstResponder()
+        return true
+    }
+*/
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if (textField == self.speedInput){
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
+    } else {
+        return true
+    }
+        
+    }
 }

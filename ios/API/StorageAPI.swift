@@ -11,6 +11,7 @@ import Firebase
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
+import UIKit
 
 protocol FetchData: class {
     func dataReceived(users: [User]);
@@ -64,6 +65,10 @@ final class StorageAPI {
         return storageRef.child(DBConstants.VIDEO_STORAGE);
     }
     
+    var offerImageStorageRef: StorageReference {
+        return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
+    }
+    
     private init() {
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
@@ -98,7 +103,8 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: Int(child.key)!, dict: dict)! // TODO: catch nil here
+                print(child.key)
+                let offering = Offering.init(id: String(child.key)!, dict: dict)! // TODO: catch nil here
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)
@@ -108,12 +114,12 @@ final class StorageAPI {
         }
     }
     
-    func getOfferingByID(id: Int, completion: @escaping (_ offering: Offering) -> Void){
-        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+    func getOfferingByID(id: String, completion: @escaping (_ offering: Offering) -> Void){
+        self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
                 if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let offeringID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
+                    let offeringID = child.key
                     if let offering = Offering.init(id: offeringID, dict: dict) {
                         completion(offering)
                     } else {
@@ -147,16 +153,16 @@ final class StorageAPI {
     }
     
     // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
-    func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [Int: [Int]]) -> Void){
+    func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [String: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
-            var resultOfferingsFeatures:[Int: [Int]] = [Int: [Int]]() // Map with offering ID as key and array of feature IDs a value
+            var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
             for (_, associationRaw) in receivedData {
                 let association:NSDictionary = associationRaw as! NSDictionary
                 // TODO: Shorthand for this?
                 guard
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
-                    let offeringID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? Int else {
+                    let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
                         print("error in getOfferingsFeatures")
                         return
                 }
@@ -182,7 +188,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                let renting = Renting.init(id: child.key, dict: dict)!
                 resultRentings.append(renting)
             }
             completion(resultRentings)
@@ -385,6 +391,22 @@ final class StorageAPI {
         self.usersRef.child(user.id).setValue(userAsDict)
     }
     
+    //store offer in db
+    func saveOffering(offer: Offering, completion: @escaping (_ offering: Offering) -> Void){
+        let offerAsDict = offer.dict
+        let key = offeringsDBReference.childByAutoId().key
+        
+        offer.id = key
+        
+        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) -> Void in
+            if ((error) != nil) {
+                //TODO: give feedback, dass alles im arsch is
+            } else {
+                completion(offer)
+            }
+        }
+    }
+    
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
         let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg];
@@ -436,7 +458,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: Int(child.key)!, dict: dict)!
+                let renting = Renting.init(id: child.key, dict: dict)!
                 resultRentings.append(renting)
             }
             completion(resultRentings)
@@ -452,7 +474,7 @@ final class StorageAPI {
             for childRaw in snapshot.children {
                 let child = childRaw as! DataSnapshot
                 let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: Int(child.key)!, dict: dict)!
+                let offering = Offering.init(id: child.key, dict: dict)!
                 resultOfferings.append(offering)
             }
             completion(resultOfferings)
@@ -466,6 +488,35 @@ final class StorageAPI {
         return Auth.auth().currentUser!.uid;
     }
     
+    //store an image to storage, return URL or Error Message
+    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView, progressLabel: UILabel, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
+        let imageName = "\(userID())_\(Date().timeIntervalSince1970).jpg"
+        let imageReference = ref.child(imageName)
+
+        if let imageData = UIImageJPEGRepresentation(image, 0.8) {
+            let metadata = StorageMetadata()
+            metadata.contentType = "image/jpeg"
+            
+            let uploadTask = imageReference.putData(imageData, metadata: metadata, completion: { (metadata, error) in
+                if let metadata = metadata {
+                    completionBlock(metadata.downloadURL(), nil)
+                } else {
+                    completionBlock(nil, error?.localizedDescription)
+                }
+            })
+            uploadTask.observe(.progress, handler: { (snapshot) in
+                guard let progress = snapshot.progress else {
+                    return
+                }
+                let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
+                progressBar.progress = percentage
+                let percentageInt = Int(percentage * 100)
+                progressLabel.text = "\(percentageInt) %"
+            })
+        } else {
+            completionBlock(nil, "Image couldn't be converted to Data.")
+        }
+    }
     
 }
 
