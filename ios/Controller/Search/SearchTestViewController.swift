@@ -27,11 +27,20 @@ class SearchTestViewController: UIViewController {
     var lastDate:Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
-    let formatter = DateFormatter()
-    let currentCalendar = Calendar.current
+    private let formatter = DateFormatter()
+    private let currentCalendar = Calendar.current
     
     let occupantNumbers = Array(1...8)
     var pickedPlace:GMSPlace?
+    var desiredRentingStart:Date?
+    var desiredRentingEnd:Date?
+    
+    // error messages
+    private let ERROR_NO_PLACE_PICKED = "Please pick a location."
+    private let ERROR_NO_FIRST_DATE_PICKED = "Please select a pickup date."
+    private let ERROR_REVERSE_DATE_INTERVAL = "Please pick a return time after the pickup time."
+    
+    private var alertController: UIAlertController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,19 +79,58 @@ class SearchTestViewController: UIViewController {
         present(autocompleteController, animated: true, completion: nil)
     }
     
-    @IBAction func searchButtonClicked(_ sender: Any) {
-        // only proceed to the search results if the user has picked a place
-        // TODO: also check for picked place here
-        // TODO: check that pickup time isn't before return time
-        if let userPickedPlace = pickedPlace {
-            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
+    func showAlert(message: String){
+        if let currentAlertController = alertController {
+            // alert controller already created -> set message and show
+            currentAlertController.message = message
+            self.present(currentAlertController, animated: true, completion: nil)
         } else {
-            // show error message to remind the user to pick a place first
-            let alertController = UIAlertController(title: "Error", message: "Please pick a location.", preferredStyle: .alert)
+            // alert controller not created yet -> create and show
+            let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
         }
+    }
+    
+    @IBAction func searchButtonClicked(_ sender: Any) {
+        // only proceed to the search results if the user has picked a place
+        // TODO: also check for picked place here
+        // TODO: check that pickup time isn't before return time
+        if pickedPlace == nil {
+            showAlert(message: ERROR_NO_PLACE_PICKED)
+            return
+        }
+        if firstDate == nil {
+            // first date is not allowed to be nil, but last date is because it's not set when the user selects a one day interval
+            showAlert(message: ERROR_NO_FIRST_DATE_PICKED)
+            return
+        } else {
+            let currentFirstDate = firstDate!
+            let desiredFirstDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
+            var desiredLastDate: Date
+            if let currentLastDate = lastDate {
+                // last date set -> user didn't select a one day interval
+                desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
+            } else {
+                // no last date set -> user picker one day interval
+                desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
+            }
+            if desiredLastDate < desiredFirstDate {
+                // user picked reverse date interval -> show error
+                showAlert(message: ERROR_REVERSE_DATE_INTERVAL)
+                return
+            }
+            // corrent date interval -> set variables
+            desiredRentingStart = desiredFirstDate
+            desiredRentingEnd = desiredLastDate
+            
+            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
+        }
+        
+        /*if pickedPlace != nil {
+            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
+        } */
     }
     
     func handleCellBackground(view: JTAppleCell?, cellState: CellState){
@@ -135,11 +183,8 @@ class SearchTestViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResultsNew") {
-            // TODO: handle errors here
-            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: firstDate!, hoursMinutesDate: pickupTimePicker.date)
-            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: lastDate!, hoursMinutesDate: returnTimePicker.date)
             // next screen: search results
-            if let searchResultsViewController = segue.destination as? SearchResultsViewController {
+            if let searchResultsViewController = segue.destination as? SearchResultsViewController, let currentDesiredRentingStart = desiredRentingStart, let currentDesiredRentingEnd = desiredRentingEnd {
                 let newFilter:Filter = Filter(
                     brandIDs: nil,
                     maxConsumption: nil,
@@ -150,7 +195,7 @@ class SearchTestViewController: UIViewController {
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
-                    dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
+                    dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                     featureIDs: nil
                 )
                 searchResultsViewController.searchFilter = newFilter
