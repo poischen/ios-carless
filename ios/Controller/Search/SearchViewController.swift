@@ -69,9 +69,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        /* for test in place.addressComponents! {
-            print(test.name)
-        } */
+
         self.pickedPlace = place
         nameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)

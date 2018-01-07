@@ -8,29 +8,46 @@
 
 import UIKit
 import JTAppleCalendar
+import GooglePlacePicker
 
 class SearchTestViewController: UIViewController {
 
     @IBOutlet weak var calendarView: JTAppleCalendarView!
-    @IBOutlet weak var year: UILabel!
-    @IBOutlet weak var month: UILabel!
+    @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    @IBOutlet weak var pickupTimePicker: UIDatePicker!
+    @IBOutlet weak var returnTimePicker: UIDatePicker!
+    @IBOutlet weak var occupantsPicker: UIPickerView!
+    @IBOutlet weak var locationNameLabel: UILabel!
+    @IBOutlet weak var pickPlaceButton: UIButton!
+    @IBOutlet weak var searchButton: UIButton!
     
+    // attributes for the calendar
     var firstDate:Date?
     var lastDate:Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
-    var datesToDeselect:[Date] = [Date]()
-    
     let formatter = DateFormatter()
     let currentCalendar = Calendar.current
+    
+    let occupantNumbers = Array(1...8)
+    var pickedPlace:GMSPlace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
-        //calendarView.rangeSelectionWillBeUsed = true
+        occupantsPicker.dataSource = self
+        occupantsPicker.delegate = self
+        
+        pickupTimePicker.date = Filter.dateToNext30(date: Date())
+        returnTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
 
-        // Do any additional setup after loading the view.
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
     
     func setupCalendarView() {
@@ -43,10 +60,29 @@ class SearchTestViewController: UIViewController {
             self.setupCalendarLabels(from: visibleDates)
         })
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func pickPlaceButtonClicked(_ sender: Any) {
+        let autocompleteController = GMSAutocompleteViewController()
+        let filter = GMSAutocompleteFilter()
+        filter.type = .city
+        autocompleteController.autocompleteFilter = filter
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
+    
+    @IBAction func searchButtonClicked(_ sender: Any) {
+        // only proceed to the search results if the user has picked a place
+        // TODO: also check for picked place here
+        // TODO: check that pickup time isn't before return time
+        if let userPickedPlace = pickedPlace {
+            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
+        } else {
+            // show error message to remind the user to pick a place first
+            let alertController = UIAlertController(title: "Error", message: "Please pick a location.", preferredStyle: .alert)
+            let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            alertController.addAction(defaultAction)
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
     
     func handleCellBackground(view: JTAppleCell?, cellState: CellState){
@@ -75,17 +111,6 @@ class SearchTestViewController: UIViewController {
         guard let myCustomCell = cell as? CustomCell else {
             return
         }
-        /* if cellState.dateBelongsTo == .thisMonth {
-            // only mark month dates as selected to avoid cross month selection problems
-            switch cellState.selectedPosition() {
-            case .full, .left, .right, .middle:
-                myCustomCell.selectedView.isHidden = false
-            default:
-                myCustomCell.selectedView.isHidden = true
-            }
-        } else {
-            myCustomCell.selectedView.isHidden = true
-        } */
         switch cellState.selectedPosition() {
         case .full, .left, .right, .middle:
             myCustomCell.selectedView.isHidden = false
@@ -98,14 +123,39 @@ class SearchTestViewController: UIViewController {
     func setupCalendarLabels(from visibleDates: DateSegmentInfo){
         let date = visibleDates.monthDates.first!.date
         self.formatter.dateFormat = "yyyy"
-        self.year.text = self.formatter.string(from: date)
+        self.yearLabel.text = self.formatter.string(from: date)
         self.formatter.dateFormat = "MMMM"
-        self.month.text = self.formatter.string(from: date)
+        self.monthLabel.text = self.formatter.string(from: date)
     }
     
     func updateCellVisuals(for cell: JTAppleCell, withState cellState: CellState){
         handleSelection(cell: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showSearchResultsNew") {
+            // TODO: handle errors here
+            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: firstDate!, hoursMinutesDate: pickupTimePicker.date)
+            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: lastDate!, hoursMinutesDate: returnTimePicker.date)
+            // next screen: search results
+            if let searchResultsViewController = segue.destination as? SearchResultsViewController {
+                let newFilter:Filter = Filter(
+                    brandIDs: nil,
+                    maxConsumption: nil,
+                    fuelIDs: nil,
+                    gearIDs: nil,
+                    minHP: nil,
+                    location: pickedPlace!.addressComponents![0].name, // only use the city name for the search
+                    maxPrice: nil,
+                    minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
+                    vehicleTypeIDs: nil,
+                    dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
+                    featureIDs: nil
+                )
+                searchResultsViewController.searchFilter = newFilter
+            }
+        }
     }
 
 }
@@ -218,6 +268,41 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
             return false
         }
     }
+}
+
+extension SearchTestViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1;
+    }
+    
+    // The number of rows of data
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return occupantNumbers.count
+    }
+    
+    // The data to return for the row and component (column) that's being passed in
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return String(occupantNumbers[row])
+    }
+}
+
+extension SearchTestViewController: GMSAutocompleteViewControllerDelegate {
+    func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        self.pickedPlace = place
+        locationNameLabel.text = place.formattedAddress
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+        // TODO: handle the error.
+        print("Error: ", error.localizedDescription)
+    }
+    
+    func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }
 
 

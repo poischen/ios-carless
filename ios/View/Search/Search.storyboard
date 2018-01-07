@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="OWs-w7-2jY"/>
+                        <segue destination="518-31-8pU" kind="relationship" relationship="rootViewController" id="IzC-nK-x2T"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GKd-qz-5bz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -642,7 +642,7 @@
         <!--Ib Calendar Data Source-->
         <scene sceneID="dvd-C5-BHL">
             <objects>
-                <viewController id="518-31-8pU" customClass="SearchTestViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Search" id="518-31-8pU" customClass="SearchTestViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="D1u-oP-GdR">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -795,7 +795,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Pick place"/>
                                 <connections>
-                                    <action selector="pickPlace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fYV-xp-V0I"/>
+                                    <action selector="pickPlaceButtonClicked:" destination="518-31-8pU" eventType="touchUpInside" id="1Bp-fr-V8w"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="I want to rent a car in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zWV-F6-1aX">
@@ -812,8 +812,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Return time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uc-hF-Rul">
-                                <rect key="frame" x="239" y="386" width="89" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Return time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uc-hF-Rul">
+                                <rect key="frame" x="239" y="386" width="94" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -859,7 +859,7 @@
                                     <color key="titleColor" red="1" green="0.56862745100000001" blue="0.2666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="searchButtonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5uP-dh-ExI"/>
+                                    <action selector="searchButtonClicked:" destination="518-31-8pU" eventType="touchUpInside" id="9mK-bw-jbo"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -871,10 +871,18 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SLX-Ii-F2u"/>
                     </view>
+                    <navigationItem key="navigationItem" id="yZk-YL-nM4"/>
                     <connections>
                         <outlet property="calendarView" destination="qyR-me-pu9" id="yQJ-Py-ApX"/>
-                        <outlet property="month" destination="zNf-Li-1OO" id="cwy-Qq-Mjw"/>
-                        <outlet property="year" destination="Lic-rZ-7ys" id="AAt-c0-o5N"/>
+                        <outlet property="locationNameLabel" destination="TE5-a6-sxE" id="bzV-sx-Mzs"/>
+                        <outlet property="monthLabel" destination="zNf-Li-1OO" id="cwy-Qq-Mjw"/>
+                        <outlet property="occupantsPicker" destination="f4P-3O-0vR" id="Gbx-qe-cO0"/>
+                        <outlet property="pickPlaceButton" destination="IsC-rh-6NC" id="wbZ-nW-4Kr"/>
+                        <outlet property="pickupTimePicker" destination="l46-dE-4X0" id="c21-aM-aOV"/>
+                        <outlet property="returnTimePicker" destination="qXQ-rC-MTX" id="D7f-18-dNU"/>
+                        <outlet property="searchButton" destination="4Z8-b9-C79" id="A0q-3j-VO1"/>
+                        <outlet property="yearLabel" destination="Lic-rZ-7ys" id="AAt-c0-o5N"/>
+                        <segue destination="Jrx-et-awz" kind="show" identifier="showSearchResultsNew" id="m9X-t4-fPa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OXT-9H-6qO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -885,4 +893,8 @@
     <resources>
         <image name="Cars" width="250" height="250"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="IzC-nK-x2T"/>
+        <segue reference="m9X-t4-fPa"/>
+    </inferredMetricsTieBreakers>
 </document>
