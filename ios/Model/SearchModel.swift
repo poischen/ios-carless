@@ -91,7 +91,7 @@ class SearchModel {
         }*/
         // TODO: filter rentings beforehand
         let rentingsOfDesiredCar = rentings.filter {renting in
-            if let rentingID = renting.id, let offeringID = offering.id {
+            if renting.id != nil, let offeringID = offering.id {
                 return renting.inseratID == offeringID
             } else {
                 return false

@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="518-31-8pU" kind="relationship" relationship="rootViewController" id="IzC-nK-x2T"/>
+                        <segue destination="518-31-8pU" kind="relationship" relationship="rootViewController" id="BvB-ri-T8X"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GKd-qz-5bz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -894,7 +894,7 @@
         <image name="Cars" width="250" height="250"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="IzC-nK-x2T"/>
+        <segue reference="BvB-ri-T8X"/>
         <segue reference="m9X-t4-fPa"/>
     </inferredMetricsTieBreakers>
 </document>
