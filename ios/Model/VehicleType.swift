@@ -8,7 +8,7 @@
 
 import Foundation
 
-class VehicleType: DictionaryConvertible, SelectableItem {
+class VehicleType: DictionaryConvertibleStatic, SelectableItem {
     
     // constants for the dictionary keys
     static let VEHICLETYPE_ICON_URL_KEY = "icon_dl"

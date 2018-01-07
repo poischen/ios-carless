@@ -6,7 +6,7 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
-class Offering {
+class Offering: DictionaryConvertibleEditable {
     
     // constants for the dictionary keys
     static let OFFERING_BRAND_ID_KEY = "brandID"

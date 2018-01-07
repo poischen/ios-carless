@@ -35,7 +35,7 @@ final class StorageAPI {
     private let gearsDBReference: DatabaseReference
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
-    private let lessorRatings: DatabaseReference
+    private let ratingsDBReference: DatabaseReference
     
     var userName = "";
     
@@ -81,7 +81,7 @@ final class StorageAPI {
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
-        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
+        self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         /*
         // tryong to avoid caching problems by keeping references synced until queried for the first time
         // TODO: find better solution?
@@ -383,8 +383,31 @@ final class StorageAPI {
     
     func saveRating(rating: Rating){
         let ratingAsDict = rating.dict
-        self.lessorRatings.childByAutoId().setValue(ratingAsDict)
+        let key = offeringsDBReference.childByAutoId().key
+        self.ratingsDBReference.childByAutoId().setValue(ratingAsDict) {(error,_) in
+            if let currentError = error {
+                print("error in saveRating:")
+                print(currentError.localizedDescription)
+            }
+        }
     }
+    
+    /*
+     nicht-funkionierende Version mit Optional für Callback:
+     func saveRating(rating: Rating, completion: (@escaping (_ rating: Rating) -> Void)?){
+     let ratingAsDict = rating.dict
+     let key = offeringsDBReference.childByAutoId().key
+     self.ratingsDBReference.childByAutoId().setValue(ratingAsDict) {(error,_) in
+     if let currentError = error {
+     print("error in saveRating:")
+     print(currentError.localizedDescription)
+     } else if let callback = completion {
+     rating.id = key
+     callback(rating)
+     }
+     }
+     }
+     */
     
     func updateUser(user: User){
         let userAsDict = user.dict
@@ -398,7 +421,7 @@ final class StorageAPI {
         
         offer.id = key
         
-        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) -> Void in
+        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) in
             if ((error) != nil) {
                 //TODO: give feedback, dass alles im arsch is
             } else {

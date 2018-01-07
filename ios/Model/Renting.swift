@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Renting {
+class Renting: DictionaryConvertibleEditable {
     
     // constants for the dictionary keys
     static let RENTING_END_TIMESTAMP_KEY = "endDate"
