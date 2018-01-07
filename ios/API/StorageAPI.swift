@@ -215,6 +215,28 @@ final class StorageAPI {
         completion([])
     }
     
+    func getVehicleTypeByID(id: Int, completion: @escaping (_ fuel: VehicleType) -> Void){
+        self.vehicleTypesDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let vehicleTypeID = Int(child.key)!
+                    if let vehicleType = VehicleType.init(id: vehicleTypeID, dict: dict) {
+                        completion(vehicleType)
+                    } else {
+                        print("error in get getVehicleTypeByID")
+                    }
+                } else {
+                    print("error in get getVehicleTypeByID")
+                }
+            } else {
+                print("no vehicle type or more than one vehicle type found")
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
         self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Brand] = []

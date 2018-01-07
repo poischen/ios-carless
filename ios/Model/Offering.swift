@@ -121,5 +121,5 @@ class Offering {
         self.pickupTime = pickupTime
         self.returnTime = returnTime
     }
-    
+
 }
