@@ -8,12 +8,11 @@
 
 import Foundation
 
-class SearchModel {
-    // TODO: make singleton or make mathods static?
-    
+class SearchModel {    
     private let storageAPI: StorageAPI
+    static let shared: SearchModel = SearchModel()
     
-    init() {
+    private init() {
         self.storageAPI = StorageAPI.shared
     }
     

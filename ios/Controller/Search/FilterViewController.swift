@@ -27,12 +27,23 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var minHorsepowerLabel: UILabel!
     @IBOutlet weak var minHorsepowerSlider: UISlider!
     
+    // outlets of table views
     @IBOutlet weak var pickExtraTable: UITableView!
     @IBOutlet weak var pickFuelTable: UITableView!
     @IBOutlet weak var pickBrandTable: UITableView!
     @IBOutlet weak var pickGearTable: UITableView!
     @IBOutlet weak var pickVehicleTypeTable: UITableView!
+    
+    // cell identifiers of the table views
+    let PICK_EXTRA_TABLE_CELL_IDENTIFIER = "ExtraTableViewCell"
+    let PICK_FUEL_TABLE_CELL_IDENTIFIER = "EngineTableViewCell"
+    let PICK_BRAND_TABLE_CELL_IDENTIFIER = "BrandTableViewCell"
+    let PICK_GEAR_TABLE_CELL_IDENTIFIER = "GearTableViewCell"
+    let PICK_VEHICLE_TYPE_TABLE_CELL_IDENTIFIER = "VehicleTypeTableViewCell"
 
+
+
+    // outlets of filter status labels of the table views
     @IBOutlet weak var gearFilterStatusLabel: UILabel!
     @IBOutlet weak var vehicleTypeFilterStatusLabel: UILabel!
     @IBOutlet weak var fuelFilterStatusLabel: UILabel!
@@ -48,7 +59,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // references to DB and search model
     let storageAPI: StorageAPI = StorageAPI.shared
-    let searchModel: SearchModel = SearchModel()
     var searchFilter:Filter?
     
     override func viewDidLoad() {
@@ -121,6 +131,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    // get number of rows in a table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         var count: Int
         
@@ -142,26 +153,27 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         return count
     }
     
+    // get cell for specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cellContent:SelectableItem
         var cellIdentifier:String
         
         switch tableView {
         case self.pickExtraTable:
-            cellIdentifier = "ExtraTableViewCell"
+            cellIdentifier = PICK_EXTRA_TABLE_CELL_IDENTIFIER
             cellContent = self.features[indexPath.row]
         case self.pickFuelTable:
-            cellIdentifier = "EngineTableViewCell"
+            cellIdentifier = PICK_FUEL_TABLE_CELL_IDENTIFIER
             cellContent = fuels[indexPath.row]
         case self.pickBrandTable:
-            cellIdentifier = "BrandTableViewCell"
+            cellIdentifier = PICK_BRAND_TABLE_CELL_IDENTIFIER
             cellContent = brands[indexPath.row]
         case self.pickGearTable:
-            cellIdentifier = "GearTableViewCell"
+            cellIdentifier = PICK_GEAR_TABLE_CELL_IDENTIFIER
             cellContent = gears[indexPath.row]
         default: // covers pickVehicleTypeTable
             // TODO: better way to provide an exhaustive switch here?
-            cellIdentifier = "VehicleTypeTableViewCell"
+            cellIdentifier = PICK_VEHICLE_TYPE_TABLE_CELL_IDENTIFIER
             cellContent = vehicleTypes[indexPath.row]
         }
         
@@ -172,7 +184,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         } else {
             returnCell.accessoryType = UITableViewCellAccessoryType.none // no checkmark if item is not selected
         }
-        returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue selection style
+        returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue background selection style
         return returnCell
     }
     

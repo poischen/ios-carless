@@ -6,6 +6,8 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
+// !! This class is deprecated, using SearchTestViewController now
+
 import UIKit
 import GooglePlacePicker
 // import GoogleMaps
