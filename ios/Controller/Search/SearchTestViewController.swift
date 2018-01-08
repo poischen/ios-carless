@@ -12,9 +12,12 @@ import GooglePlacePicker
 
 class SearchTestViewController: UIViewController {
 
+    // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var yearLabel: UILabel!
     @IBOutlet weak var monthLabel: UILabel!
+    
+    // other UI components
     @IBOutlet weak var pickupTimePicker: UIDatePicker!
     @IBOutlet weak var returnTimePicker: UIDatePicker!
     @IBOutlet weak var occupantsPicker: UIPickerView!
@@ -31,6 +34,8 @@ class SearchTestViewController: UIViewController {
     private let currentCalendar = Calendar.current
     
     let occupantNumbers = Array(1...8)
+    
+    // search criteria
     var pickedPlace:GMSPlace?
     var desiredRentingStart:Date?
     var desiredRentingEnd:Date?
@@ -49,9 +54,8 @@ class SearchTestViewController: UIViewController {
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
-        pickupTimePicker.date = Filter.dateToNext30(date: Date())
+        pickupTimePicker.date = Filter.dateToNext30(date: Date()) // "round" time to next XX:00 or XX:30 time
         returnTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,21 +68,25 @@ class SearchTestViewController: UIViewController {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-        // initialise month and year labels
+        // initialise month and year labels after getting the visible dates
         calendarView.visibleDates({visibleDates in
             self.setupCalendarLabels(from: visibleDates)
         })
     }
     
+    // show place picker when "pick place" button is clicked
     @IBAction func pickPlaceButtonClicked(_ sender: Any) {
         let autocompleteController = GMSAutocompleteViewController()
+        // create filter so that the picker only shows cities
         let filter = GMSAutocompleteFilter()
         filter.type = .city
         autocompleteController.autocompleteFilter = filter
         autocompleteController.delegate = self
+        // show place picker
         present(autocompleteController, animated: true, completion: nil)
     }
     
+    // show error message in alert
     func showAlert(message: String){
         if let currentAlertController = alertController {
             // alert controller already created -> set message and show
@@ -94,13 +102,12 @@ class SearchTestViewController: UIViewController {
     }
     
     @IBAction func searchButtonClicked(_ sender: Any) {
-        // only proceed to the search results if the user has picked a place
-        // TODO: also check for picked place here
-        // TODO: check that pickup time isn't before return time
+        // user hasn't picked a place -> show error and don't proceed to the search results
         if pickedPlace == nil {
             showAlert(message: ERROR_NO_PLACE_PICKED)
             return
         }
+        // user hasn't picked a first date in the calendar -> show error and don't proceed to the search results
         if firstDate == nil {
             // first date is not allowed to be nil, but last date is because it's not set when the user selects a one day interval
             showAlert(message: ERROR_NO_FIRST_DATE_PICKED)
@@ -110,40 +117,26 @@ class SearchTestViewController: UIViewController {
             let desiredFirstDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
             var desiredLastDate: Date
             if let currentLastDate = lastDate {
-                // last date set -> user didn't select a one day interval
+                // last date set -> user didn't select a one day interval -> merge calendar dates with pickup and return time
                 desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
             } else {
-                // no last date set -> user picker one day interval
+                // no last date set -> user picker one day interval -> merge calendar dates with pickup and return time
                 desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
             }
             if desiredLastDate < desiredFirstDate {
-                // user picked reverse date interval -> show error
+                // user picked reverse date interval -> show error and don't proceed to the search results
                 showAlert(message: ERROR_REVERSE_DATE_INTERVAL)
                 return
             }
-            // corrent date interval -> set variables
+            // corrent date interval -> set desired renting start and desired renting end and ...
             desiredRentingStart = desiredFirstDate
             desiredRentingEnd = desiredLastDate
-            
+            // ... proceed to search results
             performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
-        }
-        
-        /*if pickedPlace != nil {
-            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
-        } */
-    }
-    
-    func handleCellBackground(view: JTAppleCell?, cellState: CellState){
-        guard let validCell = view as? CustomCell else {
-            return
-        }
-        if validCell.isSelected {
-            validCell.selectedView.isHidden = false
-        } else {
-            validCell.selectedView.isHidden = true
         }
     }
     
+    // change calendar cell text color depending on whether the cell belongs to the current month
     func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as? CustomCell else {
             return
@@ -155,19 +148,22 @@ class SearchTestViewController: UIViewController {
         }
     }
     
+    // change calendar cell background according to the cell's selection status
     func handleSelection(cell: JTAppleCell?, cellState: CellState) {
         guard let myCustomCell = cell as? CustomCell else {
             return
         }
-        switch cellState.selectedPosition() {
-        case .full, .left, .right, .middle:
+        if myCustomCell.isSelected {
+            // cell is selected -> show special background
             myCustomCell.selectedView.isHidden = false
-        default:
+        } else {
+            // cell is not selected -> hide special background
             myCustomCell.selectedView.isHidden = true
         }
         
     }
     
+    // sets up the labels for the current month and the current year the calendar shows
     func setupCalendarLabels(from visibleDates: DateSegmentInfo){
         let date = visibleDates.monthDates.first!.date
         self.formatter.dateFormat = "yyyy"
@@ -176,15 +172,18 @@ class SearchTestViewController: UIViewController {
         self.monthLabel.text = self.formatter.string(from: date)
     }
     
+    // updates both the text color and the background of the cell according to it's status
     func updateCellVisuals(for cell: JTAppleCell, withState cellState: CellState){
         handleSelection(cell: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
     }
     
+    // set the filter values in the next view controller (search results)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResultsNew") {
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController, let currentDesiredRentingStart = desiredRentingStart, let currentDesiredRentingEnd = desiredRentingEnd {
+                // create filter with the desired search criteria
                 let newFilter:Filter = Filter(
                     brandIDs: nil,
                     maxConsumption: nil,
@@ -198,6 +197,7 @@ class SearchTestViewController: UIViewController {
                     dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                     featureIDs: nil
                 )
+                // send filter to the next view controller by setting an attribute of it to the filter
                 searchResultsViewController.searchFilter = newFilter
             }
         }
@@ -206,14 +206,13 @@ class SearchTestViewController: UIViewController {
 }
 
 extension SearchTestViewController: JTAppleCalendarViewDataSource{
+    // method that JTAppleCalendar needs for initialisation, should always be similar to cellForItemAt
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        // TODO: error handling
-        //handleCellBackground(view: cell, cellState: cellState)
         updateCellVisuals(for: cell, withState: cellState)
     }
     
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        let endDate = Date() + 31104000 // add one year
+        let endDate = Date() + 31104000 // one year from now
         let parameters = ConfigurationParameters(
             startDate: Date(),
             endDate: endDate,
@@ -228,7 +227,7 @@ extension SearchTestViewController: JTAppleCalendarViewDataSource{
 }
 
 extension SearchTestViewController: JTAppleCalendarViewDelegate{
-    // display the cell
+    // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         // TODO: error handling
         let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
@@ -237,6 +236,7 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
         return cell
     }
     
+    // handle the selection of a cell, select other cells between first and last date if necessary
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleSelection(cell: cell, cellState: cellState) // always recolor cell ...
         if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
@@ -277,25 +277,18 @@ extension SearchTestViewController: JTAppleCalendarViewDelegate{
         }
     }
     
+    // date deselected -> update cell's background
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleSelection(cell: cell, cellState: cellState)
     }
     
+    // change year and month labels if the user swipes to a new month
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         setupCalendarLabels(from: visibleDates)
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        /* if cellState.dateBelongsTo == .thisMonth {
-            return true
-        } else {
-            return false
-        } */
-        return true
-    }
-    
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        // this function ensures that when one date from the current date interval is deselected all others are also
+        // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
             // this is a reursive call -> only deselect cell and don't start a new recursive call
@@ -333,17 +326,18 @@ extension SearchTestViewController: UIPickerViewDelegate, UIPickerViewDataSource
 
 extension SearchTestViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+        // user picked place -> safe picked place and hide place picker
         self.pickedPlace = place
         locationNameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
-        // TODO: handle the error.
-        print("Error: ", error.localizedDescription)
+        print("Error in didFailAutocompleteWithError: ", error.localizedDescription)
     }
     
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+        // user canceled place picker -> hide it
         dismiss(animated: true, completion: nil)
     }
     
