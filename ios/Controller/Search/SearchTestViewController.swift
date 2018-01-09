@@ -54,6 +54,10 @@ class SearchTestViewController: UIViewController {
             print(brands)
         })
         
+        StorageAPI.shared.getFeaturesTest(completion: {features in
+            print(features)
+        })
+        
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
         occupantsPicker.dataSource = self

@@ -450,5 +450,27 @@ final class StorageAPI {
             return nil
         }
     }
+    
+    func snapshotToObjects(snapshot:DataSnapshot, constructor: ((Int, [String:AnyObject]) -> DictionaryConvertibleStatic?)) -> [DictionaryConvertibleStatic]? {
+        var resultObjects:[DictionaryConvertibleStatic] = []
+        for childRaw in snapshot.children {
+            if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let object = constructor(intID, dict) {
+                resultObjects.append(object)
+            } else {
+                print("childToObject: error while converting renting")
+            }
+        }
+        return resultObjects
+    }
+    
+    func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
+        self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            if let resultObjects = self.snapshotToObjects(snapshot: snapshot, constructor: Feature.init) as? [Feature] {
+                completion(resultObjects)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 }
 
