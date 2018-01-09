@@ -114,14 +114,14 @@ class SearchTestViewController: UIViewController {
             return
         } else {
             let currentFirstDate = firstDate!
-            let desiredFirstDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
+            let desiredFirstDate = Filter.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
             var desiredLastDate: Date
             if let currentLastDate = lastDate {
                 // last date set -> user didn't select a one day interval -> merge calendar dates with pickup and return time
-                desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
+                desiredLastDate = Filter.mergeDates(dayDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
             } else {
                 // no last date set -> user picker one day interval -> merge calendar dates with pickup and return time
-                desiredLastDate = Filter.setDatesHoursMinutes(originalDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
+                desiredLastDate = Filter.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
             }
             if desiredLastDate < desiredFirstDate {
                 // user picked reverse date interval -> show error and don't proceed to the search results

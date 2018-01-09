@@ -112,8 +112,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
-            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
-            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
+            let mergedStartDate = Filter.mergeDates(dayDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
+            let mergedEndDate = Filter.mergeDates(dayDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(
