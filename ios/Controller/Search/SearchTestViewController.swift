@@ -50,8 +50,8 @@ class SearchTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        StorageAPI.shared.getFeatures(completion: {features in
-            print(features)
+        StorageAPI.shared.getUserByUID(UID: "87pJyKZGviNSarBkgVqVRrWmqqi1", completion: {brands in
+            print(brands)
         })
         
         setupCalendarView()
