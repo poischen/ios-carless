@@ -15,6 +15,7 @@ import Firebase
 
 class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
     var receiverId: String = ""
     
     private var users = [User]();
@@ -33,8 +34,8 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = StorageAPI.shared.userName
         
-        //MessageHandler._shared.observeMessages()
-        MessageHandler._shared.observeMediaMessages()
+        //MessageHandler._shared.observeMediaMessages()
+        MessageHandler._shared.observeUserMediaMessages()
         MessageHandler._shared.observeUserMessages()
             
     }
@@ -126,16 +127,16 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         present(picker, animated: true, completion: nil);
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             let data = UIImageJPEGRepresentation(pic, 0.01);
             
-            MessageHandler._shared.sendMedia(image: data, video: nil, senderID: senderId, senderName: senderDisplayName);
+            MessageHandler._shared.sendMedia(image: data, video: nil, senderID: senderId, senderName: senderDisplayName, receiverID: receiverId);
             
         } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
             
-            MessageHandler._shared.sendMedia(image: nil, video: vidUrl, senderID: senderId, senderName: senderDisplayName);
+            MessageHandler._shared.sendMedia(image: nil, video: vidUrl, senderID: senderId, senderName: senderDisplayName, receiverID: receiverId);
         
         }
         
@@ -197,51 +198,4 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         dismiss(animated: true, completion: nil);
     }
     
-    /*func observeMessages() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return
-        }
-        
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
-        userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
-            let messageID = snapshot.key
-            let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
-            messagesRef.observeSingleEvent(of: .value, with: {snapshot in
-                if let data = snapshot.value as? NSDictionary {
-                    if let senderID = data[DBConstants.SENDER_ID] as? String{
-                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
-                            if let text = data[DBConstants.TEXT] as? String {
-                                MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
-                            }
-                        }
-                    }
-                }
-                
-            })
-        }
-    }*/
-    
-    /*func observeMessages() {
-     StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
-     
-     /* if let dictionary = snapshot.value as? [String: AnyObject]{
-     let message = Message()
-     message.setValuesForKeys(dictionary)
-     self.messages.append(message)
-     }*/
-     
-     if let data = snapshot.value as? NSDictionary {
-     if let senderID = data[DBConstants.SENDER_ID] as? String{
-     if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
-     if let text = data[DBConstants.TEXT] as? String {
-     self.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
-     }
-     }
-     }
-     }
-     }
-     }*/
-    
-    
-
 }

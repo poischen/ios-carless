@@ -19,7 +19,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //Array of Users to store all of the users
     private var users = [User]();
-    private var messages = [Message]();
     
     var selctedUser: String = ""
     static let sharedChat = ChatViewController()
@@ -79,7 +78,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         
     }
 
-    //go back to the View Controller before (there's none for now)
+    //go back to the View Controller before the current one
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil);
     }
@@ -90,6 +89,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             if let chatVC = targetController as? ChatWindowVC {
                 chatVC.receiverId = self.selctedUser
                 observeMessages()
+                observeMediaMessages()
             }
         
     }
@@ -119,17 +119,52 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             })
         }
     }
-    /*StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
     
-    if let data = snapshot.value as? NSDictionary {
-    if let id = data[DBConstants.SENDER_ID] as? String {
-    if let name = data[DBConstants.SENDER_NAME] as?
-    String {
-    if let fileURL = data[DBConstants.URL] as?
-    String {
-    self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL);
-    }*/
-    
+    func observeMediaMessages() {
+        
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+        userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
+            let messageID = snapshot.key
+            let messagesRef = Database.database().reference().child(DBConstants.MEDIA_MESSAGES).child(messageID)
+            messagesRef.observeSingleEvent(of: .value, with: {snapshot in
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String{
+                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                          if let name = data[DBConstants.NAME] as? String {
+                            if let fileURL = data[DBConstants.URL] as? String {
+                                if (receiverID == self.selctedUser) || (senderID == self.selctedUser) {
+                                    MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
+                                   }
+                                }
+                            }
+                        }
+                    }
+                }
+                
+            })
+        }
+        
+    }
+    /*func observeMediaMessages() {
+     
+     StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+     
+     if let data = snapshot.value as? NSDictionary {
+     if let id = data[DBConstants.SENDER_ID] as? String {
+     if let name = data[DBConstants.SENDER_NAME] as?
+     String {
+     if let fileURL = data[DBConstants.URL] as?
+     String {
+     self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL);
+     }
+     }
+     }
+     }
+     }
+     }*/
  
-    
 }
