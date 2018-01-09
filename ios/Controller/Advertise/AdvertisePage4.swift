@@ -24,7 +24,7 @@ class AdvertisePage4: UIViewController {
     
     let formatter = DateFormatter()
     
-    let blockedColor = UIColor(hue: 0.9917, saturation: 0.21, brightness: 0.98, alpha: 1.0)
+    let blockedColor = UIColor(hue: 0.9917, saturation: 0.67, brightness: 0.75, alpha: 1.0)
     let releasedColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1.0)
     let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
     
@@ -44,6 +44,8 @@ class AdvertisePage4: UIViewController {
         calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
         }
+        
+        calendarView.allowsMultipleSelection = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,16 +58,17 @@ class AdvertisePage4: UIViewController {
     
   func handleSelection(view: JTAppleCell?, cellState: CellState){
     print("handleSelection")
+    print(cellState)
         guard let cell = view as? AvailibilityCalendarCell else {return}
     if cellState.dateBelongsTo == .thisMonth {
         if cellState.isSelected {
-            print("released")
-            cell.dateLabel.textColor = releasedColor
-            cell.availibility.isBlocked = true
-        } else {
             print("blocked")
             cell.dateLabel.textColor = blockedColor
             cell.availibility.isBlocked = false
+        } else {
+            print("released")
+            cell.dateLabel.textColor = releasedColor
+            cell.availibility.isBlocked = true
         }
     }
 }
@@ -113,7 +116,7 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
         formatter.dateFormat = "yyyy MM dd"
         let selectedDate = formatter.string(from: date)
         pageViewController.advertiseHelper.blockedDates.append(selectedDate)
-        print(selectedDate)
+        print("didSelectDate " + selectedDate + "cellState: " + "\(cellState)")
         print(pageViewController.advertiseHelper.blockedDates)
         
         guard let blockedDate = cell as? AvailibilityCalendarCell else {return}
