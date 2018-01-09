@@ -37,7 +37,7 @@ class AdvertiseHelper {
     var returnTime: String?
     
     //cache input for storing availibility data into db
-    //todo
+    var blockedDates: [String] = []
     
     //cache input for storing features data into db
     //todo
@@ -121,33 +121,41 @@ class AdvertiseHelper {
 
     
     
-    func getOfferDict() -> [String : AnyObject]? {
-        var offeringDict: [String : AnyObject]? = [ : ]
+    func getOfferDict() -> [String : AnyObject] {
+        var offeringDict: [String : AnyObject] = [ : ]
         
         if let brandID = self.brandID, let consumption = self.consumption, let description = self.description, let fuel = self.fuelID, let gear = self.gearID, let speed = self.hp, let latitute = self.latitude, let location = self.location, let longitute = self.longitude, let imgURL = self.pictureURL, let price = self.basePrice, let seats = self.seats, let carName = self.type, let user = self.userUID, let vehicleType = self.vehicleTypeID, let pickupTime = self.pickupTime, let returnTime = self.returnTime {
-            offeringDict!.updateValue(brandID as AnyObject, forKey: Offering.OFFERING_BRAND_ID_KEY)
-            offeringDict!.updateValue(consumption as AnyObject, forKey: Offering.OFFERING_CONSUMPTION_KEY)
-            offeringDict!.updateValue(description as AnyObject, forKey: Offering.OFFERING_DESCRIPTION_KEY)
-            offeringDict!.updateValue(fuel as AnyObject, forKey: Offering.OFFERING_FUEL_ID_KEY)
-            offeringDict!.updateValue(gear as AnyObject, forKey: Offering.OFFERING_GEAR_ID_KEY)
-            offeringDict!.updateValue(speed as AnyObject, forKey: Offering.OFFERING_HP_KEY)
-            offeringDict!.updateValue(latitute as AnyObject, forKey:  Offering.OFFERING_LATITUDE_KEY)
-            offeringDict!.updateValue(location as AnyObject, forKey: Offering.OFFERING_LOCATION_KEY)
-            offeringDict!.updateValue(longitute as AnyObject, forKey: Offering.OFFERING_LONGITUDE_KEY)
-            offeringDict!.updateValue(imgURL as AnyObject, forKey: Offering.OFFERING_PICTURE_URL_KEY)
-            offeringDict!.updateValue(price as AnyObject, forKey: Offering.OFFERING_PRICE_KEY)
-            offeringDict!.updateValue(seats as AnyObject, forKey: Offering.OFFERING_SEATS_KEY)
-            offeringDict!.updateValue(carName as AnyObject, forKey: Offering.OFFERING_TYPE_KEY)
-            offeringDict!.updateValue(user as AnyObject, forKey: Offering.OFFERING_USER_UID_KEY)
-            offeringDict!.updateValue(vehicleType as AnyObject, forKey: Offering.OFFERING_VEHICLE_TYPE_ID_KEY)
-            offeringDict!.updateValue(pickupTime as AnyObject, forKey: Offering.OFFERING_PICKUP_TIME_KEY)
-            offeringDict!.updateValue(returnTime as AnyObject, forKey: Offering.OFFERING_RETURN_TIME_KEY)
+            offeringDict.updateValue(brandID as AnyObject, forKey: Offering.OFFERING_BRAND_ID_KEY)
+            offeringDict.updateValue(consumption as AnyObject, forKey: Offering.OFFERING_CONSUMPTION_KEY)
+            offeringDict.updateValue(description as AnyObject, forKey: Offering.OFFERING_DESCRIPTION_KEY)
+            offeringDict.updateValue(fuel as AnyObject, forKey: Offering.OFFERING_FUEL_ID_KEY)
+            offeringDict.updateValue(gear as AnyObject, forKey: Offering.OFFERING_GEAR_ID_KEY)
+            offeringDict.updateValue(speed as AnyObject, forKey: Offering.OFFERING_HP_KEY)
+            offeringDict.updateValue(latitute as AnyObject, forKey:  Offering.OFFERING_LATITUDE_KEY)
+            offeringDict.updateValue(location as AnyObject, forKey: Offering.OFFERING_LOCATION_KEY)
+            offeringDict.updateValue(longitute as AnyObject, forKey: Offering.OFFERING_LONGITUDE_KEY)
+            offeringDict.updateValue(imgURL as AnyObject, forKey: Offering.OFFERING_PICTURE_URL_KEY)
+            offeringDict.updateValue(price as AnyObject, forKey: Offering.OFFERING_PRICE_KEY)
+            offeringDict.updateValue(seats as AnyObject, forKey: Offering.OFFERING_SEATS_KEY)
+            offeringDict.updateValue(carName as AnyObject, forKey: Offering.OFFERING_TYPE_KEY)
+            offeringDict.updateValue(user as AnyObject, forKey: Offering.OFFERING_USER_UID_KEY)
+            offeringDict.updateValue(vehicleType as AnyObject, forKey: Offering.OFFERING_VEHICLE_TYPE_ID_KEY)
+            offeringDict.updateValue(pickupTime as AnyObject, forKey: Offering.OFFERING_PICKUP_TIME_KEY)
+            offeringDict.updateValue(returnTime as AnyObject, forKey: Offering.OFFERING_RETURN_TIME_KEY)
         } else {
-            offeringDict = nil
         }
         return offeringDict
     }
-            
+    
+    func releaseDate(date: String){
+        if blockedDates.count > 0 {
+            if let index = blockedDates.index(of: date) {
+                blockedDates.remove(at: index)
+                print(blockedDates)
+            }
+        }
+    }
+        
 
     
 }

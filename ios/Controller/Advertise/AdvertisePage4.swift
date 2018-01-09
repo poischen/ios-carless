@@ -28,8 +28,6 @@ class AdvertisePage4: UIViewController {
     let releasedColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1.0)
     let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
     
-    var basicPrice: Int!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,12 +55,15 @@ class AdvertisePage4: UIViewController {
     }
     
   func handleSelection(view: JTAppleCell?, cellState: CellState){
+    print("handleSelection")
         guard let cell = view as? AvailibilityCalendarCell else {return}
     if cellState.dateBelongsTo == .thisMonth {
         if cellState.isSelected {
+            print("released")
             cell.dateLabel.textColor = releasedColor
             cell.availibility.isBlocked = true
         } else {
+            print("blocked")
             cell.dateLabel.textColor = blockedColor
             cell.availibility.isBlocked = false
         }
@@ -108,11 +109,22 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        //todo: necessary to filter duplicates?
+        formatter.dateFormat = "yyyy MM dd"
+        let selectedDate = formatter.string(from: date)
+        pageViewController.advertiseHelper.blockedDates.append(selectedDate)
+        print(selectedDate)
+        print(pageViewController.advertiseHelper.blockedDates)
+        
         guard let blockedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelection(view: blockedDate, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        formatter.dateFormat = "yyyy MM dd"
+        let selectedDate = formatter.string(from: date)
+        pageViewController.advertiseHelper.releaseDate(date: selectedDate)
+        
         guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelection(view: releasedDate, cellState: cellState)
     }
@@ -126,8 +138,8 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
 extension AdvertisePage4: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = Calendar.current.timeZone
-        formatter.locale = Calendar.current.locale
+       // formatter.timeZone = Calendar.current.timeZone
+       // formatter.locale = Calendar.current.locale
         
         let date = Date()
         let calendar = Calendar.current

@@ -28,6 +28,7 @@ final class StorageAPI {
     
     // DB references
     private let offeringsDBReference: DatabaseReference
+    private let availibilityDBReference: DatabaseReference
     private let rentingsDBReference: DatabaseReference
     private let featuresDBReference: DatabaseReference
     private let offeringsFeaturesDBReference: DatabaseReference
@@ -74,6 +75,7 @@ final class StorageAPI {
         fireBaseDBAccess = Database.database().reference()
         fireBaseDBAccess.keepSynced(true)
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
+        self.availibilityDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_AVAILIBILITY)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
@@ -428,6 +430,27 @@ final class StorageAPI {
             }
         }
     }
+    
+    //store availibility of offer in db
+    func saveAvailibility(blockedDates: [String]?, offerID: String){
+        let availibilityKey = availibilityDBReference.childByAutoId().key
+        offeringsDBReference.child(offerID).child(DBConstants.PROPERTY_NAME_OFFERINGS_BLOCKED).setValue(availibilityKey)
+        
+        let reference = availibilityDBReference.child(availibilityKey)
+        if let blockedDates = blockedDates {
+            for blockedDay in blockedDates {
+                let blockedDayKey = reference.childByAutoId().key
+                let entryReference = reference.child(blockedDayKey)
+                
+                let blockedDayString = blockedDay
+                print(blockedDayString)
+                
+                entryReference.setValue(blockedDayString);
+            }
+        }
+
+    }
+    
     
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){

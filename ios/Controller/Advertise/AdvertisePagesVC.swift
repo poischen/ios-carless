@@ -24,16 +24,30 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     
     //writes offer to db if all inputs are availible
     func writeOfferToDB(){
-        if let offeringDict = advertiseHelper.getOfferDict() {
+        let offeringDict = advertiseHelper.getOfferDict()
+        print(offeringDict)
+        if offeringDict.count > 0 {
             print(offeringDict)
             let offer = Offering(id: "empty", dict: offeringDict)
+            
+        //store offering
             storageAPI.saveOffering(offer: offer!, completion: {offerWithID in
+                //store avilibility
+                if let offerID = offerWithID.id {
+                    self.storageAPI.saveAvailibility(blockedDates: self.advertiseHelper.blockedDates, offerID: offerID)
+                }
+                
+                //switch to offer view
                 let storyboard = UIStoryboard(name: "Offering", bundle: nil)
                 if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
                     viewController.displayingOffering = offerWithID
                     self.present(viewController, animated: true, completion: nil)
                 }
             })
+            
+        //store features
+            //todo
+            
         } else {
             let alertMissingInputs = UIAlertController(title: "Something is missing", message: "Please check all inputs and try again.", preferredStyle: .alert)
             let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
