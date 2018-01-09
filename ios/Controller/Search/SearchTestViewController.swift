@@ -49,6 +49,11 @@ class SearchTestViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        StorageAPI.shared.getFeatures(completion: {features in
+            print(features)
+        })
+        
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
         occupantsPicker.dataSource = self

@@ -70,9 +70,12 @@ final class StorageAPI {
     }
     
     private init() {
+        // enable caching but also enable keepSynced in order to e.g. get the newest offerings
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
         fireBaseDBAccess.keepSynced(true)
+        
+        // create "table" references
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
@@ -82,33 +85,21 @@ final class StorageAPI {
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
         self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
-        /*
-        // tryong to avoid caching problems by keeping references synced until queried for the first time
-        // TODO: find better solution?
-        self.offeringsDBReference.keepSynced(true)
-        self.rentingsDBReference.keepSynced(true)
-        self.featuresDBReference.keepSynced(true)
-        self.offeringsFeaturesDBReference.keepSynced(true)
-        self.vehicleTypesDBReference.keepSynced(true)
-        self.gearsDBReference.keepSynced(true)
-        self.brandsDBReference.keepSynced(true)
-        self.fuelDBReference.keepSynced(true)
-        self.lessorRatings.keepSynced(true)
-        self.usersRef.keepSynced(true) */
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                print(child.key)
-                let offering = Offering.init(id: String(child.key)!, dict: dict)! // TODO: catch nil here
-                resultOfferings.append(offering)
+                if let child = childRaw as? DataSnapshot,
+                   let dict = child.value as? [String:AnyObject],
+                   let offering = Offering.init(id: child.key, dict: dict) {
+                       resultOfferings.append(offering)
+                } else {
+                    print("getOfferings: error while converting offering")
+                }
             }
             completion(resultOfferings)
-            //self.offeringsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -118,13 +109,10 @@ final class StorageAPI {
         self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let offeringID = child.key
-                    if let offering = Offering.init(id: offeringID, dict: dict) {
+                if let child = childRaw as? DataSnapshot,
+                   let dict = child.value as? [String:AnyObject],
+                   let offering = Offering.init(id: child.key, dict: dict) {
                         completion(offering)
-                    } else {
-                        print("error in get getOfferingByID")
-                    }
                 } else {
                     print("error in get getOfferingByID")
                 }
@@ -140,13 +128,16 @@ final class StorageAPI {
         self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFeatures:[Feature] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let feature = Feature.init(id: Int(child.key)!, dict: dict)!
-                resultFeatures.append(feature)
+                if let child = childRaw as? DataSnapshot,
+                   let dict = child.value as? [String:AnyObject],
+                   let featureID = Int(child.key),
+                   let feature = Feature.init(id: featureID, dict: dict){
+                       resultFeatures.append(feature)
+                } else {
+                    print("getFeatures: error while converting feature")
+                }
             }
             completion(resultFeatures)
-            //self.featuresDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -158,9 +149,8 @@ final class StorageAPI {
             let receivedData = snapshot.valueInExportFormat() as! NSDictionary
             var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
             for (_, associationRaw) in receivedData {
-                let association:NSDictionary = associationRaw as! NSDictionary
-                // TODO: Shorthand for this?
                 guard
+                    let association:NSDictionary = associationRaw as? NSDictionary,
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
                     let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
                         print("error in getOfferingsFeatures")
@@ -176,7 +166,6 @@ final class StorageAPI {
                 }
             }
             completion(resultOfferingsFeatures)
-            //self.offeringsFeaturesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -202,13 +191,16 @@ final class StorageAPI {
         self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultTypes:[VehicleType] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let type = VehicleType.init(id: Int(child.key)!, dict: dict)!
-                resultTypes.append(type)
+                if let child = childRaw as? DataSnapshot,
+                   let dict = child.value as? [String:AnyObject],
+                   let typeID = Int(child.key),
+                   let type = VehicleType.init(id: typeID, dict: dict) {
+                       resultTypes.append(type)
+                } else {
+                    print("getVehicleTypes: error while converting feature")
+                }
             }
             completion(resultTypes)
-            //self.vehicleTypesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -219,13 +211,17 @@ final class StorageAPI {
         self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Brand] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let brand = Brand.init(id: Int(child.key)!, dict: dict)!
-                resultBrands.append(brand)
+                if let child = childRaw as? DataSnapshot,
+                   let dict = child.value as? [String:AnyObject],
+                   let brandID = Int(child.key),
+                   let brand = Brand.init(id: brandID, dict: dict) {
+                       resultBrands.append(brand)
+                } else {
+                    print("getBrands: error while converting brand")
+
+                }
             }
             completion(resultBrands)
-            //self.brandsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
