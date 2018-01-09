@@ -108,7 +108,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     if let senderID = data[DBConstants.SENDER_ID] as? String{
                         if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
                             if let text = data[DBConstants.TEXT] as? String {
-                                if receiverID == self.selctedUser {
+                            if (receiverID == self.selctedUser) || (senderID == self.selctedUser) {
                                     MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
                                 }
                             }
