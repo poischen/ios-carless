@@ -91,15 +91,15 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        var countrows : Int = pageViewController.advertiseModel.brandsPickerContent.count
+        var countrows : Int = pageViewController.advertise.brandsPickerContent.count
         if (pickerView == seatsPicker) {
-            countrows = self.pageViewController.advertiseModel.seatsPickerContent.count
+            countrows = self.pageViewController.advertise.seatsPickerContent.count
         } else if (pickerView == fuelPicker) {
-            countrows = self.pageViewController.advertiseModel.fuelPickerContent.count
+            countrows = self.pageViewController.advertise.fuelPickerContent.count
         } else if (pickerView == gearPicker) {
-            countrows = self.pageViewController.advertiseModel.gearPickerContent.count
+            countrows = self.pageViewController.advertise.gearPickerContent.count
         } else if (pickerView == vehicleTypePicker) {
-            countrows = self.pageViewController.advertiseModel.vehicleTypeContent.count
+            countrows = self.pageViewController.advertise.vehicleTypeContent.count
         }
         
         return countrows;
@@ -130,7 +130,7 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
         let imageView = UIImageView(frame: CGRect(origin: CGPoint(x: 0, y: 15), size: CGSize(width: 30, height: 30)))
         let titleView = UILabel(frame: CGRect(origin: CGPoint(x: 40, y: 15), size: CGSize(width: 105, height: 32)))
         if (pickerView == brandPicker) {
-            let title: String = pageViewController.advertiseModel.brandsPickerContent[row]
+            let title: String = pageViewController.advertise.brandsPickerContent[row]
             titleView.text = title
             let image = UIImage(named:title)
             imageView.image = image
@@ -138,26 +138,26 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             view.addSubview(titleView)
             return view
         } else if (pickerView == seatsPicker){
-            titleView.text = pageViewController.advertiseModel.seatsPickerContent[row]
-            imageView.image = pageViewController.advertiseModel.seatsPickerIcons[row]
+            titleView.text = pageViewController.advertise.seatsPickerContent[row]
+            imageView.image = pageViewController.advertise.seatsPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == fuelPicker){
-            titleView.text = pageViewController.advertiseModel.fuelPickerContent[row]
-            imageView.image = pageViewController.advertiseModel.fuelPickerIcons[row]
+            titleView.text = pageViewController.advertise.fuelPickerContent[row]
+            imageView.image = pageViewController.advertise.fuelPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == gearPicker){
-            titleView.text = pageViewController.advertiseModel.gearPickerContent[row]
-            imageView.image = pageViewController.advertiseModel.gearPickerIcons[row]
+            titleView.text = pageViewController.advertise.gearPickerContent[row]
+            imageView.image = pageViewController.advertise.gearPickerIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
             return view
         } else if (pickerView == vehicleTypePicker){
-            titleView.text = pageViewController.advertiseModel.vehicleTypeContent[row]
-            imageView.image = pageViewController.advertiseModel.vehicleTypeIcons[row]
+            titleView.text = pageViewController.advertise.vehicleTypeContent[row]
+            imageView.image = pageViewController.advertise.vehicleTypeIcons[row]
 //            imageView.image = pageViewController.advertiseModel.vehicleTypeIcons[row]
             view.addSubview(imageView)
             view.addSubview(titleView)
@@ -169,39 +169,49 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     //TODO convert values to DB-IDs
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == brandPicker) {
-            selectedBrand = self.pageViewController.advertiseModel.brandsPickerContent[row]
+            selectedBrand = self.pageViewController.advertise.brandsPickerContent[row]
             self.brandInput.text = selectedBrand
             self.brandPicker.isHidden = true
-            pageViewController.advertiseModel.updateDict(input: selectedBrand as AnyObject, key: Offering.OFFERING_BRAND_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_BRANDS)
+            
+            pageViewController.advertiseHelper.convertAndCacheOfferingData(input: selectedBrand, key: Offering.OFFERING_BRAND_ID_KEY, conversionType: Advertise.ADVERTISE_CONVERSION_BRANDS)
+            
+            //pageViewController.advertiseModel.updateDict(input: selectedBrand as AnyObject, key: Offering.OFFERING_BRAND_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_BRANDS)
             
         } else if (pickerView == seatsPicker){
-            selectedSeats = self.pageViewController.advertiseModel.seatsPickerContent[row]
+            selectedSeats = self.pageViewController.advertise.seatsPickerContent[row]
             self.seatsInput.text = selectedSeats
             self.seatsPicker.isHidden = true
             
-            /*var seats: AnyObject = (seatsInput.text as AnyObject)
-            if (seats as! String == "more"){
-                seats = 9 as AnyObject
-            }*/
-            pageViewController.advertiseModel.updateDict(input: selectedSeats as AnyObject, key: Offering.OFFERING_SEATS_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_SEATS)
+            pageViewController.advertiseHelper.convertAndCacheOfferingData(input: selectedSeats, key: Offering.OFFERING_SEATS_KEY, conversionType: Advertise.ADVERTISE_CONVERSION_SEATS)
+            
+            //pageViewController.advertiseModel.updateDict(input: selectedSeats as AnyObject, key: Offering.OFFERING_SEATS_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_SEATS)
             
         } else if (pickerView == fuelPicker){
-            selectedFuel = self.pageViewController.advertiseModel.fuelPickerContent[row]
+            selectedFuel = self.pageViewController.advertise.fuelPickerContent[row]
             self.fuelInput.text = selectedFuel
             self.fuelPicker.isHidden = true
-            pageViewController.advertiseModel.updateDict(input: selectedFuel as AnyObject, key: Offering.OFFERING_FUEL_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_FUELS)
+            
+            pageViewController.advertiseHelper.convertAndCacheOfferingData(input: selectedFuel, key: Offering.OFFERING_FUEL_ID_KEY, conversionType: Advertise.ADVERTISE_CONVERSION_FUELS)
+            
+            //pageViewController.advertiseModel.updateDict(input: selectedFuel as AnyObject, key: Offering.OFFERING_FUEL_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_FUELS)
             
         } else if (pickerView == gearPicker){
-            selectedGear = self.pageViewController.advertiseModel.gearPickerContent[row]
+            selectedGear = self.pageViewController.advertise.gearPickerContent[row]
             self.gearInput.text = selectedGear
             self.gearPicker.isHidden = true
-            pageViewController.advertiseModel.updateDict(input: selectedGear as AnyObject, key: Offering.OFFERING_GEAR_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_GEARS)
+            
+            pageViewController.advertiseHelper.convertAndCacheOfferingData(input: selectedGear, key: Offering.OFFERING_GEAR_ID_KEY, conversionType: Advertise.ADVERTISE_CONVERSION_GEARS)
+            
+            //pageViewController.advertiseModel.updateDict(input: selectedGear as AnyObject, key: Offering.OFFERING_GEAR_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_GEARS)
             
         } else if (pickerView == vehicleTypePicker){
-            selectedVehicleType = self.pageViewController.advertiseModel.vehicleTypeContent[row]
+            selectedVehicleType = self.pageViewController.advertise.vehicleTypeContent[row]
             self.vehicleTypeInput.text = selectedVehicleType
             self.vehicleTypePicker.isHidden = true
-            pageViewController.advertiseModel.updateDict(input: selectedVehicleType as AnyObject, key: Offering.OFFERING_VEHICLE_TYPE_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_VEHICLETYPES)
+            
+            pageViewController.advertiseHelper.convertAndCacheOfferingData(input: selectedVehicleType, key: Offering.OFFERING_VEHICLE_TYPE_ID_KEY, conversionType: Advertise.ADVERTISE_CONVERSION_VEHICLETYPES)
+            
+            //pageViewController.advertiseModel.updateDict(input: selectedVehicleType as AnyObject, key: Offering.OFFERING_VEHICLE_TYPE_ID_KEY, needsConvertion: true, conversionType: Advertise.ADVERTISE_CONVERSION_VEHICLETYPES)
             
         }
         
@@ -225,11 +235,12 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.consumptionInput){
             //let consumption: AnyObject = (consumptionInput.text as AnyObject)
-            var consumptionInt: Int
+            var consumptionInt: Int?
             consumptionInt = Int(consumptionInput.text!)!
             
             if consumptionInt != nil {
-                pageViewController.advertiseModel.updateDict(input: consumptionInt as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+                //pageViewController.advertise.updateDict(input: consumptionInt as AnyObject, key: Offering.OFFERING_CONSUMPTION_KEY, needsConvertion: false, conversionType: "none")
+                pageViewController.advertiseHelper.consumption = consumptionInt
             }
             
         } else if (textField == self.speedInput){
@@ -237,12 +248,14 @@ class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSo
             let speedInt = Int(speedInput.text!)!
             
             if speedInt != nil {
-            pageViewController.advertiseModel.updateDict(input: speedInt as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+            //pageViewController.advertise.updateDict(input: speedInt as AnyObject, key: Offering.OFFERING_HP_KEY, needsConvertion: false, conversionType: "none")
+                pageViewController.advertiseHelper.hp = speedInt
             }
             
         } else if (textField == self.modelInput){
             //let model: AnyObject = (modelInput.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: modelInput.text as AnyObject, key: Offering.OFFERING_TYPE_KEY, needsConvertion: false, conversionType: "none")
+            //pageViewController.advertise.updateDict(input: modelInput.text as AnyObject, key: Offering.OFFERING_TYPE_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseHelper.type = modelInput.text
         }
     }
     
