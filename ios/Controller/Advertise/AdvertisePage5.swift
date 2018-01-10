@@ -91,6 +91,8 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         }
         
         for component in place.addressComponents! {
+            print(component.name)
+            
             if component.type == "locality" {
                 selectedCity = component.name
                 //pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
