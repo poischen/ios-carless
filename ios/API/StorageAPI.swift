@@ -508,11 +508,28 @@ final class StorageAPI {
         return resultObjects
     }
     
+    // TODO: remove
     func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
         self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
             if let resultObjects = self.snapshotToObjects(snapshot: snapshot, constructor: Feature.init) as? [Feature] {
                 completion(resultObjects)
             }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getOfferingsNearbyTest(completion: @escaping (_ features: [Offering]) -> Void){
+        self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultOfferings:[Offering] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    resultOfferings.append(offering)
+                } else {
+                    print("getOfferings: error while converting offering")
+                }
+            }
+            completion(resultOfferings)
         }) { (error) in
             print(error.localizedDescription)
         }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import GooglePlacePicker
 
 class Filter {
     // filter criteria
@@ -76,4 +77,26 @@ class Filter {
         mergedDateComponents.minute = hoursMinutesDateComponents.minute
         return calendar.date(from: mergedDateComponents)! // forcing optional unwrap as contstructing a date from components of dates should always work
     }
+    
+    //static func distanceBetweenPlaces(place1: GMSPlace, place2: GMSPlace) -> Double{
+    static func distanceBetweenPoints(place1Latitude: Double, place1Longitude: Double, place2Latitude: Double, place2Longitude: Double) -> Double{
+        /* let (place1Latitude, place1Longitude) = (place1.coordinate.latitude as! Double, place1.coordinate.longitude as! Double)
+        let (place2Latitude, place2Longitude) = (place2.coordinate.latitude as! Double, place2.coordinate.longitude as! Double) */
+
+        // source: https://www.movable-type.co.uk/scripts/latlong.html
+        let earthRadius = Double(6371 * 1000) // meters (6371 kilometers)
+        let place1LatRadians = degreesToRadians(degrees: place1Latitude)
+        let place2LatRadians = degreesToRadians(degrees: place2Latitude)
+        let deltaLatRadians = degreesToRadians(degrees: (place2Latitude - place1Latitude))
+        let deltaLongRadians = degreesToRadians(degrees: (place2Longitude - place1Longitude))
+        
+        let a = sin(deltaLatRadians/2) * sin(deltaLatRadians/2) + cos(place1LatRadians) * cos(place2LatRadians) * sin(deltaLongRadians/2) * sin(deltaLongRadians/2);
+        let c = 2 * atan2(sqrt(a), sqrt(1-a))
+        return earthRadius * c
+    }
+    
+    static func degreesToRadians(degrees: Double) -> Double{
+        return degrees * .pi / 180
+    }
+    
 }

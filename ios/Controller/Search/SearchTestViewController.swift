@@ -50,13 +50,16 @@ class SearchTestViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        StorageAPI.shared.getUserByUID(UID: "87pJyKZGviNSarBkgVqVRrWmqqi1", completion: {brands in
-            print(brands)
-        })
-        
-        StorageAPI.shared.getFeaturesTest(completion: {features in
-            print(features)
-        })
+        /* TESTING ARE FOR THE LANGUAGE BUG */
+        /*let placesClient = GMSPlacesClient();
+        placesClient.lookUpPlaceID("EilHZXNjaHdpc3Rlci1TY2hvbGwtUGxhdHosIE11bmljaCwgR2VybWFueQ", callback: {(place, error) in
+            let test = place!
+            print(place!)
+            print(place!.formattedAddress)
+        })*/
+        print(Filter.degreesToRadians(degrees: 180))
+        print(Filter.distanceBetweenPoints(place1Latitude: 40, place1Longitude: 30, place2Latitude: 20, place2Longitude: 10))
+        /* -------------------------------- */
         
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
@@ -88,7 +91,7 @@ class SearchTestViewController: UIViewController {
         let autocompleteController = GMSAutocompleteViewController()
         // create filter so that the picker only shows cities
         let filter = GMSAutocompleteFilter()
-        filter.type = .city
+        //filter.type = .city
         autocompleteController.autocompleteFilter = filter
         autocompleteController.delegate = self
         // show place picker
