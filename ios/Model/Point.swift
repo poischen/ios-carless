@@ -37,4 +37,10 @@ class Point {
     static func degreesToRadians(degrees: Double) -> Double{
         return degrees * .pi / 180
     }
+    
+    /* static func distanceBetweenPlaces(place1: GMSPlace, place2: GMSPlace) -> Double {
+     let (place1Latitude, place1Longitude) = (place1.coordinate.latitude, place1.coordinate.longitude)
+     let (place2Latitude, place2Longitude) = (place2.coordinate.latitude, place2.coordinate.longitude)
+     return distanceBetweenPoints(place1Latitude: place1Latitude, place1Longitude: place1Longitude, place2Latitude: place2Latitude, place2Longitude: place2Longitude) // distance is returned in METERS
+     } */
 }

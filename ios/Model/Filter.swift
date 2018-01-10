@@ -16,22 +16,22 @@ class Filter {
     var fuelIDs: [Int]?
     var gearIDs: [Int]?
     var minHP: Int?
-    var location: String?
+    //var location: String? // TODO: remove
     var maxPrice: Int?
     var minSeats: Int?
     var vehicleTypeIDs: [Int]?
     var dateInterval: DateInterval?
     var featureIDs: [Int]?
-    var placeLocation: Point?
+    var placePoint: Point?
     
-    init(brandIDs: [Int]?, maxConsumption: Int?, fuelIDs: [Int]?, gearIDs: [Int]?, minHP: Int?, location: String?, maxPrice: Int?, minSeats: Int?, vehicleTypeIDs: [Int]?, dateInterval: DateInterval?, featureIDs: [Int]?, placeLocation: Point?) {
+    init(brandIDs: [Int]?, maxConsumption: Int?, fuelIDs: [Int]?, gearIDs: [Int]?, minHP: Int?, maxPrice: Int?, minSeats: Int?, vehicleTypeIDs: [Int]?, dateInterval: DateInterval?, featureIDs: [Int]?, placePoint: Point?) {
         self.brandIDs = brandIDs
         self.maxConsumption = maxConsumption
         self.fuelIDs = fuelIDs
         self.gearIDs = gearIDs
         self.minHP = minHP
-        self.location = location // TODO: remove
-        self.placeLocation = placeLocation
+        // self.location = location // TODO: remove
+        self.placePoint = placePoint
         self.maxPrice = maxPrice
         self.minSeats = minSeats
         self.vehicleTypeIDs = vehicleTypeIDs
@@ -95,11 +95,6 @@ class Filter {
     static func degreesToRadians(degrees: Double) -> Double{
         return degrees * .pi / 180
     }
-    
-    /* static func distanceBetweenPlaces(place1: GMSPlace, place2: GMSPlace) -> Double {
-        let (place1Latitude, place1Longitude) = (place1.coordinate.latitude, place1.coordinate.longitude)
-        let (place2Latitude, place2Longitude) = (place2.coordinate.latitude, place2.coordinate.longitude)
-        return distanceBetweenPoints(place1Latitude: place1Latitude, place1Longitude: place1Longitude, place2Latitude: place2Latitude, place2Longitude: place2Longitude) // distance is returned in METERS
-    } */
+
     
 }

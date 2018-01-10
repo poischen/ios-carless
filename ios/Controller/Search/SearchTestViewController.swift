@@ -205,13 +205,12 @@ class SearchTestViewController: UIViewController {
                     gearIDs: nil,
                     minHP: nil,
                     // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
-                    location: nil,
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                     featureIDs: nil,
-                    placeLocation: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
+                    placePoint: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
                 )
                 // send filter to the next view controller by setting an attribute of it to the filter
                 searchResultsViewController.searchFilter = newFilter

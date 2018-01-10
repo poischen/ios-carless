@@ -122,13 +122,13 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     fuelIDs: nil,
                     gearIDs: nil,
                     minHP: nil,
-                    location: pickedPlace!.addressComponents![0].name, // only use the city name for the search
+                    // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
                     featureIDs: nil,
-                    placeLocation: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
+                    placePoint: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
                 )
                 searchResultsViewController.searchFilter = newFilter
                 
