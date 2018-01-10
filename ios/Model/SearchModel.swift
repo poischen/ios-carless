@@ -8,7 +8,9 @@
 
 import Foundation
 
-class SearchModel {    
+class SearchModel {
+    private let FILTER_RADIUS_METERS:Double = 12000.0
+    
     private let storageAPI: StorageAPI
     static let shared: SearchModel = SearchModel()
     
@@ -116,6 +118,14 @@ class SearchModel {
                     return false
                 }
             })
+        }
+        
+        if let desiredPlaceLocation = filter.placeLocation {
+            filterFunctions.append {
+                let distance = $0.locationPoint.distanceToPoint(otherPoint: desiredPlaceLocation)
+                print(distance)
+                return distance <= self.FILTER_RADIUS_METERS
+            }
         }
         
         return filterFunctions

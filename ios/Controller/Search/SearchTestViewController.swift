@@ -51,14 +51,16 @@ class SearchTestViewController: UIViewController {
         super.viewDidLoad()
         
         /* TESTING ARE FOR THE LANGUAGE BUG */
-        /*let placesClient = GMSPlacesClient();
-        placesClient.lookUpPlaceID("EilHZXNjaHdpc3Rlci1TY2hvbGwtUGxhdHosIE11bmljaCwgR2VybWFueQ", callback: {(place, error) in
-            let test = place!
-            print(place!)
-            print(place!.formattedAddress)
-        })*/
-        print(Filter.degreesToRadians(degrees: 180))
-        print(Filter.distanceBetweenPoints(place1Latitude: 40, place1Longitude: 30, place2Latitude: 20, place2Longitude: 10))
+        /* let placesClient = GMSPlacesClient();
+        placesClient.lookUpPlaceID("ChIJ2V-Mo_l1nkcRfZixfUq4DAE", callback: {(place, error) in // Munich
+            let munich = place
+            placesClient.lookUpPlaceID("ChIJAVkDPzdOqEcRcDteW0YgIQQ", callback: {(place, error) in // Berlin
+                let berlin = place
+                print(Filter.distanceBetweenPlaces(place1: munich!, place2: berlin!))
+            })
+        }) */
+        //print(Filter.degreesToRadians(degrees: 180))
+        //print(Filter.distanceBetweenPoints(place1Latitude: 40, place1Longitude: 30, place2Latitude: 20, place2Longitude: 10))
         /* -------------------------------- */
         
         setupCalendarView()
@@ -202,12 +204,14 @@ class SearchTestViewController: UIViewController {
                     fuelIDs: nil,
                     gearIDs: nil,
                     minHP: nil,
-                    location: pickedPlace!.addressComponents![0].name, // only use the city name for the search
+                    // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
+                    location: nil,
                     maxPrice: nil,
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
-                    featureIDs: nil
+                    featureIDs: nil,
+                    placeLocation: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
                 )
                 // send filter to the next view controller by setting an attribute of it to the filter
                 searchResultsViewController.searchFilter = newFilter
@@ -340,6 +344,7 @@ extension SearchTestViewController: GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         // user picked place -> safe picked place and hide place picker
         self.pickedPlace = place
+        print(place.placeID)
         locationNameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)
     }

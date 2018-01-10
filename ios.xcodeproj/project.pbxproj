@@ -42,6 +42,7 @@
 		19CE072C1FC41C250087E958 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE072B1FC41C250087E958 /* Brand.swift */; };
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
 		19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */; };
+		19EE8F352006A40700204C73 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE8F342006A40700204C73 /* Point.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */; };
 		2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E9511FA8A2250013D67E /* Assets.xcassets */; };
@@ -132,6 +133,7 @@
 		19CE072B1FC41C250087E958 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		19D4126A1FB707D500794F1F /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleEditable.swift; sourceTree = "<group>"; };
+		19EE8F342006A40700204C73 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AD4E9471FA8A2250013D67E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -288,6 +290,7 @@
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
+				19EE8F342006A40700204C73 /* Point.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -832,6 +835,7 @@
 				1949C5941FC9D05800C5FD91 /* Gear.swift in Sources */,
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
+				19EE8F352006A40700204C73 /* Point.swift in Sources */,
 				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,

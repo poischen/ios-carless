@@ -127,7 +127,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
-                    featureIDs: nil
+                    featureIDs: nil,
+                    placeLocation: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
                 )
                 searchResultsViewController.searchFilter = newFilter
                 
