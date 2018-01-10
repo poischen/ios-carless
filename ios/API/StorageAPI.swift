@@ -28,6 +28,7 @@ final class StorageAPI {
     
     // DB references
     private let offeringsDBReference: DatabaseReference
+    private let availibilityDBReference: DatabaseReference
     private let rentingsDBReference: DatabaseReference
     private let featuresDBReference: DatabaseReference
     private let offeringsFeaturesDBReference: DatabaseReference
@@ -77,6 +78,7 @@ final class StorageAPI {
         
         // create "table" references
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
+        self.availibilityDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_AVAILIBILITY)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
         self.featuresDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FEATURES)
         self.offeringsFeaturesDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES)
@@ -191,6 +193,28 @@ final class StorageAPI {
                 }
             }
             completion(resultTypes)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getVehicleTypeByID(id: Int, completion: @escaping (_ fuel: VehicleType) -> Void){
+        self.vehicleTypesDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.childrenCount == 1 {
+                let childRaw = snapshot.children.nextObject()
+                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                    let vehicleTypeID = Int(child.key)!
+                    if let vehicleType = VehicleType.init(id: vehicleTypeID, dict: dict) {
+                        completion(vehicleType)
+                    } else {
+                        print("error in get getVehicleTypeByID")
+                    }
+                } else {
+                    print("error in get getVehicleTypeByID")
+                }
+            } else {
+                print("no vehicle type or more than one vehicle type found")
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -325,6 +349,27 @@ final class StorageAPI {
             }
         }
     }
+    
+    //store availibility of offer in db
+    func saveAvailibility(blockedDates: [String]?, offerID: String){
+        let availibilityKey = availibilityDBReference.childByAutoId().key
+        offeringsDBReference.child(offerID).child(DBConstants.PROPERTY_NAME_OFFERINGS_BLOCKED).setValue(availibilityKey)
+        
+        let reference = availibilityDBReference.child(availibilityKey)
+        if let blockedDates = blockedDates {
+            for blockedDay in blockedDates {
+                let blockedDayKey = reference.childByAutoId().key
+                let entryReference = reference.child(blockedDayKey)
+                
+                let blockedDayString = blockedDay
+                print(blockedDayString)
+                
+                entryReference.setValue(blockedDayString);
+            }
+        }
+
+    }
+    
     
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){

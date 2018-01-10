@@ -10,10 +10,34 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Advertise PagesVC-->
+        <!--Navigation Controller-->
+        <scene sceneID="K04-Aq-1oH">
+            <objects>
+                <navigationController id="icB-FN-bmn" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oNq-L9-mXl">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="YnE-ab-HEt" kind="relationship" relationship="rootViewController" id="7wA-1x-d0Y"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HbY-Hn-dvL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-126" y="-783"/>
+        </scene>
+        <!--Advertise-->
         <scene sceneID="G3y-cs-ha1">
             <objects>
-                <pageViewController storyboardIdentifier="AdvertisePages" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="YnE-ab-HEt" customClass="AdvertisePagesVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController"/>
+                <pageViewController storyboardIdentifier="AdvertisePages" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="YnE-ab-HEt" customClass="AdvertisePagesVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" title="Advertise" id="2jK-7c-gvX">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="Ode-a3-EVp">
+                            <connections>
+                                <action selector="navBackButton:" destination="YnE-ab-HEt" id="Dvw-u2-tcH"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V3t-Lj-dB5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-92" y="3"/>
@@ -640,7 +664,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R4q-Fq-0CE">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                         <subviews>
-                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsUserLocation="YES" showsCompass="NO" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gvO-zQ-nnJ">
+                                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" pitchEnabled="NO" showsCompass="NO" showsTraffic="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gvO-zQ-nnJ">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="233.5"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="Naa-RR-YP8" id="Luu-k6-xKe"/>

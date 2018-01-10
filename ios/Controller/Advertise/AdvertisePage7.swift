@@ -21,34 +21,38 @@ class AdvertisePage7: UIViewController {
         //upload car image
         progressBar.isHidden = false
         progressLabel.isHidden = false
-        storageAPI.uploadImage(pageViewController.carImage, ref: storageAPI.offerImageStorageRef, progressBar: progressBar, progressLabel: progressLabel,
-            completionBlock: { [weak self] (fileURL, errorMassage) in
-                guard let strongSelf = self else {
-                    return
-                }
-            print(fileURL)
-            print(errorMassage)
-                
-            //store image url
-                if let imgURL: AnyObject = fileURL as? AnyObject {
-                    //store image-url & user-id to offering
-                    //init offer object
-                    //write offer to db
-                    let imageUrl = fileURL?.absoluteString
-                    strongSelf.pageViewController.advertiseModel.updateDict(input: imageUrl as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
-                    strongSelf.pageViewController.advertiseModel.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
-                    print("OFFER DICT BEFORE PUBLISHING:")
-                    print(strongSelf.pageViewController.advertiseModel.offeringDict)
-                    strongSelf.pageViewController.writeOfferToDB()
-                    
-                } else {
-                    let message: String = "\(errorMassage) Please try again later."
-                    let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                    strongSelf.present(alert, animated: true, completion: nil)
-                }
-
-        })
+        if pageViewController.carImage != nil {
+            storageAPI.uploadImage(pageViewController.carImage, ref: storageAPI.offerImageStorageRef, progressBar: progressBar, progressLabel: progressLabel,
+                                   completionBlock: { [weak self] (fileURL, errorMassage) in
+                                    guard let strongSelf = self else {
+                                        return
+                                    }
+                                    //store image url
+                                    if let imgURL: AnyObject = fileURL as? AnyObject {
+                                        //store image-url & user-id to offering
+                                        //init offer object
+                                        //write offer to db
+                                        let imageUrl = fileURL?.absoluteString
+                                        //strongSelf.pageViewController.advertise.updateDict(input: imageUrl as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
+                                        //strongSelf.pageViewController.advertise.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
+                                        strongSelf.pageViewController.advertiseHelper.pictureURL = imageUrl
+                                        strongSelf.pageViewController.advertiseHelper.userUID = strongSelf.storageAPI.userID()
+                                        strongSelf.pageViewController.writeOfferToDB()
+                                        
+                                    } else {
+                                        let message: String = "\(errorMassage ?? "") Please try again later."
+                                        let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                        strongSelf.present(alert, animated: true, completion: nil)
+                                    }
+                                    
+            })
+        } else {
+            let message: String = "Image is missing."
+            let alert = UIAlertController(title: "Please provide an image of your car :)", message: message, preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     override func viewDidLoad() {

@@ -36,16 +36,12 @@ class AdvertisePage5: UIViewController {
     var pointAnnotation: MKPointAnnotation!
     var pinAnnotationView: MKPinAnnotationView!
     
-    var selectedCity: String = ""
-    var selectedLattitude: String = ""
-    var selectedLongitude: String = ""
-    var selectedPickup: String = ""
-    var selectedGear: String = ""
-    var selectedPickUpTime: String = ""
-    var selectedReturnTime: String = ""
-
-    //var timeContent: [String]?
-    /*var timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]*/
+    var selectedCity: String?
+    var selectedLattitude: String?
+    var selectedLongitude: String?
+    var selectedGear: String?
+    var selectedPickUpTime: String?
+    var selectedReturnTime: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,20 +77,26 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         
         //Store data
         selectedLattitude =  String (place.coordinate.latitude)
-        let selectedLattitudeFloat = Float(selectedLattitude)
+        let selectedLattitudeFloat = Float(selectedLattitude!)
         if (selectedLattitudeFloat != nil) {
-        pageViewController.advertiseModel.updateDict(input: selectedLattitudeFloat as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+        //pageViewController.advertiseModel.updateDict(input: selectedLattitudeFloat as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseHelper.latitude = selectedLattitudeFloat
         }
         
         selectedLongitude =  String (place.coordinate.longitude)
-        let selectedLongitudeFloat = Float(selectedLongitude)
-        if (selectedLongitudeFloat != nil) {pageViewController.advertiseModel.updateDict(input: selectedLongitudeFloat as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
+        let selectedLongitudeFloat = Float(selectedLongitude!)
+        if (selectedLongitudeFloat != nil) {
+            //pageViewController.advertiseModel.updateDict(input: selectedLongitudeFloat as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseHelper.longitude = selectedLongitudeFloat
         }
         
         for component in place.addressComponents! {
+            print(component.name)
+            
             if component.type == "locality" {
                 selectedCity = component.name
-                pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
+                //pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
+                pageViewController.advertiseHelper.location = selectedCity
             }
         }
 
@@ -191,21 +193,21 @@ extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pageViewController.advertiseModel.timeContent.count;
+        return pageViewController.advertise.timeContent.count;
     }
     
      func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pageViewController.advertiseModel.timeContent[row]
+        return pageViewController.advertise.timeContent[row]
      }
     
    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if (pickerView == pickUpPicker) {
-            selectedPickUpTime = self.pageViewController.advertiseModel.timeContent[row]
+            selectedPickUpTime = self.pageViewController.advertise.timeContent[row]
             self.pickUpTextView.text = selectedPickUpTime
             self.pickUpPicker.isHidden = true
         } else if (pickerView == returnPicker){
-            selectedReturnTime = self.pageViewController.advertiseModel.timeContent[row]
+            selectedReturnTime = self.pageViewController.advertise.timeContent[row]
             self.returnTextView.text = selectedReturnTime
             self.returnPicker.isHidden = true
         }
@@ -218,10 +220,12 @@ extension AdvertisePage5: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.pickUpTextView){
             //let pickUpTime: AnyObject = (pickUpTextView.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
+            //pageViewController.advertise.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseHelper.pickupTime = pickUpTextView.text
         } else if (textField == self.returnTextView){
             //let returnTime: AnyObject = (returnTextView.text as AnyObject)
-            pageViewController.advertiseModel.updateDict(input: returnTextView.text as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
+            //pageViewController.advertise.updateDict(input: returnTextView.text as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
+            pageViewController.advertiseHelper.returnTime = returnTextView.text
         }
     }
     

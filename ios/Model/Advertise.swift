@@ -12,10 +12,13 @@ import Kingfisher
 
 /*
  * Provides all data needed to advertise a vehicle
- * Caches input data
  */
 
-class Advertise {
+final class Advertise {
+    
+    let storageAPI = StorageAPI.shared
+    static let shared = Advertise()
+    
     //constants for conversion input to id
     static let ADVERTISE_CONVERSION_BRANDS = "brands"
     static let ADVERTISE_CONVERSION_FUELS = "fuels"
@@ -23,71 +26,6 @@ class Advertise {
     static let ADVERTISE_CONVERSION_VEHICLETYPES = "vehicleTypes"
     static let ADVERTISE_CONVERSION_FEATURES = "features"
     static let ADVERTISE_CONVERSION_SEATS = "seats"
-    
-    //cache input for storing advertise data into db
-    var offeringDict: [String : AnyObject] = [
-        Offering.OFFERING_BRAND_ID_KEY: 0 as AnyObject,
-        Offering.OFFERING_CONSUMPTION_KEY: 0 as AnyObject,
-        Offering.OFFERING_DESCRIPTION_KEY: "empty" as AnyObject,
-        Offering.OFFERING_FUEL_ID_KEY: 0 as AnyObject,
-        Offering.OFFERING_GEAR_ID_KEY: 0 as AnyObject,
-        Offering.OFFERING_HP_KEY: 0 as AnyObject,
-        Offering.OFFERING_LATITUDE_KEY: 0.0 as AnyObject,
-        Offering.OFFERING_LOCATION_KEY: "empty" as AnyObject,
-        Offering.OFFERING_LONGITUDE_KEY: 0.0 as AnyObject,
-        Offering.OFFERING_PICTURE_URL_KEY: "empty" as AnyObject,
-        Offering.OFFERING_PRICE_KEY: 0 as AnyObject,
-        Offering.OFFERING_SEATS_KEY: 0 as AnyObject,
-        Offering.OFFERING_TYPE_KEY: 0 as AnyObject,
-        Offering.OFFERING_USER_UID_KEY: 0 as AnyObject,
-        Offering.OFFERING_VEHICLE_TYPE_ID_KEY: 0 as AnyObject,
-        Offering.OFFERING_PICKUP_TIME_KEY: "empty" as AnyObject,
-        Offering.OFFERING_RETURN_TIME_KEY: "empty" as AnyObject
-    ]
-    
-    //TODO: evtl ummmodeln wegen ursprungstypen des AnyObjects
-    func updateDict(input: AnyObject, key: String, needsConvertion: Bool, conversionType: String) -> Void {
-        var input2Write: AnyObject = input
-        if needsConvertion {
-            if (conversionType == Advertise.ADVERTISE_CONVERSION_SEATS){
-                
-                var seats: String  = input as! String
-                
-                if (input as! String == "more"){
-                    seats = "9"
-                }
-                
-                let seatsInt: Int = Int(seats)!
-                input2Write = seatsInt as AnyObject
-                
-            } else {
-                
-                let inputString = input as! String
-                
-                switch (conversionType) {
-                case Advertise.ADVERTISE_CONVERSION_BRANDS:
-                    input2Write = brandsDict[inputString] as AnyObject
-
-                case Advertise.ADVERTISE_CONVERSION_FUELS:
-                    input2Write = fuelsDict[inputString] as AnyObject
-
-                case Advertise.ADVERTISE_CONVERSION_GEARS:
-                    input2Write = gearsDict[inputString] as AnyObject
-                
-                case Advertise.ADVERTISE_CONVERSION_VEHICLETYPES:
-                    input2Write = vehicleTypesDict[inputString] as AnyObject
-                    
-                case Advertise.ADVERTISE_CONVERSION_FEATURES:
-                    input2Write = featuresDict[inputString] as AnyObject
-                //TODO! Liste, seperate DB Tabelle
-                    
-                default:
-                break
-                }
-            }
-        }
-        offeringDict.updateValue(input2Write, forKey: key)
-    }
     
     //values from DB
     var brands: [Brand]?
@@ -132,8 +70,15 @@ class Advertise {
     var timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]
     
     
-    //receive data from db and convert them to necessary data for input ui
+    init(){
+        storageAPI.getBrands(completion: receiveBrands)
+        storageAPI.getFuels(completion: receiveFuels)
+        storageAPI.getGears(completion: receiveGears)
+        storageAPI.getVehicleTypes(completion: receiveVehicleTypes)
+        storageAPI.getFeatures(completion: receiveFeatures)
+    }
     
+    //receive data from db and convert them to necessary data for input ui
     func receiveBrands(brands: [Brand]) -> Void {
         self.brands = brands
         for brand in brands {
@@ -222,6 +167,5 @@ class Advertise {
             }
         }
     }
-    
 
 }

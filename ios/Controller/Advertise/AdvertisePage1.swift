@@ -19,6 +19,7 @@ class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopov
     
     var picker: UIImagePickerController? = UIImagePickerController()
     
+    @IBOutlet weak var navBackButton: UIBarButtonItem!
     @IBOutlet weak var carImageView: UIImageView!
     @IBAction func chooseImgButton(_ sender: Any) {
         chooseImage()

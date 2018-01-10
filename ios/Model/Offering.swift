@@ -121,5 +121,5 @@ class Offering: DictionaryConvertibleEditable {
         self.pickupTime = pickupTime
         self.returnTime = returnTime
     }
-    
+
 }

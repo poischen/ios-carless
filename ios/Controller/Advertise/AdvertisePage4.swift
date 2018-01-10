@@ -24,11 +24,9 @@ class AdvertisePage4: UIViewController {
     
     let formatter = DateFormatter()
     
-    let blockedColor = UIColor(hue: 0.9917, saturation: 0.21, brightness: 0.98, alpha: 1.0)
+    let blockedColor = UIColor(hue: 0.9917, saturation: 0.67, brightness: 0.75, alpha: 1.0)
     let releasedColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1.0)
     let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
-    
-    var basicPrice: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +44,8 @@ class AdvertisePage4: UIViewController {
         calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
         }
+        
+        calendarView.allowsMultipleSelection = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,14 +57,18 @@ class AdvertisePage4: UIViewController {
     }
     
   func handleSelection(view: JTAppleCell?, cellState: CellState){
+    print("handleSelection")
+    print(cellState)
         guard let cell = view as? AvailibilityCalendarCell else {return}
     if cellState.dateBelongsTo == .thisMonth {
         if cellState.isSelected {
-            cell.dateLabel.textColor = releasedColor
-            cell.availibility.isBlocked = true
-        } else {
+            print("blocked")
             cell.dateLabel.textColor = blockedColor
             cell.availibility.isBlocked = false
+        } else {
+            print("released")
+            cell.dateLabel.textColor = releasedColor
+            cell.availibility.isBlocked = true
         }
     }
 }
@@ -108,11 +112,22 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        //todo: necessary to filter duplicates?
+        formatter.dateFormat = "yyyy MM dd"
+        let selectedDate = formatter.string(from: date)
+        pageViewController.advertiseHelper.blockedDates.append(selectedDate)
+        print("didSelectDate " + selectedDate + "cellState: " + "\(cellState)")
+        print(pageViewController.advertiseHelper.blockedDates)
+        
         guard let blockedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelection(view: blockedDate, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        formatter.dateFormat = "yyyy MM dd"
+        let selectedDate = formatter.string(from: date)
+        pageViewController.advertiseHelper.releaseDate(date: selectedDate)
+        
         guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelection(view: releasedDate, cellState: cellState)
     }
@@ -126,8 +141,8 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
 extension AdvertisePage4: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         formatter.dateFormat = "yyyy MM dd"
-        formatter.timeZone = Calendar.current.timeZone
-        formatter.locale = Calendar.current.locale
+       // formatter.timeZone = Calendar.current.timeZone
+       // formatter.locale = Calendar.current.locale
         
         let date = Date()
         let calendar = Calendar.current
@@ -158,6 +173,7 @@ extension AdvertisePage4: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         let priceInt = Int(textField.text!)!
-            pageViewController.advertiseModel.updateDict(input: priceInt as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
+            //pageViewController.advertiseModel.updateDict(input: priceInt as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
+        pageViewController.advertiseHelper.basePrice = priceInt
     }
 }

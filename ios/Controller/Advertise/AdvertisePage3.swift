@@ -56,7 +56,7 @@ class AdvertisePage3: UIViewController {
 
 extension AdvertisePage3: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pageViewController.advertiseModel.featuresImages.count
+        return pageViewController.advertise.featuresImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -72,8 +72,8 @@ extension AdvertisePage3: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         let featureCell = cell as! AdvertiseFeaturesCollectionViewCell
-        featureCell.featureIconImageView.image = pageViewController.advertiseModel.featuresImages[indexPath.row]
-        featureCell.featureLabel.text = pageViewController.advertiseModel.featuresLabels[indexPath.row]
+        featureCell.featureIconImageView.image = pageViewController.advertise.featuresImages[indexPath.row]
+        featureCell.featureLabel.text = pageViewController.advertise.featuresLabels[indexPath.row]
         featureCell.awakeFromNib()
     }
     

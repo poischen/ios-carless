@@ -1,32 +1,59 @@
 import UIKit
 
-class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate, UINavigationBarDelegate {
     
     var carImage: UIImage!
     let storageAPI = StorageAPI.shared
-    let advertiseModel = Advertise()
+    let advertise = Advertise.shared
+    let advertiseHelper = AdvertiseHelper()
+    
+    @IBAction func navBackButton(_ sender: Any) {
+        back()
+    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        //load necessary information into model
-        storageAPI.getBrands(completion: advertiseModel.receiveBrands)
-        storageAPI.getFuels(completion: advertiseModel.receiveFuels)
-        storageAPI.getGears(completion: advertiseModel.receiveGears)
-        storageAPI.getVehicleTypes(completion: advertiseModel.receiveVehicleTypes)
-        storageAPI.getFeatures(completion: advertiseModel.receiveFeatures)
+        /*//load necessary information into model
+        storageAPI.getBrands(completion: advertise.receiveBrands)
+        storageAPI.getFuels(completion: advertise.receiveFuels)
+        storageAPI.getGears(completion: advertise.receiveGears)
+        storageAPI.getVehicleTypes(completion: advertise.receiveVehicleTypes)
+        storageAPI.getFeatures(completion: advertise.receiveFeatures)*/
     }
     
+    //writes offer to db if all inputs are availible
     func writeOfferToDB(){
-        //TODO: fehlende Inputs abfangen
-        let offer = Offering(id: "empty", dict: advertiseModel.offeringDict)!
-        storageAPI.saveOffering(offer: offer, completion: {offerWithID in
-            let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-            if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
-                viewController.displayingOffering = offerWithID
-                self.present(viewController, animated: true, completion: nil)
-            }
-        })
+        let offeringDict = advertiseHelper.getOfferDict()
+        print(offeringDict)
+        if offeringDict.count > 0 {
+            print(offeringDict)
+            let offer = Offering(id: "empty", dict: offeringDict)
+            
+        //store offering
+            storageAPI.saveOffering(offer: offer!, completion: {offerWithID in
+                //store avilibility
+                if let offerID = offerWithID.id {
+                    self.storageAPI.saveAvailibility(blockedDates: self.advertiseHelper.blockedDates, offerID: offerID)
+                }
+                
+                //switch to offer view
+                let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+                if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+                    viewController.displayingOffering = offerWithID
+                    self.present(viewController, animated: true, completion: nil)
+                }
+            })
+            
+        //store features
+            //todo
+            
+        } else {
+            let alertMissingInputs = UIAlertController(title: "Something is missing", message: "Please check all inputs and try again.", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+            alertMissingInputs.addAction(ok)
+            self.present(alertMissingInputs, animated: true, completion: nil)
+        }
     }
     
     //Manage pageview for advertising a car --------------------------------------------------------------------
@@ -121,6 +148,9 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         return firstViewControllerIndex
     }
     
+    func back() -> Void {
+        navigationController?.popViewController(animated: true)
+    }
     
 }
 

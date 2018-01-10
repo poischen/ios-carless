@@ -14,7 +14,6 @@ class BasicDataCollectionViewCell: UICollectionViewCell{
     @IBOutlet var basicDetailLabel: UILabel!
     
     func displayContent(image: String, despcription: String){
-        
         let icon : UIImage = UIImage(named:image)!
         basicDetailImageView.image = icon
         basicDetailLabel.text = despcription
