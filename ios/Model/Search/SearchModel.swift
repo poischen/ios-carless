@@ -82,9 +82,9 @@ class SearchModel {
             filterFunctions.append {$0.hp >= minHP}
         }
         // add location filter function if filter criterion is set
-        if let location = filter.location {
+        /* if let location = filter.location {
             filterFunctions.append {$0.location == location}
-        }
+         }*/ // TODO: remove
         // add price filter function if filter criterion is set
         if let maxPrice = filter.maxPrice {
             filterFunctions.append {$0.basePrice <= maxPrice}
@@ -120,10 +120,10 @@ class SearchModel {
             })
         }
         
-        if let desiredPlaceLocation = filter.placeLocation {
+        // add location filter function if location criterion is set
+        if let desiredPlaceLocation = filter.placePoint {
             filterFunctions.append {
                 let distance = $0.locationPoint.distanceToPoint(otherPoint: desiredPlaceLocation)
-                print(distance)
                 return distance <= self.FILTER_RADIUS_METERS
             }
         }

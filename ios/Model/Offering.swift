@@ -101,9 +101,9 @@ class Offering: DictionaryConvertibleEditable {
     var pickupTime: String
     var returnTime: String
     
-    var locationPoint: Point {
+    var locationPoint: CoordinatePoint {
         get {
-            return Point(latitude: self.latitude, longitude: self.longitude)
+            return CoordinatePoint(latitude: self.latitude, longitude: self.longitude)
         }
     }
     
