@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Renting {
+class Renting: DictionaryConvertibleEditable {
     
     // constants for the dictionary keys
     static let RENTING_END_TIMESTAMP_KEY = "endDate"
@@ -37,7 +37,7 @@ class Renting {
         ]
     }
     
-    let id: String?
+    var id: String?
     let endDate: Date
     let startDate: Date
     let userID: String

@@ -36,7 +36,7 @@ final class StorageAPI {
     private let gearsDBReference: DatabaseReference
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
-    private let lessorRatings: DatabaseReference
+    private let ratingsDBReference: DatabaseReference
     
     var userName = "";
     
@@ -71,9 +71,12 @@ final class StorageAPI {
     }
     
     private init() {
+        // enable caching but also enable keepSynced in order to e.g. get the newest offerings
         Database.database().isPersistenceEnabled = true
         fireBaseDBAccess = Database.database().reference()
         fireBaseDBAccess.keepSynced(true)
+        
+        // create "table" references
         self.offeringsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS)
         self.availibilityDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_OFFERINGS_AVAILIBILITY)
         self.rentingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RENTINGS)
@@ -83,34 +86,20 @@ final class StorageAPI {
         self.gearsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_GEARS)
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
-        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
-        /*
-        // tryong to avoid caching problems by keeping references synced until queried for the first time
-        // TODO: find better solution?
-        self.offeringsDBReference.keepSynced(true)
-        self.rentingsDBReference.keepSynced(true)
-        self.featuresDBReference.keepSynced(true)
-        self.offeringsFeaturesDBReference.keepSynced(true)
-        self.vehicleTypesDBReference.keepSynced(true)
-        self.gearsDBReference.keepSynced(true)
-        self.brandsDBReference.keepSynced(true)
-        self.fuelDBReference.keepSynced(true)
-        self.lessorRatings.keepSynced(true)
-        self.usersRef.keepSynced(true) */
+        self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                print(child.key)
-                let offering = Offering.init(id: String(child.key)!, dict: dict)! // TODO: catch nil here
-                resultOfferings.append(offering)
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    resultOfferings.append(offering)
+                } else {
+                    print("getOfferings: error while converting offering")
+                }
             }
             completion(resultOfferings)
-            //self.offeringsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -120,13 +109,8 @@ final class StorageAPI {
         self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let offeringID = child.key
-                    if let offering = Offering.init(id: offeringID, dict: dict) {
-                        completion(offering)
-                    } else {
-                        print("error in get getOfferingByID")
-                    }
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw!), let offering = Offering.init(id: stringID, dict: dict) {
+                    completion(offering)
                 } else {
                     print("error in get getOfferingByID")
                 }
@@ -142,13 +126,13 @@ final class StorageAPI {
         self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFeatures:[Feature] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let feature = Feature.init(id: Int(child.key)!, dict: dict)!
-                resultFeatures.append(feature)
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let feature = Feature.init(id: intID, dict: dict){
+                    resultFeatures.append(feature)
+                } else {
+                    print("getFeatures: error while converting feature")
+                }
             }
             completion(resultFeatures)
-            //self.featuresDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -157,12 +141,11 @@ final class StorageAPI {
     // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
     func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [String: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary  // TODO: Handle error
             var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
             for (_, associationRaw) in receivedData {
-                let association:NSDictionary = associationRaw as! NSDictionary
-                // TODO: Shorthand for this?
                 guard
+                    let association:NSDictionary = associationRaw as? NSDictionary,
                     let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
                     let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
                         print("error in getOfferingsFeatures")
@@ -178,7 +161,6 @@ final class StorageAPI {
                 }
             }
             completion(resultOfferingsFeatures)
-            //self.offeringsFeaturesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -188,13 +170,13 @@ final class StorageAPI {
         self.rentingsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: child.key, dict: dict)!
-                resultRentings.append(renting)
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                    resultRentings.append(renting)
+                } else {
+                    print("getRentings: error while converting renting")
+                }
             }
             completion(resultRentings)
-            //self.rentingsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -204,17 +186,16 @@ final class StorageAPI {
         self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultTypes:[VehicleType] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let type = VehicleType.init(id: Int(child.key)!, dict: dict)!
-                resultTypes.append(type)
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let type = VehicleType.init(id: intID, dict: dict) {
+                    resultTypes.append(type)
+                } else {
+                    print("getVehicleTypes: error while converting feature")
+                }
             }
             completion(resultTypes)
-            //self.vehicleTypesDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
-        completion([])
     }
     
     func getVehicleTypeByID(id: Int, completion: @escaping (_ fuel: VehicleType) -> Void){
@@ -243,28 +224,11 @@ final class StorageAPI {
         self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Brand] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let brand = Brand.init(id: Int(child.key)!, dict: dict)!
-                resultBrands.append(brand)
-            }
-            completion(resultBrands)
-            //self.brandsDBReference.keepSynced(false) // fix for caching problems
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    // not using this anymore
-    // TODO: remove
-    func getBrandsAsMap(completion: @escaping (_ brands: [Int:Brand]) -> Void){
-        self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
-            var resultBrands:[Int:Brand] = [:]
-            for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let brand = Brand.init(id: Int(child.key)!, dict: dict)!
-                resultBrands.updateValue(brand, forKey: brand.id)
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let brand = Brand.init(id: intID, dict: dict) {
+                    resultBrands.append(brand)
+                } else {
+                    print("getBrands: error while converting brand")
+                }
             }
             completion(resultBrands)
         }) { (error) in
@@ -276,13 +240,8 @@ final class StorageAPI {
         self.brandsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let brandID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
-                    if let brand = Brand.init(id: brandID, dict: dict) {
-                        completion(brand)
-                    } else {
-                        print("error in get getBrandByID")
-                    }
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw!), let brand = Brand.init(id: intID, dict: dict) {
+                    completion(brand)
                 } else {
                     print("error in get getBrandByID")
                 }
@@ -297,30 +256,12 @@ final class StorageAPI {
     func getFuels(completion: @escaping (_ fuels: [Fuel]) -> Void){
         self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFuels:[Fuel] = []
-            // TODO: avoid code duplication here
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let fuel = Fuel.init(id: Int(child.key)!, dict: dict)!
-                resultFuels.append(fuel)
-            }
-            completion(resultFuels)
-            //self.fuelDBReference.keepSynced(false) // fix for caching problems
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    // not using this anymore
-    // TODO: remove
-    func getFuelsAsMap(completion: @escaping (_ fuels: [Int:Fuel]) -> Void){
-        self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
-            var resultFuels:[Int:Fuel] = [:]
-            for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let fuel = Fuel.init(id: Int(child.key)!, dict: dict)!
-                resultFuels.updateValue(fuel, forKey: fuel.id)
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let fuel = Fuel.init(id: intID, dict: dict) {
+                    resultFuels.append(fuel)
+                } else {
+                    print("getBrands: error while converting brand")
+                }
             }
             completion(resultFuels)
         }) { (error) in
@@ -332,13 +273,8 @@ final class StorageAPI {
         self.fuelDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let fuelID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
-                    if let fuel = Fuel.init(id: fuelID, dict: dict) {
-                        completion(fuel)
-                    } else {
-                        print("error in get getFuelByID")
-                    }
+                if let (intID,dict) = self.childToIntIDAndDict(childRaw: childRaw!), let fuel = Fuel.init(id: intID, dict: dict) {
+                    completion(fuel)
                 } else {
                     print("error in get getFuelByID")
                 }
@@ -354,28 +290,11 @@ final class StorageAPI {
         self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultGears:[Gear] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let gear = Gear.init(id: Int(child.key)!, dict: dict)!
-                resultGears.append(gear)
-            }
-            completion(resultGears)
-            //self.gearsDBReference.keepSynced(false) // fix for caching problems
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
-    
-    // not using this anymore
-    // TODO: remove
-    func getGearsAsMap(completion: @escaping (_ gears: [Int:Gear]) -> Void){
-        self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
-            var resultGears:[Int:Gear] = [:]
-            for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let gear = Gear.init(id: Int(child.key)!, dict: dict)!
-                resultGears.updateValue(gear, forKey: gear.id)
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let gear = Gear.init(id: intID, dict: dict) {
+                    resultGears.append(gear)
+                } else {
+                    print("getGears: error while converting gear")
+                }
             }
             completion(resultGears)
         }) { (error) in
@@ -387,13 +306,8 @@ final class StorageAPI {
         self.gearsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
-                    let gearID = Int(child.key)! // not ideal but for some reason typecasting with "?" doesn't work
-                    if let gear = Gear.init(id: gearID, dict: dict) {
-                        completion(gear)
-                    } else {
-                        print("error in get getGearByID")
-                    }
+                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw!), let gear = Gear.init(id: intID, dict: dict) {
+                    completion(gear)
                 } else {
                     print("error in get getGearByID")
                 }
@@ -407,7 +321,12 @@ final class StorageAPI {
     
     func saveRating(rating: Rating){
         let ratingAsDict = rating.dict
-        self.lessorRatings.childByAutoId().setValue(ratingAsDict)
+        self.ratingsDBReference.childByAutoId().setValue(ratingAsDict) {(error,_) in
+            if let currentError = error {
+                print("error in saveRating:")
+                print(currentError.localizedDescription)
+            }
+        }
     }
     
     func updateUser(user: User){
@@ -422,9 +341,9 @@ final class StorageAPI {
         
         offer.id = key
         
-        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) -> Void in
-            if ((error) != nil) {
-                //TODO: give feedback, dass alles im arsch is
+        self.offeringsDBReference.child(key).setValue(offerAsDict) { (error, ref) in
+            if (error != nil) {
+                print(error!.localizedDescription)
             } else {
                 completion(offer)
             }
@@ -463,13 +382,13 @@ final class StorageAPI {
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
             var resultUsers:[User] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let user = User.init(id: child.key, dict: dict)!
-                resultUsers.append(user)
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let user = User.init(id: stringID, dict: dict) {
+                    resultUsers.append(user)
+                } else {
+                    print("getUsers: error while converting user")
+                }
             }
             completion(resultUsers)
-            //self.gearsDBReference.keepSynced(false) // fix for caching problems
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -478,16 +397,12 @@ final class StorageAPI {
     func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
         self.usersRef.queryOrderedByKey().queryEqual(toValue: UID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
-                if let userSnapshot = snapshot.children.nextObject() as? DataSnapshot, let userData = userSnapshot.value as? NSDictionary{
-                        if let userName = userData[DBConstants.NAME] as? String, let userRating = userData[DBConstants.RATING] as? Float, let userPic = userData[DBConstants.PROFILEIMG] as? String,
-                            let numberOfRatings = userData[User.NUMBER_OF_RATINGS] as? Int,
-                        let email = userData[User.EMAIL] as? String {
-                            completion(User(id: UID, name: userName, email: email, rating: userRating, profileImgUrl: userPic, numberOfRatings: numberOfRatings ))
-                            return
-                        }
+                let childRaw = snapshot.children.nextObject()
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw!), let user = User(id: stringID, dict: dict) {
+                    completion(user)
+                } else {
+                    print("error in get getUserByUID")
                 }
-                // retun not executed -> something went wrong -> print error
-                print("error in get getUserByUID")
             } else {
                 print("no user or more than one user found")
             }
@@ -501,10 +416,11 @@ final class StorageAPI {
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let renting = Renting.init(id: child.key, dict: dict)!
-                resultRentings.append(renting)
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                    resultRentings.append(renting)
+                } else {
+                    print("getRentingsByUserUID: error while converting renting")
+                }
             }
             completion(resultRentings)
         }) { (error) in
@@ -517,10 +433,11 @@ final class StorageAPI {
         self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
-                let child = childRaw as! DataSnapshot
-                let dict = child.value as! [String:AnyObject]
-                let offering = Offering.init(id: child.key, dict: dict)!
-                resultOfferings.append(offering)
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    resultOfferings.append(offering)
+                } else {
+                    print("getOfferingsByUserUID: error while converting offering")
+                }
             }
             completion(resultOfferings)
         }) { (error) in
@@ -563,5 +480,59 @@ final class StorageAPI {
         }
     }
     
+    func childToStringIDAndDict(childRaw: Any) -> (String, [String:AnyObject])?{
+        if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+            return (child.key,dict)
+        } else {
+            return nil
+        }
+    }
+    
+    func childToIntIDAndDict(childRaw: Any) -> (Int, [String:AnyObject])?{
+        if let (stringID, dict) = childToStringIDAndDict(childRaw: childRaw), let intID = Int(stringID) {
+            return (intID,dict)
+        } else {
+            return nil
+        }
+    }
+    
+    func snapshotToObjects(snapshot:DataSnapshot, constructor: ((Int, [String:AnyObject]) -> DictionaryConvertibleStatic?)) -> [DictionaryConvertibleStatic]? {
+        var resultObjects:[DictionaryConvertibleStatic] = []
+        for childRaw in snapshot.children {
+            if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let object = constructor(intID, dict) {
+                resultObjects.append(object)
+            } else {
+                print("childToObject: error while converting renting")
+            }
+        }
+        return resultObjects
+    }
+    
+    // TODO: remove
+    func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
+        self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            if let resultObjects = self.snapshotToObjects(snapshot: snapshot, constructor: Feature.init) as? [Feature] {
+                completion(resultObjects)
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getOfferingsNearbyTest(completion: @escaping (_ features: [Offering]) -> Void){
+        self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
+            var resultOfferings:[Offering] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    resultOfferings.append(offering)
+                } else {
+                    print("getOfferings: error while converting offering")
+                }
+            }
+            completion(resultOfferings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
 }
 

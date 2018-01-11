@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Brand: DictionaryConvertible, SelectableItem {
+class Brand: DictionaryConvertibleStatic, SelectableItem {
     
     // constants for the dictionary keys
     static let BRAND_NAME_KEY = "brand"

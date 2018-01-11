@@ -8,6 +8,8 @@
 
 import Foundation
 
+// interface for selectable items (e.g. the filter items in the lists in the filter view)
+
 protocol SelectableItem {
     var isSelected:Bool {get set}
     var name:String {get}
