@@ -15,4 +15,5 @@ import Foundation
 protocol DictionaryConvertibleStatic {
     init?(id: Int, dict: [String:AnyObject])
     var dict:[String:AnyObject] { get }
+    var id:Int { get } // ID should be immutable
 }
