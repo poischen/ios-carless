@@ -111,7 +111,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedOffering = self.offerings[indexPath.row]
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-        if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+        if let viewController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? OfferingViewController{
             viewController.displayingOffering = selectedOffering
             self.present(viewController, animated: true, completion: nil)
         }

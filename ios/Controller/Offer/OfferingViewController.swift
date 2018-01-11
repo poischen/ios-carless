@@ -37,16 +37,24 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var carLocationMap: MKMapView!
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var returnLabel: UILabel!
+    @IBOutlet weak var availibilityBtn: UIButton!
+    @IBOutlet weak var chatBtn: UIButton!
     
     @IBAction func chatButton(_ sender: UIButton) {
-        //TODO: Controller.chat()
     }
-    @IBAction func checkAvailibility(_ sender: Any) {
-        //TODO: Controller.checkAvailibility()
-    }
+    
+    /*@IBAction func checkAvailibility(_ sender: Any) {
+        let anbVC = AvailibilityAndBookingViewController(
+            nibName: "AvailibilityAndBooking",
+            bundle: nil)
+        navigationController?.pushViewController(anbVC,
+                                                 animated: true)
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationItem.title = (self.displayingOffering?.type)!
         
         //set car infos (image, name, basic details) area --------------------------------------------------
         //images using Kingfisher
@@ -61,7 +69,7 @@ class OfferingViewController: UIViewController {
         //labels
         //carNameLabel.text = displayingOffering.getBrand() + " " + displayingOffering.type
         storageAPI.getBrandByID(id: (displayingOffering?.brandID)!, completion: { (brand) in
-            self.carNameLabel.text = brand.name + " " + (self.displayingOffering?.type)!
+            self.carNameLabel.text = brand.name //+ " " + (self.displayingOffering?.type)!
         })
         
         carHpConsumptionLabel.text = "\(displayingOffering?.consumption ?? 0)" + "/100km, max. " + "\(displayingOffering?.hp ?? 0)" + " km/h."

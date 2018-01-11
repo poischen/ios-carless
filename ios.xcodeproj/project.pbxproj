@@ -67,6 +67,7 @@
 		847D337B2002A53D00493402 /* ShowOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D337A2002A53D00493402 /* ShowOffer.swift */; };
 		848486F01FFC4395008F7DAF /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848486EF1FFC4395008F7DAF /* Availibility.swift */; };
 		84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */; };
+		84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */; };
 		84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB20B91FFFD78300E351C1 /* Advertise.swift */; };
 		84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */; };
 		84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43771FF52CB600CB546C /* AdvertisePage4.swift */; };
@@ -164,6 +165,7 @@
 		847D337A2002A53D00493402 /* ShowOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOffer.swift; sourceTree = "<group>"; };
 		848486EF1FFC4395008F7DAF /* Availibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
 		84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseHelper.swift; sourceTree = "<group>"; };
+		84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailibilityAndBookingViewController.swift; sourceTree = "<group>"; };
 		84FB20B91FFFD78300E351C1 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
 		84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage3.swift; sourceTree = "<group>"; };
 		84FD43771FF52CB600CB546C /* AdvertisePage4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage4.swift; sourceTree = "<group>"; };
@@ -213,7 +215,7 @@
 				193966BD1FF57B6D008C76A8 /* Rate */,
 				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
 				19BF06451FEA853B00E495C2 /* Main.storyboard */,
-				840D63C71FE9A4F8007A1F16 /* ShowOffer */,
+				840D63C71FE9A4F8007A1F16 /* Offer */,
 				840D63BC1FE9A438007A1F16 /* Advertise */,
 				774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */,
 				840D63D31FE9A6D8007A1F16 /* Search */,
@@ -228,7 +230,7 @@
 				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
 				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
 				19BF06411FEA83D700E495C2 /* ViewController.swift */,
-				840D63D01FE9A64E007A1F16 /* ShowOffer */,
+				840D63D01FE9A64E007A1F16 /* Offer */,
 				840D63D21FE9A6A4007A1F16 /* Advertise */,
 				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
 				840D63D11FE9A677007A1F16 /* Search */,
@@ -385,22 +387,23 @@
 			path = Advertise;
 			sourceTree = "<group>";
 		};
-		840D63C71FE9A4F8007A1F16 /* ShowOffer */ = {
+		840D63C71FE9A4F8007A1F16 /* Offer */ = {
 			isa = PBXGroup;
 			children = (
 				840D63CA1FE9A565007A1F16 /* Offering.storyboard */,
 				840D63CC1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift */,
 				840D63CD1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift */,
 			);
-			path = ShowOffer;
+			path = Offer;
 			sourceTree = "<group>";
 		};
-		840D63D01FE9A64E007A1F16 /* ShowOffer */ = {
+		840D63D01FE9A64E007A1F16 /* Offer */ = {
 			isa = PBXGroup;
 			children = (
 				840D63C81FE9A534007A1F16 /* OfferingViewController.swift */,
+				84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */,
 			);
-			path = ShowOffer;
+			path = Offer;
 			sourceTree = "<group>";
 		};
 		840D63D11FE9A677007A1F16 /* Search */ = {
@@ -801,6 +804,7 @@
 				19BF064A1FEA869F00E495C2 /* ProfileViewController.swift in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
+				84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */,
 				84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */,
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */,

@@ -114,7 +114,6 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         //todo: necessary to filter duplicates?
         pageViewController.advertiseHelper.blockedDates.append(date)
-        print("didSelectDate " + selectedDate + "cellState: " + "\(cellState)")
         print(pageViewController.advertiseHelper.blockedDates)
         
         guard let blockedDate = cell as? AvailibilityCalendarCell else {return}
