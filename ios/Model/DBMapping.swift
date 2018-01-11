@@ -23,24 +23,28 @@ class DBMapping {
     var fuels:[Int:Fuel]?
     
     func fillBrandsCache(completion: @escaping () -> Void){
-        self.storageAPI.getBrandsAsMap(completion: {brandsMap in
+        print("this function is deprecated")
+        /* self.storageAPI.getBrandsAsMap(completion: {brandsMap in
             self.brands = brandsMap
             completion()
-        })
+        }) */
     }
     
     func fillGearsCache(completion: () -> Void){
-        self.storageAPI.getGearsAsMap(completion: {gearsMap in
+        /* self.storageAPI.getGearsAsMap(completion: {gearsMap in
             self.gears = gearsMap
         })
-        completion()
+        completion() */
+        print("this function is deprecated")
+
     }
     
     func fillFuelsCache(completion: @escaping () -> Void){
-        self.storageAPI.getFuelsAsMap(completion: {fuelsMap in
+        /* self.storageAPI.getFuelsAsMap(completion: {fuelsMap in
             self.fuels = fuelsMap
             completion()
-        })
+        }) */
+        print("this function is deprecated")
     }
         
     func mapBrandIDToBrand(id: Int) ->  Brand? {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Fuel: DictionaryConvertible, SelectableItem {
+class Fuel: DictionaryConvertibleStatic, SelectableItem {
     
     // constants for the dictionary keys
     static let FUEL_NAME_KEY = "fuel"

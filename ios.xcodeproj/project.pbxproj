@@ -36,11 +36,13 @@
 		19BF06481FEA853C00E495C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */; };
 		19BF064A1FEA869F00E495C2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06491FEA869E00E495C2 /* ProfileViewController.swift */; };
 		19BF064C1FEA86A700E495C2 /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF064B1FEA86A700E495C2 /* UserVC.swift */; };
+		19C31D8720027A8D004534F0 /* DictionaryConvertibleStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */; };
 		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
 		19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CB76FB1FD44E8C00B291CE /* DBConstants.swift */; };
 		19CE072C1FC41C250087E958 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE072B1FC41C250087E958 /* Brand.swift */; };
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
-		19EE2B931FD9F05B004674F0 /* DictionaryConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */; };
+		19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */; };
+		19EE8F352006A40700204C73 /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE8F342006A40700204C73 /* Point.swift */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */; };
 		2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E9511FA8A2250013D67E /* Assets.xcassets */; };
@@ -125,11 +127,13 @@
 		19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19BF06491FEA869E00E495C2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		19BF064B1FEA86A700E495C2 /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
+		19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleStatic.swift; sourceTree = "<group>"; };
 		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
 		19CB76FB1FD44E8C00B291CE /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
 		19CE072B1FC41C250087E958 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		19D4126A1FB707D500794F1F /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
-		19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertible.swift; sourceTree = "<group>"; };
+		19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleEditable.swift; sourceTree = "<group>"; };
+		19EE8F342006A40700204C73 /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AD4E9471FA8A2250013D67E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -276,7 +280,8 @@
 				1949C5931FC9D05800C5FD91 /* Gear.swift */,
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
 				19380CB91FD5A29A0057A6D2 /* VehicleType.swift */,
-				19EE2B921FD9F05B004674F0 /* DictionaryConvertible.swift */,
+				19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */,
+				19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */,
 				19A3B0511FDC19F80021458C /* DBMapping.swift */,
 				194C2E991FE7C44200E34EF8 /* SelectableItem.swift */,
 				191DABB01FF00F7000EB0070 /* Time.swift */,
@@ -285,6 +290,7 @@
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
+				19EE8F342006A40700204C73 /* Point.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -808,6 +814,7 @@
 				19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */,
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */,
+				19C31D8720027A8D004534F0 /* DictionaryConvertibleStatic.swift in Sources */,
 				199A68651FFD027A00047E5D /* CustomCell.swift in Sources */,
 				84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */,
 				19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */,
@@ -821,13 +828,14 @@
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
 				84FD437C1FF52CDA00CB546C /* AdvertisePage6.swift in Sources */,
 				191DABB11FF00F7000EB0070 /* Time.swift in Sources */,
-				19EE2B931FD9F05B004674F0 /* DictionaryConvertible.swift in Sources */,
+				19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */,
 				190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */,
 				199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */,
 				840D63C21FE9A4C2007A1F16 /* AdvertisePagesVC.swift in Sources */,
 				1949C5941FC9D05800C5FD91 /* Gear.swift in Sources */,
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
+				19EE8F352006A40700204C73 /* Point.swift in Sources */,
 				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,

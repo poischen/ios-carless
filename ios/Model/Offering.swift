@@ -6,7 +6,7 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
-class Offering {
+class Offering: DictionaryConvertibleEditable {
     
     // constants for the dictionary keys
     static let OFFERING_BRAND_ID_KEY = "brandID"
@@ -34,9 +34,9 @@ class Offering {
             let offeringFuelID = dict[Offering.OFFERING_FUEL_ID_KEY] as? Int,
             let offeringGearID = dict[Offering.OFFERING_GEAR_ID_KEY] as? Int,
             let offeringHP = dict[Offering.OFFERING_HP_KEY] as? Int,
-            let offeringLatitude = dict[Offering.OFFERING_LATITUDE_KEY] as? Float,
+            let offeringLatitude = dict[Offering.OFFERING_LATITUDE_KEY] as? Double,
             let offeringLocation = dict[Offering.OFFERING_LOCATION_KEY] as? String,
-            let offeringLongitude = dict[Offering.OFFERING_LONGITUDE_KEY] as? Float,
+            let offeringLongitude = dict[Offering.OFFERING_LONGITUDE_KEY] as? Double,
             let offeringPictureURL = dict[Offering.OFFERING_PICTURE_URL_KEY] as? String,
             let offeringPrice = dict[Offering.OFFERING_PRICE_KEY] as? Int,
             let offeringSeats = dict[Offering.OFFERING_SEATS_KEY] as? Int,
@@ -90,9 +90,9 @@ class Offering {
     var fuelID: Int
     var gearID: Int
     var hp: Int
-    var latitude: Float
+    var latitude: Double
     var location: String
-    var longitude: Float
+    var longitude: Double
     var pictureURL: String
     var seats: Int
     var type: String
@@ -101,7 +101,13 @@ class Offering {
     var pickupTime: String
     var returnTime: String
     
-    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Float, location: String, longitude: Float, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: String, returnTime: String) {
+    var locationPoint: Point {
+        get {
+            return Point(latitude: self.latitude, longitude: self.longitude)
+        }
+    }
+    
+    init(id: String?, brandID: Int, consumption: Int, description: String, fuelID: Int, gearID: Int, hp: Int, latitude: Double, location: String, longitude: Double, pictureURL: String, basePrice: Int, seats: Int, type: String, vehicleTypeID: Int, userUID: String, pickupTime: String, returnTime: String) {
         self.basePrice = basePrice
         self.id = id
         self.brandID = brandID

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Feature: DictionaryConvertible, SelectableItem {
+class Feature: DictionaryConvertibleStatic, SelectableItem {
     
     // constants for the dictionary keys
     static let FEATURE_NAME_KEY = "type"

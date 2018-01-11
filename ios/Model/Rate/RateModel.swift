@@ -32,7 +32,7 @@ class RateModel {
     }
     
     static func saveRating(rating: Int, ratedUser: User, explanation: String){
-        let newRating = Rating(userUID: ratedUser.id, explanation: explanation, rating: rating)
+        let newRating = Rating(id: nil, userUID: ratedUser.id, explanation: explanation, rating: rating)
         StorageAPI.shared.saveRating(rating: newRating)
         // update user's rating
         let currentRating = ratedUser.rating

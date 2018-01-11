@@ -6,6 +6,8 @@
 //  Copyright © 2017 Konrad Fischer. All rights reserved.
 //
 
+// !! This class is deprecated, using SearchTestViewController now
+
 import UIKit
 import GooglePlacePicker
 // import GoogleMaps
@@ -38,8 +40,6 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
         endTimeDatePicker.minimumDate = Date() + 86400 // adding one day
         startTimeTimePicker.date = Filter.dateToNext30(date: Date())
         endTimeTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour
-        
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,9 +71,7 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     }
     
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
-        /* for test in place.addressComponents! {
-            print(test.name)
-        } */
+
         self.pickedPlace = place
         nameLabel.text = place.formattedAddress
         dismiss(animated: true, completion: nil)
@@ -114,8 +112,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
-            let mergedStartDate = Filter.setDatesHoursMinutes(originalDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
-            let mergedEndDate = Filter.setDatesHoursMinutes(originalDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
+            let mergedStartDate = Filter.mergeDates(dayDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
+            let mergedEndDate = Filter.mergeDates(dayDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(
@@ -129,7 +127,8 @@ class SearchViewController: UIViewController, UIPickerViewDelegate, UIPickerView
                     minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
-                    featureIDs: nil
+                    featureIDs: nil,
+                    placeLocation: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
                 )
                 searchResultsViewController.searchFilter = newFilter
                 

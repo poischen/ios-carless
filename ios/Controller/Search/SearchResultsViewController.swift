@@ -12,26 +12,22 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     var offerings:[Offering] = []
     var searchFilter:Filter?
-    let searchModel:SearchModel = SearchModel()
+    let searchModel:SearchModel = SearchModel.shared
+    
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let dbMapping = DBMapping.shared
     let storageAPI = StorageAPI.shared
     
+    // error message
+    let ERROR_ALERT_TITLE = "Sorry"
+    let NO_OFFERINGS_FOUND_ERROR = "We couln't find a car for you. :("
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        // set this view controller as the data source and delegate of the table view
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
-
-        /* self.dbMapping.fillBrandsCache(completion: {
-            self.searchResultsTable.reloadData()
-        }) */
-        /*self.dbMapping.fillGearsCache(completion: {
-            self.searchResultsTable.reloadData()
-        }) */
-        /* self.dbMapping.fillFuelsCache(completion: {
-            self.searchResultsTable.reloadData()
-        }) */
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,6 +47,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // Dispose of any resources that can be recreated.
     }
     
+    // get numer of required rows
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return offerings.count
     }
@@ -61,71 +58,68 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             fatalError("The dequeued cell is not an instance of SearchResultsTableViewCell.")
         }
         
+        // get offering to be displayed
         let offering = offerings[indexPath.row]
         
-        /* if let offeringsBrand = self.dbMapping.mapBrandIDToBrand(id: offering.brandID) {
-            print("setting brand")
-            cell.modelLabel.text = offeringsBrand.name + " " + offering.type
-        } else {
-            cell.modelLabel.text = "loading"
-        } */
         cell.modelLabel.text = "loading"
+        // get the offering's brand and set the model label to the right name after receiving it
         self.storageAPI.getBrandByID(id: offering.brandID, completion: {brand in
             cell.modelLabel.text = brand.name + " " + offering.type
         })
         
-        /* if let offeringsGear = self.dbMapping.mapGearIDToGear(id: offering.gearID) {
-            cell.gearshiftLabel.text = offeringsGear.name
-        } else {
-            cell.gearshiftLabel.text = "loading"
-        } */
-        
         cell.gearshiftLabel.text = "loading"
+        // get the offering's gear and set the gear label to the right name after receiving it
         self.storageAPI.getGearByID(id: offering.gearID, completion: {gear in
             cell.gearshiftLabel.text = gear.name
         })
         
-        /* if let offeringsFuel = self.dbMapping.mapFuelIDToFuel(id: offering.fuelID) {
-            cell.fuelLabel.text = offeringsFuel.name
-        } else {
-            cell.fuelLabel.text = "loading"
-        } */
-        
         cell.fuelLabel.text = "loading"
+        // get the offering's fuel and set the fuel label to the right name after receiving it
         self.storageAPI.getFuelByID(id: offering.fuelID, completion: {fuel in
             cell.fuelLabel.text = fuel.name
         })
         
+        // set remaining labels that can be set with values from the offering itself
         cell.seatsLabel.text = String(offering.seats) + " seats"
         cell.mileageLabel.text = String(offering.consumption) + "l/100km"
         cell.locationLabel.text = offering.location
         cell.priceLabel.text = "from " + String(offering.basePrice) + "€ per day"
+        
+        // get offering's picture from it's pricture url
         let url = URL(string: offering.pictureURL)
         let data = try? Data(contentsOf: url!)
-        let image: UIImage = UIImage(data: data!)! // TODO: better error handling here
-        cell.photo.image = image
+        if let currentData = data, let currentImage = UIImage(data: currentData) {
+            cell.photo.image = currentImage
+        } else {
+            print("error while getting an offerings image in cellForRowAt")
+        }
         
         return cell
     }
     
+    // go to offerin's detail view when the user taps an offering in the search results
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedOffering = self.offerings[indexPath.row]
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
         if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
+            // send the selected offering to the next view controller by setting an attribute there
             viewController.displayingOffering = selectedOffering
+            // show next view controller
             self.present(viewController, animated: true, completion: nil)
         }
     }
     
     func receiveOfferings(_ offerings: [Offering]) {
         if (offerings.count <= 0) {
-            let alertController = UIAlertController(title: "Sorry", message: "We couln't find a car for you. :(", preferredStyle: .alert)
+            // show error message if no offerings were received (because the search returned no results)
+            let alertController = UIAlertController(title: ERROR_ALERT_TITLE, message: NO_OFFERINGS_FOUND_ERROR, preferredStyle: .alert)
             let defaultAction = UIAlertAction(title: "back to search", style: .cancel, handler: {alterAction in
                 self.navigationController?.popViewController(animated: true)
             })
             alertController.addAction(defaultAction)
             self.present(alertController, animated: true, completion: nil)
         } else {
+            // offerings received -> save offerings, reload table to show them
             self.offerings = offerings
             self.searchResultsTable.reloadData()
         }
@@ -136,16 +130,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             // next screen: filter
             if let filterViewController = segue.destination as? FilterViewController {
                 // set filter screen's default values here
-                if self.searchFilter != nil {
+                if let currentSearchFilter = searchFilter {
                     // only set the values if they're not set yet -> if this is the first time the filter view is opened
-                    if self.searchFilter!.maxPrice == nil {
-                        self.searchFilter!.maxPrice = 100
+                    if currentSearchFilter.maxPrice == nil {
+                        currentSearchFilter.maxPrice = 100
                     }
-                    if self.searchFilter!.maxConsumption == nil {
-                        self.searchFilter!.maxConsumption = 10
+                    if currentSearchFilter.maxConsumption == nil {
+                        currentSearchFilter.maxConsumption = 10
                     }
-                    if self.searchFilter!.minHP == nil {
-                        self.searchFilter!.minHP = 50
+                    if currentSearchFilter.minHP == nil {
+                        currentSearchFilter.minHP = 50
                     }
                 }
                 
