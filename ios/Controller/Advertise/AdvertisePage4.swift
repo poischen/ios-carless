@@ -113,9 +113,7 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         //todo: necessary to filter duplicates?
-        formatter.dateFormat = "yyyy MM dd"
-        let selectedDate = formatter.string(from: date)
-        pageViewController.advertiseHelper.blockedDates.append(selectedDate)
+        pageViewController.advertiseHelper.blockedDates.append(date)
         print("didSelectDate " + selectedDate + "cellState: " + "\(cellState)")
         print(pageViewController.advertiseHelper.blockedDates)
         
@@ -124,9 +122,7 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        formatter.dateFormat = "yyyy MM dd"
-        let selectedDate = formatter.string(from: date)
-        pageViewController.advertiseHelper.releaseDate(date: selectedDate)
+        pageViewController.advertiseHelper.releaseDate(date: date)
         
         guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelection(view: releasedDate, cellState: cellState)
