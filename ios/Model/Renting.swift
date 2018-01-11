@@ -37,7 +37,7 @@ class Renting: DictionaryConvertibleEditable {
         ]
     }
     
-    let id: String?
+    var id: String?
     let endDate: Date
     let startDate: Date
     let userID: String

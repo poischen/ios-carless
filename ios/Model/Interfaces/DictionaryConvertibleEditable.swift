@@ -14,8 +14,7 @@ import Foundation
 
 protocol DictionaryConvertibleEditable {
     // the ID can be filled later, e.g. when the object is passed to StorageAPI which gets a UID from the DB, sets it in the object and then saves it to the DB
-    // TODO: remove ID from constructor?
-    // TODO: add contraint that ID should be editable
     init?(id: String?, dict: [String:AnyObject])
     var dict:[String:AnyObject] { get }
+    var id:String? {get set} // ID should be mutable
 }
