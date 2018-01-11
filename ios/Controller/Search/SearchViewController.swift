@@ -197,7 +197,7 @@ class SearchViewController: UIViewController {
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                     featureIDs: nil,
-                    placePoint: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
+                    placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
                 )
                 // send filter to the next view controller by setting an attribute of it to the filter
                 searchResultsViewController.searchFilter = newFilter

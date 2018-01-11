@@ -93,7 +93,7 @@ class SearchViewControllerOld: UIViewController, UIPickerViewDelegate, UIPickerV
     
     @IBAction func searchButtonClicked(_ sender: Any) {
         // only proceed to the search results if the user has picked a place
-        if let userPickedPlace = pickedPlace {
+        if pickedPlace != nil {
             performSegue(withIdentifier: "showSearchResults", sender: nil)
         } else {
             // show error message to remind the user to pick a place first
@@ -128,7 +128,7 @@ class SearchViewControllerOld: UIViewController, UIPickerViewDelegate, UIPickerV
                     vehicleTypeIDs: nil,
                     dateInterval: DateInterval(start: mergedStartDate, end: mergedEndDate),
                     featureIDs: nil,
-                    placePoint: Point(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
+                    placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude)
                 )
                 searchResultsViewController.searchFilter = newFilter
                 

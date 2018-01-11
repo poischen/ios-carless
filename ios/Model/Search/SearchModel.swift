@@ -120,10 +120,10 @@ class SearchModel {
             })
         }
         
+        // add location filter function if location criterion is set
         if let desiredPlaceLocation = filter.placePoint {
             filterFunctions.append {
                 let distance = $0.locationPoint.distanceToPoint(otherPoint: desiredPlaceLocation)
-                print(distance)
                 return distance <= self.FILTER_RADIUS_METERS
             }
         }

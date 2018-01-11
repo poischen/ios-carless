@@ -22,9 +22,9 @@ class Filter {
     var vehicleTypeIDs: [Int]?
     var dateInterval: DateInterval?
     var featureIDs: [Int]?
-    var placePoint: Point?
+    var placePoint: CoordinatePoint?
     
-    init(brandIDs: [Int]?, maxConsumption: Int?, fuelIDs: [Int]?, gearIDs: [Int]?, minHP: Int?, maxPrice: Int?, minSeats: Int?, vehicleTypeIDs: [Int]?, dateInterval: DateInterval?, featureIDs: [Int]?, placePoint: Point?) {
+    init(brandIDs: [Int]?, maxConsumption: Int?, fuelIDs: [Int]?, gearIDs: [Int]?, minHP: Int?, maxPrice: Int?, minSeats: Int?, vehicleTypeIDs: [Int]?, dateInterval: DateInterval?, featureIDs: [Int]?, placePoint: CoordinatePoint?) {
         self.brandIDs = brandIDs
         self.maxConsumption = maxConsumption
         self.fuelIDs = fuelIDs

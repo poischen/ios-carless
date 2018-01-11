@@ -8,7 +8,8 @@
 
 import Foundation
 
-class Point {
+// this class represents a point on the earth identified by it's coordinates
+class CoordinatePoint {
     let latitude:Double
     let longitude:Double
     
@@ -17,11 +18,13 @@ class Point {
         self.longitude = longitude
     }
     
-    func distanceToPoint(otherPoint: Point) -> Double {
-        return Point.distanceBetweenPoints(place1Latitude: self.latitude, place1Longitude: self.longitude, place2Latitude: otherPoint.latitude, place2Longitude: otherPoint.longitude)
+    // How far is this point away from another point (in meters)?
+    func distanceToPoint(otherPoint: CoordinatePoint) -> Double {
+        return CoordinatePoint.distanceBetweenCoordinates(place1Latitude: self.latitude, place1Longitude: self.longitude, place2Latitude: otherPoint.latitude, place2Longitude: otherPoint.longitude)
     }
     
-    static func distanceBetweenPoints(place1Latitude: Double, place1Longitude: Double, place2Latitude: Double, place2Longitude: Double) -> Double{
+    // distance between two pairs of coordinates
+    static func distanceBetweenCoordinates(place1Latitude: Double, place1Longitude: Double, place2Latitude: Double, place2Longitude: Double) -> Double{
         // source: https://www.movable-type.co.uk/scripts/latlong.html (adapted for Swift)
         let earthRadius = Double(6371 * 1000) // meters (6371 kilometers)
         let place1LatRadians = degreesToRadians(degrees: place1Latitude)
@@ -34,13 +37,8 @@ class Point {
         return earthRadius * c // distance is returned in METERS
     }
     
+    // converts degrees to radians
     static func degreesToRadians(degrees: Double) -> Double{
         return degrees * .pi / 180
     }
-    
-    /* static func distanceBetweenPlaces(place1: GMSPlace, place2: GMSPlace) -> Double {
-     let (place1Latitude, place1Longitude) = (place1.coordinate.latitude, place1.coordinate.longitude)
-     let (place2Latitude, place2Longitude) = (place2.coordinate.latitude, place2.coordinate.longitude)
-     return distanceBetweenPoints(place1Latitude: place1Latitude, place1Longitude: place1Longitude, place2Latitude: place2Latitude, place2Longitude: place2Longitude) // distance is returned in METERS
-     } */
 }
