@@ -22,12 +22,11 @@
 		196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196FD4E81FAFBFE2000875AE /* Search.storyboard */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
-		196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewController.swift */; };
+		196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */; };
 		19714D411FF6419100067565 /* RateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19714D401FF6419100067565 /* RateModel.swift */; };
 		199A68651FFD027A00047E5D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68641FFD027A00047E5D /* CustomCell.swift */; };
-		199A68671FFD03FE00047E5D /* SearchTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68661FFD03FE00047E5D /* SearchTestViewController.swift */; };
+		199A68671FFD03FE00047E5D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68661FFD03FE00047E5D /* SearchViewController.swift */; };
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
-		19A3B0521FDC19F80021458C /* DBMapping.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3B0511FDC19F80021458C /* DBMapping.swift */; };
 		19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3F8611FF5AAEE00FA2D95 /* Rating.swift */; };
 		19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A7FA791FD2D2C900FA7C8D /* Renting.swift */; };
 		19BF06421FEA83D700E495C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06411FEA83D700E495C2 /* ViewController.swift */; };
@@ -113,12 +112,11 @@
 		196FD4E81FAFBFE2000875AE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
-		196FD4F21FAFC46E000875AE /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerOld.swift; sourceTree = "<group>"; };
 		19714D401FF6419100067565 /* RateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateModel.swift; sourceTree = "<group>"; };
 		199A68641FFD027A00047E5D /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
-		199A68661FFD03FE00047E5D /* SearchTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchTestViewController.swift; sourceTree = "<group>"; };
+		199A68661FFD03FE00047E5D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
-		19A3B0511FDC19F80021458C /* DBMapping.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBMapping.swift; sourceTree = "<group>"; };
 		19A3F8611FF5AAEE00FA2D95 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		19A7FA791FD2D2C900FA7C8D /* Renting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renting.swift; sourceTree = "<group>"; };
 		19BF06411FEA83D700E495C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -268,6 +266,9 @@
 		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				19CA79A22007E06500402963 /* Interfaces */,
+				19CA79A12007E04E00402963 /* Helper */,
+				19CA79A02007E02E00402963 /* Search */,
 				19714D3F1FF6416C00067565 /* Rate */,
 				840D63D41FE9A746007A1F16 /* CarLocation.swift */,
 				7734A9A31FD6F2750013A923 /* User.swift */,
@@ -275,22 +276,14 @@
 				19D4126A1FB707D500794F1F /* Feature.swift */,
 				1922178C1FBDA5BE00D7FDFE /* Fuel.swift */,
 				196FD4EA1FAFC0F0000875AE /* Offering.swift */,
-				190DB08B1FBF30E90027F5CD /* Filter.swift */,
-				199BFDA51FC1CB81002A0101 /* SearchModel.swift */,
 				1949C5931FC9D05800C5FD91 /* Gear.swift */,
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
 				19380CB91FD5A29A0057A6D2 /* VehicleType.swift */,
-				19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */,
-				19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */,
-				19A3B0511FDC19F80021458C /* DBMapping.swift */,
-				194C2E991FE7C44200E34EF8 /* SelectableItem.swift */,
-				191DABB01FF00F7000EB0070 /* Time.swift */,
 				848486EF1FFC4395008F7DAF /* Availibility.swift */,
 				19A3F8611FF5AAEE00FA2D95 /* Rating.swift */,
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
-				19EE8F342006A40700204C73 /* Point.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -303,6 +296,34 @@
 				19CB76FB1FD44E8C00B291CE /* DBConstants.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		19CA79A02007E02E00402963 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				190DB08B1FBF30E90027F5CD /* Filter.swift */,
+				199BFDA51FC1CB81002A0101 /* SearchModel.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		19CA79A12007E04E00402963 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				191DABB01FF00F7000EB0070 /* Time.swift */,
+				19EE8F342006A40700204C73 /* Point.swift */,
+			);
+			path = Helper;
+			sourceTree = "<group>";
+		};
+		19CA79A22007E06500402963 /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */,
+				19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */,
+				194C2E991FE7C44200E34EF8 /* SelectableItem.swift */,
+			);
+			path = Interfaces;
 			sourceTree = "<group>";
 		};
 		2AD4E93B1FA8A2250013D67E = {
@@ -413,9 +434,9 @@
 			isa = PBXGroup;
 			children = (
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
-				196FD4F21FAFC46E000875AE /* SearchViewController.swift */,
+				196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
-				199A68661FFD03FE00047E5D /* SearchTestViewController.swift */,
+				199A68661FFD03FE00047E5D /* SearchViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -795,7 +816,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19A3B0521FDC19F80021458C /* DBMapping.swift in Sources */,
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				840D63C61FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift in Sources */,
 				84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */,
@@ -806,7 +826,7 @@
 				19714D411FF6419100067565 /* RateModel.swift in Sources */,
 				19BF064A1FEA869F00E495C2 /* ProfileViewController.swift in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
-				196FD4F31FAFC46E000875AE /* SearchViewController.swift in Sources */,
+				196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */,
 				84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */,
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */,
@@ -847,7 +867,7 @@
 				840D63C91FE9A534007A1F16 /* OfferingViewController.swift in Sources */,
 				841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */,
 				194C2E9A1FE7C44200E34EF8 /* SelectableItem.swift in Sources */,
-				199A68671FFD03FE00047E5D /* SearchTestViewController.swift in Sources */,
+				199A68671FFD03FE00047E5D /* SearchViewController.swift in Sources */,
 				840D63CE1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

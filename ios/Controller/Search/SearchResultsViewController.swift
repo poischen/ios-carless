@@ -16,7 +16,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var searchResultsTable: UITableView!
     
-    let dbMapping = DBMapping.shared
     let storageAPI = StorageAPI.shared
     
     // error message
@@ -133,13 +132,13 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 if let currentSearchFilter = searchFilter {
                     // only set the values if they're not set yet -> if this is the first time the filter view is opened
                     if currentSearchFilter.maxPrice == nil {
-                        currentSearchFilter.maxPrice = 100
+                        currentSearchFilter.maxPrice = 100 // default value for maxPrice
                     }
                     if currentSearchFilter.maxConsumption == nil {
-                        currentSearchFilter.maxConsumption = 10
+                        currentSearchFilter.maxConsumption = 10 // default value for maxConsumption
                     }
                     if currentSearchFilter.minHP == nil {
-                        currentSearchFilter.minHP = 50
+                        currentSearchFilter.minHP = 50 // default value for minHp
                     }
                 }
                 

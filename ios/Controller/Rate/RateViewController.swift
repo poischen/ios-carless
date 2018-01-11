@@ -20,8 +20,8 @@ class RateViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var ratingCarModel: UILabel!
     @IBOutlet weak var ratingLessorUsername: UILabel!
     
-    private let minExplanationLength = 50
-    private let maxExplanationLength = 300
+    private let MIN_EXPLANATION_LENGTH = 50
+    private let MAX_EXPLANATION_LENGTH = 300
     
     var rentingBeingRated: Renting? = Renting(id: "1", inseratID: "-L2GGCQf0M-9rPzx3Wx4", userID: "W7VPwDFSTyNwW0WJl38MhsVmcdX2", startDate: Date(), endDate: Date()) // TODO: set from profile, only here for testing
     private var userBeingRated: User? = nil // TODO: set from profile
@@ -35,16 +35,17 @@ class RateViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if (rentingBeingRated != nil){
+        if let currentRentingBeingRated = rentingBeingRated {
             if (rateLessee){
-                RateModel.getAdditionalInformationForLesseeRating(rentingBeingRated: rentingBeingRated!, completion: { (carModelName, lesseeUser) in
+                // user (lessor) wants to rate a lessee -> get information (car model, lessee user) from the DB (via the RateModel)
+                RateModel.getAdditionalInformationForLesseeRating(rentingBeingRated: currentRentingBeingRated, completion: { (carModelName, lesseeUser) in
                     self.ratingCarModel.text = carModelName
                     self.ratingLessorUsername.text = lesseeUser.name
                     self.userBeingRated = lesseeUser
                 })
             } else {
-                // rate a lessor
-                RateModel.getAdditionalInformationForLessorRating(rentingBeingRated: rentingBeingRated!, completion: { (carModelName, lessorUser) in
+                // user (lessee) wants to rate a lessor -> get information (car model, lessor user) from the DB (via the RateModel)
+                RateModel.getAdditionalInformationForLessorRating(rentingBeingRated: currentRentingBeingRated, completion: { (carModelName, lessorUser) in
                     self.ratingCarModel.text = carModelName
                     self.ratingLessorUsername.text = lessorUser.name
                     self.userBeingRated = lessorUser
@@ -60,14 +61,15 @@ class RateViewController: UIViewController, UITextViewDelegate {
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         let newText = (textView.text as NSString).replacingCharacters(in: range, with: text)
-        let numberOfChars = newText.characters.count
-        return numberOfChars < maxExplanationLength
+        let numberOfChars = newText.count
+        print(newText.count)
+        return numberOfChars <= MAX_EXPLANATION_LENGTH
     }
 
     @IBAction func saveRatingButtonClicked(_ sender: Any) {
         if userBeingRated != nil {
             // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
-            if ratingExplanation.text.count >= minExplanationLength && ratingExplanation.text.count <= maxExplanationLength {
+            if ratingExplanation.text.count >= MIN_EXPLANATION_LENGTH && ratingExplanation.text.count <= MAX_EXPLANATION_LENGTH {
                 // save rating and update user's average rating
                 RateModel.saveRating(rating: ratingStars.rating, ratedUser: userBeingRated!, explanation: ratingExplanation.text)
                 goBackToProfile()
@@ -86,19 +88,10 @@ class RateViewController: UIViewController, UITextViewDelegate {
         goBackToProfile()
     }
     
+    // TODO: replace with navigation controller
     private func goBackToProfile(){
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Home")
         self.present(vc, animated: true, completion: nil)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

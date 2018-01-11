@@ -63,10 +63,6 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         // set this view controller as delegate and data source of all the table views it contains
         pickFuelTable.delegate = self
@@ -79,7 +75,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         pickGearTable.delegate = self
         pickVehicleTypeTable.delegate = self
         pickVehicleTypeTable.dataSource = self
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    
         // get filter items from DB, receiving functions also restore the view state from the filter object
         storageAPI.getFeatures(completion: self.receiveFeatures)
         storageAPI.getVehicleTypes(completion: self.receiveVehicleTypes)
