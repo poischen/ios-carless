@@ -24,7 +24,7 @@ class MessageHandler {
     
     func sendMessage(senderID: String, senderName: String, text: String, receiverID: String){
         
-        let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text, DBConstants.RECEIVER_ID: receiverID];
+        let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text, DBConstants.RECEIVER_ID: receiverID]
         
         //StorageAPI.shared.messagesRef.childByAutoId().setValue(data);
         
@@ -32,7 +32,7 @@ class MessageHandler {
         
         ref.childByAutoId().updateChildValues(data) { (error, ref) in
             if error != nil {
-               // print(error)
+               print("Oops something went wrong!")
                 return
             }
             let userMessagesRef = Database.database().reference().child("user-messages").child(StorageAPI.shared.userID())
@@ -45,7 +45,7 @@ class MessageHandler {
         }
     }
     
-    func sendMediaMessage(senderID: String, senderName: String, url: String, receiverID: String) {
+   /* func sendMediaMessage(senderID: String, senderName: String, url: String, receiverID: String) {
         let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.URL: url, DBConstants.RECEIVER_ID: receiverID]
         
         let ref = StorageAPI.shared.mediaMessagesRef
@@ -65,7 +65,31 @@ class MessageHandler {
         }
         
         StorageAPI.shared.mediaMessagesRef.childByAutoId().setValue(data)
+    }*/
+    
+    
+    func sendMediaMessage(senderID: String, senderName: String, url: String, receiverID: String) {
+        let data: Dictionary<String, Any> = [DBConstants.SENDER_ID: senderID, DBConstants.SENDER_NAME: senderName, DBConstants.URL: url, DBConstants.RECEIVER_ID: receiverID]
+        
+        let ref = StorageAPI.shared.messagesRef
+        
+        ref.childByAutoId().updateChildValues(data) { (error, ref) in
+            if error != nil {
+                print("Oops something went wrong!")
+                return
+            }
+            let userMessagesRef = Database.database().reference().child("user-messages").child(StorageAPI.shared.userID())
+            
+            let messageID = ref.key
+            userMessagesRef.updateChildValues([messageID: 1])
+            
+            let recipientUserMessageRef = Database.database().reference().child("user-messages").child(receiverID)
+            recipientUserMessageRef.updateChildValues([messageID: 1])
+        }
+        
+        //StorageAPI.shared.messagesRef.childByAutoId().setValue(data)
     }
+
     
     func sendMedia(image: Data?, video: URL?, senderID: String, senderName: String, receiverID: String) {
         
@@ -74,18 +98,18 @@ class MessageHandler {
             StorageAPI.shared.imageStorageRef.child(senderID + "\(NSUUID().uuidString).jpg").putData(image!, metadata: nil) { (metadata: StorageMetadata?, err: Error?) in
                 
                 if err != nil {
-                    //TODO: inform user if image wasn't uploaded
+                    print("Failed to upload image!")
                     
                 } else {
-                  self.sendMediaMessage(senderID: senderID, senderName: senderName, url: String (describing: metadata!.downloadURL()!), receiverID: receiverID)
+                    self.sendMediaMessage(senderID: senderID, senderName: senderName, url: String (describing: metadata!.downloadURL()!), receiverID: receiverID)
                 }
             }
             
-                } else {
+        } else {
             StorageAPI.shared.videoStorageRef.child(senderID + "\(NSUUID().uuidString)").putFile(from: video!, metadata: nil) { (metadata: StorageMetadata?, err: Error?) in
                 
                 if err != nil {
-                    //TODO: inform user if video wasn't uploaded
+                    print("Failed to upload video!")
                     
                 } else {
                     self.sendMediaMessage(senderID: senderID, senderName: senderName, url: String (describing: metadata!.downloadURL()!), receiverID: receiverID)
@@ -94,6 +118,7 @@ class MessageHandler {
             
         }
     }
+
     
     func observeUserMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
@@ -121,7 +146,7 @@ class MessageHandler {
         }
     }
     
-    func observeUserMediaMessages() {
+   /* func observeUserMediaMessages() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
@@ -137,7 +162,7 @@ class MessageHandler {
             })
             
         }
-    }
+    }*/
     
     /*func observeMessages() {
         StorageAPI.shared.messagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
@@ -160,7 +185,7 @@ class MessageHandler {
         }
     }*/
     
-   /* func observeMediaMessages() {
+    /*func observeMediaMessages() {
         
         StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
@@ -170,7 +195,8 @@ class MessageHandler {
                         String {
                         if let fileURL = data[DBConstants.URL] as?
                         String {
-                            self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL);
+                            self.delegate?.mediaReceived(senderID: id, senderName: name, url: fileURL)
+                            
                         }
                     }
                 }

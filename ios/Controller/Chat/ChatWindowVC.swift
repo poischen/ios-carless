@@ -35,7 +35,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         self.senderDisplayName = StorageAPI.shared.userName
         
         //MessageHandler._shared.observeMediaMessages()
-        MessageHandler._shared.observeUserMediaMessages()
+       // MessageHandler._shared.observeUserMediaMessages()
         MessageHandler._shared.observeUserMessages()
             
     }
@@ -127,7 +127,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         present(picker, animated: true, completion: nil);
     }
     
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
             let data = UIImageJPEGRepresentation(pic, 0.01);
@@ -137,7 +137,7 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
         } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
             
             MessageHandler._shared.sendMedia(image: nil, video: vidUrl, senderID: senderId, senderName: senderDisplayName, receiverID: receiverId);
-        
+            
         }
         
         self.dismiss(animated: true, completion: nil);
@@ -172,9 +172,11 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
                             } else {
                                 photo?.appliesMediaViewMaskAsOutgoing = false;
                             }
-                            
-                            self.messages.append(JSQMessage(senderId: senderID, displayName: senderName, media: photo));
+                           
+                                
+                            self.messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: photo));
                             self.collectionView.reloadData();
+                            
                         }
                     })
                 } else {
@@ -184,8 +186,11 @@ class ChatWindowVC: JSQMessagesViewController, MessageReceivedDelegate, UIImageP
                     } else {
                         video?.appliesMediaViewMaskAsOutgoing = false;
                     }
-                    messages.append(JSQMessage(senderId: senderID, displayName: senderName, media: video));
+                    
+                       
+                    messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: video));
                     self.collectionView.reloadData();
+                    
                 }
             } catch {
                 

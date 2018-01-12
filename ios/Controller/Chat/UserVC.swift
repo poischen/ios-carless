@@ -20,7 +20,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Array of Users to store all of the users
     private var users = [User]();
     
-    var selctedUser: String = ""
+    var selectedUser: String = ""
     static let sharedChat = ChatViewController()
     
     override func viewDidLoad() {
@@ -68,8 +68,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUserObject = self.users[indexPath.row]
 
-        self.selctedUser = selectedUserObject.id
-            let ref = Database.database().reference().child(DBConstants.USERS).child(self.selctedUser)
+        self.selectedUser = selectedUserObject.id
+            let ref = Database.database().reference().child(DBConstants.USERS).child(self.selectedUser)
             ref.observeSingleEvent(of: .value, with: {(snapshot) in
                
                 self.performSegue(withIdentifier: self.CHAT_SEGUE, sender: nil)
@@ -87,7 +87,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let destinationNavigationController = segue.destination as! UINavigationController
         let targetController = destinationNavigationController.topViewController
             if let chatVC = targetController as? ChatWindowVC {
-                chatVC.receiverId = self.selctedUser
+                chatVC.receiverId = self.selectedUser
                 observeMessages()
                 observeMediaMessages()
             }
@@ -108,8 +108,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
                     if let senderID = data[DBConstants.SENDER_ID] as? String{
                         if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
                             if let text = data[DBConstants.TEXT] as? String {
-                            if (receiverID == self.selctedUser) || (senderID == self.selctedUser) {
+                               // if let fileURL = data[DBConstants.URL] as? String {
+                                   // if let name = data[DBConstants.NAME] as? String{
+                            if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
                                     MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                                    //MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
+                                
+                                   //     }
+                              //  }
                                 }
                             }
                         }
@@ -120,7 +126,34 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    func observeMediaMessages() {
+    
+    /*func observeMediaMessages() {
+        
+        StorageAPI.shared.mediaMessagesRef.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+            
+            if let data = snapshot.value as? NSDictionary {
+                if let senderID = data[DBConstants.SENDER_ID] as? String {
+                    if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                    if let name = data[DBConstants.SENDER_NAME] as?
+                        String {
+                        if let fileURL = data[DBConstants.URL] as?
+                            String {
+                            if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
+                                print(receiverID)
+                                print(senderID)
+                                print(self.selectedUser)
+                            MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
+                            }
+                        }
+                        }
+                    }
+                }
+            }
+        }
+    }*/
+    
+    
+   func observeMediaMessages() {
         
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -129,19 +162,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
         userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
             let messageID = snapshot.key
-            let messagesRef = Database.database().reference().child(DBConstants.MEDIA_MESSAGES).child(messageID)
+            let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
             messagesRef.observeSingleEvent(of: .value, with: {snapshot in
                 if let data = snapshot.value as? NSDictionary {
                     if let senderID = data[DBConstants.SENDER_ID] as? String{
                         if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
                           if let name = data[DBConstants.NAME] as? String {
                             if let fileURL = data[DBConstants.URL] as? String {
-                                if (receiverID == self.selctedUser) || (senderID == self.selctedUser) {
+                                
+                                if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
                                     MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
-                                   }
-                                }
+                                  }
+                               }
                             }
-                        }
+                       }
                     }
                 }
                 

@@ -212,8 +212,6 @@
 		191BBB9F1FB5075E00D95B26 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
-				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
 				779BFE782004EE6400AAB77A /* Chat */,
 				193966C21FF57ECC008C76A8 /* Rate */,
 				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
@@ -355,6 +353,8 @@
 		779BFE782004EE6400AAB77A /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
+				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
