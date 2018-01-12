@@ -351,7 +351,7 @@ final class StorageAPI {
     }
     
     //store availibility of offer in db
-    func saveAvailibility(blockedDates: [String]?, offerID: String){
+    func saveAvailibility(blockedDates: [Date]?, offerID: String){
         let availibilityKey = availibilityDBReference.childByAutoId().key
         offeringsDBReference.child(offerID).child(DBConstants.PROPERTY_NAME_OFFERINGS_BLOCKED).setValue(availibilityKey)
         
@@ -361,10 +361,10 @@ final class StorageAPI {
                 let blockedDayKey = reference.childByAutoId().key
                 let entryReference = reference.child(blockedDayKey)
                 
-                let blockedDayString = blockedDay
-                print(blockedDayString)
+                let blockedDayConverted = Renting.dateToIntTimestamp(date: blockedDay)
+                print(blockedDayConverted)
                 
-                entryReference.setValue(blockedDayString);
+                entryReference.setValue(blockedDayConverted);
             }
         }
 
