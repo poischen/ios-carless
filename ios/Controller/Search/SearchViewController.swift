@@ -183,25 +183,28 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResultsNew") {
             // next screen: search results
-            if let searchResultsViewController = segue.destination as? SearchResultsViewController, let currentDesiredRentingStart = desiredRentingStart, let currentDesiredRentingEnd = desiredRentingEnd {
-                // create filter with the desired search criteria
-                let newFilter:Filter = Filter(
-                    brandIDs: nil,
-                    maxConsumption: nil,
-                    fuelIDs: nil,
-                    gearIDs: nil,
-                    minHP: nil,
-                    // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
-                    maxPrice: nil,
-                    minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
-                    vehicleTypeIDs: nil,
-                    dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
-                    featureIDs: nil,
-                    placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
-                )
-                // send filter to the next view controller by setting an attribute of it to the filter
-                searchResultsViewController.searchFilter = newFilter
+            // TODO: use guard here?
+            guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
+                let currentDesiredRentingStart = desiredRentingStart,
+                let currentDesiredRentingEnd = desiredRentingEnd else {
+                    return
             }
+            let newFilter:Filter = Filter(
+                brandIDs: nil,
+                maxConsumption: nil,
+                fuelIDs: nil,
+                gearIDs: nil,
+                minHP: nil,
+                // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
+                maxPrice: nil,
+                minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
+                vehicleTypeIDs: nil,
+                dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
+                featureIDs: nil,
+                placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
+            )
+            // send filter to the next view controller by setting an attribute of it to the filter
+            searchResultsViewController.searchFilter = newFilter
         }
     }
 
