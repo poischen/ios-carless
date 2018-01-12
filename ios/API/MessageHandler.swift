@@ -129,7 +129,7 @@ class MessageHandler {
         ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
             let messageID = snapshot.key
-            let messagesRef = StorageAPI.shared.messagesRef.child(messageID)
+            /* let messagesRef = StorageAPI.shared.messagesRef.child(messageID)
             
             messagesRef.observeSingleEvent(of: .value, with: { snapshot in
                /* if let data = snapshot.value as? NSDictionary {
@@ -141,7 +141,7 @@ class MessageHandler {
                         }
                     }
                 }*/
-            })
+            })*/
             
         }
     }

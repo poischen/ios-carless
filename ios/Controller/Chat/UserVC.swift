@@ -20,6 +20,10 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     //Array of Users to store all of the users
     private var users = [User]();
     
+    // Konrads Testzeug
+    var messageListeners:[String] = [String]()
+    var listenerOpened = false
+    
     var selectedUser: String = ""
     static let sharedChat = ChatViewController()
     
@@ -99,31 +103,37 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             return
         }
         
-        let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
-        userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
-            let messageID = snapshot.key
-            let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
-            messagesRef.observeSingleEvent(of: .value, with: {snapshot in
-                if let data = snapshot.value as? NSDictionary {
-                    if let senderID = data[DBConstants.SENDER_ID] as? String{
-                        if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
-                            if let text = data[DBConstants.TEXT] as? String {
-                               // if let fileURL = data[DBConstants.URL] as? String {
-                                   // if let name = data[DBConstants.NAME] as? String{
-                            if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
-                                    MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
-                                    //MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
-                                
-                                   //     }
-                              //  }
+        if (listenerOpened == false) {
+            let userMessagesRef = Database.database().reference().child("user-messages").child(uid)
+            
+            userMessagesRef.observe(DataEventType.childAdded){ (snapshot: DataSnapshot) in
+                let messageID = snapshot.key
+                let messagesRef = Database.database().reference().child(DBConstants.MESSAGES).child(messageID)
+                messagesRef.observeSingleEvent(of: .value, with: {snapshot in
+                    if let data = snapshot.value as? NSDictionary {
+                        if let senderID = data[DBConstants.SENDER_ID] as? String{
+                            if let receiverID = data[DBConstants.RECEIVER_ID] as? String {
+                                if let text = data[DBConstants.TEXT] as? String {
+                                    // if let fileURL = data[DBConstants.URL] as? String {
+                                    // if let name = data[DBConstants.NAME] as? String{
+                                    if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
+                                        MessageHandler._shared.delegate?.messageReceived(senderID: senderID, receiverID: receiverID, text: text)
+                                        //MessageHandler._shared.delegate?.mediaReceived(senderID: senderID, senderName: name, url: fileURL)
+                                        
+                                        //     }
+                                        //  }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                
-            })
+                    
+                })
+            }
+            listenerOpened = true
         }
+        
+        
     }
     
     
