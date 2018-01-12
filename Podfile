@@ -1,3 +1,4 @@
+source 'https://github.com/CocoaPods/Specs.git'
 # Uncomment the next line to define a global platform for your project
 # platform :ios, '9.0'
 
@@ -9,8 +10,19 @@ target 'ios' do
   
     pod 'Firebase/Core'
     pod 'Firebase/Database'
+    pod 'Firebase/Storage'
     pod 'Firebase/Auth'
     pod 'KeychainSwift'
+    pod 'GooglePlaces'
+    pod 'GooglePlacePicker'
+    pod 'JSQMessagesViewController'
+    pod 'Kingfisher', '~> 3.13.x'
+    pod 'JTAppleCalendar', '~> 7.0'
+    pod 'Cosmos', '~> 11.0'
+    pod 'SDWebImage'
+    pod 'AI'
+    pod 'ApiAI'
+
 
   target 'iosTests' do
     inherit! :search_paths
