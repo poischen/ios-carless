@@ -37,7 +37,7 @@ class AdvertiseHelper {
     var returnTime: String?
     
     //cache input for storing availibility data into db
-    var blockedDates: [String] = []
+    var blockedDates: [Date] = []
     
     //cache input for storing features data into db
     //todo
@@ -147,11 +147,10 @@ class AdvertiseHelper {
         return offeringDict
     }
     
-    func releaseDate(date: String){
+    func releaseDate(date: Date){
         if blockedDates.count > 0 {
             if let index = blockedDates.index(of: date) {
                 blockedDates.remove(at: index)
-                print(blockedDates)
             }
         }
     }
