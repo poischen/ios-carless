@@ -53,6 +53,8 @@ class OfferingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+     /*   displayingOffering = Offering(id: "1", brandID: 1, consumption: 1, description: "default", fuelID: 1, gearID: 1, hp: 1, latitude: 1.0, location: "default", longitude: 1.0, pictureURL: "default", basePrice: 1, seats: 1, type: "default", vehicleTypeID: 1, userUID: "default", pickupTime: "10:10", returnTime: "20:20")*/
+        
         //self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.title = (self.displayingOffering?.type)!
         

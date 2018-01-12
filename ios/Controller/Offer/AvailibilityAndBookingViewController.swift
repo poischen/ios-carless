@@ -98,6 +98,16 @@ class AvailibilityAndBookingViewController: UIViewController {
         formatter.dateFormat = "MMMM yy"
         monthAndYear.text = formatter.string(from: date)
     }
+    
+    func checkAvailibility() -> Void {
+        //todo
+        calculatePrice()
+    }
+    
+    func calculatePrice() -> Void {
+        //Todo
+    }
+    
 }
 
 extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
@@ -121,19 +131,6 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         dates2Check.append(date)
         guard let selectedDate = cell as? AvailibilityCalendarCell else {return}
         handleSelectionVisually(view: selectedDate, cellState: cellState)
-        print("SELECT")
-        print(dates2Check)
-    }
-    
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-            if dates2Check.count > 0 {
-                if let index = dates2Check.index(of: date) {
-                    dates2Check.remove(at: index)
-                }
-            }
-        
-        guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
-        handleSelectionVisually(view: releasedDate, cellState: cellState)
         
         if recursiveSelectionCall == false {
             if let currentFirstDate = firstDate {
@@ -150,10 +147,10 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                         lastDate = nil
                     } else {
                         lastDate = date
-                        //???????????
                         if (firstDate != lastDate) {
                             recursiveSelectionCall = true
                             calendarView.selectDates(from: currentFirstDate, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                            checkAvailibility()
                             recursiveSelectionCall = false
                         }
                     }
@@ -162,6 +159,21 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                 firstDate = date
             }
         }
+        
+        print("SELECT")
+        print(dates2Check)
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+            if dates2Check.count > 0 {
+                if let index = dates2Check.index(of: date) {
+                    dates2Check.remove(at: index)
+                }
+            }
+        
+        guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
+        handleSelectionVisually(view: releasedDate, cellState: cellState)
+
         print("DESELECT")
         print(dates2Check)
     }
