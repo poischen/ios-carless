@@ -100,7 +100,11 @@ class MenuControl: UIStackView {
     }
     
     @objc func fourthButtonTapped(button: UIButton) {
-        print("Button 4 pressed 👍")
+        if let topController = getTopmostViewController() {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Home")
+            topController.present(vc, animated: true, completion: nil)
+        }
     }
     
     private func getTopmostViewController() -> UIViewController? {

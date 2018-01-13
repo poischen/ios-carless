@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import Firebase
 import GooglePlaces
+import ApiAI
+import AI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -21,6 +23,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         GMSPlacesClient.provideAPIKey("AIzaSyAyMV-s4s4QIw1KHLmgkqa2t5zcc1dxhCg")
+        
+        let configuration: AIConfiguration = AIDefaultConfiguration()
+        configuration.clientAccessToken = "7f03656169d84ecca98f39a2dc91e27c"
+        let apiai = ApiAI.shared()
+        apiai?.configuration = configuration
+
         
         return true
     }

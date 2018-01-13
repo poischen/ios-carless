@@ -118,5 +118,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
         self.present(vc, animated: true, completion: nil)
     }
+    @IBAction func goToChatbot(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "chatbot") as! ChatBotViewController
+        self.present(vc, animated: true, completion: nil)
+    }
     
 }
