@@ -64,7 +64,7 @@ class ViewController: UIViewController {
                     print("You have successfully logged in")
                     
                     //Go to the HomeViewController if the login is sucessful
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomePage")
                     self.present(vc!, animated: true, completion: nil)
                     
                     
@@ -100,7 +100,7 @@ class ViewController: UIViewController {
                 print("You have successfully signed up")
                 //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Home")
+                let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomePage")
                 self.present(vc!, animated: true, completion: nil)
                 
                 StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808" );
