@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import InteractiveSideMenu
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, SideMenuItemContent {
 
    
     @IBOutlet weak var imageView: UIImageView!
@@ -117,6 +118,11 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let storyboard = UIStoryboard(name: "Rate", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func menuButtonClicked(_ sender: Any) {
+        showSideMenu()
     }
     
 }

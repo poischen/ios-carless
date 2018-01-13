@@ -9,8 +9,9 @@
 import UIKit
 import JTAppleCalendar
 import GooglePlacePicker
+import InteractiveSideMenu
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, SideMenuItemContent {
 
     // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
@@ -207,7 +208,13 @@ class SearchViewController: UIViewController {
             searchResultsViewController.searchFilter = newFilter
         }
     }
-
+    
+    
+    @IBAction func menuButtonClicked(_ sender: Any) {
+        print("show side menu")
+        showSideMenu()
+    }
+    
 }
 
 extension SearchViewController: JTAppleCalendarViewDataSource{

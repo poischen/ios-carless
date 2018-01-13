@@ -20,6 +20,7 @@ target 'ios' do
     pod 'JTAppleCalendar', '~> 7.0'
     pod 'Cosmos', '~> 11.0'
     pod 'SDWebImage'
+    pod 'InteractiveSideMenu'
 
   target 'iosTests' do
     inherit! :search_paths
