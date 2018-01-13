@@ -96,29 +96,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    // go to offerin's detail view when the user taps an offering in the search results
+    // go to offering's detail view when the user taps an offering in the search results
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedOffering = self.offerings[indexPath.row]
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-        let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as! UINavigationController
-        let targetController = navigationController.topViewController as! OfferingViewController
-        /* let targetController = destinationNavigationController.topViewController
-        vc.childViewControllers[0]. */
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
+            let targetController = navigationController.topViewController as? OfferingViewController else {
+                return
+        }
         targetController.displayingOffering = selectedOffering
         self.present(navigationController, animated: true, completion: nil)
-  
-        /*let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-//        if let viewController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? OfferingViewController{
-        
-
-        
-           if let viewController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? OfferingViewController
-            {
-            // send the selected offering to the next view controller by setting an attribute there
-            viewController.displayingOffering = selectedOffering
-            // show next view controller
-            self.present(viewController, animated: true, completion: nil)
-        }*/
     }
     
     func receiveOfferings(_ offerings: [Offering]) {

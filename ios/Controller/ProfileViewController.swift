@@ -85,6 +85,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        imageView.layer.borderWidth = 1
+        imageView.layer.masksToBounds = false
+        imageView.layer.borderColor = UIColor.black.cgColor
+        imageView.layer.cornerRadius = imageView.frame.height/2
+        imageView.clipsToBounds = true
 
         // Do any additional setup after loading the view.
     }
@@ -116,6 +122,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBAction func rateButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Rate", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
+        self.present(vc, animated: true, completion: nil)
+    }
+    @IBAction func goToChatbot(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "chatbot") as! ChatBotViewController
         self.present(vc, animated: true, completion: nil)
     }
     

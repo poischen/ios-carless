@@ -852,7 +852,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z8-b9-C79">
-                                <rect key="frame" x="11" y="617" width="352" height="30"/>
+                                <rect key="frame" x="11" y="588" width="352" height="30"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="Search">
@@ -862,11 +862,17 @@
                                     <action selector="searchButtonClicked:" destination="518-31-8pU" eventType="touchUpInside" id="9mK-bw-jbo"/>
                                 </connections>
                             </button>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8Qv-Lm-1ug" customClass="MenuControl" customModule="ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="trailing" secondItem="SLX-Ii-F2u" secondAttribute="trailing" id="5vO-GF-hMW"/>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="leading" secondItem="SLX-Ii-F2u" secondAttribute="leading" id="8S3-eT-iwP"/>
+                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="bottom" secondItem="SLX-Ii-F2u" secondAttribute="bottom" id="Z8P-kl-jap"/>
+                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="trailing" secondItem="SLX-Ii-F2u" secondAttribute="trailing" id="Zg2-0l-iWb"/>
+                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="leading" secondItem="SLX-Ii-F2u" secondAttribute="leading" id="mRD-mT-5uw"/>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="top" secondItem="SLX-Ii-F2u" secondAttribute="top" constant="59" id="mgr-Ae-aFn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SLX-Ii-F2u"/>

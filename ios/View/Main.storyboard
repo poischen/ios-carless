@@ -168,6 +168,14 @@
                                     <action selector="rateButton:" destination="dyd-1j-bhe" eventType="touchUpInside" id="ief-1t-QBB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QFL-os-WhN">
+                                <rect key="frame" x="71" y="541" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Chatbot"/>
+                                <connections>
+                                    <action selector="goToChatbot:" destination="dyd-1j-bhe" eventType="touchUpInside" id="h1U-jD-HxC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <viewLayoutGuide key="safeArea" id="AMp-9V-bZc"/>
@@ -178,7 +186,82 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ne1-eD-vb4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3303" y="72"/>
+            <point key="canvasLocation" x="2258" y="15"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="2Hc-kc-zB6">
+            <objects>
+                <viewController storyboardIdentifier="HomePage" id="XDG-uh-MGF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ms4-PP-snQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Wu2-WG-USW" customClass="MenuControl" customModule="ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                            </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Startseite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JnI-Ms-FRH">
+                                <rect key="frame" x="195" y="323" width="75" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Wu2-WG-USW" firstAttribute="leading" secondItem="4UI-CM-kFD" secondAttribute="leading" id="URx-7N-qzC"/>
+                            <constraint firstItem="Wu2-WG-USW" firstAttribute="trailing" secondItem="4UI-CM-kFD" secondAttribute="trailing" id="csr-bt-s5d"/>
+                            <constraint firstItem="Wu2-WG-USW" firstAttribute="bottom" secondItem="4UI-CM-kFD" secondAttribute="bottom" id="yUz-HA-Me6"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="4UI-CM-kFD"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xrc-xq-FDQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1120.8" y="14.842578710644679"/>
+        </scene>
+        <!--Chat Bot View Controller-->
+        <scene sceneID="NoF-6V-o75">
+            <objects>
+                <viewController storyboardIdentifier="chatbot" id="PoJ-1d-rUw" customClass="ChatBotViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Tz3-tK-epv">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pc-Vh-Ugg">
+                                <rect key="frame" x="16" y="54" width="281" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ydc-hy-c2k">
+                                <rect key="frame" x="36" y="339" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgH-wv-nab">
+                                <rect key="frame" x="66" y="384" width="36" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendToBot:" destination="PoJ-1d-rUw" eventType="touchUpInside" id="7L5-bz-QNW"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="CVc-ac-Pk4"/>
+                    </view>
+                    <connections>
+                        <outlet property="chipResponse" destination="5Pc-Vh-Ugg" id="NG3-Er-Bcd"/>
+                        <outlet property="messageField" destination="Ydc-hy-c2k" id="PjI-UU-7QH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9yN-5F-Rts" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1008.8" y="710.19490254872574"/>
         </scene>
     </scenes>
     <resources>

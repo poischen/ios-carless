@@ -29,6 +29,8 @@
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
 		19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3F8611FF5AAEE00FA2D95 /* Rating.swift */; };
 		19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A7FA791FD2D2C900FA7C8D /* Renting.swift */; };
+		19AFCF1F200A287400758E91 /* MenuControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19AFCF1E200A287400758E91 /* MenuControl.swift */; };
+		19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BBB890200A57B500723339 /* ChatBotViewController.swift */; };
 		19BF06421FEA83D700E495C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06411FEA83D700E495C2 /* ViewController.swift */; };
 		19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06431FEA84A500E495C2 /* MessageHandler.swift */; };
 		19BF06471FEA853C00E495C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06451FEA853B00E495C2 /* Main.storyboard */; };
@@ -120,6 +122,8 @@
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		19A3F8611FF5AAEE00FA2D95 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		19A7FA791FD2D2C900FA7C8D /* Renting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renting.swift; sourceTree = "<group>"; };
+		19AFCF1E200A287400758E91 /* MenuControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuControl.swift; sourceTree = "<group>"; };
+		19BBB890200A57B500723339 /* ChatBotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotViewController.swift; sourceTree = "<group>"; };
 		19BF06411FEA83D700E495C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		19BF06431FEA84A500E495C2 /* MessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		19BF06451FEA853B00E495C2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 		191BBB9E1FB5070300D95B26 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				19AFCF1D200A285900758E91 /* Menu */,
 				193966BD1FF57B6D008C76A8 /* Rate */,
 				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
 				19BF06451FEA853B00E495C2 /* Main.storyboard */,
@@ -228,6 +233,7 @@
 		191BBB9F1FB5075E00D95B26 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				19BBB88F200A579C00723339 /* ChatBot */,
 				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
 				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
 				19BF06411FEA83D700E495C2 /* ViewController.swift */,
@@ -263,6 +269,22 @@
 				19714D401FF6419100067565 /* RateModel.swift */,
 			);
 			path = Rate;
+			sourceTree = "<group>";
+		};
+		19AFCF1D200A285900758E91 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				19AFCF1E200A287400758E91 /* MenuControl.swift */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		19BBB88F200A579C00723339 /* ChatBot */ = {
+			isa = PBXGroup;
+			children = (
+				19BBB890200A57B500723339 /* ChatBotViewController.swift */,
+			);
+			path = ChatBot;
 			sourceTree = "<group>";
 		};
 		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
@@ -730,6 +752,8 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-ios/Pods-ios-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AI/AI.framework",
+				"${BUILT_PRODUCTS_DIR}/ApiAI/ApiAI.framework",
 				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
@@ -744,6 +768,8 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ApiAI.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
@@ -853,6 +879,7 @@
 				84FD437C1FF52CDA00CB546C /* AdvertisePage6.swift in Sources */,
 				191DABB11FF00F7000EB0070 /* Time.swift in Sources */,
 				19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */,
+				19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */,
 				190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */,
 				199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */,
 				840D63C21FE9A4C2007A1F16 /* AdvertisePagesVC.swift in Sources */,
@@ -873,6 +900,7 @@
 				194C2E9A1FE7C44200E34EF8 /* SelectableItem.swift in Sources */,
 				199A68671FFD03FE00047E5D /* SearchViewController.swift in Sources */,
 				840D63CE1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift in Sources */,
+				19AFCF1F200A287400758E91 /* MenuControl.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,7 +1049,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = TRZFF8P7QE;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
@@ -1037,7 +1065,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = TRZFF8P7QE;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
