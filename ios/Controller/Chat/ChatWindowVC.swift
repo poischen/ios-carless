@@ -27,7 +27,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = StorageAPI.shared.userName
         
-        observeMessages()
+        //observeMessages()
+        observeUserMessages()
         
         // Do any additional setup after loading the view.
     }
@@ -108,6 +109,29 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     private func chooseMedia(type: CFString){
         picker.mediaTypes = [type as String]
         present(picker, animated: true, completion: nil)
+    }
+    
+    func observeUserMessages() {
+        //logged in user's ID
+        let uid = StorageAPI.shared.userID()
+        
+        let ref = StorageAPI.shared.userMessagesRef.child(uid)
+        ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+            
+            let messageID = snapshot.key
+            let messageRef = StorageAPI.shared.messagesRef.child(messageID)
+            
+            messageRef.observeSingleEvent(of: .value, with: {snapshot in
+            if let data = snapshot.value as? NSDictionary {
+                if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String{
+                    self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
+                    self.finishReceivingMessage()
+                }
+            } else {
+                print("Error! Could not decode message data!")
+            }
+           })
+        }
     }
 
     func observeMessages() {

@@ -7,20 +7,35 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseDatabase
-import FirebaseStorage
+//import Firebase
+//import FirebaseDatabase
+//import FirebaseStorage
 
 
 class MessageHandler {
     
     static let shared = MessageHandler()
    
+    /* fanning out of messages,
+     sort messages by User IDs in "user-messages" node */
     func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
         let ref = StorageAPI.shared.messagesRef
-        let childRef = ref.childByAutoId()
         let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
-        childRef.updateChildValues(values)
+        
+        ref.childByAutoId().updateChildValues(values){ (error, ref) in
+            if error != nil {
+                print("Oops something went wrong")
+                return
+            }
+            //add new node "user-messages"
+            let userMessagesRef = StorageAPI.shared.userMessagesRef.child(StorageAPI.shared.userID())
+            
+            //gets key of messages
+            let messageID = ref.key
+            userMessagesRef.updateChildValues([messageID: 1])
+        }
+        
+        
         
     }
     

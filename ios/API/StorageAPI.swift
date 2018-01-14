@@ -39,6 +39,7 @@ final class StorageAPI {
     var dbRef: DatabaseReference
     var usersRef: DatabaseReference
     var messagesRef: DatabaseReference
+    var userMessagesRef: DatabaseReference
     var mediaMessagesRef: DatabaseReference
     var storageRef: StorageReference
     var imageStorageRef: StorageReference
@@ -64,6 +65,7 @@ final class StorageAPI {
         self.dbRef = Database.database().reference()
         self.usersRef = self.dbRef.child(DBConstants.USERS)
         self.messagesRef = self.dbRef.child(DBConstants.MESSAGES)
+        self.userMessagesRef = self.dbRef.child(DBConstants.USER_MESSAGES)
         self.mediaMessagesRef = self.dbRef.child(DBConstants.MEDIA_MESSAGES)
         self.storageRef = Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com")
         self.imageStorageRef = storageRef.child(DBConstants.IMAGE_STORAGE)
@@ -421,7 +423,7 @@ final class StorageAPI {
     
     //gets UserID in Firebase
     func userID() -> String {
-        return Auth.auth().currentUser!.uid;
+        return Auth.auth().currentUser!.uid
     }
     
     
