@@ -44,7 +44,7 @@ final class StorageAPI {
     var imageStorageRef: StorageReference
     var videoStorageRef: StorageReference
     
-    var userName = "";
+    var userName = ""
     
     
     private init() {

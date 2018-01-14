@@ -14,6 +14,8 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     private var users = [User]()
     
+    //receiverID
+    var selectedUser: String = ""
    
     @IBOutlet weak var myTableView: UITableView!
     
@@ -28,6 +30,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func dataReceived(users: [User]) {
         self.users = users
+        
+        for user in users {
+            if user.id == StorageAPI.shared.userID() {
+                StorageAPI.shared.userName = user.name
+            }
+        }
         myTableView.reloadData()
     }
 
@@ -53,17 +61,20 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let selectedUserObject = self.users[indexPath.row]
-        
-        //self.selectedUser = selectedUserObject.id
-       // let ref = Database.database().reference().child(DBConstants.USERS).child(self.selectedUser)
-        //ref.observeSingleEvent(of: .value, with: {(snapshot) in
-            
-            performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
-        //})
+        let selectedUserObject = self.users[indexPath.row]
+        self.selectedUser = selectedUserObject.id
+        performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
     
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationNavigationController = segue.destination as! UINavigationController
+        let targetController = destinationNavigationController.topViewController
+        if let chatVC = targetController as? ChatWindowVC {
+            chatVC.receiverID = self.selectedUser
+        }
+        
+    }
 
     
     //Back Button that goes back to the View before this one

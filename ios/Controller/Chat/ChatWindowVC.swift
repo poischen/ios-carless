@@ -19,11 +19,13 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     let picker = UIImagePickerController()
     
+    var receiverID: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.senderId = "1"
-        self.senderDisplayName = "Jelena"
+        self.senderId = StorageAPI.shared.userID()
+        self.senderDisplayName = StorageAPI.shared.userName
         
         // Do any additional setup after loading the view.
     }
@@ -70,8 +72,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        // TODO  wrong for now
-        //MessageHandler._shared.sendMessage(senderID: senderId, senderName: senderDisplayName, text: text, receiverID: self.receiverId)
+        MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.receiverID, senderName: senderDisplayName, text: text)
+        
         messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
         collectionView.reloadData()
         
