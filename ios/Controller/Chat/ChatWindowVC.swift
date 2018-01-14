@@ -27,6 +27,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = StorageAPI.shared.userName
         
+        observeMessages()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -74,13 +76,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         
         MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.receiverID, senderName: senderDisplayName, text: text)
         
-        messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
-        collectionView.reloadData()
-        
         //remove text from textfield
         finishSendingMessage()
     }
     
+    func addMessage(senderID: String, receiverID: String, senderName: String, text: String) {
+       messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
+        
+    }
     
     //Sending media button
     override func didPressAccessoryButton(_ sender: UIButton!) {
@@ -107,7 +110,20 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         present(picker, animated: true, completion: nil)
     }
 
-
+    func observeMessages() {
+        let ref = StorageAPI.shared.messagesRef
+        ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+            if let data = snapshot.value as? NSDictionary {
+                if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String{
+                    self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
+                   self.finishReceivingMessage()
+                    }
+            } else {
+                print("Error! Could not decode message data!")
+            }
+            
+        }
+    }
 
     
     
