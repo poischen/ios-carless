@@ -12,6 +12,7 @@
 		19017040200BA65F00E21080 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703F200BA65F00E21080 /* HomePageModel.swift */; };
 		19017042200BA70200E21080 /* RentingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017041200BA70200E21080 /* RentingRequest.swift */; };
 		19017045200BB0B300E21080 /* UserRentingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */; };
+		19017047200BD68600E21080 /* UserRentingRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */; };
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
 		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		191DABB11FF00F7000EB0070 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191DABB01FF00F7000EB0070 /* Time.swift */; };
@@ -110,6 +111,7 @@
 		1901703F200BA65F00E21080 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		19017041200BA70200E21080 /* RentingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingRequest.swift; sourceTree = "<group>"; };
 		19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingsTableViewCell.swift; sourceTree = "<group>"; };
+		19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingRequestsTableViewCell.swift; sourceTree = "<group>"; };
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		191DABB01FF00F7000EB0070 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 			children = (
 				19017039200BA32100E21080 /* HomePage.storyboard */,
 				19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */,
+				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -938,6 +941,7 @@
 				1922178D1FBDA5BE00D7FDFE /* Fuel.swift in Sources */,
 				840D63CF1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift in Sources */,
 				840D63C01FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift in Sources */,
+				19017047200BD68600E21080 /* UserRentingRequestsTableViewCell.swift in Sources */,
 				840D63C91FE9A534007A1F16 /* OfferingViewController.swift in Sources */,
 				841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */,
 				194C2E9A1FE7C44200E34EF8 /* SelectableItem.swift in Sources */,

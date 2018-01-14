@@ -22,6 +22,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
     var usersOfferingsAndBrands: [(Offering,Brand)] = []
+    var usersRentingRequests: [(Offering, Brand, User, Renting)] = []
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
@@ -30,6 +31,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersRentingsTable.delegate = self
         usersOfferingsTable.dataSource = self
         usersOfferingsTable.delegate = self
+        usersRentingRequestsTable.dataSource = self
+        usersRentingRequestsTable.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -41,6 +44,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
+        })
+        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
+            self.usersRentingRequests = offeringsBrandsAndUsers
+            self.usersRentingRequestsTable.reloadData()
         })
     }
 
@@ -58,17 +65,18 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         case self.usersOfferingsTable:
             count = usersOfferingsAndBrands.count
         case self.usersRentingRequestsTable:
-            // TODO: change
-            count = 0
+            count = usersRentingRequests.count
         default:
             count = 0
-            print("non-intended use of FilterViewController as delegate for an unknown table view (in numberOfRowsInSection)")
+            print("non-intended use of HomePageViewController as delegate for an unknown table view (in numberOfRowsInSection)")
         }
         return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var returnCell:UITableViewCell
+        
+        // TODO: better error handling here
         
         switch tableView {
         case self.usersRentingsTable:
@@ -83,8 +91,17 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath)
             cell.textLabel?.text = brand.name + " " + offering.type
             returnCell = cell
-        default: // covers usersRentingRequestsTable
+        case self.usersRentingRequestsTable:
+            let (offering, brand, user, renting) = usersRentingRequests[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
+            cell.usernameLabel.text = user.name
+            cell.ratingScoreLabel.text = String(user.rating)
+            cell.carNameLabel.text = brand.name + " " + offering.type
+            cell.numberOfRatingsLabel.text = "(\(user.numberOfRatings) ratings)"
+            returnCell = cell
+        default:
             returnCell = UITableViewCell()
+            print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")
             // TODO: better way to provide an exhaustive switch here?
             //cellIdentifier = USER_REQUESTS_TABLE_CELL_IDENTIFIER
             //cellContent = vehicleTypes[indexPath.row]

@@ -428,6 +428,22 @@ final class StorageAPI {
         }
     }
     
+    func getRentingsByOfferingID(offeringID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_OFFERING_ID_KEY).queryEqual(toValue: offeringID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                    resultRentings.append(renting)
+                } else {
+                    print("getRentingsByOfferingID: error while converting renting")
+                }
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     // get the rentings for a specific user (lessor view)
     func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in

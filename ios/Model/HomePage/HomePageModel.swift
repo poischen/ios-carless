@@ -51,6 +51,46 @@ class HomePageModel {
             }
         })
     }
+    
+    // TODO: more efficient variant?
+    // TODO: is it necessary to return the renting?
+    func getUnconfirmedOfferingsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
+        var result:[(Offering, Brand, User, Renting)] = []
+        var offeringsProcessed = 0
+        getUsersOfferings(UID: UID, completion: {usersOfferings in
+            for (offering, brand) in usersOfferings {
+                if let offeringID = offering.id {
+                    self.storageAPI.getRentingsByOfferingID(offeringID: offeringID, completion: {offeringsRentings in
+                        // we're only interested in the unconfirmed rentings
+                        let unconfirmedRentings = offeringsRentings.filter {$0.confirmationStatus == false}
+                        var resultsForThisOffering:[(Offering, Brand, User, Renting)] = []
+                        if (unconfirmedRentings.count > 0) {
+                            // unconfirmed offerings exist -> proceed with them
+                            for unconfirmedRenting in unconfirmedRentings {
+                                self.storageAPI.getUserByUID(UID: unconfirmedRenting.userID, completion: {rentingUser in
+                                    resultsForThisOffering.append((offering, brand, rentingUser, unconfirmedRenting))
+                                    if (resultsForThisOffering.count == unconfirmedRentings.count) {
+                                        // all unconfirmed rentings for this offering processed -> offering processed -> add results to total results
+                                        offeringsProcessed = offeringsProcessed + 1
+                                        result.append(contentsOf: resultsForThisOffering)
+                                        if (offeringsProcessed == usersOfferings.count) {
+                                            completion(result)
+                                        }
+                                    }
+                                })
+                            }
+                        } else {
+                            // no unconfirmed offerings exist -> offering processed
+                            offeringsProcessed = offeringsProcessed + 1
+                            if (offeringsProcessed == usersOfferings.count) {
+                                completion(result)
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
 
     
     /*
@@ -84,6 +124,7 @@ class HomePageModel {
      }
  */
     
+    // TODO: move somewhere else?
     func dateToString(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy"
