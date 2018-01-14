@@ -15,10 +15,16 @@ class AvailibilityAndBookingViewController: UIViewController {
     let storageAPI = StorageAPI.shared
     var offer: Offering?
     
+    var preselectedEndDate: Date?
+    var preselectedStartDate: Date?
+    
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var monthAndYear: UILabel!
     @IBOutlet weak var resultView: UILabel!
     @IBOutlet weak var reservationButton: UIButton!
+    @IBOutlet weak var priceView: UILabel!
+    @IBOutlet weak var discountView: UILabel!
+    @IBOutlet weak var totalPriceView: UILabel!
     
     let formatter = DateFormatter()
     var firstDate:Date?
@@ -30,29 +36,39 @@ class AvailibilityAndBookingViewController: UIViewController {
     let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
     
     var dates2Check: [Date] = []
+    var totalPrice: Float = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if (offer?.userUID != storageAPI.userID()) {
-            self.navigationItem.title = "Check Availibility"
-        } else {
-            self.navigationItem.title = "Preview"
-            //todo: löschen button
-            //todo: bearbeiten button
-        }
         
+        if (storageAPI.userID() == offer!.userUID) {
+            self.navigationItem.title = "Check Availibility Preview"
+            reservationButton.isHidden = true
+            //todo: bearbeiten possibility
+        } else {
+            self.navigationItem.title = "Check Availibility"
+            reservationButton.isEnabled = false
+        }
+
         calendarView.calendarDelegate = self
         calendarView.calendarDataSource = self
         
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
+       /* if let psd = preselectedStartDate, let ped = preselectedEndDate {
+            print("preselected dates")
+            calendarView.scrollToHeaderForDate(psd)
+            calendarView.selectDates(from: psd, to: ped)
+        } */
+        
         calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
         }
         
         calendarView.allowsMultipleSelection = true
+       // calendarView.isRangeSelectionUsed = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -64,19 +80,29 @@ class AvailibilityAndBookingViewController: UIViewController {
     }
     
     func handleSelectionVisually(view: JTAppleCell?, cellState: CellState){
-        print(cellState)
         guard let cell = view as? AvailibilityCalendarCell else {return}
-        if cellState.dateBelongsTo == .thisMonth {
+        
+    if cellState.dateBelongsTo == .thisMonth {
+        switch cellState.selectedPosition() {
+        case .full, .left, .right, .middle:
+            cell.dateLabel.textColor = selectedColor
+            cell.availibility.isBlocked = false
+
+        default:
+            cell.dateLabel.textColor = releasedColor
+            cell.availibility.isBlocked = true
+        }
+    }
+        
+     /*   if cellState.dateBelongsTo == .thisMonth {
             if cellState.isSelected {
-                print("selected")
                 cell.dateLabel.textColor = selectedColor
                 cell.availibility.isBlocked = false
             } else {
-                print("released")
                 cell.dateLabel.textColor = releasedColor
                 cell.availibility.isBlocked = true
             }
-        }
+        }*/
     }
     
     func handleMonthColors(view: JTAppleCell?, cellState: CellState){
@@ -98,16 +124,111 @@ class AvailibilityAndBookingViewController: UIViewController {
         formatter.dateFormat = "MMMM yy"
         monthAndYear.text = formatter.string(from: date)
     }
-    
+
     func checkAvailibility() -> Void {
-        //todo
-        calculatePrice()
+        resultView.text = "Checking for availibility..."
+        
+        var intervall2Check: DateInterval?
+        
+        if (lastDate != nil){
+            intervall2Check = DateInterval(start: firstDate!, end: lastDate!)
+        } else {
+            intervall2Check = DateInterval(start: firstDate!, end: firstDate!)
+        }
+        
+        storageAPI.getRentings(completion: { (rentings) in
+            //check dates from rentings
+            for renting in rentings {
+                if (renting.confirmationStatus){
+                let rentingIntervall = DateInterval(start: renting.startDate, end: renting.endDate)
+                if (intervall2Check?.intersects(rentingIntervall))!{
+                    self.resultView.text = "Not availible - try another date! :)"
+                    return
+                }
+            }
+            }
+            //if renting-check was okay, check blocked days:
+            //storage api get blocked dates id
+            if let oid = self.offer!.id {
+                self.storageAPI.getBlockedDaysIDByOfferingID(offeringID: oid, completion: { (blockedDaysID) in
+                    //storage api get blocked dates
+                    self.storageAPI.getBlockedDaysByID(bdID: blockedDaysID, completion: { (blockDaysInts) in
+                        //check blocked days
+                        for day in blockDaysInts {
+                            let date = Renting.intTimestampToDate(timestamp: day)
+                            let blockedDateIntervall = DateInterval(start: date, end: date)
+                            if (intervall2Check?.intersects(blockedDateIntervall))!{
+                                self.resultView.text = "Not availible - try another date! :)"
+                                return
+                            }
+                        }
+                    })
+                })
+            }
+        })
+        
+        self.resultView.text = "Yey, the car is availible!"
+        calculatePrice(rentingIntervall: intervall2Check!)
     }
     
-    func calculatePrice() -> Void {
-        //Todo
+    func calculatePrice(rentingIntervall: DateInterval) -> Void {
+        let intervalLength : Float = Float(Calendar.current.dateComponents([.day], from: rentingIntervall.start, to: rentingIntervall.end).day!)
+        
+        let priceperDay: Float = Float((offer?.basePrice)!)
+    
+        priceView.text = "Price per day: \(priceperDay)"
+        
+        //calculate discount depending on rating
+        //todo: frühbucherrabatt?
+        storageAPI.getUserByUID(UID: storageAPI.userID()) { (user) in
+            let rating: Float = user.rating
+            var discount: Float = 0
+            
+            if (rating < 4) {
+                self.discountView.text = "No discount yet - go and get at least 4 stars!"
+            } else if (rating >= 4 && rating < 4.9) { //get 5% discount
+                discount = priceperDay*0.05
+                self.discountView.text = "5% discount: -\(discount)"
+            } else if (rating >= 4.9) { //get 10% discount
+                discount = priceperDay*0.1
+                self.discountView.text = "10% discount: -\(discount)"
+            } else {
+                self.discountView.text = "No discount yet - go and get at least 4 stars!"
+            }
+            
+            self.totalPrice = ((priceperDay - discount) * intervalLength)
+            self.totalPriceView.text = "Total price: \(self.totalPrice)"
+            self.reservationButton.isEnabled = true
+        }
     }
     
+    @IBAction func reserve(_ sender: Any) {
+        reservationButton.isEnabled = false
+        resultView.text = "Reservation in progress..."
+        priceView.text = ""
+        discountView.text = ""
+        totalPriceView.text = ""
+        storageAPI.generateRentingKey(completion: {(rentingID) in
+            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
+            self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
+                if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
+                    //TODO: go back to startseite
+                    //chat message to lessor from default user
+                    //todo: Methoden in MessageHandler erstellen?
+                    MessageHandler._shared.sendMessage(senderID: MessageHandler.defaultUserButtlerJamesID, senderName: MessageHandler.defaultUserButtlerJamesName, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST, receiverID: self.offer!.id!);
+                } else {
+                    self.reservationButton.isEnabled = true
+                    self.resultView.text = ""
+                    let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
+                    let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+                    alertMissingInputs.addAction(ok)
+                    self.present(alertMissingInputs, animated: true, completion: nil)
+                }
+            })
+
+        })
+    }
+
 }
 
 extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
@@ -118,8 +239,6 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         myCustomCell.dateLabel.text = cellState.text
         handleMonthColors(view: myCustomCell, cellState: cellState)
     }
-    
-    
     
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         let myCustomCell = calendar.dequeueReusableCell(withReuseIdentifier: "availibilityCalendarCell", for: indexPath) as! AvailibilityCalendarCell
@@ -136,6 +255,11 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
             if let currentFirstDate = firstDate {
                 if lastDate != nil {
                     calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
+                    resultView.text = ""
+                    priceView.text = ""
+                    discountView.text = ""
+                    totalPriceView.text = ""
+                    reservationButton.isEnabled = false
                     firstDate = date
                     lastDate = nil
                 } else {
@@ -143,6 +267,11 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                         recursiveDeselectionCall = true
                         calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
                         recursiveDeselectionCall = false
+                        resultView.text = ""
+                        priceView.text = ""
+                        discountView.text = ""
+                        totalPriceView.text = ""
+                        reservationButton.isEnabled = false
                         firstDate = date
                         lastDate = nil
                     } else {
@@ -151,31 +280,32 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                             recursiveSelectionCall = true
                             calendarView.selectDates(from: currentFirstDate, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
                             checkAvailibility()
+                            print("a valid intervall is selected selected, check availibility")
                             recursiveSelectionCall = false
                         }
                     }
                 }
             } else {
                 firstDate = date
+                lastDate = firstDate
+                checkAvailibility()
+                print("only on cell selected, check availibility")
             }
         }
-        
-        print("SELECT")
-        print(dates2Check)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        print(cellState.selectedPosition)
+        if !(cellState.selectedPosition() == .middle) {
             if dates2Check.count > 0 {
                 if let index = dates2Check.index(of: date) {
                     dates2Check.remove(at: index)
                 }
             }
-        
-        guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
-        handleSelectionVisually(view: releasedDate, cellState: cellState)
-
-        print("DESELECT")
-        print(dates2Check)
+            
+            guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
+            handleSelectionVisually(view: releasedDate, cellState: cellState)
+        }
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
@@ -202,29 +332,21 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         }
     }
 
+
 }
 
 extension AvailibilityAndBookingViewController: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-        // formatter.timeZone = Calendar.current.timeZone
-        // formatter.locale = Calendar.current.locale
-        
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: date)
-        
-        let startYear =  components.year
-        let endYear = startYear! + 1
-        let month = components.month
-        //let day = components.day
-        
-        let startDateString = (startYear?.description)! + " " + (month?.description)! + " 01"
-        let endDateString = endYear.description + " " + (month?.description)! + " 01"
-        let startDate = formatter.date(from: startDateString)!
-        let endDate = formatter.date(from: endDateString)!
-        print("configure calendar:  " + startDateString + " " + endDateString)
-        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate, firstDayOfWeek: .monday)
+        let endDate = Date() + 31104000 // one year from now
+        let parameters = ConfigurationParameters(
+            startDate: Date(),
+            endDate: endDate,
+            numberOfRows: 6,
+            calendar: Calendar.current,
+            generateInDates: .forAllMonths,
+            generateOutDates: .tillEndOfGrid,
+            firstDayOfWeek: .monday
+        )
         return parameters
     }
 }

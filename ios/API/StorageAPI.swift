@@ -40,6 +40,8 @@ final class StorageAPI {
     
     var userName = "";
     
+    static let STORAGE_API_SUCCESS = "Successfully saved"
+    
     // TODO: cache users?
     var usersRef: DatabaseReference{
         return fireBaseDBAccess.child(DBConstants.USERS);
@@ -350,6 +352,24 @@ final class StorageAPI {
         }
     }
     
+    func generateRentingKey(completion: @escaping (_ rentingID: String) -> Void){
+        let rentingKey = rentingsDBReference.childByAutoId().key
+        completion(rentingKey)
+    }
+    
+    func saveRenting(renting: Renting, completion: @escaping (_ status: String) -> Void){
+        let rentingAsDict = renting.dict
+        self.rentingsDBReference.child(renting.id!).setValue(rentingAsDict) { (error, ref) in
+            if (error != nil) {
+                print(error!.localizedDescription)
+                completion(error!.localizedDescription)
+            } else {
+                completion(StorageAPI.STORAGE_API_SUCCESS)
+            }
+        }
+    }
+    
+    
     //store availibility of offer in db
     func saveAvailibility(blockedDates: [Date]?, offerID: String){
         let availibilityKey = availibilityDBReference.childByAutoId().key
@@ -444,6 +464,34 @@ final class StorageAPI {
             print(error.localizedDescription)
         }
     }
+    
+    //get the id of an offering's blocked days by the id of the givwn offering
+    func getBlockedDaysIDByOfferingID(offeringID: String, completion: @escaping (_ blockedDayIDs: String) -> Void){
+        self.offeringsDBReference.child(offeringID).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get blocked Days ID value
+            let id = snapshot.value as? NSDictionary
+            let blockedDaysID = id?[DBConstants.PROPERTY_NAME_OFFERINGS_BLOCKED] as? String ?? ""
+            completion(blockedDaysID)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getBlockedDaysByID(bdID: String, completion: @escaping (_ blockedDays: [Int]) -> Void){
+        self.availibilityDBReference.child(bdID).observeSingleEvent(of: .value, with: { snapshot in
+            var blockedDays: [Int] = []
+            for childRaw in snapshot.children {
+                if let child = childRaw as? DataSnapshot{
+                    let blockedDay = child.value as! Int
+                    blockedDays.append(blockedDay)
+                }
+            }
+            completion(blockedDays)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     
     //gets UserID in Firebase
     func userID() -> String {

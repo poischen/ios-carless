@@ -12,13 +12,8 @@ import FirebaseDatabase
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-   
     @IBOutlet weak var imageView: UIImageView!
- 
-   
     @IBAction func chooseImage(_ sender: Any) {
-
-    
         
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -44,10 +39,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler:nil ))
         
         self.present(actionSheet, animated: true, completion:nil)
-        
-        
-        
-        
         
     }
     
