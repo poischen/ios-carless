@@ -10,6 +10,7 @@ import UIKit
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
+    
     let userUID = StorageAPI.shared.userID()
     
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
@@ -98,6 +99,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.ratingScoreLabel.text = String(user.rating)
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.numberOfRatingsLabel.text = "(\(user.numberOfRatings) ratings)"
+            cell.showedRenting = renting
+            cell.delegate = self
             returnCell = cell
         default:
             returnCell = UITableViewCell()
@@ -122,4 +125,30 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     */
 
+}
+
+extension HomePageViewController: RequestProcessingProtocol{
+    func acceptRequest(renting: Renting) {
+        homePageModel.acceptRenting(renting: renting)
+        removeRequestFromList(renting: renting)
+    }
+    
+    func denyRequest(renting: Renting) {
+        homePageModel.denyRenting(renting: renting)
+        removeRequestFromList(renting: renting)
+    }
+    
+    
+    func removeRequestFromList(renting: Renting) {
+        if let wantedRentingID = renting.id {
+            usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
+                if let currentRentingID = currentRenting.id  {
+                    return currentRentingID != wantedRentingID
+                } else {
+                    return false
+                }
+            }
+        }
+        usersRentingRequestsTable.reloadData()
+    }
 }

@@ -16,6 +16,9 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
     @IBOutlet weak var ratingScoreLabel: UILabel!
     @IBOutlet weak var numberOfRatingsLabel: UILabel!
     
+    var showedRenting: Renting?
+    var delegate: RequestProcessingProtocol?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -26,5 +29,20 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+    
+    @IBAction func acceptButtonTapped(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentRenting = showedRenting else {
+                return
+        }
+        currentDelegate.acceptRequest(renting: currentRenting)
+    }
+    
+    @IBAction func denyButtonTapped(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentRenting = showedRenting else {
+                return
+        }
+        currentDelegate.denyRequest(renting: currentRenting)
+    }
 }

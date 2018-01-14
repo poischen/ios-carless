@@ -444,6 +444,17 @@ final class StorageAPI {
         }
     }
     
+    func updateRenting(renting: Renting){
+        let rentingAsDict = renting.dict
+        if let rentingID = renting.id {
+            self.rentingsDBReference.child(rentingID).setValue(rentingAsDict)
+        }
+    }
+    
+    func deleteRentingByID(rentingID: String){
+        self.rentingsDBReference.child(rentingID).removeValue()
+    }
+    
     // get the rentings for a specific user (lessor view)
     func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in

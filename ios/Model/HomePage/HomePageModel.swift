@@ -91,6 +91,17 @@ class HomePageModel {
             }
         })
     }
+    
+    func acceptRenting(renting: Renting) {
+        renting.confirmationStatus = true
+        storageAPI.updateRenting(renting: renting)
+    }
+    
+    func denyRenting(renting: Renting){
+        if let rentingID = renting.id {
+            storageAPI.deleteRentingByID(rentingID: rentingID)
+        }
+    }
 
     
     /*
