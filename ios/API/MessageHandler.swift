@@ -11,10 +11,15 @@ import Foundation
 //import FirebaseDatabase
 //import FirebaseStorage
 
+/*protocol AddMessageDelegate: class {
+    func addMessage(senderID: String, receiverID: String, senderName: String, text: String)
+}*/
 
 class MessageHandler {
     
     static let shared = MessageHandler()
+    
+    //weak var delegate: AddMessageDelegate?
    
     /* fanning out of messages,
      sort messages by User IDs in "user-messages" node */
@@ -33,6 +38,9 @@ class MessageHandler {
             //gets key of messages
             let messageID = ref.key
             userMessagesRef.updateChildValues([messageID: 1])
+            
+            let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
+            receiverUserMessageRef.updateChildValues([messageID: 1])
         }
         
         

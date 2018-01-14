@@ -15,6 +15,7 @@ import Firebase
 
 class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
+    
     private var messages = [JSQMessage]()
     
     let picker = UIImagePickerController()
@@ -23,6 +24,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //MessageHandler.shared.delegate = self
         
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = StorageAPI.shared.userName
@@ -82,7 +85,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     }
     
     func addMessage(senderID: String, receiverID: String, senderName: String, text: String) {
-       messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text))
+       messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text))
+        collectionView.reloadData()
         
     }
     
@@ -113,7 +117,9 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     func observeUserMessages() {
         //logged in user's ID
-        let uid = StorageAPI.shared.userID()
+        guard  let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
         
         let ref = StorageAPI.shared.userMessagesRef.child(uid)
         ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
@@ -122,35 +128,30 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             let messageRef = StorageAPI.shared.messagesRef.child(messageID)
             
             messageRef.observeSingleEvent(of: .value, with: {snapshot in
-            if let data = snapshot.value as? NSDictionary {
-                if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String{
-                    self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
-                    self.finishReceivingMessage()
-                }
-            } else {
-                print("Error! Could not decode message data!")
-            }
-           })
-        }
-    }
-
-    func observeMessages() {
-        let ref = StorageAPI.shared.messagesRef
-        ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
-            if let data = snapshot.value as? NSDictionary {
-                if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String{
-                    self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
-                   self.finishReceivingMessage()
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String {
+                        //if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
+                            self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
+                            self.finishReceivingMessage()
+                       // }
+                        
                     }
-            } else {
-                print("Error! Could not decode message data!")
-            }
-            
+                } else {
+                    print("Error! Could not decode message data!")
+                }
+            })
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationNavigationController = segue.destination as! UINavigationController
+        let targetController = destinationNavigationController.topViewController
+        if let userVC = targetController as? ChatViewController {
+            userVC.selectedUser = self.receiverID
+        }
+        
+    }
 
-    
-    
     @IBAction func backButtonChatWindow(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }

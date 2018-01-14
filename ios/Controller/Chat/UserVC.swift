@@ -20,11 +20,13 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var myTableView: UITableView!
     
     private let CHAT_SEGUE = "ChatSegue"
+    
  
     override func viewDidLoad() {
         super.viewDidLoad()
         
         StorageAPI.shared.getUsers(completion: dataReceived)
+        
         
     }
     
@@ -75,7 +77,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
         
     }
-
+    
     
     //Back Button that goes back to the View before this one
     @IBAction func backButtonUserVC(_ sender: Any) {
