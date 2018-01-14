@@ -73,6 +73,8 @@
 		84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */; };
 		84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */; };
 		84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB20B91FFFD78300E351C1 /* Advertise.swift */; };
+		84FC9CF0200C0BEA001B2B2B /* Ich in Resources */ = {isa = PBXBuildFile; fileRef = 84FC9CEF200C0BEA001B2B2B /* Ich */; };
+		84FC9CF5200C0C5C001B2B2B /* ExternProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC9CF4200C0C5C001B2B2B /* ExternProfileViewController.swift */; };
 		84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */; };
 		84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43771FF52CB600CB546C /* AdvertisePage4.swift */; };
 		84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */; };
@@ -175,6 +177,8 @@
 		84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseHelper.swift; sourceTree = "<group>"; };
 		84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailibilityAndBookingViewController.swift; sourceTree = "<group>"; };
 		84FB20B91FFFD78300E351C1 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
+		84FC9CEF200C0BEA001B2B2B /* Ich */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Ich; sourceTree = "<group>"; };
+		84FC9CF4200C0C5C001B2B2B /* ExternProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternProfileViewController.swift; sourceTree = "<group>"; };
 		84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage3.swift; sourceTree = "<group>"; };
 		84FD43771FF52CB600CB546C /* AdvertisePage4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage4.swift; sourceTree = "<group>"; };
 		84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage5.swift; sourceTree = "<group>"; };
@@ -220,6 +224,7 @@
 		191BBB9E1FB5070300D95B26 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				84FC9CEE200C0BC2001B2B2B /* Profile */,
 				19AFCF1D200A285900758E91 /* Menu */,
 				193966BD1FF57B6D008C76A8 /* Rate */,
 				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
@@ -235,9 +240,9 @@
 		191BBB9F1FB5075E00D95B26 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				84FC9CF3200C0C45001B2B2B /* Profile */,
 				19BBB88F200A579C00723339 /* ChatBot */,
 				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
-				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
 				19BF06411FEA83D700E495C2 /* ViewController.swift */,
 				840D63D01FE9A64E007A1F16 /* Offer */,
 				840D63D21FE9A6A4007A1F16 /* Advertise */,
@@ -497,6 +502,23 @@
 			path = Search;
 			sourceTree = "<group>";
 		};
+		84FC9CEE200C0BC2001B2B2B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				84FC9CEF200C0BEA001B2B2B /* Ich */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		84FC9CF3200C0C45001B2B2B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
+				84FC9CF4200C0C5C001B2B2B /* ExternProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 		84FD43731FF5206B00CB546C /* Brands */ = {
 			isa = PBXGroup;
 			children = (
@@ -638,6 +660,7 @@
 				193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */,
 				2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */,
 				196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */,
+				84FC9CF0200C0BEA001B2B2B /* Ich in Resources */,
 				840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
 				2AD4E9791FA8A5AF0013D67E /* GoogleService-Info.plist in Resources */,
@@ -850,6 +873,7 @@
 			files = (
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
 				840D63C61FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift in Sources */,
+				84FC9CF5200C0C5C001B2B2B /* ExternProfileViewController.swift in Sources */,
 				84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */,
 				7734A9A41FD6F2750013A923 /* User.swift in Sources */,
 				194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */,

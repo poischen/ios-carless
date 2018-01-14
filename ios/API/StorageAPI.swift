@@ -72,6 +72,10 @@ final class StorageAPI {
         return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
     }
     
+    var profileImageStorageRef: StorageReference {
+        return storageRef.child(DBConstants.IMAGE_STORAGE_PROFILE)
+    }
+    
     private init() {
         // enable caching but also enable keepSynced in order to e.g. get the newest offerings
         Database.database().isPersistenceEnabled = true
@@ -336,6 +340,10 @@ final class StorageAPI {
         self.usersRef.child(user.id).setValue(userAsDict)
     }
     
+    func updateUserProfilePicture(userID: String, imgUrl: String){
+        self.usersRef.child(userID).child(DBConstants.PROFILEIMG).setValue(imgUrl)
+    }
+    
     //store offer in db
     func saveOffering(offer: Offering, completion: @escaping (_ offering: Offering) -> Void){
         let offerAsDict = offer.dict
@@ -498,8 +506,18 @@ final class StorageAPI {
         return Auth.auth().currentUser!.uid;
     }
     
+    func getUserProfileImageUrl(uID: String, completion: @escaping (_ profileImgUrl: String) -> Void){
+        self.usersRef.child(uID).observeSingleEvent(of: .value, with: { (snapshot) in
+            let url = snapshot.value as? NSDictionary
+            let profileImgUrl = url?[DBConstants.PROFILEIMG] as? String ?? ""
+            completion(profileImgUrl)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     //store an image to storage, return URL or Error Message
-    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView, progressLabel: UILabel, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
+    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView?, progressLabel: UILabel?, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
         let imageName = "\(userID())_\(Date().timeIntervalSince1970).jpg"
         let imageReference = ref.child(imageName)
 
@@ -518,10 +536,15 @@ final class StorageAPI {
                 guard let progress = snapshot.progress else {
                     return
                 }
-                let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
-                progressBar.progress = percentage
-                let percentageInt = Int(percentage * 100)
-                progressLabel.text = "\(percentageInt) %"
+                if let pb = progressBar {
+                    let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
+                    pb.progress = percentage
+                    
+                    if let pl = progressLabel {
+                        let percentageInt = Int(percentage * 100)
+                        pl.text = "\(percentageInt) %"
+                    }
+                }
             })
         } else {
             completionBlock(nil, "Image couldn't be converted to Data.")
