@@ -11,6 +11,7 @@
 		1901703D200BA55D00E21080 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703C200BA55D00E21080 /* HomePageViewController.swift */; };
 		19017040200BA65F00E21080 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703F200BA65F00E21080 /* HomePageModel.swift */; };
 		19017042200BA70200E21080 /* RentingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017041200BA70200E21080 /* RentingRequest.swift */; };
+		19017045200BB0B300E21080 /* UserRentingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */; };
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
 		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		191DABB11FF00F7000EB0070 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191DABB01FF00F7000EB0070 /* Time.swift */; };
@@ -108,6 +109,7 @@
 		1901703C200BA55D00E21080 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1901703F200BA65F00E21080 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		19017041200BA70200E21080 /* RentingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingRequest.swift; sourceTree = "<group>"; };
+		19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingsTableViewCell.swift; sourceTree = "<group>"; };
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		191DABB01FF00F7000EB0070 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -239,9 +241,19 @@
 			path = HomePage;
 			sourceTree = "<group>";
 		};
+		19017043200BB09300E21080 /* HomePage */ = {
+			isa = PBXGroup;
+			children = (
+				19017039200BA32100E21080 /* HomePage.storyboard */,
+				19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */,
+			);
+			path = HomePage;
+			sourceTree = "<group>";
+		};
 		191BBB9E1FB5070300D95B26 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				19017043200BB09300E21080 /* HomePage */,
 				19AFCF1D200A285900758E91 /* Menu */,
 				193966BD1FF57B6D008C76A8 /* Rate */,
 				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
@@ -250,7 +262,6 @@
 				840D63BC1FE9A438007A1F16 /* Advertise */,
 				774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */,
 				840D63D31FE9A6D8007A1F16 /* Search */,
-				19017039200BA32100E21080 /* HomePage.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -908,6 +919,7 @@
 				19017042200BA70200E21080 /* RentingRequest.swift in Sources */,
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
 				84FD437C1FF52CDA00CB546C /* AdvertisePage6.swift in Sources */,
+				19017045200BB0B300E21080 /* UserRentingsTableViewCell.swift in Sources */,
 				191DABB11FF00F7000EB0070 /* Time.swift in Sources */,
 				19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */,
 				19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */,

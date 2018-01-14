@@ -509,7 +509,7 @@ final class StorageAPI {
     }
     
     // TODO: remove
-    func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
+    /* func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
         self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
             if let resultObjects = self.snapshotToObjects(snapshot: snapshot, constructor: Feature.init) as? [Feature] {
                 completion(resultObjects)
@@ -517,9 +517,10 @@ final class StorageAPI {
         }) { (error) in
             print(error.localizedDescription)
         }
-    }
+    } */
     
-    func getOfferingsNearbyTest(completion: @escaping (_ features: [Offering]) -> Void){
+    // TODO: remove
+    /* func getOfferingsNearbyTest(completion: @escaping (_ features: [Offering]) -> Void){
         self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
@@ -533,6 +534,14 @@ final class StorageAPI {
         }) { (error) in
             print(error.localizedDescription)
         }
+    } */
+    
+    func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)) -> Void){
+        self.getOfferingByID(id: offeringID, completion: {offering in
+            StorageAPI.shared.getBrandByID(id: offering.brandID, completion: { offeringBrand in
+                completion((offering, offeringBrand))
+            })
+        })
     }
 }
 
