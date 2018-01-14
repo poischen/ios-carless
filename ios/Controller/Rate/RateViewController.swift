@@ -25,7 +25,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
     private let MAX_EXPLANATION_LENGTH = 300
     private let CHARACTER_COUNT_LABEL_LIMIT = "/50"
     
-    var rentingBeingRated: Renting? = Renting(id: "1", inseratID: "-L2GGCQf0M-9rPzx3Wx4", userID: "W7VPwDFSTyNwW0WJl38MhsVmcdX2", startDate: Date(), endDate: Date()) // TODO: set from profile, only here for testing
+    var rentingBeingRated: Renting? = Renting(id: "1", inseratID: "-L2GGCQf0M-9rPzx3Wx4", userID: "W7VPwDFSTyNwW0WJl38MhsVmcdX2", startDate: Date(), endDate: Date(), confirmationStatus: true) // TODO: set from profile, only here for testing
     private var userBeingRated: User? = nil // TODO: set from profile
     var rateLessee: Bool = true // Should the view to rate a lessee be shown? (default: false)
     

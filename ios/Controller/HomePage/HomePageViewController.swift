@@ -30,8 +30,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersRentingsTable.delegate = self
         usersOfferingsTable.dataSource = self
         usersOfferingsTable.delegate = self
-
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {

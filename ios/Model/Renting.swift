@@ -15,17 +15,21 @@ class Renting: DictionaryConvertibleEditable {
     static let RENTING_OFFERING_ID_KEY = "inseratId"
     static let RENTING_START_TIMESTAMP_KEY = "startDate"
     static let RENTING_USER_ID_KEY = "userId"
+    static let RENTING_CONFIRMATION_STATUS_KEY = "isConfirmed"
+    
     
     convenience required init?(id: String?, dict: [String : AnyObject]) {
         guard let rentingEndDateTimestamp = dict[Renting.RENTING_END_TIMESTAMP_KEY] as? Int,
               let rentingInseratID = dict[Renting.RENTING_OFFERING_ID_KEY] as? String,
               let rentingStartDateTimestamp = dict[Renting.RENTING_START_TIMESTAMP_KEY] as? Int,
-              let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String else {
+              let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String,
+              let rentingConfirmationStatus = dict[Renting.RENTING_CONFIRMATION_STATUS_KEY] as? Bool
+        else {
             return nil
         }
         let startDate = Renting.intTimestampToDate(timestamp: rentingStartDateTimestamp)
         let endDate = Renting.intTimestampToDate(timestamp: rentingEndDateTimestamp)
-        self.init(id: id, inseratID: rentingInseratID, userID: rentingUserId, startDate: startDate, endDate: endDate)
+        self.init(id: id, inseratID: rentingInseratID, userID: rentingUserId, startDate: startDate, endDate: endDate, confirmationStatus: rentingConfirmationStatus)
     }
     
     var dict: [String : AnyObject] {
@@ -33,7 +37,8 @@ class Renting: DictionaryConvertibleEditable {
             Renting.RENTING_END_TIMESTAMP_KEY: Renting.dateToIntTimestamp(date: self.endDate) as AnyObject,
             Renting.RENTING_OFFERING_ID_KEY: self.inseratID as AnyObject,
             Renting.RENTING_START_TIMESTAMP_KEY: Renting.dateToIntTimestamp(date: self.startDate) as AnyObject,
-            Renting.RENTING_USER_ID_KEY: self.userID as AnyObject
+            Renting.RENTING_USER_ID_KEY: self.userID as AnyObject,
+            Renting.RENTING_CONFIRMATION_STATUS_KEY: self.confirmationStatus as AnyObject
         ]
     }
     
@@ -42,13 +47,15 @@ class Renting: DictionaryConvertibleEditable {
     let startDate: Date
     let userID: String
     let inseratID: String
+    var confirmationStatus: Bool
     
-    init(id: String?, inseratID: String, userID: String, startDate: Date, endDate: Date) {
+    init(id: String?, inseratID: String, userID: String, startDate: Date, endDate: Date, confirmationStatus: Bool) {
         self.id = id
         self.inseratID = inseratID
         self.userID = userID
         self.startDate = startDate
         self.endDate = endDate
+        self.confirmationStatus = confirmationStatus
     }
     
     static func intTimestampToDate(timestamp: Int) -> Date {
