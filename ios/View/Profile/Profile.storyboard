@@ -119,7 +119,7 @@
         <!--Extern Profile-->
         <scene sceneID="fEL-0r-4Cv">
             <objects>
-                <viewController storyboardIdentifier="Home" title="Profile" id="fWV-cC-v5J" userLabel="Extern Profile" customClass="ExternProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Profile" id="fWV-cC-v5J" userLabel="Extern Profile" customClass="ExternProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="o6r-qh-uWZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

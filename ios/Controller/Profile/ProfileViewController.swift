@@ -107,9 +107,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         imageView.layer.borderWidth = 1
         imageView.layer.borderColor = UIColor.black.cgColor
         
-        imageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
-        imageView.contentMode = .scaleAspectFill
-        
         let imageUrl = storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
             let profileImgUrl = URL(string: path)
             self.imageView.kf.indicatorType = .activity
