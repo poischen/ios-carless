@@ -32,12 +32,26 @@ class HomePageModel {
                         completion(result)
                     }
                 })
-                
-
             }
         })
     }
     
+    func getUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
+        // TODO: move into storage API?
+        var result:[(Offering, Brand)] = []
+        storageAPI.getOfferingsByUserUID(userUID: UID, completion: {offerings in
+            let numberOfOfferings = offerings.count
+            for offering in offerings {
+                self.storageAPI.getBrandByID(id: offering.brandID, completion: {offeringsBrand in
+                    result.append((offering, offeringsBrand))
+                    if (result.count == numberOfOfferings) {
+                        completion(result)
+                    }
+                })
+            }
+        })
+    }
+
     
     /*
      old version with caching of offerings:

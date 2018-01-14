@@ -13,7 +13,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     let userUID = StorageAPI.shared.userID()
     
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
-    let USER_OFFERINGS_TABLE_CELL_IDENTIFIER = "userOfferingsCell"
+    let USER_OFFERINGS_TABLE_CELL_IDENTIFIER = "usersOfferingsCell"
     let USER_REQUESTS_TABLE_CELL_IDENTIFIER = "userRentingRequestsCell"
 
     @IBOutlet weak var usersRentingsTable: UITableView!
@@ -21,13 +21,15 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var usersRentingRequestsTable: UITableView!
     
     var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
-    var userOfferings: [Offering] = []
+    var usersOfferingsAndBrands: [(Offering,Brand)] = []
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         usersRentingsTable.dataSource = self
         usersRentingsTable.delegate = self
+        usersOfferingsTable.dataSource = self
+        usersOfferingsTable.delegate = self
 
         // Do any additional setup after loading the view.
     }
@@ -37,6 +39,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         homePageModel.getUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
             self.usersRentingsAndOfferings = rentingsAndOfferings
             self.usersRentingsTable.reloadData()
+        })
+        homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
+            self.usersOfferingsAndBrands = offeringsAndBrands
+            self.usersOfferingsTable.reloadData()
         })
     }
 
@@ -52,7 +58,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         case self.usersRentingsTable:
             count = usersRentingsAndOfferings.count
         case self.usersOfferingsTable:
-            count = userOfferings.count
+            count = usersOfferingsAndBrands.count
         case self.usersRentingRequestsTable:
             // TODO: change
             count = 0
@@ -75,8 +81,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.endDateLabel.text = homePageModel.dateToString(date: renting.startDate)
             returnCell = cell
         case self.usersOfferingsTable:
-            returnCell = UITableViewCell()
-            //cellIdentifier = USER_OFFERINGS_TABLE_CELL_IDENTIFIER
+            let (offering, brand) = usersOfferingsAndBrands[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath)
+            cell.textLabel?.text = brand.name + " " + offering.type
+            returnCell = cell
         default: // covers usersRentingRequestsTable
             returnCell = UITableViewCell()
             // TODO: better way to provide an exhaustive switch here?
