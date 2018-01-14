@@ -27,7 +27,7 @@ class DBConstants {
     
     //DBProvider
     static let USERS = "Users";
-    static let MESSAGES = "Messages";
+    static let MESSAGES = "messages";
     static let MEDIA_MESSAGES = "Media_Messages";
     static let IMAGE_STORAGE = "Image_Storage";
     static let VIDEO_STORAGE = "Video_Storage";

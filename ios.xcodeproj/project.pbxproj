@@ -67,6 +67,7 @@
 		840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63D41FE9A746007A1F16 /* CarLocation.swift */; };
 		841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */; };
 		841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */; };
+		845AD974200903FE0037D053 /* BlockedDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AD973200903FE0037D053 /* BlockedDay.swift */; };
 		847D337B2002A53D00493402 /* ShowOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D337A2002A53D00493402 /* ShowOffer.swift */; };
 		848486F01FFC4395008F7DAF /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848486EF1FFC4395008F7DAF /* Availibility.swift */; };
 		84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */; };
@@ -168,6 +169,7 @@
 		840D63D41FE9A746007A1F16 /* CarLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarLocation.swift; sourceTree = "<group>"; };
 		841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage1.swift; sourceTree = "<group>"; };
 		841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage2.swift; sourceTree = "<group>"; };
+		845AD973200903FE0037D053 /* BlockedDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedDay.swift; sourceTree = "<group>"; };
 		847D337A2002A53D00493402 /* ShowOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOffer.swift; sourceTree = "<group>"; };
 		848486EF1FFC4395008F7DAF /* Availibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
 		84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseHelper.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
 				19380CB91FD5A29A0057A6D2 /* VehicleType.swift */,
 				848486EF1FFC4395008F7DAF /* Availibility.swift */,
+				845AD973200903FE0037D053 /* BlockedDay.swift */,
 				19A3F8611FF5AAEE00FA2D95 /* Rating.swift */,
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
@@ -852,6 +855,7 @@
 				194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */,
 				84FD437E1FF52CE600CB546C /* AdvertisePage7.swift in Sources */,
 				2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */,
+				845AD974200903FE0037D053 /* BlockedDay.swift in Sources */,
 				19714D411FF6419100067565 /* RateModel.swift in Sources */,
 				19BF064A1FEA869F00E495C2 /* ProfileViewController.swift in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,

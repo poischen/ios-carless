@@ -17,6 +17,10 @@ protocol MessageReceivedDelegate: class {
 
 class MessageHandler {
     static let _shared = MessageHandler()
+    static let defaultUserButtlerJamesID = "jBosKYKdmvUOgzsTBr9gZhz3bNi1"
+    static let defaultUserButtlerJamesName = "James"
+    static let DEFAULT_MESSAGE_RENTING_REQUEST = "Hi! You have a new request for one of your offers. How exciting! Go to your home page and have a look!"
+    
     private init() {}
     
     weak var delegate: MessageReceivedDelegate?
