@@ -13,7 +13,7 @@
         <!--Profile-->
         <scene sceneID="QZW-Ec-lL3">
             <objects>
-                <viewController storyboardIdentifier="Home" title="Profile" id="TmJ-yU-Q3K" customClass="ProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Profile" title="Profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TmJ-yU-Q3K" customClass="ProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OLR-AH-caa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -55,57 +55,25 @@
                                     <action selector="logout:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="PCF-7J-Mpj"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9TT-FU-j9r">
-                                <rect key="frame" x="76" y="601" width="63" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Search" image="Search"/>
-                                <connections>
-                                    <action selector="searchButton:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="3CD-CW-5vi"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RIY-dt-v4R">
-                                <rect key="frame" x="255" y="607" width="54" height="43"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <state key="normal" image="Chat">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="chatButton:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="tIe-tz-UQ0"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ixb-aZ-8He">
-                                <rect key="frame" x="155" y="614" width="65" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Advertise"/>
-                                <connections>
-                                    <action selector="advertiseButton:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="Rn3-e6-OqX"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pE7-vo-xSU">
-                                <rect key="frame" x="171" y="541" width="32" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Rate"/>
-                                <connections>
-                                    <action selector="rateButton:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="qnl-Gk-xoK"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vSI-Pg-FVq">
-                                <rect key="frame" x="71" y="541" width="56" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Chatbot"/>
-                                <connections>
-                                    <action selector="goToChatbot:" destination="TmJ-yU-Q3K" eventType="touchUpInside" id="FVd-Y8-CWH"/>
-                                </connections>
-                            </button>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ygF-g8-e6s">
                                 <rect key="frame" x="127" y="266" width="150" height="3"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="progressTintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="trackTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="2mI-ar-BNt" customClass="MenuControl" customModule="ios" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="3hL-uP-dW3"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="2mI-ar-BNt" firstAttribute="leading" secondItem="UH7-Uu-1ki" secondAttribute="leading" id="3kb-8D-GR4"/>
+                            <constraint firstItem="UH7-Uu-1ki" firstAttribute="bottom" secondItem="2mI-ar-BNt" secondAttribute="bottom" id="LbD-LP-Crt"/>
+                            <constraint firstAttribute="trailing" secondItem="2mI-ar-BNt" secondAttribute="trailing" id="ebR-Gx-QCf"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="UH7-Uu-1ki"/>
                     </view>
                     <connections>
@@ -144,16 +112,18 @@
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profil.png" translatesAutoresizingMaskIntoConstraints="NO" id="77U-cV-MMA" userLabel="Profile Image">
-                                        <rect key="frame" x="94" y="40" width="187" height="160"/>
+                                        <rect key="frame" x="112.5" y="50" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="150" id="WbR-im-kNk"/>
+                                            <constraint firstAttribute="height" constant="150" id="oYI-4g-WAo"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="77U-cV-MMA" firstAttribute="width" secondItem="BNv-kG-o4b" secondAttribute="width" multiplier="0.5" id="AYZ-1y-HJr"/>
                                     <constraint firstItem="hTc-HH-Ly4" firstAttribute="leading" secondItem="BNv-kG-o4b" secondAttribute="leading" id="FGR-cv-qtc"/>
                                     <constraint firstItem="S8C-Kk-zu3" firstAttribute="width" secondItem="BNv-kG-o4b" secondAttribute="width" id="JuT-YO-hpH"/>
                                     <constraint firstItem="hTc-HH-Ly4" firstAttribute="top" secondItem="BNv-kG-o4b" secondAttribute="top" id="M1y-tW-i5h"/>
-                                    <constraint firstItem="77U-cV-MMA" firstAttribute="height" secondItem="S8C-Kk-zu3" secondAttribute="height" id="Odq-h5-Ryp"/>
                                     <constraint firstItem="S8C-Kk-zu3" firstAttribute="leading" secondItem="BNv-kG-o4b" secondAttribute="leading" id="QQW-3u-s1I"/>
                                     <constraint firstItem="S8C-Kk-zu3" firstAttribute="top" secondItem="BNv-kG-o4b" secondAttribute="top" id="aDX-An-PLc"/>
                                     <constraint firstItem="hTc-HH-Ly4" firstAttribute="height" secondItem="BNv-kG-o4b" secondAttribute="height" multiplier="0.8" id="bIb-LU-Mef"/>
@@ -554,6 +524,5 @@
         <image name="Chat" width="256" height="256"/>
         <image name="HomePicture.jpg" width="1920" height="1080"/>
         <image name="Profil.png" width="500" height="500"/>
-        <image name="Search" width="384" height="384"/>
     </resources>
 </document>

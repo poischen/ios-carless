@@ -11,20 +11,20 @@ import UIKit
 class MenuControl: UIStackView {
     
     private var menuButtons = [UIButton]()
-    private let numberOfButtons = 4
+    private let numberOfButtons = 5
     
     private var vc:UIViewController
     
     override init(frame: CGRect) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        vc = storyboard.instantiateViewController(withIdentifier: "HomePage")
+        let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+        vc = storyboard.instantiateViewController(withIdentifier: "Home")
         super.init(frame: frame)
         setupButtons()
     }
     
     required init(coder: NSCoder) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        vc = storyboard.instantiateViewController(withIdentifier: "HomePage")
+        let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+        vc = storyboard.instantiateViewController(withIdentifier: "Home")
         super.init(coder: coder)
         
         setupButtons()
@@ -53,7 +53,9 @@ class MenuControl: UIStackView {
             case 3:
                 //button.setTitle("button" + String(index), for: .normal)
                 button.addTarget(self, action: #selector(MenuControl.fourthButtonTapped(button:)), for: .touchUpInside)
-                
+            case 4:
+                //button.setTitle("button" + String(index), for: .normal)
+                button.addTarget(self, action: #selector(MenuControl.fifthButtonTapped(button:)), for: .touchUpInside)
             default:
                 //button.setTitle("default" + String(index), for: .normal)
                 button.addTarget(self, action: #selector(MenuControl.firstButtonTapped(button:)), for: .touchUpInside)
@@ -76,8 +78,8 @@ class MenuControl: UIStackView {
     
     @objc func firstButtonTapped(button: UIButton) {
         if let topController = getTopmostViewController() {
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "HomePage")
+            let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Home")
             topController.present(vc, animated: true, completion: nil)
         }
 
@@ -93,16 +95,24 @@ class MenuControl: UIStackView {
     
     @objc func thirdButtonTapped(button: UIButton) {
         if let topController = getTopmostViewController() {
-            let storyboard = UIStoryboard(name: "Rate", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
+            let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ChatNavigation")
             topController.present(vc, animated: true, completion: nil)
         }
     }
     
     @objc func fourthButtonTapped(button: UIButton) {
         if let topController = getTopmostViewController() {
+            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "Profile")
+            topController.present(vc, animated: true, completion: nil)
+        }
+    }
+    
+    @objc func fifthButtonTapped(button: UIButton) {
+        if let topController = getTopmostViewController() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "Home")
+            let vc = storyboard.instantiateViewController(withIdentifier: "chatbot")
             topController.present(vc, animated: true, completion: nil)
         }
     }

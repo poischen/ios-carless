@@ -87,7 +87,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FHV-F6-4tP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="K6d-Ha-1Vz" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNavigation" automaticallyAdjustsScrollViewInsets="NO" id="K6d-Ha-1Vz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tr6-Hd-JUD">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
