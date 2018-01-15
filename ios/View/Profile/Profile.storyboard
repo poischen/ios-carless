@@ -406,7 +406,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="7I6-T7-hph">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="OffersCollectionViewCell" id="7I6-T7-hph" customClass="ProfileUsersOffersCollectionViewCell" customModule="ios" customModuleProvider="target">
                                                 <rect key="frame" x="37.5" y="0.0" width="300" height="100"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -451,6 +451,9 @@
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H1x-gW-ESm">
                                                                             <rect key="frame" x="0.0" y="46.5" width="85" height="23.5"/>
                                                                             <state key="normal" title="more details"/>
+                                                                            <connections>
+                                                                                <action selector="moreDetailsButton:" destination="7I6-T7-hph" eventType="touchUpInside" id="e8z-OA-cZu"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                 </stackView>
@@ -475,8 +478,17 @@
                                                     <constraint firstItem="rM4-mc-ydP" firstAttribute="width" secondItem="7I6-T7-hph" secondAttribute="width" multiplier="0.5" id="nm5-tq-OBX"/>
                                                     <constraint firstAttribute="bottom" secondItem="rM4-mc-ydP" secondAttribute="bottom" id="xoY-Jm-7Kh"/>
                                                 </constraints>
+                                                <connections>
+                                                    <outlet property="offerCarImg" destination="rei-H1-58u" id="wiH-5u-P3H"/>
+                                                    <outlet property="offerCarName" destination="eRB-CP-n7q" id="mE7-oE-hbl"/>
+                                                    <outlet property="offerCarPrice" destination="4Nw-07-Oiz" id="h2Y-0L-DWT"/>
+                                                </connections>
                                             </collectionViewCell>
                                         </cells>
+                                        <connections>
+                                            <outlet property="dataSource" destination="fWV-cC-v5J" id="ceS-BF-4Fs"/>
+                                            <outlet property="delegate" destination="fWV-cC-v5J" id="GeA-YP-Bjj"/>
+                                        </connections>
                                     </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -523,7 +535,14 @@
                         <viewLayoutGuide key="safeArea" id="5pU-Oq-Msj"/>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="77U-cV-MMA" id="dwE-L8-OYC"/>
+                        <outlet property="collectionViewOffers" destination="50X-aW-Ry9" id="LnQ-gJ-vq7"/>
+                        <outlet property="collectionViewRatings" destination="Z7N-pK-PS2" id="YVf-Ac-O8G"/>
+                        <outlet property="noCurrentOfferNote" destination="Fcu-DM-QUL" id="iHg-Vb-61U"/>
+                        <outlet property="otherUsersAboutProfileOwnerHL" destination="fXA-KB-Ebo" id="xnB-MS-Vux"/>
+                        <outlet property="profileOwnerImageView" destination="77U-cV-MMA" id="p0k-dK-OEC"/>
+                        <outlet property="profileOwnerName" destination="kX0-w4-vkJ" id="bwZ-Ms-I6s"/>
+                        <outlet property="profileOwnerRatingStars" destination="24I-4q-bXx" id="ylT-We-ZkF"/>
+                        <outlet property="profileOwnersCurrentOffersHL" destination="CQw-Qx-Ngj" id="TzS-Zk-LiX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0UD-NH-5vI" userLabel="First Responder" sceneMemberID="firstResponder"/>
