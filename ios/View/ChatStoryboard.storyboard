@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat View Controller-->
+        <!--Chat-->
         <scene sceneID="fWM-dM-gWS">
             <objects>
-                <viewController storyboardIdentifier="Chat" id="t90-G8-1mJ" customClass="ChatViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chat" title="Chat" id="t90-G8-1mJ" customClass="ChatViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ydA-yM-IJk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,7 +54,7 @@
                         <viewLayoutGuide key="safeArea" id="KJu-ze-TXh"/>
                     </view>
                     <connections>
-                        <outlet property="myTableView" destination="zQr-ld-lKH" id="g6B-cf-39Z"/>
+                        <outlet property="myTableView" destination="zQr-ld-lKH" id="fx0-16-oVe"/>
                         <segue destination="K6d-Ha-1Vz" kind="show" identifier="ChatSegue" id="p78-k0-tGq"/>
                     </connections>
                 </viewController>

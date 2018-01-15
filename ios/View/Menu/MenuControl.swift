@@ -96,7 +96,7 @@ class MenuControl: UIStackView {
     @objc func thirdButtonTapped(button: UIButton) {
         if let topController = getTopmostViewController() {
             let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ChatNavigation")
+            let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
             topController.present(vc, animated: true, completion: nil)
         }
     }

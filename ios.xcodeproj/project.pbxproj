@@ -42,7 +42,6 @@
 		19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06431FEA84A500E495C2 /* MessageHandler.swift */; };
 		19BF06471FEA853C00E495C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06451FEA853B00E495C2 /* Main.storyboard */; };
 		19BF06481FEA853C00E495C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */; };
-		19BF064C1FEA86A700E495C2 /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF064B1FEA86A700E495C2 /* UserVC.swift */; };
 		19C31D8720027A8D004534F0 /* DictionaryConvertibleStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */; };
 		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
 		19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CB76FB1FD44E8C00B291CE /* DBConstants.swift */; };
@@ -79,6 +78,7 @@
 		845AD974200903FE0037D053 /* BlockedDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AD973200903FE0037D053 /* BlockedDay.swift */; };
 		847D337B2002A53D00493402 /* ShowOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D337A2002A53D00493402 /* ShowOffer.swift */; };
 		848486F01FFC4395008F7DAF /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848486EF1FFC4395008F7DAF /* Availibility.swift */; };
+		849F46FB200D08D6001C216C /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 849F46FA200D08D6001C216C /* UserVC.swift */; };
 		84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */; };
 		84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */; };
 		84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB20B91FFFD78300E351C1 /* Advertise.swift */; };
@@ -147,7 +147,6 @@
 		19BF06431FEA84A500E495C2 /* MessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
 		19BF06451FEA853B00E495C2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		19BF064B1FEA86A700E495C2 /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleStatic.swift; sourceTree = "<group>"; };
 		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
 		19CB76FB1FD44E8C00B291CE /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
@@ -192,6 +191,7 @@
 		845AD973200903FE0037D053 /* BlockedDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedDay.swift; sourceTree = "<group>"; };
 		847D337A2002A53D00493402 /* ShowOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOffer.swift; sourceTree = "<group>"; };
 		848486EF1FFC4395008F7DAF /* Availibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
+		849F46FA200D08D6001C216C /* UserVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertiseHelper.swift; sourceTree = "<group>"; };
 		84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailibilityAndBookingViewController.swift; sourceTree = "<group>"; };
 		84FB20B91FFFD78300E351C1 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
@@ -289,7 +289,6 @@
 				1901703B200BA54600E21080 /* HomePage */,
 				84FC9CF3200C0C45001B2B2B /* Profile */,
 				19BBB88F200A579C00723339 /* ChatBot */,
-				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
 				779BFE782004EE6400AAB77A /* Chat */,
 				193966C21FF57ECC008C76A8 /* Rate */,
 				19BF06411FEA83D700E495C2 /* ViewController.swift */,
@@ -478,6 +477,7 @@
 		779BFE782004EE6400AAB77A /* Chat */ = {
 			isa = PBXGroup;
 			children = (
+				849F46FA200D08D6001C216C /* UserVC.swift */,
 				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
 			);
 			path = Chat;
@@ -944,6 +944,7 @@
 				19017040200BA65F00E21080 /* HomePageModel.swift in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
 				84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */,
+				849F46FB200D08D6001C216C /* UserVC.swift in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */,
 				84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */,
 				840424C5200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift in Sources */,
@@ -962,7 +963,6 @@
 				848486F01FFC4395008F7DAF /* Availibility.swift in Sources */,
 				84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */,
 				84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */,
-				19BF064C1FEA86A700E495C2 /* UserVC.swift in Sources */,
 				193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */,
 				19017042200BA70200E21080 /* RentingRequest.swift in Sources */,
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
