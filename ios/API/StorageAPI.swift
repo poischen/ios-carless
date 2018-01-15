@@ -79,7 +79,7 @@ final class StorageAPI {
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
         self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
-        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_LESSOR_RATINGS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         
         self.dbRef = Database.database().reference()
         self.usersRef = self.dbRef.child(DBConstants.USERS)
@@ -416,12 +416,12 @@ final class StorageAPI {
         usersRef.child(withID).setValue(data);
     }
     //stores User in Database
-    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
+   /* func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
         
         let user = User(id: withID, name: name, email: email, rating: 0, profileImgUrl: profileImg, numberOfRatings: 0)
         
         usersRef.child(withID).setValue(user.dict);
-    }
+    }*/
     
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
