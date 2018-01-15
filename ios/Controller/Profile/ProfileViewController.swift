@@ -9,17 +9,14 @@
 import UIKit
 import Firebase
 import FirebaseDatabase
+import Kingfisher
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-   
+    let storageAPI = StorageAPI.shared
     @IBOutlet weak var imageView: UIImageView!
- 
-   
-    @IBAction func chooseImage(_ sender: Any) {
-
+    @IBOutlet weak var profileImageUploadProgress: UIProgressView!
     
-        
+    @IBAction func chooseImage(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -33,28 +30,24 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             }else {
                 print ("Camera not available")
             }
-
+            
         }))
         
-         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {(action:UIAlertAction) in
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: {(action:UIAlertAction) in
             imagePickerController.sourceType = .photoLibrary
             self.present(imagePickerController, animated:true, completion:nil)
-         }))
+        }))
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler:nil ))
         
         self.present(actionSheet, animated: true, completion:nil)
-        
-        
-        
-        
-        
+
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         
-        imageView.image=image
+        uploadImage(image: image)
         
         picker.dismiss(animated:true, completion:nil)
     }
@@ -63,11 +56,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         picker.dismiss(animated:true, completion:nil)
     }
     
-    
-  
     @IBAction func logout(_ sender: Any) {
-    
-    if Auth.auth().currentUser != nil {
+        
+        if Auth.auth().currentUser != nil {
             do {
                 try Auth.auth().signOut()
                 
@@ -81,20 +72,48 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
-    
+/*
+ * Upload new profile image to Storage and hand it to Database
+ */
+    func uploadImage(image: UIImage){
+        //Todo: profileImageUploadProgress.isHidden = false
+        storageAPI.uploadImage(imageView.image!, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
+                               completionBlock: { [weak self] (fileURL, errorMassage) in
+                                guard let strongSelf = self else {
+                                    return
+                                }
+                                //store image url to user
+                                if let imgURL = fileURL {
+                                    //Todo: strongSelf.profileImageUploadProgress.isHidden = true
+                                    let imageUrl = imgURL.absoluteString
+                                    strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
+                                    strongSelf.imageView.image = image
+                                } else {
+                                    strongSelf.profileImageUploadProgress.isHidden = true
+                                    let message: String = "\(errorMassage ?? "") Please try again later."
+                                    let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
+                                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                    //Todo: strongSelf.present(alert, animated: true, completion: nil)
+                                }
+        })
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.layer.borderWidth = 1
-        imageView.layer.masksToBounds = false
-        imageView.layer.borderColor = UIColor.black.cgColor
-        imageView.layer.cornerRadius = imageView.frame.height/2
+        imageView.layer.cornerRadius = imageView.frame.size.width / 2
         imageView.clipsToBounds = true
-
-        // Do any additional setup after loading the view.
+        imageView.layer.borderWidth = 1
+        imageView.layer.borderColor = UIColor.black.cgColor
+        
+        let imageUrl = storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
+            let profileImgUrl = URL(string: path)
+            self.imageView.kf.indicatorType = .activity
+            self.imageView.kf.setImage(with: profileImgUrl)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -118,7 +137,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
         self.present(vc, animated: true, completion: nil)
     }
-
+    
     @IBAction func rateButton(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Rate", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Rate")

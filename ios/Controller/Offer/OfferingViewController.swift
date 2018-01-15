@@ -16,8 +16,12 @@ class OfferingViewController: UIViewController {
     var displayingOffering: Offering?
     let storageAPI = StorageAPI.shared
     let showOfferModel = ShowOffer()
+    var preselectedEndDate: Date?
+    var preselectedStartDate: Date?
     
-    let lessor = User(id: "profile123", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
+    //todo: add nav bar items depending on users role to offer http://rshankar.com/navigation-controller-in-ios/
+    
+    let lessor = User(id: "u58UjfgRRRdOxgelgHpLVydQkah1", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]
@@ -33,14 +37,23 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var offerDescriptionTextView: UITextView!
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     var features: [String] = []
-    let regionRadius: CLLocationDistance = 2000
+    let regionRadius: CLLocationDistance = 20
     @IBOutlet weak var carLocationMap: MKMapView!
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var returnLabel: UILabel!
     @IBOutlet weak var availibilityBtn: UIButton!
     @IBOutlet weak var chatBtn: UIButton!
+    @IBOutlet weak var actionItem: UIBarButtonItem!
     
     @IBAction func chatButton(_ sender: UIButton) {
+            let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ChatWithUser") as! ChatWindowVC
+            vc.selectedUser = lessor.id
+            self.present(vc, animated: true, completion: nil)
+    }
+    
+    @IBAction func backButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil);
     }
     
     /*@IBAction func checkAvailibility(_ sender: Any) {
@@ -53,10 +66,16 @@ class OfferingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     /*   displayingOffering = Offering(id: "1", brandID: 1, consumption: 1, description: "default", fuelID: 1, gearID: 1, hp: 1, latitude: 1.0, location: "default", longitude: 1.0, pictureURL: "default", basePrice: 1, seats: 1, type: "default", vehicleTypeID: 1, userUID: "default", pickupTime: "10:10", returnTime: "20:20")*/
-        
-        //self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.title = (self.displayingOffering?.type)!
+
+         // Offer is not the users own offer -> provide availibility check
+        if (displayingOffering?.userUID != storageAPI.userID()) {
+            self.navigationItem.title = "Offer"
+            actionItem.title = "Check Availibility"
+            //todo
+        } else { // Offer is the users own offer -> provide deleting option
+            self.navigationItem.title = "Preview "
+            //todo
+        }
         
         //set car infos (image, name, basic details) area --------------------------------------------------
         //images using Kingfisher
@@ -71,7 +90,7 @@ class OfferingViewController: UIViewController {
         //labels
         //carNameLabel.text = displayingOffering.getBrand() + " " + displayingOffering.type
         storageAPI.getBrandByID(id: (displayingOffering?.brandID)!, completion: { (brand) in
-            self.carNameLabel.text = brand.name //+ " " + (self.displayingOffering?.type)!
+            self.carNameLabel.text = brand.name + " " + (self.displayingOffering?.type)!
         })
         
         carHpConsumptionLabel.text = "\(displayingOffering?.consumption ?? 0)" + "/100km, max. " + "\(displayingOffering?.hp ?? 0)" + " km/h."
@@ -148,6 +167,21 @@ class OfferingViewController: UIViewController {
         
         return label.frame
     }
+    
+    //MARK:- PrepareForSegue
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        print("segueidentifier")
+        print(segue.identifier ?? "")
+        if segue.identifier == "availibilityCheckSegue" {
+            let aNbVC: AvailibilityAndBookingViewController = segue.destination as! AvailibilityAndBookingViewController
+            aNbVC.offer = displayingOffering
+            if let psd = preselectedStartDate, let ped = preselectedEndDate {
+                aNbVC.preselectedEndDate = psd
+                aNbVC.preselectedEndDate = ped
+            }
+        }
+    }
+
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -227,7 +261,6 @@ extension OfferingViewController: UICollectionViewDataSource {
             featureCell.displayContent(image: feature)
             featureCell.awakeFromNib()
         }
-        
         
     }
     

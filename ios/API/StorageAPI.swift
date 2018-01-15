@@ -37,37 +37,29 @@ final class StorageAPI {
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
     private let ratingsDBReference: DatabaseReference
+    private let lessorRatings: DatabaseReference
     
-    var userName = "";
+    var dbRef: DatabaseReference
+    var usersRef: DatabaseReference
+    var messagesRef: DatabaseReference
+    var userMessagesRef: DatabaseReference
+    var mediaMessagesRef: DatabaseReference
+    var storageRef: StorageReference
+    var imageStorageRef: StorageReference
+    var videoStorageRef: StorageReference
+
     
-    // TODO: cache users?
-    var usersRef: DatabaseReference{
-        return fireBaseDBAccess.child(DBConstants.USERS);
-    }
+    //var userName = ""
     
-    var messagesRef: DatabaseReference {
-        return fireBaseDBAccess.child(DBConstants.MESSAGES);
-    }
+    static let STORAGE_API_SUCCESS = "Successfully saved"
     
-    var mediaMessagesRef: DatabaseReference{
-        return fireBaseDBAccess.child(DBConstants.MEDIA_MESSAGES);
-    }
-    
-    //where media files are stored
-    var storageRef: StorageReference {
-        return Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com");
-    }
-    
-    var imageStorageRef: StorageReference {
-        return storageRef.child(DBConstants.IMAGE_STORAGE);
-    }
-    
-    var videoStorageRef: StorageReference {
-        return storageRef.child(DBConstants.VIDEO_STORAGE);
-    }
     
     var offerImageStorageRef: StorageReference {
         return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
+    }
+    
+    var profileImageStorageRef: StorageReference {
+        return storageRef.child(DBConstants.IMAGE_STORAGE_PROFILE)
     }
     
     private init() {
@@ -87,6 +79,30 @@ final class StorageAPI {
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
         self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
+        
+        self.dbRef = Database.database().reference()
+        self.usersRef = self.dbRef.child(DBConstants.USERS)
+        self.messagesRef = self.dbRef.child(DBConstants.MESSAGES)
+        self.userMessagesRef = self.dbRef.child(DBConstants.USER_MESSAGES)
+        self.mediaMessagesRef = self.dbRef.child(DBConstants.MEDIA_MESSAGES)
+        self.storageRef = Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com")
+        self.imageStorageRef = storageRef.child(DBConstants.IMAGE_STORAGE)
+        self.videoStorageRef = storageRef.child(DBConstants.VIDEO_STORAGE)
+        
+        // tryong to avoid caching problems by keeping references synced until queried for the first time
+        // TODO: find better solution?
+        self.offeringsDBReference.keepSynced(true)
+        self.rentingsDBReference.keepSynced(true)
+        self.featuresDBReference.keepSynced(true)
+        self.offeringsFeaturesDBReference.keepSynced(true)
+        self.vehicleTypesDBReference.keepSynced(true)
+        self.gearsDBReference.keepSynced(true)
+        self.brandsDBReference.keepSynced(true)
+        self.fuelDBReference.keepSynced(true)
+        self.lessorRatings.keepSynced(true)
+        self.usersRef.keepSynced(true)
+
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -334,6 +350,10 @@ final class StorageAPI {
         self.usersRef.child(user.id).setValue(userAsDict)
     }
     
+    func updateUserProfilePicture(userID: String, imgUrl: String){
+        self.usersRef.child(userID).child(DBConstants.PROFILEIMG).setValue(imgUrl)
+    }
+    
     //store offer in db
     func saveOffering(offer: Offering, completion: @escaping (_ offering: Offering) -> Void){
         let offerAsDict = offer.dict
@@ -349,6 +369,24 @@ final class StorageAPI {
             }
         }
     }
+    
+    func generateRentingKey(completion: @escaping (_ rentingID: String) -> Void){
+        let rentingKey = rentingsDBReference.childByAutoId().key
+        completion(rentingKey)
+    }
+    
+    func saveRenting(renting: Renting, completion: @escaping (_ status: String) -> Void){
+        let rentingAsDict = renting.dict
+        self.rentingsDBReference.child(renting.id!).setValue(rentingAsDict) { (error, ref) in
+            if (error != nil) {
+                print(error!.localizedDescription)
+                completion(error!.localizedDescription)
+            } else {
+                completion(StorageAPI.STORAGE_API_SUCCESS)
+            }
+        }
+    }
+    
     
     //store availibility of offer in db
     func saveAvailibility(blockedDates: [Date]?, offerID: String){
@@ -377,6 +415,14 @@ final class StorageAPI {
         
         usersRef.child(withID).setValue(data);
     }
+    //stores User in Database
+   /* func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
+        
+        let user = User(id: withID, name: name, email: email, rating: 0, profileImgUrl: profileImg, numberOfRatings: 0)
+        
+        usersRef.child(withID).setValue(user.dict);
+    }*/
+    
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -472,13 +518,51 @@ final class StorageAPI {
         }
     }
     
+    //get the id of an offering's blocked days by the id of the givwn offering
+    func getBlockedDaysIDByOfferingID(offeringID: String, completion: @escaping (_ blockedDayIDs: String) -> Void){
+        self.offeringsDBReference.child(offeringID).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get blocked Days ID value
+            let id = snapshot.value as? NSDictionary
+            let blockedDaysID = id?[DBConstants.PROPERTY_NAME_OFFERINGS_BLOCKED] as? String ?? ""
+            completion(blockedDaysID)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func getBlockedDaysByID(bdID: String, completion: @escaping (_ blockedDays: [Int]) -> Void){
+        self.availibilityDBReference.child(bdID).observeSingleEvent(of: .value, with: { snapshot in
+            var blockedDays: [Int] = []
+            for childRaw in snapshot.children {
+                if let child = childRaw as? DataSnapshot{
+                    let blockedDay = child.value as! Int
+                    blockedDays.append(blockedDay)
+                }
+            }
+            completion(blockedDays)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    
     //gets UserID in Firebase
     func userID() -> String {
-        return Auth.auth().currentUser!.uid;
+        return Auth.auth().currentUser!.uid
+    }
+    
+    func getUserProfileImageUrl(uID: String, completion: @escaping (_ profileImgUrl: String) -> Void){
+        self.usersRef.child(uID).observeSingleEvent(of: .value, with: { (snapshot) in
+            let url = snapshot.value as? NSDictionary
+            let profileImgUrl = url?[DBConstants.PROFILEIMG] as? String ?? ""
+            completion(profileImgUrl)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     //store an image to storage, return URL or Error Message
-    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView, progressLabel: UILabel, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
+    func uploadImage(_ image: UIImage, ref: StorageReference, progressBar: UIProgressView?, progressLabel: UILabel?, completionBlock: @escaping (_ url: URL?, _ errorMessage: String?) -> Void) {
         let imageName = "\(userID())_\(Date().timeIntervalSince1970).jpg"
         let imageReference = ref.child(imageName)
 
@@ -497,10 +581,15 @@ final class StorageAPI {
                 guard let progress = snapshot.progress else {
                     return
                 }
-                let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
-                progressBar.progress = percentage
-                let percentageInt = Int(percentage * 100)
-                progressLabel.text = "\(percentageInt) %"
+                if let pb = progressBar {
+                    let percentage = (Float(progress.completedUnitCount) / Float(progress.totalUnitCount))
+                    pb.progress = percentage
+                    
+                    if let pl = progressLabel {
+                        let percentageInt = Int(percentage * 100)
+                        pl.text = "\(percentageInt) %"
+                    }
+                }
             })
         } else {
             completionBlock(nil, "Image couldn't be converted to Data.")

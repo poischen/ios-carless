@@ -135,25 +135,16 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
 
 extension AdvertisePage4: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
-        formatter.dateFormat = "yyyy MM dd"
-       // formatter.timeZone = Calendar.current.timeZone
-       // formatter.locale = Calendar.current.locale
-        
-        let date = Date()
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month, .day], from: date)
-        
-        let startYear =  components.year
-        let endYear = startYear! + 1
-        let month = components.month
-        //let day = components.day
-        
-        let startDateString = (startYear?.description)! + " " + (month?.description)! + " 01"
-        let endDateString = endYear.description + " " + (month?.description)! + " 01"
-        let startDate = formatter.date(from: startDateString)!
-        let endDate = formatter.date(from: endDateString)!
-        print("configure calendar:  " + startDateString + " " + endDateString)
-        let parameters = ConfigurationParameters(startDate: startDate, endDate: endDate, firstDayOfWeek: .monday)
+        let endDate = Date() + 31104000 // one year from now
+        let parameters = ConfigurationParameters(
+            startDate: Date(),
+            endDate: endDate,
+            numberOfRows: 6,
+            calendar: Calendar.current,
+            generateInDates: .forAllMonths,
+            generateOutDates: .tillEndOfGrid,
+            firstDayOfWeek: .monday
+        )
         return parameters
     }
 }

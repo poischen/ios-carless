@@ -40,6 +40,11 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
     }
     
     @IBAction func usernameButtonTapped(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentUser = rentingUser else {
+                return
+        }
+        currentDelegate.goToProfile(user: currentUser)
     }
     
     @IBAction func denyButtonTapped(_ sender: Any) {

@@ -14,6 +14,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     var searchFilter:Filter?
     let searchModel:SearchModel = SearchModel.shared
     
+    var preselectedStartDate: Date?
+    var preselectedEndDate: Date?
+    
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let storageAPI = StorageAPI.shared
@@ -103,6 +106,10 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
             let targetController = navigationController.topViewController as? OfferingViewController else {
                 return
+        }
+        if let psd = preselectedStartDate, let ped = preselectedEndDate {
+            targetController.preselectedStartDate = psd
+            targetController.preselectedEndDate = ped
         }
         targetController.displayingOffering = selectedOffering
         self.present(navigationController, animated: true, completion: nil)
