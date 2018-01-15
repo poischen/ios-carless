@@ -133,6 +133,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(vc, animated: true, completion: nil)
     }
     
+    @IBAction func ratingTestButtonClicked(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func showSelectedOffering(selectedOffering: Offering){
         // show selected offering
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
