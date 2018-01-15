@@ -56,6 +56,7 @@
 		7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */; };
 		7734A9A41FD6F2750013A923 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734A9A31FD6F2750013A923 /* User.swift */; };
 		774EB4F71FD6F8F000FE1FBF /* ChatStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */; };
+		840424C5200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */; };
 		840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 840D63BD1FE9A4B7007A1F16 /* Advertise.storyboard */; };
 		840D63C01FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */; };
 		840D63C21FE9A4C2007A1F16 /* AdvertisePagesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63C11FE9A4C1007A1F16 /* AdvertisePagesVC.swift */; };
@@ -160,6 +161,7 @@
 		7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWindowVC.swift; sourceTree = "<group>"; };
 		7734A9A31FD6F2750013A923 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ChatStoryboard.storyboard; sourceTree = "<group>"; };
+		840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingsCollectionViewCell.swift; sourceTree = "<group>"; };
 		840D63BD1FE9A4B7007A1F16 /* Advertise.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Advertise.storyboard; sourceTree = "<group>"; };
 		840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailibilityCalendarCell.swift; sourceTree = "<group>"; };
 		840D63C11FE9A4C1007A1F16 /* AdvertisePagesVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvertisePagesVC.swift; sourceTree = "<group>"; };
@@ -506,6 +508,7 @@
 			isa = PBXGroup;
 			children = (
 				84FC9CF6200C244C001B2B2B /* Profile.storyboard */,
+				840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -788,6 +791,7 @@
 				"${BUILT_PRODUCTS_DIR}/JTAppleCalendar/JTAppleCalendar.framework",
 				"${BUILT_PRODUCTS_DIR}/KeychainSwift/KeychainSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/PTEHorizontalTableView/PTEHorizontalTableView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -804,6 +808,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JTAppleCalendar.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KeychainSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PTEHorizontalTableView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -886,6 +891,7 @@
 				84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */,
 				196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */,
 				84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */,
+				840424C5200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift in Sources */,
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
 				841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */,
 				19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */,
