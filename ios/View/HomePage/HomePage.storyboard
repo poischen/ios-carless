@@ -129,13 +129,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bfJ-iY-pUf">
-                                                    <rect key="frame" x="60" y="8" width="121" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <color key="textColor" red="0.54551845789999998" green="0.54594862460000004" blue="0.54558509590000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="carname" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iHq-gC-6gC">
                                                     <rect key="frame" x="60" y="31" width="121" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -180,13 +173,22 @@
                                                         <action selector="acceptButtonTapped:" destination="dqE-ds-mbm" eventType="touchUpInside" id="X08-rA-9HM"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epb-nQ-4R8">
+                                                    <rect key="frame" x="60" y="8" width="121" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <state key="normal" title="username"/>
+                                                    <connections>
+                                                        <action selector="usernameButtonTapped:" destination="dqE-ds-mbm" eventType="touchUpInside" id="voU-z6-zdv"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="carNameLabel" destination="iHq-gC-6gC" id="xp4-Ux-0Kt"/>
                                             <outlet property="numberOfRatingsLabel" destination="DOr-wS-271" id="qGT-49-JfB"/>
                                             <outlet property="ratingScoreLabel" destination="Dru-C6-g7E" id="gT1-Xk-2PX"/>
-                                            <outlet property="usernameLabel" destination="bfJ-iY-pUf" id="LiV-rH-Xth"/>
+                                            <outlet property="usernameButton" destination="epb-nQ-4R8" id="vw5-z8-SZ4"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -11,13 +11,14 @@ import UIKit
 class UserRentingRequestsTableViewCell: UITableViewCell {
     
     
-    @IBOutlet weak var usernameLabel: UILabel!
+    @IBOutlet weak var usernameButton: UIButton!
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var ratingScoreLabel: UILabel!
     @IBOutlet weak var numberOfRatingsLabel: UILabel!
     
     var showedRenting: Renting?
     var delegate: RequestProcessingProtocol?
+    var rentingUser: User?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -36,6 +37,9 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
                 return
         }
         currentDelegate.acceptRequest(renting: currentRenting)
+    }
+    
+    @IBAction func usernameButtonTapped(_ sender: Any) {
     }
     
     @IBAction func denyButtonTapped(_ sender: Any) {

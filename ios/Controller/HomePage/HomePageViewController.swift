@@ -95,19 +95,19 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         case self.usersRentingRequestsTable:
             let (offering, brand, user, renting) = usersRentingRequests[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
-            cell.usernameLabel.text = user.name
+            cell.usernameButton.setTitle(user.name, for: .normal)
             cell.ratingScoreLabel.text = String(user.rating)
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.numberOfRatingsLabel.text = "(\(user.numberOfRatings) ratings)"
+            // setting data necessary for using the buttons in the cell as gateway to other views
             cell.showedRenting = renting
+            cell.rentingUser = user
             cell.delegate = self
             returnCell = cell
         default:
             returnCell = UITableViewCell()
             print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")
             // TODO: better way to provide an exhaustive switch here?
-            //cellIdentifier = USER_REQUESTS_TABLE_CELL_IDENTIFIER
-            //cellContent = vehicleTypes[indexPath.row]
         }
         
 
