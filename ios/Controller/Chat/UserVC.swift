@@ -72,8 +72,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationNavigationController = segue.destination as! UINavigationController
         let targetController = destinationNavigationController.topViewController
-        if let chatVC = targetController as? ChatWindowVC {
+       if let chatVC = targetController as? ChatWindowVC {
             chatVC.receiverID = self.selectedUser
+             chatVC.selectedUser = self.selectedUser
         }
         
     }

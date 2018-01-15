@@ -22,6 +22,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     var receiverID: String = ""
     
+    var selectedUser: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -130,11 +132,12 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             messageRef.observeSingleEvent(of: .value, with: {snapshot in
                 if let data = snapshot.value as? NSDictionary {
                     if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String {
-                        //if (receiverID == self.selectedUser) || (senderID == self.selectedUser) {
+                        if let user = self.selectedUser {
+                        if (receiverID == user) || (senderID == user) {
                             self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
                             self.finishReceivingMessage()
-                       // }
-                        
+                       }
+                        }
                     }
                 } else {
                     print("Error! Could not decode message data!")
@@ -143,14 +146,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationNavigationController = segue.destination as! UINavigationController
         let targetController = destinationNavigationController.topViewController
         if let userVC = targetController as? ChatViewController {
             userVC.selectedUser = self.receiverID
         }
         
-    }
+    }*/
 
     @IBAction func backButtonChatWindow(_ sender: Any) {
         dismiss(animated: true, completion: nil)
