@@ -148,6 +148,15 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 }
 
 extension HomePageViewController: RequestProcessingProtocol{
+    func goToProfile(user: User) {
+        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+        guard let profileController = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as? ExternProfileViewController else {
+                return
+        }
+        profileController.profileOwner = user
+        self.present(profileController, animated: true, completion: nil)
+    }
+    
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
         removeRequestFromList(renting: renting)
@@ -157,6 +166,7 @@ extension HomePageViewController: RequestProcessingProtocol{
         homePageModel.denyRenting(renting: renting)
         removeRequestFromList(renting: renting)
     }
+    
     
     
     func removeRequestFromList(renting: Renting) {
