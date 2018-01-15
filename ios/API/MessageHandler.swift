@@ -31,9 +31,11 @@ class MessageHandler {
    
     /* fanning out of messages,
      sort messages by User IDs in "user-messages" node */
-    func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
+    //func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
+    func handleSend(senderID: String, receiverID: String, text: String) {
         let ref = StorageAPI.shared.messagesRef
-        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
+        //let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
+        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.TEXT: text]
         
         ref.childByAutoId().updateChildValues(values){ (error, ref) in
             if error != nil {

@@ -30,10 +30,11 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         //MessageHandler.shared.delegate = self
         
         self.senderId = StorageAPI.shared.userID()
-        self.senderDisplayName = StorageAPI.shared.userName
+        self.senderDisplayName = "default"
         
         //observeMessages()
         observeUserMessages()
+        
         
         // Do any additional setup after loading the view.
     }
@@ -80,13 +81,15 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
         
-        MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.receiverID, senderName: senderDisplayName, text: text)
+      /* MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.selectedUser!, senderName: senderDisplayName, text: text)*/
+        
+        MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.selectedUser!, text: text)
         
         //remove text from textfield
         finishSendingMessage()
     }
     
-    func addMessage(senderID: String, receiverID: String, senderName: String, text: String) {
+    func addMessage(senderID: String, receiverID: String, text: String) {
        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text))
         collectionView.reloadData()
         
@@ -131,10 +134,10 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             
             messageRef.observeSingleEvent(of: .value, with: {snapshot in
                 if let data = snapshot.value as? NSDictionary {
-                    if let senderID = data[DBConstants.SENDER_ID] as? String, let senderName = data[DBConstants.SENDER_NAME] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String {
                         if let user = self.selectedUser {
                         if (receiverID == user) || (senderID == user) {
-                            self.addMessage(senderID: senderID, receiverID: receiverID, senderName: senderName, text: text)
+                            self.addMessage(senderID: senderID, receiverID: receiverID, text: text)
                             self.finishReceivingMessage()
                        }
                         }

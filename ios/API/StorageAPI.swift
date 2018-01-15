@@ -49,7 +49,7 @@ final class StorageAPI {
     var videoStorageRef: StorageReference
 
     
-    var userName = ""
+    //var userName = ""
     
     static let STORAGE_API_SUCCESS = "Successfully saved"
     

@@ -21,7 +21,7 @@ class OfferingViewController: UIViewController {
     
     //todo: add nav bar items depending on users role to offer http://rshankar.com/navigation-controller-in-ios/
     
-    let lessor = User(id: "profile123", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
+    let lessor = User(id: "u58UjfgRRRdOxgelgHpLVydQkah1", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]
@@ -46,6 +46,10 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var actionItem: UIBarButtonItem!
     
     @IBAction func chatButton(_ sender: UIButton) {
+            let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ChatWithUser") as! ChatWindowVC
+            vc.selectedUser = lessor.id
+            self.present(vc, animated: true, completion: nil)
     }
     
     @IBAction func backButton(_ sender: Any) {

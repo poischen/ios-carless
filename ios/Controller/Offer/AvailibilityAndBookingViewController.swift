@@ -215,7 +215,8 @@ class AvailibilityAndBookingViewController: UIViewController {
                     //TODO: go back to startseite
                     //chat message to lessor from default user
                     //todo: Methoden in MessageHandler erstellen?
-                    MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, senderName: MessageHandler.defaultUserButtlerJamesName, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €");
+               //     MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, senderName: MessageHandler.defaultUserButtlerJamesName, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €");
+                    MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
                 } else {
                     self.reservationButton.isEnabled = true
                     self.resultView.text = ""

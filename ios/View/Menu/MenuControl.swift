@@ -44,6 +44,7 @@ class MenuControl: UIStackView {
             case 0:
                 //button.setTitle("Home" + String(index), for: .normal)
                 button.addTarget(self, action: #selector(MenuControl.firstButtonTapped(button:)), for: .touchUpInside)
+                //button.setImage
             case 1:
                 //button.setTitle("just" + String(index), for: .normal)
                 button.addTarget(self, action: #selector(MenuControl.secondButtonTapped(button:)), for: .touchUpInside)

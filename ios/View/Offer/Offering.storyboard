@@ -1345,6 +1345,9 @@
                                                                         <rect key="frame" x="0.0" y="0.0" width="187.5" height="36"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                         <state key="normal" title="Chat with lessor"/>
+                                                                        <connections>
+                                                                            <action selector="chatButton:" destination="3sk-Lh-NHJ" eventType="touchUpInside" id="fuM-PW-ICT"/>
+                                                                        </connections>
                                                                     </button>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8Zv-Uf-D56">
                                                                         <rect key="frame" x="187.5" y="0.0" width="187.5" height="36"/>
@@ -1436,7 +1439,6 @@
                         <outlet property="carImageView" destination="wjX-em-u2m" id="g7H-aW-t0q"/>
                         <outlet property="carLocationMap" destination="xpd-4b-vgb" id="fPo-OO-klD"/>
                         <outlet property="carNameLabel" destination="ob1-FY-7c4" id="FxO-2P-M9D"/>
-                        <outlet property="chatBtn" destination="82Q-M0-xL6" id="pSE-aF-0ap"/>
                         <outlet property="featuresCollectionView" destination="COU-F3-ysR" id="RPb-Xk-xg5"/>
                         <outlet property="lessorNameLabel" destination="3q5-bR-I7V" id="UJq-oY-Qbb"/>
                         <outlet property="lessorProfileImageView" destination="FDM-1U-fkT" id="6i8-Ez-iwD"/>
