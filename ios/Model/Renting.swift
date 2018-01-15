@@ -22,10 +22,10 @@ class Renting: DictionaryConvertibleEditable {
         guard let rentingEndDateTimestamp = dict[Renting.RENTING_END_TIMESTAMP_KEY] as? Int,
               let rentingInseratID = dict[Renting.RENTING_OFFERING_ID_KEY] as? String,
               let rentingStartDateTimestamp = dict[Renting.RENTING_START_TIMESTAMP_KEY] as? Int,
-            let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String,
-            let rentingConfirmationStatus = dict[Renting.RENTING_CONFIRMATION_STATUS_KEY] as? Bool,
-        let rentingPrice = dict[Renting.RENTING_PRICE_KEY] as? Float
-            else {
+              let rentingUserId = dict[Renting.RENTING_USER_ID_KEY] as? String,
+              let rentingConfirmationStatus = dict[Renting.RENTING_CONFIRMATION_STATUS_KEY] as? Bool,
+              let rentingPrice = dict[Renting.RENTING_PRICE_KEY] as? Float
+        else {
             return nil
         }
         let startDate = Renting.intTimestampToDate(timestamp: rentingStartDateTimestamp)

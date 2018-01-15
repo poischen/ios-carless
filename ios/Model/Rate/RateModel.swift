@@ -10,6 +10,7 @@ import Foundation
 
 class RateModel {
     static func getAdditionalInformationForLessorRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
+        // TODO: use getOfferingWithBrandByOfferingID here
         // first the offering from the DB (the car the user rented) in order to assemble the car model name
         StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
             // then get the lessor user from the DB in order to return it
