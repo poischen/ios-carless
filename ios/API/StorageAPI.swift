@@ -37,36 +37,22 @@ final class StorageAPI {
     private let brandsDBReference: DatabaseReference
     private let fuelDBReference: DatabaseReference
     private let ratingsDBReference: DatabaseReference
+    private let lessorRatings: DatabaseReference
     
-    var userName = "";
+    var dbRef: DatabaseReference
+    var usersRef: DatabaseReference
+    var messagesRef: DatabaseReference
+    var userMessagesRef: DatabaseReference
+    var mediaMessagesRef: DatabaseReference
+    var storageRef: StorageReference
+    var imageStorageRef: StorageReference
+    var videoStorageRef: StorageReference
+
+    
+    var userName = ""
     
     static let STORAGE_API_SUCCESS = "Successfully saved"
     
-    // TODO: cache users?
-    var usersRef: DatabaseReference{
-        return fireBaseDBAccess.child(DBConstants.USERS);
-    }
-    
-    var messagesRef: DatabaseReference {
-        return fireBaseDBAccess.child(DBConstants.MESSAGES);
-    }
-    
-    var mediaMessagesRef: DatabaseReference{
-        return fireBaseDBAccess.child(DBConstants.MEDIA_MESSAGES);
-    }
-    
-    //where media files are stored
-    var storageRef: StorageReference {
-        return Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com");
-    }
-    
-    var imageStorageRef: StorageReference {
-        return storageRef.child(DBConstants.IMAGE_STORAGE);
-    }
-    
-    var videoStorageRef: StorageReference {
-        return storageRef.child(DBConstants.VIDEO_STORAGE);
-    }
     
     var offerImageStorageRef: StorageReference {
         return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
@@ -93,6 +79,30 @@ final class StorageAPI {
         self.brandsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_BRANDS)
         self.fuelDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_FUELS)
         self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
+        self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_LESSOR_RATINGS)
+        
+        self.dbRef = Database.database().reference()
+        self.usersRef = self.dbRef.child(DBConstants.USERS)
+        self.messagesRef = self.dbRef.child(DBConstants.MESSAGES)
+        self.userMessagesRef = self.dbRef.child(DBConstants.USER_MESSAGES)
+        self.mediaMessagesRef = self.dbRef.child(DBConstants.MEDIA_MESSAGES)
+        self.storageRef = Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com")
+        self.imageStorageRef = storageRef.child(DBConstants.IMAGE_STORAGE)
+        self.videoStorageRef = storageRef.child(DBConstants.VIDEO_STORAGE)
+        
+        // tryong to avoid caching problems by keeping references synced until queried for the first time
+        // TODO: find better solution?
+        self.offeringsDBReference.keepSynced(true)
+        self.rentingsDBReference.keepSynced(true)
+        self.featuresDBReference.keepSynced(true)
+        self.offeringsFeaturesDBReference.keepSynced(true)
+        self.vehicleTypesDBReference.keepSynced(true)
+        self.gearsDBReference.keepSynced(true)
+        self.brandsDBReference.keepSynced(true)
+        self.fuelDBReference.keepSynced(true)
+        self.lessorRatings.keepSynced(true)
+        self.usersRef.keepSynced(true)
+
     }
     
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -405,6 +415,14 @@ final class StorageAPI {
         
         usersRef.child(withID).setValue(data);
     }
+    //stores User in Database
+    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
+        
+        let user = User(id: withID, name: name, email: email, rating: 0, profileImgUrl: profileImg, numberOfRatings: 0)
+        
+        usersRef.child(withID).setValue(user.dict);
+    }
+    
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -530,7 +548,7 @@ final class StorageAPI {
     
     //gets UserID in Firebase
     func userID() -> String {
-        return Auth.auth().currentUser!.uid;
+        return Auth.auth().currentUser!.uid
     }
     
     func getUserProfileImageUrl(uID: String, completion: @escaping (_ profileImgUrl: String) -> Void){

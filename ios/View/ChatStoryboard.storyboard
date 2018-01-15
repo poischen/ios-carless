@@ -24,7 +24,7 @@
                                     <navigationItem title="Messages" id="xQm-Jf-giD">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="ccZ-20-Irm">
                                             <connections>
-                                                <action selector="backBtn:" destination="t90-G8-1mJ" id="h0z-Mm-lkd"/>
+                                                <action selector="backButtonUserVC:" destination="t90-G8-1mJ" id="jZ2-Ia-B0I"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -54,7 +54,7 @@
                         <viewLayoutGuide key="safeArea" id="KJu-ze-TXh"/>
                     </view>
                     <connections>
-                        <outlet property="myTV" destination="zQr-ld-lKH" id="7du-G7-cSb"/>
+                        <outlet property="myTableView" destination="zQr-ld-lKH" id="g6B-cf-39Z"/>
                         <segue destination="K6d-Ha-1Vz" kind="show" identifier="ChatSegue" id="p78-k0-tGq"/>
                     </connections>
                 </viewController>
@@ -75,7 +75,7 @@
                     <navigationItem key="navigationItem" title="Chat" id="37G-l3-ne7">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="mLm-Bh-Tx4">
                             <connections>
-                                <action selector="BackBtn2:" destination="jyf-u0-Yxb" id="Ftz-JA-INy"/>
+                                <action selector="backButtonChatWindow:" destination="jyf-u0-Yxb" id="oMh-hA-N9q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

@@ -290,12 +290,13 @@
 				84FC9CF3200C0C45001B2B2B /* Profile */,
 				19BBB88F200A579C00723339 /* ChatBot */,
 				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
+				779BFE782004EE6400AAB77A /* Chat */,
+				193966C21FF57ECC008C76A8 /* Rate */,
+				19BF06491FEA869E00E495C2 /* ProfileViewController.swift */,
 				19BF06411FEA83D700E495C2 /* ViewController.swift */,
 				840D63D01FE9A64E007A1F16 /* Offer */,
 				840D63D21FE9A6A4007A1F16 /* Advertise */,
-				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
 				840D63D11FE9A677007A1F16 /* Search */,
-				193966C21FF57ECC008C76A8 /* Rate */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -473,6 +474,15 @@
 				2AD4E97B1FA8AA2D0013D67E /* Profil.png */,
 			);
 			path = PictureFiles;
+			sourceTree = "<group>";
+		};
+		779BFE782004EE6400AAB77A /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				19BF064B1FEA86A700E495C2 /* UserVC.swift */,
+				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		7ECCD950BF8E10D14DF6A571 /* Frameworks */ = {
