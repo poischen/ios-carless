@@ -22,7 +22,6 @@ target 'ios' do
     pod 'SDWebImage'
     pod 'AI'
     pod 'ApiAI'
-    pod 'PTEHorizontalTableView'
 
   target 'iosTests' do
     inherit! :search_paths
