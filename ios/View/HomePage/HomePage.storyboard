@@ -214,6 +214,9 @@
                                 <rect key="frame" x="275" y="221" width="84" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="add offering"/>
+                                <connections>
+                                    <action selector="addOfferingButtonClicked:" destination="PcC-rc-5Iw" eventType="touchUpInside" id="Flr-CG-hmr"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

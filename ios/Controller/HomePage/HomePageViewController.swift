@@ -114,16 +114,36 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue background selection style
         return returnCell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if (tableView == self.usersOfferingsTable) {
+            let (selectedOffering,_) = self.usersOfferingsAndBrands[indexPath.row]
+            showSelectedOffering(selectedOffering: selectedOffering)
+        } else if (tableView == self.usersRentingsTable) {
+            let (_,selectedOffering,_) = self.usersRentingsAndOfferings[indexPath.row]
+            showSelectedOffering(selectedOffering: selectedOffering)
+        }
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
     }
-    */
+
+    @IBAction func addOfferingButtonClicked(_ sender: Any) {
+        // go to advertise view
+        let storyboard = UIStoryboard(name: "Advertise", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "AdvertisePages")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func showSelectedOffering(selectedOffering: Offering){
+        // show selected offering
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
+            let targetController = navigationController.topViewController as? OfferingViewController else {
+                return
+        }
+        targetController.displayingOffering = selectedOffering
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
 
 }
 
