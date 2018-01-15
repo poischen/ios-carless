@@ -273,11 +273,11 @@
 				84FC9CEE200C0BC2001B2B2B /* Profile */,
 				19AFCF1D200A285900758E91 /* Menu */,
 				193966BD1FF57B6D008C76A8 /* Rate */,
-				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
-				19BF06451FEA853B00E495C2 /* Main.storyboard */,
 				840D63C71FE9A4F8007A1F16 /* Offer */,
 				840D63BC1FE9A438007A1F16 /* Advertise */,
 				774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */,
+				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
+				19BF06451FEA853B00E495C2 /* Main.storyboard */,
 				840D63D31FE9A6D8007A1F16 /* Search */,
 			);
 			path = View;
@@ -291,7 +291,6 @@
 				19BBB88F200A579C00723339 /* ChatBot */,
 				779BFE782004EE6400AAB77A /* Chat */,
 				193966C21FF57ECC008C76A8 /* Rate */,
-				19BF06411FEA83D700E495C2 /* ViewController.swift */,
 				840D63D01FE9A64E007A1F16 /* Offer */,
 				840D63D21FE9A6A4007A1F16 /* Advertise */,
 				840D63D11FE9A677007A1F16 /* Search */,
@@ -343,6 +342,7 @@
 		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				841855E4200D2E3700D2E1A4 /* Offer */,
 				1901703E200BA65000E21080 /* HomePage */,
 				19CA79A22007E06500402963 /* general Interfaces */,
 				19CA79A12007E04E00402963 /* Helper */,
@@ -357,12 +357,8 @@
 				1949C5931FC9D05800C5FD91 /* Gear.swift */,
 				19A7FA791FD2D2C900FA7C8D /* Renting.swift */,
 				19380CB91FD5A29A0057A6D2 /* VehicleType.swift */,
-				848486EF1FFC4395008F7DAF /* Availibility.swift */,
 				845AD973200903FE0037D053 /* BlockedDay.swift */,
 				19A3F8611FF5AAEE00FA2D95 /* Rating.swift */,
-				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
-				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
-				847D337A2002A53D00493402 /* ShowOffer.swift */,
 				19017041200BA70200E21080 /* RentingRequest.swift */,
 			);
 			path = Model;
@@ -432,6 +428,7 @@
 			isa = PBXGroup;
 			children = (
 				191BBB9F1FB5075E00D95B26 /* Controller */,
+				19BF06411FEA83D700E495C2 /* ViewController.swift */,
 				191BBB9E1FB5070300D95B26 /* View */,
 				19C9E9A71FB1A3A0002F4C84 /* API */,
 				19C9E9A61FB1A2D5002F4C84 /* Model */,
@@ -557,6 +554,17 @@
 				199A68641FFD027A00047E5D /* CustomCell.swift */,
 			);
 			path = Search;
+			sourceTree = "<group>";
+		};
+		841855E4200D2E3700D2E1A4 /* Offer */ = {
+			isa = PBXGroup;
+			children = (
+				848486EF1FFC4395008F7DAF /* Availibility.swift */,
+				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
+				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
+				847D337A2002A53D00493402 /* ShowOffer.swift */,
+			);
+			path = Offer;
 			sourceTree = "<group>";
 		};
 		84FC9CEE200C0BC2001B2B2B /* Profile */ = {

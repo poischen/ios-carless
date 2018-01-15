@@ -19,9 +19,8 @@ class OfferingViewController: UIViewController {
     var preselectedEndDate: Date?
     var preselectedStartDate: Date?
     
-    //todo: add nav bar items depending on users role to offer http://rshankar.com/navigation-controller-in-ios/
-    
-    let lessor = User(id: "u58UjfgRRRdOxgelgHpLVydQkah1", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
+    var lessor: User?
+
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]
@@ -29,27 +28,37 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var carImageView: UIImageView!
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var basicDataCollectionView: UICollectionView!
-    var basicDetails: [String] = []
+    var basicDetails: [String]?
     @IBOutlet weak var carHpConsumptionLabel: UILabel!
     @IBOutlet weak var lessorNameLabel: UILabel!
     @IBOutlet weak var lessorRateView: CosmosView!
     @IBOutlet weak var lessorProfileImageView: UIImageView!
     @IBOutlet weak var offerDescriptionTextView: UITextView!
     @IBOutlet weak var featuresCollectionView: UICollectionView!
-    var features: [String] = []
-    let regionRadius: CLLocationDistance = 20
+    @IBOutlet weak var featuresCVSuperView: UILabel!
+    var features: [String]?
+    let regionRadius: CLLocationDistance = 200
     @IBOutlet weak var carLocationMap: MKMapView!
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var returnLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var availibilityBtn: UIButton!
     @IBOutlet weak var chatBtn: UIButton!
     @IBOutlet weak var actionItem: UIBarButtonItem!
     
+    let identifierBasicDataCollectionView = "basicDetailsCollectionViewCell"
+    let identifierFeaturesCollectionView = "featuresCollectionViewCell"
+    
+    let PICKUP_RETURN_DEFAULT = "00:00"
+    let CURRENCY = "€"
+    
     @IBAction func chatButton(_ sender: UIButton) {
+        if let lessorUser = lessor {
             let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ChatWithUser") as! ChatWindowVC
-            vc.selectedUser = lessor.id
+            vc.selectedUser = lessorUser.id
             self.present(vc, animated: true, completion: nil)
+        }
     }
     
     @IBAction func backButton(_ sender: Any) {
@@ -64,6 +73,16 @@ class OfferingViewController: UIViewController {
                                                  animated: true)
     }*/
     
+    //Switch to User Profile Storyboard when Lessor's Profile Image was tapped
+    func tappedOnLessorImg() {
+        if let lessorUser = lessor {
+            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as! ExternProfileViewController
+            vc.profileOwner = lessorUser
+            self.present(vc, animated: true, completion: nil)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -77,7 +96,7 @@ class OfferingViewController: UIViewController {
             //todo
         }
         
-        //set car infos (image, name, basic details) area --------------------------------------------------
+        //set car infos (image, name, basic details) area --------------------------------------------------------------------------------------------------------
         //images using Kingfisher
         carImageView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleBottomMargin, .flexibleRightMargin, .flexibleLeftMargin, .flexibleTopMargin]
         carImageView.contentMode = .scaleAspectFill
@@ -97,22 +116,32 @@ class OfferingViewController: UIViewController {
         
         //detailicons
         
-        basicDetails = showOfferModel.getBasicDetails(offer: displayingOffering!)
-        basicDataCollectionView.dataSource = self
+        showOfferModel.getBasicDetails(offer: displayingOffering!, completion: { (basicDetails) in
+            self.basicDetails = basicDetails
+            self.basicDataCollectionView.dataSource = self
+                //view.reload?
+        })
+
         
-        //set information about lessor area---------------------------------------------------
-        //todo: get user from offering
-        lessorNameLabel.text = lessor.name
-        lessorRateView.rating = Double(lessor.rating)
-        lessorRateView.text = String (lessor.rating)
+        //set information about lessor area-------------------------------------------------------------------------------------------------------------------------
+        storageAPI.getUserByUID(UID: displayingOffering!.userUID) { (lessor) in
+            self.lessor = lessor
+            self.lessorNameLabel.text = lessor.name
+            self.lessorRateView.rating = Double(lessor.rating)
+            self.lessorRateView.text = String (lessor.rating)
+            
+            let lessorProfileImage: UIImage = UIImage(named: "user")!
+            self.lessorProfileImageView.maskCircle(anyImage: lessorProfileImage)
+            
+            let profileImgUrl = URL(string: lessor.profileImgUrl)!
+            self.lessorProfileImageView.kf.setImage(with: profileImgUrl)
+        }
         
-        let lessorProfileImage: UIImage = UIImage(named: "user")!
-        lessorProfileImageView.maskCircle(anyImage: lessorProfileImage)
+        let tapOnLessorImg = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnLessorImg))
+        lessorProfileImageView.addGestureRecognizer(tapOnLessorImg)
+        lessorProfileImageView.isUserInteractionEnabled = true
         
-        let profileImgUrl = URL(string: lessor.profileImgUrl)!
-        lessorProfileImageView.kf.setImage(with: profileImgUrl)
-        
-        //set information about further details and description area---------------------------------------------------
+        //set information about further details and description area-----------------------------------------------------------------------------------------------
         offerDescriptionTextView.text = displayingOffering?.description
         let contentSize = offerDescriptionTextView.sizeThatFits(offerDescriptionTextView.bounds.size)
         var frame = offerDescriptionTextView.frame
@@ -122,38 +151,40 @@ class OfferingViewController: UIViewController {
         let aspectRatioTextViewConstraint = NSLayoutConstraint(item: offerDescriptionTextView, attribute: .height, relatedBy: .equal, toItem: offerDescriptionTextView, attribute: .width, multiplier: offerDescriptionTextView.bounds.height/offerDescriptionTextView.bounds.width, constant: 1)
         offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
         
-        //set feature area---------------------------------------------------
+        //set feature area----------------------------------------------------------------------------------------------------------------------------------------
         //features = displayingOffering.getFeatures() //TODO
         features = featuresDummy
         featuresCollectionView.dataSource = self
         self.view.addSubview(featuresCollectionView)
         
-        //set information for picking up the car (map & time) area---------------------------------------------------
+        //set information for picking up the car (map & time) area---------------------------------------------------------------------------------------------------
         let latitude = Double((displayingOffering?.latitude)!)
         let longitude = Double((displayingOffering?.longitude)!)
-        //let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
-        
-        //TODO  centerMapOnLocation(location: initialLocation)
+        let initialLocation = CLLocation(latitude: latitude, longitude: longitude)
+        centerMapOnLocation(location: initialLocation)
         
         let carLocation = CarLocation(locationName: (displayingOffering?.location)!, discipline: "default", coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(latitude), longitude: longitude))
         carLocationMap.addAnnotation(carLocation)
         
-        pickUpLabel.text = displayingOffering?.pickupTime
-        returnLabel.text = displayingOffering?.returnTime
+        if (displayingOffering?.pickupTime == ""){
+            pickUpLabel.text = PICKUP_RETURN_DEFAULT
+        } else {
+            pickUpLabel.text = displayingOffering?.pickupTime
+        }
+        
+        if (displayingOffering?.returnTime == ""){
+            returnLabel.text = PICKUP_RETURN_DEFAULT
+        } else {
+            returnLabel.text = displayingOffering?.returnTime
+        }
+
+        priceLabel.text = "\(displayingOffering!.basePrice)" + CURRENCY
+        
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-   
-    //Switch to User Profile Storyboard when Lessor's Profile Image was tapped
-    @IBAction func lessorProfileTap(_ sender: UITapGestureRecognizer) {
-        print("Profilepic was touched")
-        //TODO switch
-        //let viewController:UIViewController = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "ViewController") as UIViewController
-        //self.present(viewController, animated: false, completion: nil)
     }
     
     //Adjust hight of Description to Content Text
@@ -164,7 +195,6 @@ class OfferingViewController: UIViewController {
         label.font = font
         label.text = text
         label.sizeToFit()
-        
         return label.frame
     }
     
@@ -181,7 +211,6 @@ class OfferingViewController: UIViewController {
             }
         }
     }
-
     
     override func viewDidAppear(_ animated: Bool) {
         
@@ -213,58 +242,49 @@ extension UIImageView {
 extension OfferingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView == self.basicDataCollectionView){
-            return basicDetails.count
+            if let bd = basicDetails {
+                return bd.count
+            } else {
+                print("No basic details yet")
+                return 0
+            }
         } else {
-            return features.count
+            if let f = features {
+                return f.count
+            } else {
+                print("No features yet")
+                return 0
+            }
         }
     }
     
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.basicDataCollectionView {
-            let cell = basicDataCollectionView.dequeueReusableCell(withReuseIdentifier: "basicDetailsCollectionViewCell", for: indexPath) as! BasicDataCollectionViewCell
-            cell.awakeFromNib()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifierBasicDataCollectionView, for: indexPath) as! BasicDataCollectionViewCell
+            //cell.awakeFromNib()
+            
+            if let bd = basicDetails{
+                let basicDetail = bd[indexPath.row]
+                if (indexPath.row == 0){ //seats
+                    cell.displayContent(image: basicDetail, despcription: "\(basicDetail)" + " seats")
+                }
+                else {
+                    //todo: was, wenn icon nicht local vorhanden? woher download url?
+                    cell.displayContent(image: basicDetail, despcription: "\(basicDetail)")
+                }
+            }
             return cell
         }
         else {
-            let cell = featuresCollectionView.dequeueReusableCell(withReuseIdentifier: "featuresCollectionViewCell", for: indexPath) as! FeaturesCollectionViewCell
-            cell.awakeFromNib()
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifierFeaturesCollectionView, for: indexPath) as! FeaturesCollectionViewCell
+            //cell.awakeFromNib()
+            
+            if let f = features{
+                let feature = f[indexPath.row]
+                cell.displayContent(image: feature)
+            }
             return cell
         }
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if collectionView == self.basicDataCollectionView {
-            let basiDetailCell = cell as! BasicDataCollectionViewCell
-            let basicDetail = basicDetails[indexPath.row]
-            
-            print("basicDetail")
-            print(basicDetail)
-            
-            if (indexPath.row == 0){ //seats
-                basiDetailCell.displayContent(image: basicDetail, despcription: "")
-            }
-            else {
-                //todo: was, wenn icon nicht local vorhanden? woher download url?
-                basiDetailCell.displayContent(image: basicDetail, despcription: "")
-            }
-            basiDetailCell.awakeFromNib()
-        }
-            
-        else {
-            //TODO
-            let featureCell = cell as! FeaturesCollectionViewCell
-            let feature = features[indexPath.row]
-            featureCell.displayContent(image: feature)
-            featureCell.awakeFromNib()
-        }
-        
-    }
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
     }
 }
