@@ -32,7 +32,6 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     func dataReceived(users: [User]) {
         self.users = users.filter {$0.id != StorageAPI.shared.userID()}
-        
         myTableView.reloadData()
     }
 
