@@ -185,8 +185,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
       
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
             
-            let img = JSQPhotoMediaItem(image: pic)
-            messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
+            //let img = JSQPhotoMediaItem(image: pic)
+           // messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
             MessageHandler.shared.uploadImageToFirebase(senderID: senderId, receiverID: receiverID, image: pic)
             
         }
