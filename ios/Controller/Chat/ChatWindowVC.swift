@@ -27,6 +27,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        picker.delegate = self
+        
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
         
@@ -114,6 +116,27 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         picker.mediaTypes = [type as String]
         present(picker, animated: true, completion: nil)
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            let img = JSQPhotoMediaItem(image: pic)
+            self.messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
+            
+            
+        } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            
+            let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true)
+            messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video))
+           
+        }
+        
+        self.dismiss(animated: true, completion: nil);
+        collectionView.reloadData()
+    }
+
+    
+    //END FUNCTIONS PICKER VIEW
     
     func observeUserMessages() {
         //logged in user's ID
