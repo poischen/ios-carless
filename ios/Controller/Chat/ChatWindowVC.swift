@@ -184,14 +184,16 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
       
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
             let img = JSQPhotoMediaItem(image: pic)
             messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
             MessageHandler.shared.uploadImageToFirebase(senderID: senderId, receiverID: receiverID, image: pic)
             
-            
-        } else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
-            
-        print("send video")
+        }
+        else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            //let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true)
+              //messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video))
+            MessageHandler.shared.uploadVideoToFirebase(senderID: senderId, receiverID: receiverID, vidUrl: vidUrl)
            
         }
         

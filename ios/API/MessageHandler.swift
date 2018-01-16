@@ -61,18 +61,32 @@ class MessageHandler {
                 }
                 
                 if let imageUrl = metadata?.downloadURL()?.absoluteString {
-                    self.sendMessageWithImageUrl(senderID: senderID, receiverID: receiverID, imageUrl: imageUrl)
+                    self.sendMessageWithUrl(senderID: senderID, receiverID: receiverID, url: imageUrl)
                 }
                 
             })
         }
-        
     }
     
-    func sendMessageWithImageUrl(senderID: String, receiverID: String, imageUrl: String) {
+    func uploadVideoToFirebase(senderID: String, receiverID: String, vidUrl: URL?) {
+        let fileName = NSUUID().uuidString
+        StorageAPI.shared.videoStorageRef.child(fileName).putFile(from: vidUrl!, metadata: nil) { (metadata, error) in
+       
+            if error != nil {
+                print("Failed to upload video!")
+                return
+            }
+            
+            if let vidUrl = metadata?.downloadURL()?.absoluteString {
+                self.sendMessageWithUrl(senderID: senderID, receiverID: receiverID, url: vidUrl)
+            }
+        }
+    }
+    
+    func sendMessageWithUrl(senderID: String, receiverID: String, url: String) {
         let ref = StorageAPI.shared.messagesRef
         //let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
-        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.URL: imageUrl]
+        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.URL: url]
         
         ref.childByAutoId().updateChildValues(values){ (error, ref) in
             if error != nil {
