@@ -11,8 +11,15 @@ import Foundation
 class RateModel {
     static func getAdditionalInformationForLessorRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
         // TODO: use getOfferingWithBrandByOfferingID here
-        // first the offering from the DB (the car the user rented) in order to assemble the car model name
-        StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
+        // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
+        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {(offering, offeringsBrand) in
+            // then get the lessor user from the DB in order to return it
+            StorageAPI.shared.getUserByUID(UID: offering.userUID, completion: { lessorUser in
+                let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
+                completion(offeringCarModelName, lessorUser)
+            })
+        })
+        /* StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
             // then get the lessor user from the DB in order to return it
             StorageAPI.shared.getUserByUID(UID: offering.userUID, completion: { lessorUser in
                 // then get the brand of the rented car using the brand ID from the previously received offering
@@ -21,11 +28,11 @@ class RateModel {
                     completion(offeringCarModelName, lessorUser)
                 })
             })
-        })
+        }) */
     }
     
     static func getAdditionalInformationForLesseeRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lesseeUser: User) -> Void){
-        // first the offering from the DB (the car the user rented) in order to assemble the car model name
+        /* // first the offering from the DB (the car the user rented) in order to assemble the car model name
         StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
             // then get the lessee user from the DB in order to return it
             StorageAPI.shared.getUserByUID(UID: rentingBeingRated.userID, completion: { lesseeUser in
@@ -34,6 +41,14 @@ class RateModel {
                     let offeringCarModelName = offeringBrand.name + " " + offering.type // assemble car model from brand name and model name
                     completion(offeringCarModelName, lesseeUser)
                 })
+            })
+        }) */
+        // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
+        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {(offering, offeringsBrand) in
+            // then get the lessee user from the DB in order to return it
+            StorageAPI.shared.getUserByUID(UID: rentingBeingRated.userID, completion: { lesseeUser in
+                let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
+                completion(offeringCarModelName, lesseeUser)
             })
         })
     }

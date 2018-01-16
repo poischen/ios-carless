@@ -596,6 +596,22 @@ final class StorageAPI {
         }
     }
     
+    func getRatingsByUserUID(userUID: String, completion: @escaping (_ rentings: [Rating]) -> Void){
+        self.ratingsDBReference.queryOrdered(byChild: Rating.RATING_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
+            var resultRatings:[Rating] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let rating = Rating.init(id: stringID, dict: dict) {
+                    resultRatings.append(rating)
+                } else {
+                    print("getRatingsByUserUID: error while converting rating")
+                }
+            }
+            completion(resultRatings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     func childToStringIDAndDict(childRaw: Any) -> (String, [String:AnyObject])?{
         if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
             return (child.key,dict)
