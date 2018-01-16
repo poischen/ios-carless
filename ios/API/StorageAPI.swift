@@ -13,10 +13,6 @@ import FirebaseStorage
 import FirebaseAuth
 import UIKit
 
-protocol FetchData: class {
-    func dataReceived(users: [User]);
-}
-
 
 // singleton class for access to Firebase and maybe to local storage in the future
 // TODO: don't use forced typecasting -> handle errors gracefully

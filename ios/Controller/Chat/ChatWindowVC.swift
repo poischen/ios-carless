@@ -27,16 +27,11 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MessageHandler.shared.delegate = self
-        
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
         
-        //observeMessages()
         observeUserMessages()
         
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,7 +48,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         if message.senderId == self.senderId {
             return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue)
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.green)
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.gray)
         }
         
     }
@@ -149,14 +144,6 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         }
     }
     
-   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationNavigationController = segue.destination as! UINavigationController
-        let targetController = destinationNavigationController.topViewController
-        if let userVC = targetController as? ChatViewController {
-            userVC.selectedUser = self.receiverID
-        }
-        
-    }*/
 
     @IBAction func backButtonChatWindow(_ sender: Any) {
         dismiss(animated: true, completion: nil)

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -24,10 +22,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         StorageAPI.shared.getUsers(completion: dataReceived)
-        
-        
     }
     
     func dataReceived(users: [User]) {

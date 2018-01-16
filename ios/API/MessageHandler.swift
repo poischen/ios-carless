@@ -7,13 +7,6 @@
 //
 
 import Foundation
-//import Firebase
-//import FirebaseDatabase
-//import FirebaseStorage
-
-/*protocol AddMessageDelegate: class {
-    func addMessage(senderID: String, receiverID: String, senderName: String, text: String)
-}*/
 
 class MessageHandler {
 
