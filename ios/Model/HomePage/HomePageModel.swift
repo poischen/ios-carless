@@ -18,7 +18,7 @@ class HomePageModel {
         storageAPI = StorageAPI.shared
     }
     
-    func getUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
+    /* func getUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
         var result:[(Renting, Offering, Brand)] = []
         storageAPI.getRentingsByUserUID(userUID: UID, completion: {rentings in
             let numberOfRentings = rentings.count
@@ -33,7 +33,7 @@ class HomePageModel {
                 })
             }
         })
-    }
+    } */
     
     func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
         storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
@@ -41,13 +41,19 @@ class HomePageModel {
             let numberOfRentings = rentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
-            for renting in rentings {
-                self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                    result.append((renting, offering, offeringsBrand))
-                    if (result.count == numberOfRentings) {
-                        completion(result)
-                    }
-                })
+            if numberOfRentings == 0 {
+                // empty array should also fire callback to pass on that the user has no rentings
+                // (can e.g. happen when a renting of the user is denied)
+                completion([])
+            } else {
+                for renting in rentings {
+                    self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
+                        result.append((renting, offering, offeringsBrand))
+                        if (result.count == numberOfRentings) {
+                            completion(result)
+                        }
+                    })
+                }
             }
         })
     }
@@ -70,7 +76,7 @@ class HomePageModel {
     
     // TODO: more efficient variant?
     // TODO: is it necessary to return the renting?
-    func getUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
+    /* func getUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
         var result:[(Offering, Brand, User, Renting)] = []
         var offeringsProcessed = 0
         subscribeToUsersOfferings(UID: UID, completion: {usersOfferings in
@@ -106,10 +112,11 @@ class HomePageModel {
                 }
             }
         })
-    }
+    } */
     
     // TODO: make this more efficient by only returning the offering once for all requests for that offering
     // TODO: merge with subscribeToUsersOfferings?
+    // TODO: Does this method have to handle empty arrays like the others do?
     func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
         var watchedOfferingsIDs:Set = Set<String>()
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
