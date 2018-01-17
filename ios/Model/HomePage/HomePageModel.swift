@@ -110,47 +110,39 @@ class HomePageModel {
     
     // TODO: make this more efficient by only returning the offering once for all requests for that offering
     // TODO: merge with subscribeToUsersOfferings?
-    /*func getUnconfirmedRequestsForUsersOfferingsNew(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
+    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
         var watchedOfferingsIDs:Set = Set<String>()
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
             for (offering, brand) in usersOfferings {
-                if (offering.id != nil && watchedOfferingsIDs.contains(offering.id!)){
-                    // offering has an ID and is not watched yet -> create listener
-                    storageAPI.getRenting
-                }
-                
-                if let offeringID = offering.id {
-                    self.storageAPI.getRentingsByOfferingID(offeringID: offeringID, completion: {offeringsRentings in
+                // TODO: find better solution for offeringID here
+                if (offering.id != nil && (!watchedOfferingsIDs.contains(offering.id!))){
+                    // offering has an ID and is not watched yet -> add it to the watched offerings and create listener for this offering
+                    watchedOfferingsIDs.insert(offering.id!)
+                    self.storageAPI.subscribeToRentingsForOffering(offeringID: offering.id!, completion: {offeringsRentings in
                         // we're only interested in the unconfirmed rentings
                         let unconfirmedRentings = offeringsRentings.filter {$0.confirmationStatus == false}
                         var resultsForThisOffering:[(Offering, Brand, User, Renting)] = []
                         if (unconfirmedRentings.count > 0) {
-                            // unconfirmed offerings exist -> proceed with them
+                            // unconfirmed rentings exist -> proceed with them
                             for unconfirmedRenting in unconfirmedRentings {
                                 self.storageAPI.getUserByUID(UID: unconfirmedRenting.userID, completion: {rentingUser in
                                     resultsForThisOffering.append((offering, brand, rentingUser, unconfirmedRenting))
                                     if (resultsForThisOffering.count == unconfirmedRentings.count) {
-                                        // all unconfirmed rentings for this offering processed -> offering processed -> add results to total results
-                                        offeringsProcessed = offeringsProcessed + 1
-                                        result.append(contentsOf: resultsForThisOffering)
-                                        if (offeringsProcessed == usersOfferings.count) {
-                                            completion(result)
-                                        }
+                                        // all unconfirmed rentings for this offering processed -> offering processed -> fire callback
+                                        completion(offering.id!, resultsForThisOffering)
                                     }
                                 })
                             }
                         } else {
-                            // no unconfirmed offerings exist -> offering processed
-                            offeringsProcessed = offeringsProcessed + 1
-                            if (offeringsProcessed == usersOfferings.count) {
-                                completion(result)
-                            }
+                            // no unconfirmed ratings exists -> fire callback
+                            // this is necessary to make accepted requests disappear
+                            completion(offering.id!, [])
                         }
                     })
                 }
             }
         })
-    }*/
+    }
     
     func acceptRenting(renting: Renting) {
         renting.confirmationStatus = true

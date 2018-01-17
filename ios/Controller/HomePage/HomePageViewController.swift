@@ -23,7 +23,17 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
     var usersOfferingsAndBrands: [(Offering,Brand)] = []
-    var usersRentingRequests: [(Offering, Brand, User, Renting)] = []
+    private var usersRentingRequestsMap: [String:[(Offering, Brand, User, Renting)]] = [:]
+    var usersRentingRequests: [(Offering, Brand, User, Renting)] {
+        var result:[(Offering, Brand, User, Renting)] = []
+        for (_, requestData) in usersRentingRequestsMap {
+            result += requestData
+        }
+        return result
+    }
+    var volume: Double {
+        return 5.0
+    }
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
@@ -46,8 +56,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
         })
-        homePageModel.getUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
-            self.usersRentingRequests = offeringsBrandsAndUsers
+        homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringID, rentingData in
+            // overwrite (maybe) existing requests for this offering in the map
+            // this will also change the computed property usersRentingRequests which is the data source of the table
+            self.usersRentingRequestsMap[offeringID] = rentingData
             self.usersRentingRequestsTable.reloadData()
         })
     }
@@ -171,25 +183,25 @@ extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
     
     func denyRequest(renting: Renting) {
         homePageModel.denyRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
     
     
     
     func removeRequestFromList(renting: Renting) {
         if let wantedRentingID = renting.id {
-            usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
+            /* usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
                 if let currentRentingID = currentRenting.id  {
                     return currentRentingID != wantedRentingID
                 } else {
                     return false
                 }
-            }
+            }*/
         }
         usersRentingRequestsTable.reloadData()
     }
