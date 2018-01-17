@@ -24,7 +24,6 @@ class HomePageModel {
             let numberOfRentings = rentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
-            // TODO: avoid code duplication
             for renting in rentings {
                 self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
                     result.append((renting, offering, offeringsBrand))
@@ -38,7 +37,7 @@ class HomePageModel {
     
     func getUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
         // TODO: move into storage API?
-        var result:[(Offering, Brand)] = []
+        /* var result:[(Offering, Brand)] = []
         storageAPI.getOfferingsByUserUID(userUID: UID, completion: {offerings in
             let numberOfOfferings = offerings.count
             for offering in offerings {
@@ -49,12 +48,13 @@ class HomePageModel {
                     }
                 })
             }
-        })
+        })*/
+        storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: completion)
     }
     
     // TODO: more efficient variant?
     // TODO: is it necessary to return the renting?
-    func getUnconfirmedOfferingsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
+    func getUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
         var result:[(Offering, Brand, User, Renting)] = []
         var offeringsProcessed = 0
         getUsersOfferings(UID: UID, completion: {usersOfferings in

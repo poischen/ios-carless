@@ -46,7 +46,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
         })
-        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
+        homePageModel.getUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
             self.usersRentingRequests = offeringsBrandsAndUsers
             self.usersRentingRequestsTable.reloadData()
         })

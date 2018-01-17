@@ -670,10 +670,31 @@ final class StorageAPI {
     
     func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)) -> Void){
         self.getOfferingByID(id: offeringID, completion: {offering in
-            StorageAPI.shared.getBrandByID(id: offering.brandID, completion: { offeringBrand in
+            self.getBrandByID(id: offering.brandID, completion: { offeringBrand in
                 completion((offering, offeringBrand))
             })
         })
+    }
+    
+    func subscribeToUsersOfferingsWithBrands(userUID: String, completion: @escaping (_ result: [(Offering, Brand)]) -> Void){
+        self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observe(.value, with: {snapshot in
+            var resultOfferings:[(Offering, Brand)] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    self.getBrandByID(id: offering.brandID, completion: {offeringsBrand in
+                        resultOfferings.append((offering, offeringsBrand))
+                        if (resultOfferings.count == snapshot.childrenCount){
+                            // last brand received -> fire callback
+                            completion(resultOfferings)
+                        }
+                    })
+                } else {
+                    print("subscribeToUsersOfferingsWithBrands: error while converting offering")
+                }
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 }
 

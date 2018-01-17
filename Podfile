@@ -22,6 +22,7 @@ target 'ios' do
     pod 'SDWebImage'
     pod 'AI'
     pod 'ApiAI'
+    # pod 'FirebaseUI/Database', '~> 4.0'
 
   target 'iosTests' do
     inherit! :search_paths
