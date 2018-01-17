@@ -59,9 +59,9 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                 // no rentings -> hide table and show placeholder
                 self.usersRentingsTable.isHidden = true
                 self.usersRentingsPlaceholderLabel.isHidden = false
-                self.usersRentingsTable.reloadData()
             } else {
                 // rentings exist -> hide placeholder and show table
+                self.usersRentingsTable.reloadData()
                 self.usersRentingsTable.isHidden = false
                 self.usersRentingsPlaceholderLabel.isHidden = true
             }
@@ -69,6 +69,16 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         homePageModel.subscribeToUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
+            if (offeringsAndBrands.count == 0){
+                // no offerings -> hide table and show placeholder
+                self.usersOfferingsTable.isHidden = true
+                self.userOfferingsPlaceholderLabel.isHidden = false
+            } else {
+                // offering exist -> hide placeholder and show table
+                self.usersOfferingsTable.reloadData()
+                self.usersOfferingsTable.isHidden = false
+                self.userOfferingsPlaceholderLabel.isHidden = true
+            }
         })
         homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringID, rentingData in
             // operations here will also change the computed property usersRentingRequests which is the data source of the table
