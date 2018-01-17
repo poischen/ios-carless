@@ -12,6 +12,7 @@ import MobileCoreServices
 import AVKit
 import SDWebImage
 import Firebase
+import Photos
 
 class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -27,16 +28,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //MessageHandler.shared.delegate = self
+          picker.delegate = self
         
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
         
-        //observeMessages()
         observeUserMessages()
+        observeUserMediaMessages()
         
-        
-        // Do any additional setup after loading the view.
     }
     
     override func didReceiveMemoryWarning() {
@@ -53,7 +52,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         if message.senderId == self.senderId {
             return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue)
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.green)
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.gray)
         }
         
     }
@@ -67,6 +66,23 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData {
         return messages[indexPath.item]
     }
+    
+    //play videos
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        
+        let msg = messages[indexPath.item]
+        
+        if msg.isMediaMessage {
+        if let mediaItem = msg.media as? JSQVideoMediaItem {
+            let player = AVPlayer(url: mediaItem.fileURL)
+            let playerController = AVPlayerViewController()
+            playerController.player = player
+            
+            self.present(playerController, animated: true, completion: nil)
+          }
+        }
+    }
+
     
     //how many messages are in one section
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -92,7 +108,52 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     func addMessage(senderID: String, receiverID: String, text: String) {
        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text))
         collectionView.reloadData()
-        
+    }
+    
+    func addMediaMessage(senderID: String, receiverID: String, url: String){
+        if let mediaURL = URL(string: url){
+            
+            do {
+                
+                let data = try Data(contentsOf: mediaURL);
+                
+                if let _ = UIImage(data: data){
+                    
+                    let _ = SDWebImageDownloader.shared().downloadImage(with: mediaURL, options: [], progress: nil, completed: { (image, data, error, finished) in
+                        
+                        DispatchQueue.main.async {
+                            let photo = JSQPhotoMediaItem(image: image);
+                            
+                            if senderID == self.senderId {
+                                photo?.appliesMediaViewMaskAsOutgoing = true;
+                            } else {
+                                photo?.appliesMediaViewMaskAsOutgoing = false;
+                            }
+                            
+                            
+                            self.messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: photo));
+                            self.collectionView.reloadData();
+                            
+                        }
+                    })
+                } else {
+                    let video = JSQVideoMediaItem(fileURL: mediaURL, isReadyToPlay: true);
+                    if senderID == self.senderId {
+                        video?.appliesMediaViewMaskAsOutgoing = true;
+                    } else {
+                        video?.appliesMediaViewMaskAsOutgoing = false;
+                    }
+                    
+                    
+                    messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: video));
+                    self.collectionView.reloadData();
+                    
+                }
+            } catch {
+                
+            }
+        }
+
     }
     
     //Sending media button
@@ -119,6 +180,29 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         picker.mediaTypes = [type as String]
         present(picker, animated: true, completion: nil)
     }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+      
+        if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            
+            //let img = JSQPhotoMediaItem(image: pic)
+           // messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
+            MessageHandler.shared.uploadImageToFirebase(senderID: senderId, receiverID: receiverID, image: pic)
+            
+        }
+        else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
+            //let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true)
+              //messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video))
+            MessageHandler.shared.uploadVideoToFirebase(senderID: senderId, receiverID: receiverID, vidUrl: vidUrl)
+           
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+        collectionView.reloadData()
+    }
+
+    
+    //END FUNCTIONS PICKER VIEW
     
     func observeUserMessages() {
         //logged in user's ID
@@ -149,14 +233,35 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         }
     }
     
-   /* override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationNavigationController = segue.destination as! UINavigationController
-        let targetController = destinationNavigationController.topViewController
-        if let userVC = targetController as? ChatViewController {
-            userVC.selectedUser = self.receiverID
+    func observeUserMediaMessages() {
+        //logged in user's ID
+        guard  let uid = Auth.auth().currentUser?.uid else {
+            return
         }
         
-    }*/
+        let ref = StorageAPI.shared.userMessagesRef.child(uid)
+        ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
+            
+            let messageID = snapshot.key
+            let messageRef = StorageAPI.shared.messagesRef.child(messageID)
+            
+            messageRef.observeSingleEvent(of: .value, with: {snapshot in
+                if let data = snapshot.value as? NSDictionary {
+                    if let senderID = data[DBConstants.SENDER_ID] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let url = data[DBConstants.URL] as? String {
+                        if let user = self.selectedUser {
+                            if (receiverID == user) || (senderID == user) {
+                                self.addMediaMessage(senderID: senderID, receiverID: receiverID, url: url)
+                                self.finishReceivingMessage()
+                            }
+                        }
+                    }
+                } else {
+                    print("Error! Could not decode message data!")
+                }
+            })
+        }
+    }
+    
 
     @IBAction func backButtonChatWindow(_ sender: Any) {
         dismiss(animated: true, completion: nil)
