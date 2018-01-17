@@ -52,7 +52,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Car Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lw7-Xi-zK1">
-                                                    <rect key="frame" x="15" y="11" width="167" height="21"/>
+                                                    <rect key="frame" x="15" y="2" width="167" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -86,12 +86,20 @@
                                                     <color key="textColor" red="0.54551845789999998" green="0.54594862460000004" blue="0.54558509590000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="accepted" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Kb-3O-54N">
+                                                    <rect key="frame" x="15" y="22" width="167" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.54551845789999998" green="0.54594862460000004" blue="0.54558509590000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="carNameLabel" destination="Lw7-Xi-zK1" id="gh7-0f-n1U"/>
                                             <outlet property="endDateLabel" destination="vXR-65-CaJ" id="dig-eb-eOO"/>
                                             <outlet property="startDateLabel" destination="A5w-8B-mzh" id="sm0-Ar-SUf"/>
+                                            <outlet property="statusLabel" destination="4Kb-3O-54N" id="Bmo-pB-S0p"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -38,11 +38,11 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        homePageModel.getUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
+        homePageModel.subscribeToUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
             self.usersRentingsAndOfferings = rentingsAndOfferings
             self.usersRentingsTable.reloadData()
         })
-        homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
+        homePageModel.subscribeToUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
         })
@@ -86,6 +86,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.startDateLabel.text = homePageModel.dateToString(date: renting.startDate)
             cell.endDateLabel.text = homePageModel.dateToString(date: renting.startDate)
+            if (renting.confirmationStatus) {
+                // renting is confirmed
+                cell.statusLabel.text = UserRentingsTableViewCell.ACCEPTED_STATUS_MESSAGE
+            } else {
+                cell.statusLabel.text = UserRentingsTableViewCell.PENDING_STATUS_MESSAGE
+            }
             returnCell = cell
         case self.usersOfferingsTable:
             let (offering, brand) = usersOfferingsAndBrands[indexPath.row]
