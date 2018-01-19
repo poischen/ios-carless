@@ -19,8 +19,8 @@ class ChatBotViewController: UIViewController {
         chipResponse.numberOfLines = 0;
     }
     
-    var geocountrylocal: String? = ""
-    var consultlocal: String? = ""
+    var geocountrylocal: String? = nil
+    var consultlocal: String? = nil
     
     
     @IBOutlet weak var chipResponse: UILabel!
@@ -47,14 +47,17 @@ class ChatBotViewController: UIViewController {
                     let consult = parameters["consults"]?.stringValue else {
                         return
                 }
-                if (geocountry != "" && consult != "") {
+                if (geocountry != "" && consult != "") { //alles ist da
                     if let textResponse = response.result.fulfillment.speech {
                         self.speechAndText(text: textResponse)
                         self.geocountrylocal = geocountry
                         self.consultlocal = consult
+                        
+                        
+                        
                     }
                 } else if (geocountry == "" && consult != "") { // Country nicht gegeben ...
-                    if (self.geocountrylocal != "") { // ... aber gespeichert
+                    if (self.geocountrylocal != nil) { // ... aber gespeichert
                         let requestcountry = ApiAI.shared().textRequest()
                         requestcountry?.query = self.geocountrylocal!
                     
@@ -77,7 +80,39 @@ class ChatBotViewController: UIViewController {
                         })
                         ApiAI.shared().enqueue(requestcountry)
                     } else { // Country nicht gegeben und nicht gespeichert
+                        if let textResponse = response.result.fulfillment.speech {
+                            self.speechAndText(text: textResponse)
+                        }
+                    }
+                } else if (geocountry != "" && consult == "") { //consults nicht gegeben
+                    if (self.consultlocal != nil) { // ... aber gespeichert
+                        print ("im here")
+                        print (self.consultlocal)
+                        let requestconsult = ApiAI.shared().textRequest()
+                        requestconsult?.query = self.consultlocal!
                         
+                        
+                        requestconsult?.setMappedCompletionBlockSuccess({ (request, response) in
+                            guard  let response = response as? AIResponse,
+                                let parameters = response.result.parameters as? [String: AIResponseParameter],
+                                let geocountry = parameters["geo-country"]?.stringValue else {
+                                    return
+                            }
+                            self.geocountrylocal = geocountry
+                            
+                            if let textResponse = response.result.fulfillment.speech {
+                                self.speechAndText(text: textResponse)
+                                
+                            }
+                            
+                        }, failure: { (request, error) in
+                            print(error!)
+                        })
+                        ApiAI.shared().enqueue(requestconsult)
+                    }else { // consult nicht gegeben und nicht gespeichert
+                        if let textResponse = response.result.fulfillment.speech {
+                            self.speechAndText(text: textResponse)
+                        }
                     }
                 }
             }
@@ -85,9 +120,9 @@ class ChatBotViewController: UIViewController {
             
             
             
-            if let textResponse = response.result.fulfillment.speech {
+          /*  if let textResponse = response.result.fulfillment.speech {
                self.speechAndText(text: textResponse)
-            }
+            }*/
             
             
         }, failure: { (request, error) in
