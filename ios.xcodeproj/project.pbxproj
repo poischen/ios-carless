@@ -21,7 +21,7 @@
 		19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19380CB91FD5A29A0057A6D2 /* VehicleType.swift */; };
 		193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966BE1FF57B86008C76A8 /* RateStarControl.swift */; };
 		193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 193966C01FF57BED008C76A8 /* Rate.storyboard */; };
-		193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966C31FF57EDE008C76A8 /* RateViewController.swift */; };
+		193966C41FF57EDE008C76A8 /* 123.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966C31FF57EDE008C76A8 /* 123.swift */; };
 		194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769221FC8480000AB02E4 /* SearchResultsViewController.swift */; };
 		194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */; };
 		1949C5941FC9D05800C5FD91 /* Gear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1949C5931FC9D05800C5FD91 /* Gear.swift */; };
@@ -75,6 +75,8 @@
 		840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 840D63D41FE9A746007A1F16 /* CarLocation.swift */; };
 		841D10841FF3DC9900960FA3 /* AdvertisePage1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */; };
 		841D10861FF3DCAA00960FA3 /* AdvertisePage2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */; };
+		843107BC2012978B00DE06CE /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843107BB2012978B00DE06CE /* Profile.storyboard */; };
+		843107BE2012986F00DE06CE /* ProfileExternView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 843107BD2012986F00DE06CE /* ProfileExternView.storyboard */; };
 		845AD974200903FE0037D053 /* BlockedDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845AD973200903FE0037D053 /* BlockedDay.swift */; };
 		847D337B2002A53D00493402 /* ShowOffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 847D337A2002A53D00493402 /* ShowOffer.swift */; };
 		848486F01FFC4395008F7DAF /* Availibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 848486EF1FFC4395008F7DAF /* Availibility.swift */; };
@@ -83,7 +85,6 @@
 		84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */; };
 		84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FB20B91FFFD78300E351C1 /* Advertise.swift */; };
 		84FC9CF5200C0C5C001B2B2B /* ExternProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FC9CF4200C0C5C001B2B2B /* ExternProfileViewController.swift */; };
-		84FC9CF7200C244C001B2B2B /* Profile.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84FC9CF6200C244C001B2B2B /* Profile.storyboard */; };
 		84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */; };
 		84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43771FF52CB600CB546C /* AdvertisePage4.swift */; };
 		84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */; };
@@ -126,7 +127,7 @@
 		19380CB91FD5A29A0057A6D2 /* VehicleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleType.swift; sourceTree = "<group>"; };
 		193966BE1FF57B86008C76A8 /* RateStarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarControl.swift; sourceTree = "<group>"; };
 		193966C01FF57BED008C76A8 /* Rate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Rate.storyboard; sourceTree = "<group>"; };
-		193966C31FF57EDE008C76A8 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
+		193966C31FF57EDE008C76A8 /* 123.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 123.swift; sourceTree = "<group>"; };
 		194769221FC8480000AB02E4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		1949C5931FC9D05800C5FD91 /* Gear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gear.swift; sourceTree = "<group>"; };
@@ -188,6 +189,8 @@
 		840D63D41FE9A746007A1F16 /* CarLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarLocation.swift; sourceTree = "<group>"; };
 		841D10831FF3DC9900960FA3 /* AdvertisePage1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage1.swift; sourceTree = "<group>"; };
 		841D10851FF3DCAA00960FA3 /* AdvertisePage2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage2.swift; sourceTree = "<group>"; };
+		843107BB2012978B00DE06CE /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
+		843107BD2012986F00DE06CE /* ProfileExternView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileExternView.storyboard; sourceTree = "<group>"; };
 		845AD973200903FE0037D053 /* BlockedDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockedDay.swift; sourceTree = "<group>"; };
 		847D337A2002A53D00493402 /* ShowOffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowOffer.swift; sourceTree = "<group>"; };
 		848486EF1FFC4395008F7DAF /* Availibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Availibility.swift; sourceTree = "<group>"; };
@@ -196,7 +199,6 @@
 		84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailibilityAndBookingViewController.swift; sourceTree = "<group>"; };
 		84FB20B91FFFD78300E351C1 /* Advertise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advertise.swift; sourceTree = "<group>"; };
 		84FC9CF4200C0C5C001B2B2B /* ExternProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExternProfileViewController.swift; sourceTree = "<group>"; };
-		84FC9CF6200C244C001B2B2B /* Profile.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Profile.storyboard; sourceTree = "<group>"; };
 		84FD43751FF52C9E00CB546C /* AdvertisePage3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage3.swift; sourceTree = "<group>"; };
 		84FD43771FF52CB600CB546C /* AdvertisePage4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage4.swift; sourceTree = "<group>"; };
 		84FD43791FF52CCD00CB546C /* AdvertisePage5.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdvertisePage5.swift; sourceTree = "<group>"; };
@@ -311,7 +313,7 @@
 		193966C21FF57ECC008C76A8 /* Rate */ = {
 			isa = PBXGroup;
 			children = (
-				193966C31FF57EDE008C76A8 /* RateViewController.swift */,
+				193966C31FF57EDE008C76A8 /* 123.swift */,
 			);
 			path = Rate;
 			sourceTree = "<group>";
@@ -562,9 +564,10 @@
 		84FC9CEE200C0BC2001B2B2B /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				84FC9CF6200C244C001B2B2B /* Profile.storyboard */,
 				840424C6200CCC5E00D2EBA4 /* ProfileUsersOffersCollectionViewCell.swift */,
 				840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */,
+				843107BB2012978B00DE06CE /* Profile.storyboard */,
+				843107BD2012986F00DE06CE /* ProfileExternView.storyboard */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -675,7 +678,12 @@
 				TargetAttributes = {
 					2AD4E9431FA8A2250013D67E = {
 						CreatedOnToolsVersion = 9.0.1;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 0;
+							};
+						};
 					};
 					2AD4E95A1FA8A2260013D67E = {
 						CreatedOnToolsVersion = 9.0.1;
@@ -719,14 +727,15 @@
 				193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */,
 				2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */,
 				196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */,
-				84FC9CF7200C244C001B2B2B /* Profile.storyboard in Resources */,
 				840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
+				843107BE2012986F00DE06CE /* ProfileExternView.storyboard in Resources */,
 				2AD4E9791FA8A5AF0013D67E /* GoogleService-Info.plist in Resources */,
 				774EB4F71FD6F8F000FE1FBF /* ChatStoryboard.storyboard in Resources */,
 				2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */,
 				1901703A200BA32100E21080 /* HomePage.storyboard in Resources */,
 				19BF06481FEA853C00E495C2 /* LaunchScreen.storyboard in Resources */,
+				843107BC2012978B00DE06CE /* Profile.storyboard in Resources */,
 				840D63CB1FE9A566007A1F16 /* Offering.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -980,7 +989,7 @@
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
 				19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */,
-				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
+				193966C41FF57EDE008C76A8 /* 123.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,
 				840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */,
@@ -1144,12 +1153,13 @@
 			baseConfigurationReference = 213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TRZFF8P7QE;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1160,12 +1170,13 @@
 			baseConfigurationReference = 3B72885CBF880C627F6B01F6 /* Pods-ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = TRZFF8P7QE;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.cars.ios-cars";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

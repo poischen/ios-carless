@@ -31,7 +31,7 @@
                                 </items>
                             </navigationBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zQr-ld-lKH">
-                                <rect key="frame" x="0.0" y="76" width="375" height="533"/>
+                                <rect key="frame" x="0.0" y="76" width="375" height="591"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -49,19 +49,8 @@
                                     <outlet property="delegate" destination="t90-G8-1mJ" id="zVa-F8-fME"/>
                                 </connections>
                             </tableView>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="XPw-5F-Tb7" customClass="MenuControl" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="IAn-IK-9aJ"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="XPw-5F-Tb7" firstAttribute="leading" secondItem="ydA-yM-IJk" secondAttribute="leading" id="Bt7-0w-WFs"/>
-                            <constraint firstItem="KJu-ze-TXh" firstAttribute="bottom" secondItem="XPw-5F-Tb7" secondAttribute="bottom" id="Gmc-OF-fRC"/>
-                            <constraint firstItem="KJu-ze-TXh" firstAttribute="trailing" secondItem="XPw-5F-Tb7" secondAttribute="trailing" id="kIS-Yb-YiR"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="KJu-ze-TXh"/>
                     </view>
                     <connections>

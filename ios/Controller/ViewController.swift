@@ -85,7 +85,7 @@ class ViewController: UIViewController {
     
     func goToHome() {
         let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Home")
+        let vc = storyboard.instantiateViewController(withIdentifier: "Navtabs")
         self.present(vc, animated: true, completion: nil)
     }
     

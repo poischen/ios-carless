@@ -862,21 +862,12 @@
                                     <action selector="searchButtonClicked:" destination="518-31-8pU" eventType="touchUpInside" id="9mK-bw-jbo"/>
                                 </connections>
                             </button>
-                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="8Qv-Lm-1ug" customClass="MenuControl" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="617" width="375" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="jVV-pT-JFE"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="trailing" secondItem="SLX-Ii-F2u" secondAttribute="trailing" id="5vO-GF-hMW"/>
-                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="bottom" secondItem="SLX-Ii-F2u" secondAttribute="bottom" id="7ea-qY-oYf"/>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="leading" secondItem="SLX-Ii-F2u" secondAttribute="leading" id="8S3-eT-iwP"/>
-                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="leading" secondItem="SLX-Ii-F2u" secondAttribute="leading" id="Auf-XA-TM0"/>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="top" secondItem="SLX-Ii-F2u" secondAttribute="top" constant="59" id="mgr-Ae-aFn"/>
-                            <constraint firstItem="8Qv-Lm-1ug" firstAttribute="trailing" secondItem="SLX-Ii-F2u" secondAttribute="trailing" id="rDg-Xr-rAq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SLX-Ii-F2u"/>
                     </view>
