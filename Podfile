@@ -12,6 +12,7 @@ target 'ios' do
     pod 'Firebase/Database'
     pod 'Firebase/Storage'
     pod 'Firebase/Auth'
+    pod 'Firebase/Messaging'
     pod 'KeychainSwift'
     pod 'GooglePlaces'
     pod 'GooglePlacePicker'
@@ -22,6 +23,7 @@ target 'ios' do
     pod 'SDWebImage'
     pod 'AI'
     pod 'ApiAI'
+   
 
   target 'iosTests' do
     inherit! :search_paths

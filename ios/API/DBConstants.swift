@@ -42,6 +42,7 @@ class DBConstants {
     static let DATA = "data"
     static let RATING = "rating"
     static let PROFILEIMG = "profileImg"
+    static let DEVICE_TOKEN = "device-id"
     
     //messages
     static let TEXT = "text"
