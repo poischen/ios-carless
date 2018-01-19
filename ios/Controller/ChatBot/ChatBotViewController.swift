@@ -45,7 +45,12 @@ class ChatBotViewController: UIViewController {
             if let parameters = response.result.parameters as? [String: AIResponseParameter] {
                 guard let geocountry = parameters["geo-country"]?.stringValue,
                     let consult = parameters["consults"]?.stringValue else {
-                        return
+                        if let textResponse = response.result.fulfillment.speech {
+                            self.speechAndText(text: textResponse)
+                            return
+                        } else {
+                            return
+                        }
                 }
                 if (geocountry != "" && consult != "") { //alles ist da
                     if let textResponse = response.result.fulfillment.speech {
@@ -115,6 +120,8 @@ class ChatBotViewController: UIViewController {
                         }
                     }
                 }
+                    
+                
             }
           
             
