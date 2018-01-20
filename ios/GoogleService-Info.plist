@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>99420225243-rk2chvj4ntc9vl2qclfad6ghbauk9s5s.apps.googleusercontent.com</string>
+	<string>99420225243-d0v6fefpskokiapa55sjjntakh6o0ga4.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.99420225243-rk2chvj4ntc9vl2qclfad6ghbauk9s5s</string>
+	<string>com.googleusercontent.apps.99420225243-d0v6fefpskokiapa55sjjntakh6o0ga4</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDMZFnOSXONs1bzYcqE9RwVTd6yEZNAAOA</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cars.ios-cars</string>
+	<string>de.lmu.ifi.mobile.com.cars.ios-cars</string>
 	<key>PROJECT_ID</key>
 	<string>ioscars-32e69</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:99420225243:ios:a23a1c47c6ea5842</string>
+	<string>1:99420225243:ios:44d7b3e371662fcb</string>
 	<key>DATABASE_URL</key>
 	<string>https://ioscars-32e69.firebaseio.com</string>
 </dict>

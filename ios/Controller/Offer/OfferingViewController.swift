@@ -21,7 +21,7 @@ class OfferingViewController: UIViewController {
     
     //todo: add nav bar items depending on users role to offer http://rshankar.com/navigation-controller-in-ios/
     
-    let lessor = User(id: "u58UjfgRRRdOxgelgHpLVydQkah1", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3)
+    let lessor = User(id: "u58UjfgRRRdOxgelgHpLVydQkah1", name: "Markus", email: "markus@test.de", rating: 3.5, profileImgUrl: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", numberOfRatings: 3, deviceID: "b4e49d6c9a5d203f451aac7e344d17b4a88af32d67b3b182a2b363147dfd2732")
     
     //TODO Use featurelist from db
     let featuresDummy = ["AC", "navigation", "cruise_control"]

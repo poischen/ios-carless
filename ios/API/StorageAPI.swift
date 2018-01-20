@@ -406,10 +406,11 @@ final class StorageAPI {
     
     
     //stores User in Database
-    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
-        let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg];
+    func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String, deviceID: String){
+        /* let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg, DBConstants.DEVICE_TOKEN: deviceID]*/
+        let newUser = User(id: withID, name: name, email: email, rating: rating, profileImgUrl: profileImg, numberOfRatings: 0, deviceID: deviceID)
         
-        usersRef.child(withID).setValue(data);
+        usersRef.child(withID).setValue(newUser.dict)
     }
     //stores User in Database
    /* func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
