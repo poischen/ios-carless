@@ -32,7 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let apiai = ApiAI.shared()
         apiai?.configuration = configuration
         
-        registerForPushNotifications()
+        //registerForPushNotifications()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+            if error == nil {
+                print("Successful Authorization")
+            }
+            
+        }
+        
+        application.registerForRemoteNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
         
@@ -111,7 +120,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func registerForPushNotifications() {
+   /* func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) {
             (granted, error) in
             print("Permission granted: \(granted)")
@@ -119,15 +128,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             guard granted else { return }
             self.getNotificationSettings()
         }
-    }
+    }*/
     
-    func getNotificationSettings() {
+    /*func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
             UIApplication.shared.registerForRemoteNotifications()
         }
-    }
+    }*/
     
     func application(_ application: UIApplication,
                      didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
