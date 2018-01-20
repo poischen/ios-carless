@@ -17,7 +17,7 @@ import AI
 import UserNotifications
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     var window: UIWindow?
 
@@ -35,6 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
+        
+        Messaging.messaging().delegate = self
+
+        func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+            print("Firebase registration token: \(fcmToken)")
+            
+            // TODO: If necessary send token to application server.
+            // Note: This callback is fired at each app startup and whenever a new token is generated.
+        }
         
         return true
     }
