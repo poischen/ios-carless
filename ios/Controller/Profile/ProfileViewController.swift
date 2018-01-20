@@ -13,7 +13,8 @@ import Kingfisher
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let storageAPI = StorageAPI.shared
-    @IBOutlet weak var imageView: UIImageView!
+
+    @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileImageUploadProgress: UIProgressView!
     
     @IBAction func chooseImage(_ sender: Any) {
@@ -77,7 +78,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
  */
     func uploadImage(image: UIImage){
         //Todo: profileImageUploadProgress.isHidden = false
-        storageAPI.uploadImage(imageView.image!, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
+        storageAPI.uploadImage(profileImage.image!, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
                                completionBlock: { [weak self] (fileURL, errorMassage) in
                                 guard let strongSelf = self else {
                                     return
@@ -87,7 +88,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                                     //Todo: strongSelf.profileImageUploadProgress.isHidden = true
                                     let imageUrl = imgURL.absoluteString
                                     strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
-                                    strongSelf.imageView.image = image
+                                    strongSelf.profileImage.image = image
                                 } else {
                                     strongSelf.profileImageUploadProgress.isHidden = true
                                     let message: String = "\(errorMassage ?? "") Please try again later."
@@ -102,50 +103,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageView.layer.cornerRadius = imageView.frame.size.width / 2
-        imageView.clipsToBounds = true
-        imageView.layer.borderWidth = 1
-        imageView.layer.borderColor = UIColor.black.cgColor
+        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+        profileImage.clipsToBounds = true
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.black.cgColor
         
-        let imageUrl = storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
+       storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
             let profileImgUrl = URL(string: path)
-            self.imageView.kf.indicatorType = .activity
-            self.imageView.kf.setImage(with: profileImgUrl)
+            self.profileImage.kf.indicatorType = .activity
+            self.profileImage.kf.setImage(with: profileImgUrl)
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    // temporary link, remove later
-    @IBAction func searchButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Search", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "SearchNavigation")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func advertiseButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Advertise", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "AdvertisePages")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func chatButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Chat")
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    @IBAction func rateButton(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
-        self.present(vc, animated: true, completion: nil)
-    }
-    @IBAction func goToChatbot(_ sender: Any) {
-        let vc = self.storyboard?.instantiateViewController(withIdentifier: "chatbot") as! ChatBotViewController
-        self.present(vc, animated: true, completion: nil)
     }
     
 }

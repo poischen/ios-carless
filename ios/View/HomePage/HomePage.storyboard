@@ -335,10 +335,10 @@
             </objects>
             <point key="canvasLocation" x="1697" y="-1308"/>
         </scene>
-        <!--ProfileExternView-->
+        <!--Profile-->
         <scene sceneID="MDf-p2-OZc">
             <objects>
-                <viewControllerPlaceholder storyboardName="ProfileExternView" id="Oqe-8x-QSu" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Profile" id="Oqe-8x-QSu" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="xSl-wo-64h"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DjZ-tz-vyH" userLabel="First Responder" sceneMemberID="firstResponder"/>

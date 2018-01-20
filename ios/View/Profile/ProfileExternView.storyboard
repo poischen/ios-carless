@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="q1A-8t-pJA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -143,6 +143,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This user does not have ratings yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYr-P5-JAO">
+                                        <rect key="frame" x="79.5" y="75" width="216" height="16"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P2u-ai-cYv" userLabel="Collection View user rating">
                                         <rect key="frame" x="10" y="31" width="355" height="131"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -257,9 +263,11 @@
                                     <constraint firstItem="P2u-ai-cYv" firstAttribute="top" secondItem="o0w-ca-0xf" secondAttribute="bottom" constant="10" id="APa-H3-WGT"/>
                                     <constraint firstItem="oTr-u0-GrX" firstAttribute="top" secondItem="3UP-yQ-xPT" secondAttribute="top" constant="5" id="DYc-It-yZq"/>
                                     <constraint firstAttribute="trailing" secondItem="P2u-ai-cYv" secondAttribute="trailing" constant="10" id="IdN-ea-F1A"/>
+                                    <constraint firstItem="dYr-P5-JAO" firstAttribute="centerY" secondItem="3UP-yQ-xPT" secondAttribute="centerY" id="Ly0-aB-7tE"/>
                                     <constraint firstItem="o0w-ca-0xf" firstAttribute="leading" secondItem="3UP-yQ-xPT" secondAttribute="leading" constant="10" id="Q7Q-gV-fad"/>
                                     <constraint firstItem="oTr-u0-GrX" firstAttribute="leading" secondItem="3UP-yQ-xPT" secondAttribute="leading" id="YAl-s1-I51"/>
                                     <constraint firstItem="P2u-ai-cYv" firstAttribute="leading" secondItem="3UP-yQ-xPT" secondAttribute="leading" constant="10" id="haV-Mr-rqH"/>
+                                    <constraint firstItem="dYr-P5-JAO" firstAttribute="centerX" secondItem="3UP-yQ-xPT" secondAttribute="centerX" id="iiv-y9-sDm"/>
                                     <constraint firstItem="o0w-ca-0xf" firstAttribute="top" secondItem="oTr-u0-GrX" secondAttribute="bottom" constant="5" id="xj9-xw-YKw"/>
                                     <constraint firstAttribute="bottom" secondItem="P2u-ai-cYv" secondAttribute="bottom" constant="5" id="z5M-ff-UpP"/>
                                 </constraints>

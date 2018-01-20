@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CV2-sL-xQo">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -12,28 +13,57 @@
         <!--Profile-->
         <scene sceneID="vEn-XW-wTY">
             <objects>
-                <viewController storyboardIdentifier="Profile" title="Profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CV2-sL-xQo" customClass="ProfileViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Profile" title="Profile" useStoryboardIdentifierAsRestorationIdentifier="YES" id="CV2-sL-xQo" customClass="ProfileViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0O5-l0-MlS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="HomePicture.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="ypO-v0-idU">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="idW-Qo-F0P">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="184"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Profil.png" translatesAutoresizingMaskIntoConstraints="NO" id="rCq-Hv-q6l">
-                                <rect key="frame" x="112" y="102" width="180" height="150"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZy-xB-BXL">
-                                <rect key="frame" x="42" y="317" width="290" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9vr-n9-myy" userLabel="Images">
+                                <rect key="frame" x="0.0" y="20" width="375" height="200"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomePicture.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="y9j-jo-AUS">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pWe-UI-lbq">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profil.png" translatesAutoresizingMaskIntoConstraints="NO" id="ch8-83-Mx4" userLabel="Profile Image">
+                                        <rect key="frame" x="112.5" y="50" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="150" id="F3t-wn-RiZ"/>
+                                            <constraint firstAttribute="width" constant="150" id="cb7-vI-wgt"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ch8-83-Mx4" firstAttribute="centerX" secondItem="9vr-n9-myy" secondAttribute="centerX" id="3fh-DO-WoC"/>
+                                    <constraint firstAttribute="bottom" secondItem="ch8-83-Mx4" secondAttribute="bottom" id="7Bp-99-hIl"/>
+                                    <constraint firstItem="pWe-UI-lbq" firstAttribute="width" secondItem="9vr-n9-myy" secondAttribute="width" id="JHs-gM-eJB"/>
+                                    <constraint firstItem="y9j-jo-AUS" firstAttribute="top" secondItem="9vr-n9-myy" secondAttribute="top" id="Pdz-yz-xzS"/>
+                                    <constraint firstItem="pWe-UI-lbq" firstAttribute="top" secondItem="9vr-n9-myy" secondAttribute="top" id="QYg-G1-BhW"/>
+                                    <constraint firstItem="y9j-jo-AUS" firstAttribute="leading" secondItem="9vr-n9-myy" secondAttribute="leading" id="bDD-pS-e6c"/>
+                                    <constraint firstItem="y9j-jo-AUS" firstAttribute="height" secondItem="9vr-n9-myy" secondAttribute="height" multiplier="0.8" id="d0P-kj-GnE"/>
+                                    <constraint firstItem="pWe-UI-lbq" firstAttribute="leading" secondItem="9vr-n9-myy" secondAttribute="leading" id="e2U-fM-KF6"/>
+                                    <constraint firstItem="pWe-UI-lbq" firstAttribute="height" secondItem="9vr-n9-myy" secondAttribute="height" multiplier="0.8" id="hB8-r0-gLS"/>
+                                    <constraint firstItem="y9j-jo-AUS" firstAttribute="width" secondItem="9vr-n9-myy" secondAttribute="width" id="ysw-rj-fqK"/>
+                                </constraints>
+                            </view>
+                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4R-1a-01L">
+                                <rect key="frame" x="112" y="235" width="150" height="3"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="3" id="RbR-IO-9f0"/>
+                                </constraints>
+                                <color key="progressTintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="trackTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
+                            </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZy-xB-BXL">
+                                <rect key="frame" x="62" y="318" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="zoi-AW-WzP"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Change Profile Picture">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -42,9 +72,8 @@
                                     <action selector="chooseImage:" destination="CV2-sL-xQo" eventType="touchUpInside" id="U4w-nR-kWD"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9LK-Yf-c0H">
-                                <rect key="frame" x="42" y="363" width="290" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9LK-Yf-c0H">
+                                <rect key="frame" x="62" y="373" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Logout">
@@ -54,19 +83,28 @@
                                     <action selector="logout:" destination="CV2-sL-xQo" eventType="touchUpInside" id="lgD-vk-wYh"/>
                                 </connections>
                             </button>
-                            <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r4R-1a-01L">
-                                <rect key="frame" x="127" y="266" width="150" height="3"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="progressTintColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="trackTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
-                            </progressView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="9vr-n9-myy" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" id="CTs-X5-KU7"/>
+                            <constraint firstItem="PZy-xB-BXL" firstAttribute="top" secondItem="r4R-1a-01L" secondAttribute="bottom" constant="80" id="EZp-xG-Vwc"/>
+                            <constraint firstItem="9LK-Yf-c0H" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" multiplier="1:1.5" id="NW6-EP-W7S"/>
+                            <constraint firstItem="9vr-n9-myy" firstAttribute="height" secondItem="0O5-l0-MlS" secondAttribute="height" multiplier="0.3" id="RQ4-68-JEp"/>
+                            <constraint firstItem="r4R-1a-01L" firstAttribute="centerX" secondItem="0O5-l0-MlS" secondAttribute="centerX" id="RWe-NA-CdC"/>
+                            <constraint firstItem="PZy-xB-BXL" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" multiplier="1:1.5" id="T4T-mA-31q"/>
+                            <constraint firstItem="9vr-n9-myy" firstAttribute="top" secondItem="EcE-3l-eZR" secondAttribute="top" id="Ydm-4a-jTf"/>
+                            <constraint firstItem="9LK-Yf-c0H" firstAttribute="top" secondItem="PZy-xB-BXL" secondAttribute="bottom" constant="25" id="akd-r0-DKZ"/>
+                            <constraint firstItem="r4R-1a-01L" firstAttribute="width" secondItem="ch8-83-Mx4" secondAttribute="width" id="d8O-j3-1rO"/>
+                            <constraint firstItem="9LK-Yf-c0H" firstAttribute="centerX" secondItem="0O5-l0-MlS" secondAttribute="centerX" id="kKA-bX-s3Y"/>
+                            <constraint firstItem="9vr-n9-myy" firstAttribute="leading" secondItem="EcE-3l-eZR" secondAttribute="leading" id="v1S-qh-NHh"/>
+                            <constraint firstItem="r4R-1a-01L" firstAttribute="top" secondItem="9vr-n9-myy" secondAttribute="bottom" constant="15" id="veK-gQ-UAG"/>
+                            <constraint firstItem="PZy-xB-BXL" firstAttribute="centerX" secondItem="0O5-l0-MlS" secondAttribute="centerX" id="zNE-aw-Sf2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="EcE-3l-eZR"/>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="rCq-Hv-q6l" id="wzx-6i-QAP"/>
-                        <outlet property="profileImageUploadProgress" destination="r4R-1a-01L" id="b27-Jc-t4V"/>
+                        <outlet property="profileImage" destination="ch8-83-Mx4" id="5QT-0O-HYH"/>
+                        <outlet property="profileImageUploadProgress" destination="r4R-1a-01L" id="pFd-mX-Tdy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cEg-bx-4q8" userLabel="First Responder" sceneMemberID="firstResponder"/>
