@@ -13,6 +13,7 @@ class HomePageModel {
     static let shared = HomePageModel();
     
     let storageAPI:StorageAPI
+    let maxDistanceFromNow:Double = 30 * 24 * 3600// one month
     
     init(){
         storageAPI = StorageAPI.shared
@@ -38,7 +39,25 @@ class HomePageModel {
     func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
         storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
             var result:[(Renting, Offering, Brand)] = []
-            let numberOfRentings = rentings.count
+            
+            let newerRentings = rentings.filter {renting in
+                if (renting.endDate < Date()){
+                    // renting has already ended -> check how long ago it ended
+                    let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
+                    if (distanceFromNow.duration < self.maxDistanceFromNow) {
+                        // renting is "new enough" -> show
+                        return true
+                    } else {
+                        // renting is too old -> hide
+                        return false
+                    }
+                } else {
+                    // renting hasn't ended yet -> show
+                    return true
+                }
+            }
+            
+            let numberOfRentings = newerRentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
             if numberOfRentings == 0 {
@@ -46,7 +65,7 @@ class HomePageModel {
                 // (can e.g. happen when a renting of the user is denied)
                 completion([])
             } else {
-                for renting in rentings {
+                for renting in newerRentings {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
                         result.append((renting, offering, offeringsBrand))
                         if (result.count == numberOfRentings) {
