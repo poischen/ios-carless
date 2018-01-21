@@ -891,7 +891,11 @@
                                 <action selector="backButton:" destination="ydo-nl-Bdg" id="hvp-Xw-iME"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="Nhs-c6-fUb"/>
+                        <barButtonItem key="rightBarButtonItem" id="Nhs-c6-fUb">
+                            <connections>
+                                <action selector="actionItem:" destination="ydo-nl-Bdg" id="CxY-GI-FRN"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <size key="freeformSize" width="375" height="2000"/>
                     <connections>
@@ -902,6 +906,7 @@
                         <outlet property="carImageView" destination="pBh-PN-aWU" id="xLj-h2-pTo"/>
                         <outlet property="carLocationMap" destination="e6m-0U-08p" id="btL-53-PzO"/>
                         <outlet property="carNameLabel" destination="CNv-ly-3dS" id="F3s-J2-5Gn"/>
+                        <outlet property="chatBtn" destination="ULL-Yo-YwP" id="RKF-iO-wzc"/>
                         <outlet property="featuresCVSuperView" destination="siK-tZ-hyu" id="g4X-m8-fNw"/>
                         <outlet property="featuresCollectionView" destination="ah6-Jx-RHH" id="Gtg-1f-Tep"/>
                         <outlet property="lessorNameLabel" destination="OIi-Fz-e6D" id="Xxc-V9-IBq"/>
