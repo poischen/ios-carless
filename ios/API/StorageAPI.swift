@@ -672,5 +672,14 @@ final class StorageAPI {
             })
         })
     }
+    
+    
+   /* func isLoggedIn() -> Bool {
+        if Auth.auth().currentUser != nil {
+            return true
+        }
+        return false
+    }*/
+    
 }
 
