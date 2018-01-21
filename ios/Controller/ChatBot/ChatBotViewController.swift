@@ -52,6 +52,7 @@ class ChatBotViewController: UIViewController {
                             return
                         }
                 }
+
                 if (geocountry != "" && consult != "") { //alles ist da
                     if let textResponse = response.result.fulfillment.speech {
                         self.speechAndText(text: textResponse)
