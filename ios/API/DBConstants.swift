@@ -26,24 +26,28 @@ class DBConstants {
     static let PROPERTY_NAME_OFFERINGS_BLOCKED = "blocked_dates"
     
     //DBProvider
-    static let USERS = "Users";
-    static let MESSAGES = "Messages";
-    static let MEDIA_MESSAGES = "Media_Messages";
-    static let IMAGE_STORAGE = "Image_Storage";
-    static let VIDEO_STORAGE = "Video_Storage";
+
     static let IMAGE_STORAGE_OFFER = "Image_Storage/offers";
+    static let IMAGE_STORAGE_PROFILE = "Image_Storage/profile_pictures";
+    static let USERS = "Users"
+    static let MESSAGES = "messages"
+    static let USER_MESSAGES = "user-messages"
+    static let MEDIA_MESSAGES = "media_Messages"
+    static let IMAGE_STORAGE = "Image_Storage"
+    static let VIDEO_STORAGE = "Video_Storage"
     
-    static let NAME = "name";
-    static let EMAIL = "email";
-    static let PASSWORD = "password";
-    static let DATA = "data";
-    static let RATING = "rating";
-    static let PROFILEIMG = "profileImg";
+    static let NAME = "name"
+    static let EMAIL = "email"
+    static let PASSWORD = "password"
+    static let DATA = "data"
+    static let RATING = "rating"
+    static let PROFILEIMG = "profileImg"
+    static let DEVICE_TOKEN = "device-id"
     
     //messages
-    static let TEXT = "text";
-    static let SENDER_ID = "sender_id";
-    static let SENDER_NAME = "sender_name";
-    static let RECEIVER_ID = "receiver_id";
-    static let URL = "url";
+    static let TEXT = "text"
+    static let SENDER_ID = "sender_id"
+    static let SENDER_NAME = "sender_name"
+    static let RECEIVER_ID = "receiver_id"
+    static let URL = "url"
 }

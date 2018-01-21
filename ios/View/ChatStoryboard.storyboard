@@ -9,10 +9,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat View Controller-->
+        <!--Chat-->
         <scene sceneID="fWM-dM-gWS">
             <objects>
-                <viewController storyboardIdentifier="Chat" id="t90-G8-1mJ" customClass="ChatViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Chat" title="Chat" id="t90-G8-1mJ" customClass="ChatViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ydA-yM-IJk">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,7 +24,7 @@
                                     <navigationItem title="Messages" id="xQm-Jf-giD">
                                         <barButtonItem key="leftBarButtonItem" title="Back" id="ccZ-20-Irm">
                                             <connections>
-                                                <action selector="backBtn:" destination="t90-G8-1mJ" id="h0z-Mm-lkd"/>
+                                                <action selector="backButtonUserVC:" destination="t90-G8-1mJ" id="jZ2-Ia-B0I"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -54,7 +54,7 @@
                         <viewLayoutGuide key="safeArea" id="KJu-ze-TXh"/>
                     </view>
                     <connections>
-                        <outlet property="myTV" destination="zQr-ld-lKH" id="7du-G7-cSb"/>
+                        <outlet property="myTableView" destination="zQr-ld-lKH" id="fx0-16-oVe"/>
                         <segue destination="K6d-Ha-1Vz" kind="show" identifier="ChatSegue" id="p78-k0-tGq"/>
                     </connections>
                 </viewController>
@@ -62,10 +62,10 @@
             </objects>
             <point key="canvasLocation" x="36" y="42.728635682158924"/>
         </scene>
-        <!--Chat-->
+        <!--ChatWithUser-->
         <scene sceneID="Vfp-zH-jo2">
             <objects>
-                <viewController id="jyf-u0-Yxb" customClass="ChatWindowVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatWithUser" title="ChatWithUser" useStoryboardIdentifierAsRestorationIdentifier="YES" id="jyf-u0-Yxb" customClass="ChatWindowVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="WmT-6y-q4e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,7 +75,7 @@
                     <navigationItem key="navigationItem" title="Chat" id="37G-l3-ne7">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="mLm-Bh-Tx4">
                             <connections>
-                                <action selector="BackBtn2:" destination="jyf-u0-Yxb" id="Ftz-JA-INy"/>
+                                <action selector="backButtonChatWindow:" destination="jyf-u0-Yxb" id="oMh-hA-N9q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -87,7 +87,7 @@
         <!--Navigation Controller-->
         <scene sceneID="FHV-F6-4tP">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="K6d-Ha-1Vz" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="ChatNavigation" automaticallyAdjustsScrollViewInsets="NO" id="K6d-Ha-1Vz" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tr6-Hd-JUD">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

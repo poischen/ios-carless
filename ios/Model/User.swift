@@ -14,10 +14,10 @@ class User {
             let userEmail = dict[User.EMAIL] as? String,
             let userRating = dict[User.RATING] as? Float,
             let profileImg = dict[User.PROFILEIMG] as? String,
-            let numberOfRatings = dict[User.NUMBER_OF_RATINGS] as? Int else {
+            let numberOfRatings = dict[User.NUMBER_OF_RATINGS] as? Int, let deviceID = dict[User.DEVICE_TOKEN] as? String else {
                 return nil
         }
-        self.init(id: id, name: userName, email: userEmail, rating: userRating, profileImgUrl: profileImg, numberOfRatings: numberOfRatings)
+        self.init(id: id, name: userName, email: userEmail, rating: userRating, profileImgUrl: profileImg, numberOfRatings: numberOfRatings, deviceID: deviceID )
     }
     
     
@@ -26,6 +26,7 @@ class User {
     static let RATING = "rating"
     static let PROFILEIMG = "profileImg"
     static let NUMBER_OF_RATINGS = "numberOfRatings"
+    static let DEVICE_TOKEN = "device-id"
     
     
     let name: String
@@ -34,15 +35,17 @@ class User {
     var rating: Float
     let profileImgUrl: String
     var numberOfRatings: Int
+    let deviceID: String
     
     //create Users when fetching them from Database
-    init(id: String, name: String, email: String, rating: Float, profileImgUrl: String, numberOfRatings: Int){
+    init(id: String, name: String, email: String, rating: Float, profileImgUrl: String, numberOfRatings: Int, deviceID: String){
         self.id = id
         self.name = name
         self.email = email
         self.rating = rating
         self.profileImgUrl = profileImgUrl
         self.numberOfRatings = numberOfRatings
+        self.deviceID = deviceID
         
     }
     
@@ -52,7 +55,8 @@ class User {
             User.EMAIL: self.email as AnyObject,
             User.RATING: self.rating as AnyObject,
             User.PROFILEIMG: self.profileImgUrl as AnyObject,
-            User.NUMBER_OF_RATINGS: self.numberOfRatings as AnyObject
+            User.NUMBER_OF_RATINGS: self.numberOfRatings as AnyObject,
+            User.DEVICE_TOKEN: self.deviceID as AnyObject
             
         ]
     }

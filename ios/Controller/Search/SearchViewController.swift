@@ -183,7 +183,6 @@ class SearchViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResultsNew") {
             // next screen: search results
-            // TODO: use guard here?
             guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
                 let currentDesiredRentingStart = desiredRentingStart,
                 let currentDesiredRentingEnd = desiredRentingEnd else {

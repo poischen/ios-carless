@@ -90,9 +90,7 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
             pageViewController.advertiseHelper.longitude = selectedLongitudeFloat
         }
         
-        for component in place.addressComponents! {
-            print(component.name)
-            
+        for component in place.addressComponents! {            
             if component.type == "locality" {
                 selectedCity = component.name
                 //pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")

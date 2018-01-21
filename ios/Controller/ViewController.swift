@@ -64,8 +64,7 @@ class ViewController: UIViewController {
                     print("You have successfully logged in")
                     
                     //Go to the HomeViewController if the login is sucessful
-                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomePage")
-                    self.present(vc!, animated: true, completion: nil)
+                    self.goToHome()
                     
                     
                 } else {
@@ -84,6 +83,12 @@ class ViewController: UIViewController {
         
     }
     
+    func goToHome() {
+        let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Navtabs")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     func signup() {
         if email.text == "" {
             let alertController = UIAlertController(title: "Error", message: "Please enter you E-Mail adress", preferredStyle: .alert)
@@ -100,11 +105,9 @@ class ViewController: UIViewController {
                 print("You have successfully signed up")
                 //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
                 
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "HomePage")
-                self.present(vc!, animated: true, completion: nil)
+                self.goToHome()
                 
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808" );
-
+                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: "b4e49d6c9a5d203f451aac7e344d17b4a88af32d67b3b182a2b363147dfd2732")
                 
             } else {
                 let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
