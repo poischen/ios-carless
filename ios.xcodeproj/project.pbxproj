@@ -40,7 +40,6 @@
 		19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BBB890200A57B500723339 /* ChatBotViewController.swift */; };
 		19BF06421FEA83D700E495C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06411FEA83D700E495C2 /* ViewController.swift */; };
 		19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06431FEA84A500E495C2 /* MessageHandler.swift */; };
-		19BF06471FEA853C00E495C2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06451FEA853B00E495C2 /* Main.storyboard */; };
 		19BF06481FEA853C00E495C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */; };
 		19C31D8720027A8D004534F0 /* DictionaryConvertibleStatic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */; };
 		19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */; };
@@ -49,6 +48,7 @@
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
 		19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */; };
 		19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE8F342006A40700204C73 /* CoordinatePoint.swift */; };
+		2A7E98752014E84700B0E82C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2A7E98742014E84700B0E82C /* Main.storyboard */; };
 		2AA80B1C2014C8F700B778C6 /* ChatBot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */; };
@@ -147,7 +147,6 @@
 		19BBB890200A57B500723339 /* ChatBotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotViewController.swift; sourceTree = "<group>"; };
 		19BF06411FEA83D700E495C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		19BF06431FEA84A500E495C2 /* MessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
-		19BF06451FEA853B00E495C2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleStatic.swift; sourceTree = "<group>"; };
 		19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageAPI.swift; sourceTree = "<group>"; };
@@ -157,6 +156,7 @@
 		19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleEditable.swift; sourceTree = "<group>"; };
 		19EE8F342006A40700204C73 /* CoordinatePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatePoint.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		2A7E98742014E84700B0E82C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatBot.storyboard; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AD4E9471FA8A2250013D67E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -279,10 +279,10 @@
 				19AFCF1D200A285900758E91 /* Menu */,
 				193966BD1FF57B6D008C76A8 /* Rate */,
 				19BF06461FEA853B00E495C2 /* LaunchScreen.storyboard */,
-				19BF06451FEA853B00E495C2 /* Main.storyboard */,
 				840D63C71FE9A4F8007A1F16 /* Offer */,
 				840D63BC1FE9A438007A1F16 /* Advertise */,
 				774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */,
+				2A7E98742014E84700B0E82C /* Main.storyboard */,
 				840D63D31FE9A6D8007A1F16 /* Search */,
 				2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */,
 			);
@@ -729,17 +729,16 @@
 			files = (
 				2AA80B1C2014C8F700B778C6 /* ChatBot.storyboard in Resources */,
 				2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */,
-				19BF06471FEA853C00E495C2 /* Main.storyboard in Resources */,
 				193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */,
 				2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */,
 				196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */,
 				840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
 				843107BE2012986F00DE06CE /* ProfileExternView.storyboard in Resources */,
-				2AD4E9791FA8A5AF0013D67E /* GoogleService-Info.plist in Resources */,
 				774EB4F71FD6F8F000FE1FBF /* ChatStoryboard.storyboard in Resources */,
 				2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */,
 				1901703A200BA32100E21080 /* HomePage.storyboard in Resources */,
+				2A7E98752014E84700B0E82C /* Main.storyboard in Resources */,
 				19BF06481FEA853C00E495C2 /* LaunchScreen.storyboard in Resources */,
 				843107BC2012978B00DE06CE /* Profile.storyboard in Resources */,
 				840D63CB1FE9A566007A1F16 /* Offering.storyboard in Resources */,
