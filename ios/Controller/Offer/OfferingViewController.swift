@@ -19,8 +19,6 @@ class OfferingViewController: UIViewController {
     var preselectedEndDate: Date?
     var preselectedStartDate: Date?
     
-    //todo: add nav bar items depending on users role to offer http://rshankar.com/navigation-controller-in-ios/
-    
     var lessor: User?
     
     //TODO Use featurelist from db
@@ -43,7 +41,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var pickUpLabel: UILabel!
     @IBOutlet weak var returnLabel: UILabel!
     @IBOutlet weak var availibilityBtn: UIButton!
-//    @IBOutlet weak var chatBtn: UIButton!
+    @IBOutlet weak var chatBtn: UIButton!
     @IBOutlet weak var actionItem: UIBarButtonItem!
     @IBOutlet weak var priceLabel: UILabel!
     
@@ -63,6 +61,32 @@ class OfferingViewController: UIViewController {
         }
     }
     
+    @IBAction func actionItem(_ sender: Any) {
+        // Offer is not the users own offer -> provide availibility check
+        if (displayingOffering?.userUID != storageAPI.userID()) {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "Offering") as! AvailibilityAndBookingViewController
+            //pass preselected dates -> in prepare function
+            self.present(vc, animated: true, completion: nil)
+            
+        } else { // Offer is the users own offer -> provide deleting option
+            guard let id = displayingOffering?.id else {
+                let alert = UIAlertController(title: "Oh noes", message: "Something went wrong. Try again later.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+                return
+            }
+            let alert = UIAlertController(title: "Orly?", message: "Are you sure about deleting this awesome offering?", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Yes please!",
+                                          style: UIAlertActionStyle.default,
+                                          handler: {(alert: UIAlertAction!) in
+                                            self.storageAPI.deleteOfferingByID(offeringID: id)
+                                            self.dismiss(animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "NOPE!", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
     @IBAction func backButton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil);
     }
@@ -70,33 +94,23 @@ class OfferingViewController: UIViewController {
     //Switch to User Profile Storyboard when Lessor's Profile Image was tapped
     func tappedOnLessorImg() {
         if let lessorUser = lessor {
-            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+            let storyboard = UIStoryboard(name: "ProfileExternView", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as! ExternProfileViewController
             vc.profileOwner = lessorUser
             self.present(vc, animated: true, completion: nil)
         }
     }
-
-    
-    /*@IBAction func checkAvailibility(_ sender: Any) {
-        let anbVC = AvailibilityAndBookingViewController(
-            nibName: "AvailibilityAndBooking",
-            bundle: nil)
-        navigationController?.pushViewController(anbVC,
-                                                 animated: true)
-    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
             actionItem.title = "Check Availibility"
-            //todo
-        } else { // Offer is the users own offer -> provide deleting option
-            self.navigationItem.title = "Preview "
-            //todo
+        } else { // Offer is the users own offer
+            self.navigationItem.title = "Preview"
+            actionItem.image = UIImage(named: "icondelete")
+            chatBtn.isEnabled = false
         }
         
         //set car infos (image, name, basic details) area --------------------------------------------------
@@ -118,7 +132,6 @@ class OfferingViewController: UIViewController {
         carHpConsumptionLabel.text = "\(displayingOffering?.consumption ?? 0)" + "/100km, max. " + "\(displayingOffering?.hp ?? 0)" + " km/h."
         
         //detailicons
-        
         showOfferModel.getBasicDetails(offer: displayingOffering!, completion: { (basicDetails) in
             self.basicDetails = basicDetails
             self.basicDataCollectionView.dataSource = self
@@ -127,6 +140,7 @@ class OfferingViewController: UIViewController {
         
         //set information about lessor area-------------------------------------------------------------------------------------------------------------------------
         storageAPI.getUserByUID(UID: displayingOffering!.userUID) { (lessor) in
+            print(lessor)
             self.lessor = lessor
             self.lessorNameLabel.text = lessor.name
             self.lessorRateView.rating = Double(lessor.rating)
@@ -202,10 +216,9 @@ class OfferingViewController: UIViewController {
         return label.frame
     }
     
-    //MARK:- PrepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segueidentifier")
-        print(segue.identifier ?? "")
+        print(segue.identifier ?? "defaultsegue")
         if segue.identifier == "availibilityCheckSegue" {
             let aNbVC: AvailibilityAndBookingViewController = segue.destination as! AvailibilityAndBookingViewController
             aNbVC.offer = displayingOffering

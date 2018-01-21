@@ -345,11 +345,11 @@
             </objects>
             <point key="canvasLocation" x="1697" y="-816"/>
         </scene>
-        <!--Ask James-->
+        <!--Ask Geoffrey-->
         <scene sceneID="DcQ-xK-3R1">
             <objects>
                 <navigationController id="IcQ-qY-zKX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ask James" image="iconchatbot" id="48q-Wb-3IF"/>
+                    <tabBarItem key="tabBarItem" title="Ask Geoffrey" image="iconchatbot" id="48q-Wb-3IF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ijk-K8-yDQ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
