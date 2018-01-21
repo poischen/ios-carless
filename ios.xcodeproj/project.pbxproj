@@ -44,6 +44,7 @@
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
 		19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */; };
 		19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE8F342006A40700204C73 /* CoordinatePoint.swift */; };
+		2AA80B1C2014C8F700B778C6 /* ChatBot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */; };
 		2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E9471FA8A2250013D67E /* AppDelegate.swift */; };
 		2AD4E9501FA8A2250013D67E /* ios.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2AD4E94E1FA8A2250013D67E /* ios.xcdatamodeld */; };
 		2AD4E9521FA8A2250013D67E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E9511FA8A2250013D67E /* Assets.xcassets */; };
@@ -138,6 +139,7 @@
 		19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleEditable.swift; sourceTree = "<group>"; };
 		19EE8F342006A40700204C73 /* CoordinatePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatePoint.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
+		2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ChatBot.storyboard; sourceTree = "<group>"; };
 		2AD4E9441FA8A2250013D67E /* ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2AD4E9471FA8A2250013D67E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2AD4E94F1FA8A2250013D67E /* ios.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ios.xcdatamodel; sourceTree = "<group>"; };
@@ -226,6 +228,7 @@
 				840D63BC1FE9A438007A1F16 /* Advertise */,
 				774EB4F61FD6F8EF00FE1FBF /* ChatStoryboard.storyboard */,
 				840D63D31FE9A6D8007A1F16 /* Search */,
+				2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2AA80B1C2014C8F700B778C6 /* ChatBot.storyboard in Resources */,
 				2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */,
 				19BF06471FEA853C00E495C2 /* Main.storyboard in Resources */,
 				193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */,
