@@ -70,7 +70,7 @@ class OfferingViewController: UIViewController {
     //Switch to User Profile Storyboard when Lessor's Profile Image was tapped
     func tappedOnLessorImg() {
         if let lessorUser = lessor {
-            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+            let storyboard = UIStoryboard(name: "ProfileExternView", bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as! ExternProfileViewController
             vc.profileOwner = lessorUser
             self.present(vc, animated: true, completion: nil)
@@ -127,6 +127,7 @@ class OfferingViewController: UIViewController {
         
         //set information about lessor area-------------------------------------------------------------------------------------------------------------------------
         storageAPI.getUserByUID(UID: displayingOffering!.userUID) { (lessor) in
+            print(lessor)
             self.lessor = lessor
             self.lessorNameLabel.text = lessor.name
             self.lessorRateView.rating = Double(lessor.rating)
@@ -202,10 +203,9 @@ class OfferingViewController: UIViewController {
         return label.frame
     }
     
-    //MARK:- PrepareForSegue
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         print("segueidentifier")
-        print(segue.identifier ?? "")
+        print(segue.identifier)
         if segue.identifier == "availibilityCheckSegue" {
             let aNbVC: AvailibilityAndBookingViewController = segue.destination as! AvailibilityAndBookingViewController
             aNbVC.offer = displayingOffering

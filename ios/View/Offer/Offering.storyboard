@@ -333,34 +333,36 @@
                                                     </label>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="UG8-Vx-5IZ">
                                                         <rect key="frame" x="10" y="304" width="355" height="90"/>
+                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="90" id="0a9-dK-olX"/>
                                                         </constraints>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UOf-t5-jxx">
-                                                            <size key="itemSize" width="70" height="100"/>
+                                                            <size key="itemSize" width="70" height="105"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                         </collectionViewFlowLayout>
                                                         <cells>
                                                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="basicDetailsCollectionViewCell" id="1w2-vg-GTd" customClass="BasicDataCollectionViewCell" customModule="ios" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="100"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="70" height="105"/>
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOj-0h-lQx">
-                                                                            <rect key="frame" x="22" y="75" width="26.5" height="25"/>
+                                                                            <rect key="frame" x="22" y="71.5" width="26.5" height="25"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="25" id="YFL-BN-Y6K"/>
                                                                             </constraints>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                                                             <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
+                                                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                         </label>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image=" Aston Martin" translatesAutoresizingMaskIntoConstraints="NO" id="aZP-7x-gVM">
                                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="70" id="GnU-xP-WYz"/>
                                                                                 <constraint firstAttribute="width" constant="70" id="N6w-cY-PNo"/>
@@ -372,7 +374,7 @@
                                                                     <constraint firstItem="hOj-0h-lQx" firstAttribute="centerX" secondItem="1w2-vg-GTd" secondAttribute="centerX" id="0fy-a3-JUV"/>
                                                                     <constraint firstItem="aZP-7x-gVM" firstAttribute="top" secondItem="1w2-vg-GTd" secondAttribute="top" id="Dqz-yK-BBM"/>
                                                                     <constraint firstItem="aZP-7x-gVM" firstAttribute="centerX" secondItem="1w2-vg-GTd" secondAttribute="centerX" id="NLr-70-uRG"/>
-                                                                    <constraint firstItem="hOj-0h-lQx" firstAttribute="top" secondItem="aZP-7x-gVM" secondAttribute="bottom" constant="5" id="Zel-fR-nZQ"/>
+                                                                    <constraint firstItem="hOj-0h-lQx" firstAttribute="top" secondItem="aZP-7x-gVM" secondAttribute="bottom" constant="1" id="Zel-fR-nZQ"/>
                                                                 </constraints>
                                                                 <connections>
                                                                     <outlet property="basicDetailImageView" destination="aZP-7x-gVM" id="5f3-9Y-8eF"/>
@@ -430,7 +432,7 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Max Mustermann" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIi-Fz-e6D">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="User name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OIi-Fz-e6D">
                                                                 <rect key="frame" x="12" y="35" width="213" height="20.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                 <nil key="textColor"/>
@@ -850,7 +852,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                         <state key="normal" title="Check availibility"/>
                                                         <connections>
-                                                            <segue destination="s4y-zG-HBl" kind="show" id="DhH-Dw-byI"/>
+                                                            <segue destination="s4y-zG-HBl" kind="show" identifier="availibilityCheckSegue" id="DhH-Dw-byI"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
