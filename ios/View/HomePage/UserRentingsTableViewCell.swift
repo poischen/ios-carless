@@ -14,6 +14,7 @@ class UserRentingsTableViewCell: UITableViewCell {
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var rateButton: UIButton!
     
     static let ACCEPTED_STATUS_MESSAGE = "confirmed"
     static let PENDING_STATUS_MESSAGE = "pending"
