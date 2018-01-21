@@ -265,6 +265,7 @@
 				19017039200BA32100E21080 /* HomePage.storyboard */,
 				19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */,
 				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
+				840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -567,7 +568,6 @@
 			isa = PBXGroup;
 			children = (
 				840424C6200CCC5E00D2EBA4 /* ProfileUsersOffersCollectionViewCell.swift */,
-				840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */,
 				843107BB2012978B00DE06CE /* Profile.storyboard */,
 				843107BD2012986F00DE06CE /* ProfileExternView.storyboard */,
 			);
@@ -732,7 +732,6 @@
 				840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
 				843107BE2012986F00DE06CE /* ProfileExternView.storyboard in Resources */,
-				2AD4E9791FA8A5AF0013D67E /* GoogleService-Info.plist in Resources */,
 				774EB4F71FD6F8F000FE1FBF /* ChatStoryboard.storyboard in Resources */,
 				2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */,
 				1901703A200BA32100E21080 /* HomePage.storyboard in Resources */,

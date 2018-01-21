@@ -10,8 +10,9 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MessagingDelegate {
     
+    var fcmTokenLocal: String! = ""
     
     //outlets
     @IBOutlet weak var username: UITextField!
@@ -20,6 +21,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        Messaging.messaging().delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -112,7 +114,7 @@ class ViewController: UIViewController {
                 
                 self.goToHome()
                 
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: "b4e49d6c9a5d203f451aac7e344d17b4a88af32d67b3b182a2b363147dfd2732")
+                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: self.fcmTokenLocal)
                 
             } else {
                 let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
@@ -125,6 +127,22 @@ class ViewController: UIViewController {
             }
         }
         
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        fcmTokenLocal = fcmToken
+        
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+    
+    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+        print("Firebase registration token: \(fcmToken)")
+        fcmTokenLocal = fcmToken
+        
+        // TODO: If necessary send token to application server.
+        // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
 
 }
