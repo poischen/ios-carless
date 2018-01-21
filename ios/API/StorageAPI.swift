@@ -471,6 +471,38 @@ final class StorageAPI {
         }
     }
     
+    func subscribeToUsersRentings(userUID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observe(.value, with: {snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                    resultRentings.append(renting)
+                } else {
+                    print("subscribeToUsersRenting: error while converting renting")
+                }
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    func subscribeToRentingsForOffering(offeringID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
+        self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_OFFERING_ID_KEY).queryEqual(toValue: offeringID).observe(.value, with: {snapshot in
+            var resultRentings:[Renting] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                    resultRentings.append(renting)
+                } else {
+                    print("subscribeToRentingsForOffering: error while converting renting")
+                }
+            }
+            completion(resultRentings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
     func getRentingsByOfferingID(offeringID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_OFFERING_ID_KEY).queryEqual(toValue: offeringID).observeSingleEvent(of: .value, with: {snapshot in
             var resultRentings:[Renting] = []
@@ -667,10 +699,31 @@ final class StorageAPI {
     
     func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)) -> Void){
         self.getOfferingByID(id: offeringID, completion: {offering in
-            StorageAPI.shared.getBrandByID(id: offering.brandID, completion: { offeringBrand in
+            self.getBrandByID(id: offering.brandID, completion: { offeringBrand in
                 completion((offering, offeringBrand))
             })
         })
+    }
+    
+    func subscribeToUsersOfferingsWithBrands(userUID: String, completion: @escaping (_ result: [(Offering, Brand)]) -> Void){
+        self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observe(.value, with: {snapshot in
+            var resultOfferings:[(Offering, Brand)] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                    self.getBrandByID(id: offering.brandID, completion: {offeringsBrand in
+                        resultOfferings.append((offering, offeringsBrand))
+                        if (resultOfferings.count == snapshot.childrenCount){
+                            // last brand received -> fire callback
+                            completion(resultOfferings)
+                        }
+                    })
+                } else {
+                    print("subscribeToUsersOfferingsWithBrands: error while converting offering")
+                }
+            }
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 }
 

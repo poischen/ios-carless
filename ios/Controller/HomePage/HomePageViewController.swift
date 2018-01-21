@@ -19,11 +19,26 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var usersRentingsTable: UITableView!
     @IBOutlet weak var usersOfferingsTable: UITableView!
-    @IBOutlet weak var usersRentingRequestsTable: UITableView!
+    @IBOutlet weak var usersRentingsRequestsTable: UITableView!
+    
+
+    @IBOutlet weak var usersRentingsPlaceholderLabel: UILabel!
+    @IBOutlet weak var userOfferingsPlaceholderLabel: UILabel!
+    @IBOutlet weak var userRentingRequestsPlaceholderLabel: UILabel!
     
     var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
     var usersOfferingsAndBrands: [(Offering,Brand)] = []
-    var usersRentingRequests: [(Offering, Brand, User, Renting)] = []
+    private var usersRentingRequestsMap: [String:[(Offering, Brand, User, Renting)]] = [:]
+    var usersRentingRequests: [(Offering, Brand, User, Renting)] {
+        var result:[(Offering, Brand, User, Renting)] = []
+        for (_, requestData) in usersRentingRequestsMap {
+            result += requestData
+        }
+        return result
+    }
+    var volume: Double {
+        return 5.0
+    }
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
@@ -32,23 +47,58 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersRentingsTable.delegate = self
         usersOfferingsTable.dataSource = self
         usersOfferingsTable.delegate = self
-        usersRentingRequestsTable.dataSource = self
-        usersRentingRequestsTable.delegate = self
+        usersRentingsRequestsTable.dataSource = self
+        usersRentingsRequestsTable.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        homePageModel.getUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
+        homePageModel.subscribeToUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
             self.usersRentingsAndOfferings = rentingsAndOfferings
-            self.usersRentingsTable.reloadData()
+            if (rentingsAndOfferings.count == 0){
+                // no rentings -> hide table and show placeholder
+                self.usersRentingsTable.isHidden = true
+                self.usersRentingsPlaceholderLabel.isHidden = false
+            } else {
+                // rentings exist -> hide placeholder and show table
+                self.usersRentingsTable.reloadData()
+                self.usersRentingsTable.isHidden = false
+                self.usersRentingsPlaceholderLabel.isHidden = true
+            }
         })
-        homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
+        homePageModel.subscribeToUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
+            if (offeringsAndBrands.count == 0){
+                // no offerings -> hide table and show placeholder
+                self.usersOfferingsTable.isHidden = true
+                self.userOfferingsPlaceholderLabel.isHidden = false
+            } else {
+                // offering exist -> hide placeholder and show table
+                self.usersOfferingsTable.reloadData()
+                self.usersOfferingsTable.isHidden = false
+                self.userOfferingsPlaceholderLabel.isHidden = true
+            }
         })
-        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
-            self.usersRentingRequests = offeringsBrandsAndUsers
-            self.usersRentingRequestsTable.reloadData()
+        homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringID, rentingData in
+            // operations here will also change the computed property usersRentingRequests which is the data source of the table
+            if rentingData.count > 0 {
+                // overwrite (maybe) existing requests for this offering in the map
+                self.usersRentingRequestsMap[offeringID] = rentingData
+            } else {
+                // remove key from map if no requests for the offering exist
+                self.usersRentingRequestsMap.removeValue(forKey: offeringID)
+            }
+            if (self.usersRentingRequestsMap.count == 0) {
+                // no requests -> hide table and show placeholder
+                self.usersRentingsRequestsTable.isHidden = true
+                self.userRentingRequestsPlaceholderLabel.isHidden = false
+            } else {
+                // requests exist -> update table, show it and hide the placeholder
+                self.usersRentingsRequestsTable.reloadData()
+                self.usersRentingsRequestsTable.isHidden = false
+                self.userRentingRequestsPlaceholderLabel.isHidden = true
+            }
         })
     }
 
@@ -65,7 +115,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             count = usersRentingsAndOfferings.count
         case self.usersOfferingsTable:
             count = usersOfferingsAndBrands.count
-        case self.usersRentingRequestsTable:
+        case self.usersRentingsRequestsTable:
             count = usersRentingRequests.count
         default:
             count = 0
@@ -86,13 +136,19 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.startDateLabel.text = homePageModel.dateToString(date: renting.startDate)
             cell.endDateLabel.text = homePageModel.dateToString(date: renting.startDate)
+            if (renting.confirmationStatus) {
+                // renting is confirmed
+                cell.statusLabel.text = UserRentingsTableViewCell.ACCEPTED_STATUS_MESSAGE
+            } else {
+                cell.statusLabel.text = UserRentingsTableViewCell.PENDING_STATUS_MESSAGE
+            }
             returnCell = cell
         case self.usersOfferingsTable:
             let (offering, brand) = usersOfferingsAndBrands[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath)
             cell.textLabel?.text = brand.name + " " + offering.type
             returnCell = cell
-        case self.usersRentingRequestsTable:
+        case self.usersRentingsRequestsTable:
             let (offering, brand, user, renting) = usersRentingRequests[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
             cell.usernameButton.setTitle(user.name, for: .normal)
@@ -165,26 +221,26 @@ extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
     
     func denyRequest(renting: Renting) {
         homePageModel.denyRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
     
     
     
     func removeRequestFromList(renting: Renting) {
         if let wantedRentingID = renting.id {
-            usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
+            /* usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
                 if let currentRentingID = currentRenting.id  {
                     return currentRentingID != wantedRentingID
                 } else {
                     return false
                 }
-            }
+            }*/
         }
-        usersRentingRequestsTable.reloadData()
+        usersRentingsRequestsTable.reloadData()
     }
 }

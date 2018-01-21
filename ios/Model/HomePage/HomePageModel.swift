@@ -18,13 +18,12 @@ class HomePageModel {
         storageAPI = StorageAPI.shared
     }
     
-    func getUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
+    /* func getUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
         var result:[(Renting, Offering, Brand)] = []
         storageAPI.getRentingsByUserUID(userUID: UID, completion: {rentings in
             let numberOfRentings = rentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
-            // TODO: avoid code duplication
             for renting in rentings {
                 self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
                     result.append((renting, offering, offeringsBrand))
@@ -34,11 +33,33 @@ class HomePageModel {
                 })
             }
         })
-    }
+    } */
     
-    func getUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
+    func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
+        storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
+            var result:[(Renting, Offering, Brand)] = []
+            let numberOfRentings = rentings.count
+            // TODO: will the rentings appear in a deterministic order?
+            // TODO: handle errors
+            if numberOfRentings == 0 {
+                // empty array should also fire callback to pass on that the user has no rentings
+                // (can e.g. happen when a renting of the user is denied)
+                completion([])
+            } else {
+                for renting in rentings {
+                    self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
+                        result.append((renting, offering, offeringsBrand))
+                        if (result.count == numberOfRentings) {
+                            completion(result)
+                        }
+                    })
+                }
+            }
+        })
+    }
+    func subscribeToUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
         // TODO: move into storage API?
-        var result:[(Offering, Brand)] = []
+        /* var result:[(Offering, Brand)] = []
         storageAPI.getOfferingsByUserUID(userUID: UID, completion: {offerings in
             let numberOfOfferings = offerings.count
             for offering in offerings {
@@ -49,15 +70,16 @@ class HomePageModel {
                     }
                 })
             }
-        })
+        })*/
+        storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: completion)
     }
     
     // TODO: more efficient variant?
     // TODO: is it necessary to return the renting?
-    func getUnconfirmedOfferingsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
+    /* func getUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand, User, Renting)]) -> Void){
         var result:[(Offering, Brand, User, Renting)] = []
         var offeringsProcessed = 0
-        getUsersOfferings(UID: UID, completion: {usersOfferings in
+        subscribeToUsersOfferings(UID: UID, completion: {usersOfferings in
             for (offering, brand) in usersOfferings {
                 if let offeringID = offering.id {
                     self.storageAPI.getRentingsByOfferingID(offeringID: offeringID, completion: {offeringsRentings in
@@ -85,6 +107,43 @@ class HomePageModel {
                             if (offeringsProcessed == usersOfferings.count) {
                                 completion(result)
                             }
+                        }
+                    })
+                }
+            }
+        })
+    } */
+    
+    // TODO: make this more efficient by only returning the offering once for all requests for that offering
+    // TODO: merge with subscribeToUsersOfferings?
+    // TODO: Does this method have to handle empty arrays like the others do?
+    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
+        var watchedOfferingsIDs:Set = Set<String>()
+        storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
+            for (offering, brand) in usersOfferings {
+                // TODO: find better solution for offeringID here
+                if (offering.id != nil && (!watchedOfferingsIDs.contains(offering.id!))){
+                    // offering has an ID and is not watched yet -> add it to the watched offerings and create listener for this offering
+                    watchedOfferingsIDs.insert(offering.id!)
+                    self.storageAPI.subscribeToRentingsForOffering(offeringID: offering.id!, completion: {offeringsRentings in
+                        // we're only interested in the unconfirmed rentings
+                        let unconfirmedRentings = offeringsRentings.filter {$0.confirmationStatus == false}
+                        var resultsForThisOffering:[(Offering, Brand, User, Renting)] = []
+                        if (unconfirmedRentings.count > 0) {
+                            // unconfirmed rentings exist -> proceed with them
+                            for unconfirmedRenting in unconfirmedRentings {
+                                self.storageAPI.getUserByUID(UID: unconfirmedRenting.userID, completion: {rentingUser in
+                                    resultsForThisOffering.append((offering, brand, rentingUser, unconfirmedRenting))
+                                    if (resultsForThisOffering.count == unconfirmedRentings.count) {
+                                        // all unconfirmed rentings for this offering processed -> offering processed -> fire callback
+                                        completion(offering.id!, resultsForThisOffering)
+                                    }
+                                })
+                            }
+                        } else {
+                            // no unconfirmed ratings exists -> fire callback
+                            // this is necessary to make accepted requests disappear
+                            completion(offering.id!, [])
                         }
                     })
                 }

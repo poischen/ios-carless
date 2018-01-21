@@ -13,6 +13,10 @@ class UserRentingsTableViewCell: UITableViewCell {
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
+    
+    static let ACCEPTED_STATUS_MESSAGE = "confirmed"
+    static let PENDING_STATUS_MESSAGE = "pending"
     
     override func awakeFromNib() {
         super.awakeFromNib()
