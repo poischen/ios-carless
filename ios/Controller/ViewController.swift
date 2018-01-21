@@ -22,6 +22,13 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
+    
+    /*override func viewDidAppear(_ animated: Bool) {
+        if StorageAPI.shared.isLoggedIn(){
+            let loginController = ViewController()
+            present(loginController, animated: true, completion: nil)
+        }
+    }*/
 
     //actions
     @IBAction func loginButton(_ sender: Any) {
@@ -31,15 +38,6 @@ class ViewController: UIViewController {
     @IBAction func signUpButton(_ sender: Any) {
         signup()
     }
-    
-    
-  
-    
-    
-    @IBAction func skipButton(_ sender: Any) {
-        _ = self.storyboard?.instantiateViewController(withIdentifier: "Home")
-    }
-    
     
     //function
     func login() {
@@ -121,7 +119,6 @@ class ViewController: UIViewController {
         }
         
     }
-    
 
 }
         
