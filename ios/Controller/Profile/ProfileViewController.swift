@@ -58,22 +58,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @IBAction func logout(_ sender: Any) {
-        
-        /*if Auth.auth().currentUser != nil {
-            do {
-                try Auth.auth().signOut()
-                
-                let vc = self.storyboard?.instantiateViewController(withIdentifier: "Main")
-                self.present(vc!, animated: true, completion: nil)
-                present(vc!, animated: true, completion: nil)
-                
-            } catch let error as NSError {
-                print(error.localizedDescription)
-            }
-        }*/
-       handleLogout()
-        
-       
+        handleLogout()
     }
     
     func handleLogout() {
@@ -82,10 +67,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-        
-        //let loginController = ViewController()
-        //present(loginController, animated: true, completion: nil)
-        
+    
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Main")
         self.present(vc, animated: true, completion: nil)
@@ -132,9 +114,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.profileImage.kf.setImage(with: profileImgUrl)
         }
         
-        if Auth.auth().currentUser?.uid == nil {
+       /* if Auth.auth().currentUser?.uid == nil {
             handleLogout()
-        }
+        }*/
     }
     
     override func didReceiveMemoryWarning() {

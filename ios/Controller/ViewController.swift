@@ -23,6 +23,13 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if Auth.auth().currentUser != nil {
+            goToHome()
+        }
+    }
+    
     /*override func viewDidAppear(_ animated: Bool) {
         if StorageAPI.shared.isLoggedIn(){
             let loginController = ViewController()

@@ -18,12 +18,13 @@ import UserNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
-
+    
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        
         GMSPlacesClient.provideAPIKey("AIzaSyAyMV-s4s4QIw1KHLmgkqa2t5zcc1dxhCg")
         
         let configuration: AIConfiguration = AIDefaultConfiguration()
@@ -133,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
-            UIApplication.shared.registerForRemoteNotifications()
+           // UIApplication.shared.registerForRemoteNotifications()
         }
     }
     
@@ -161,13 +162,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     
     func FBHandler() {
         Messaging.messaging().shouldEstablishDirectChannel = true
-    }
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
     
     func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
