@@ -65,9 +65,9 @@ final class Advertise {
     var featuresLabels: [String]  = []
     
     //further values vor input UI
-    var seatsPickerContent = ["1", "2", "3", "4", "5", "6", "7", "8", "more"]
-    var seatsPickerIcons = [UIImage(named:"1"), UIImage(named:"2"), UIImage(named:"3"), UIImage(named:"4"), UIImage(named:"5"), UIImage(named:"6"), UIImage(named:"7"), UIImage(named:"8"), UIImage(named:"9")]
-    var timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]
+    let seatsPickerContent = ["1", "2", "3", "4", "5", "6", "7", "8", "more"]
+    let seatsPickerIcons = [UIImage(named:"1"), UIImage(named:"2"), UIImage(named:"3"), UIImage(named:"4"), UIImage(named:"5"), UIImage(named:"6"), UIImage(named:"7"), UIImage(named:"8"), UIImage(named:"9")]
+    let timeContent = ["00:00", "00:30", "01:00", "01:30", "02:00", "02:30", "03:00", "03:30", "04:00", "04:30", "05:00", "05:30", "06:00", "06:30", "07:00", "07:30", "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00", "21:30", "22:00", "22:30", "23:00", "23:30"]
     
     
     init(){
@@ -83,12 +83,8 @@ final class Advertise {
         self.brands = brands
         for brand in brands {
             let brandName = brand.name
-            //brandsDict.updateValue(brand, forKey: brandName)
             brandsDict.updateValue(brand.id, forKey: brandName)
             brandsPickerContent.append(brandName)
-            
-            //let icon = UIImage(named: brandName)
-            //brandsPickerIcons.append(icon!)
         }
     }
     
@@ -96,7 +92,6 @@ final class Advertise {
         self.fuels = fuels
         for fuel in fuels {
             let fuelName = fuel.name
-            //fuelsDict.updateValue(fuel, forKey: fuelName)
             fuelsDict.updateValue(fuel.id, forKey: fuelName)
             fuelPickerContent.append(fuelName)
             
@@ -115,7 +110,6 @@ final class Advertise {
         self.gears = gears
         for gear in gears {
             let gearName = gear.name
-            //gearsDict.updateValue(gear, forKey: gearName)
             gearsDict.updateValue(gear.id, forKey: gearName)
             gearPickerContent.append(gearName)
             
@@ -134,10 +128,8 @@ final class Advertise {
         self.vehicleTypes = vehicleTypes
         for vehicleType in vehicleTypes {
             let vehicleTypeName = vehicleType.name
-            //vehicleTypesDict.updateValue(vehicleType, forKey: vehicleTypeName)
             vehicleTypesDict.updateValue(vehicleType.id, forKey: vehicleTypeName)
             vehicleTypeContent.append(vehicleTypeName)
-            
             if let icon = UIImage(named: vehicleTypeName) {
                 vehicleTypeIcons.append(icon)
             } else {
@@ -153,7 +145,6 @@ final class Advertise {
         self.features = features
         for feature in features {
             let featureName = feature.name
-            //featuresDict.updateValue(feature, forKey: featureName)
             featuresDict.updateValue(feature.id, forKey: featureName)
             featuresLabels.append(featureName)
             

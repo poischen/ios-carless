@@ -75,52 +75,6 @@ class AdvertiseHelper {
     }
 }
     
-    /*func updateOffer(input: AnyObject, key: String, needsConvertion: Bool, conversionType: String) -> Void {
-        var input2Write: AnyObject = input
-        if needsConvertion {
-            if (conversionType == Advertise.ADVERTISE_CONVERSION_SEATS){
-                
-                var seats: String  = input as! String
-                
-                if (input as! String == "more"){
-                    seats = "9"
-                }
-                
-                let seatsInt: Int = Int(seats)!
-                input2Write = seatsInt as AnyObject
-                
-            } else {
-                
-                let inputString = input as! String
-                
-                switch (conversionType) {
-                case Advertise.ADVERTISE_CONVERSION_BRANDS:
-                    input2Write = advertiseOffer.brandsDict[inputString] as AnyObject
-                    
-                case Advertise.ADVERTISE_CONVERSION_FUELS:
-                    input2Write = advertiseOffer.fuelsDict[inputString] as AnyObject
-                    
-                case Advertise.ADVERTISE_CONVERSION_GEARS:
-                    input2Write = advertiseOffer.gearsDict[inputString] as AnyObject
-                    
-                case Advertise.ADVERTISE_CONVERSION_VEHICLETYPES:
-                    input2Write = advertiseOffer.vehicleTypesDict[inputString] as AnyObject
-                    
-                case Advertise.ADVERTISE_CONVERSION_FEATURES:
-                    input2Write = advertiseOffer.featuresDict[inputString] as AnyObject
-                    //TODO! Liste, seperate DB Tabelle
-                    
-                default:
-                    break
-                }
-            }
-        }
-        offeringDict.updateValue(input2Write, forKey: key)
-    }
-*/
-
-    
-    
     func getOfferDict() -> [String : AnyObject] {
         var offeringDict: [String : AnyObject] = [ : ]
         

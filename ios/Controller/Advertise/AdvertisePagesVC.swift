@@ -82,7 +82,7 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         }
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [AdvertisePagesVC.self])
         pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.currentPageIndicatorTintColor = UIColor.init(red: 1.00, green: 0.57, blue: 0.57, alpha: 1.0)
+        pageControl.currentPageIndicatorTintColor = UIColor.init(red: 1, green: 0.5804, blue: 0, alpha: 1)
     }
     
     override func viewDidLayoutSubviews() {

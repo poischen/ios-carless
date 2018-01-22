@@ -386,7 +386,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseConsumptionTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="l per 100 km" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hqh-rL-G7c" userLabel="consumptionTextField">
+                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseConsumptionTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="per 100 km" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hqh-rL-G7c" userLabel="consumptionTextField">
                                                 <rect key="frame" x="125" y="12" width="230" height="30"/>
                                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="0.14000000000000001" colorSpace="calibratedRGB"/>
                                                 <nil key="textColor"/>

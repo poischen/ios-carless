@@ -368,7 +368,6 @@
 				845AD973200903FE0037D053 /* BlockedDay.swift */,
 				19A3F8611FF5AAEE00FA2D95 /* Rating.swift */,
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
-				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
 				19017041200BA70200E21080 /* RentingRequest.swift */,
 			);
@@ -397,6 +396,7 @@
 		19CA79A12007E04E00402963 /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				191DABB01FF00F7000EB0070 /* Time.swift */,
 				19EE8F342006A40700204C73 /* CoordinatePoint.swift */,
 			);
