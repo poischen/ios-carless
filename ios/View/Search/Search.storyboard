@@ -648,7 +648,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="fjQ-ej-Vr7">
-                                <rect key="frame" x="0.0" y="123" width="375" height="255"/>
+                                <rect key="frame" x="0.0" y="74" width="375" height="255"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3Gz-ay-vhu">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
@@ -867,11 +867,11 @@
                         <constraints>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="trailing" secondItem="SLX-Ii-F2u" secondAttribute="trailing" id="5vO-GF-hMW"/>
                             <constraint firstItem="fjQ-ej-Vr7" firstAttribute="leading" secondItem="SLX-Ii-F2u" secondAttribute="leading" id="8S3-eT-iwP"/>
-                            <constraint firstItem="fjQ-ej-Vr7" firstAttribute="top" secondItem="SLX-Ii-F2u" secondAttribute="top" constant="59" id="mgr-Ae-aFn"/>
+                            <constraint firstItem="fjQ-ej-Vr7" firstAttribute="top" secondItem="SLX-Ii-F2u" secondAttribute="top" constant="10" id="mgr-Ae-aFn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SLX-Ii-F2u"/>
                     </view>
-                    <navigationItem key="navigationItem" id="yZk-YL-nM4"/>
+                    <navigationItem key="navigationItem" title="Search" id="yZk-YL-nM4"/>
                     <connections>
                         <outlet property="calendarView" destination="qyR-me-pu9" id="yQJ-Py-ApX"/>
                         <outlet property="locationNameLabel" destination="TE5-a6-sxE" id="bzV-sx-Mzs"/>
