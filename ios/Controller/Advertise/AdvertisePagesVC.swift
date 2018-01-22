@@ -7,8 +7,9 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     let advertise = Advertise.shared
     let advertiseHelper = AdvertiseHelper()
     
-    @IBAction func navBackButton(_ sender: Any) {
-        back()
+    @IBAction func cancelAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     required init?(coder: NSCoder) {

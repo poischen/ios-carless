@@ -35,7 +35,7 @@
             <objects>
                 <navigationController id="3Ky-Hl-zVh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="iconhome" id="1mJ-Ff-uJh"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Aof-mY-neq">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="Aof-mY-neq">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -47,12 +47,22 @@
             </objects>
             <point key="canvasLocation" x="-1087" y="-1308"/>
         </scene>
+        <!--AdvertiseNav-->
+        <scene sceneID="VYK-NB-d8T">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Advertise" referencedIdentifier="AdvertiseNav" id="z1F-tp-ezi" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="8me-Rd-7RZ"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IqZ-Nb-Xfl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1193" y="-67"/>
+        </scene>
         <!--Home-->
         <scene sceneID="a6S-1c-ahy">
             <objects>
                 <viewController restorationIdentifier="Home" storyboardIdentifier="Home" title="Home" id="PcC-rc-5Iw" customClass="HomePageViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vp5-x9-sgd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You look fabulous today :)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zUo-xX-E3F">
@@ -252,7 +262,6 @@
                                 <state key="normal" title="add offering"/>
                                 <connections>
                                     <action selector="addOfferingButtonClicked:" destination="PcC-rc-5Iw" eventType="touchUpInside" id="Flr-CG-hmr"/>
-                                    <segue destination="wDI-GF-bTz" kind="show" id="ph6-Z0-tFU"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M4w-SU-Tc0">
@@ -268,7 +277,13 @@
                         <viewLayoutGuide key="safeArea" id="8CP-CY-Lv6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="iconhome" id="ixZ-Hl-Xyo"/>
-                    <navigationItem key="navigationItem" id="qjI-u0-WsN"/>
+                    <navigationItem key="navigationItem" title="Your Homepage" leftItemsSupplementBackButton="YES" id="qjI-u0-WsN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="sq6-MX-lz2">
+                            <connections>
+                                <segue destination="z1F-tp-ezi" kind="showDetail" id="arC-fm-1XD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="usersOfferingsTable" destination="b70-uN-kCa" id="11b-xq-rW7"/>
                         <outlet property="usersRentingRequestsTable" destination="O46-ta-yNf" id="2I9-7K-6Di"/>
@@ -289,16 +304,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iew-Uq-0eF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-159" y="-815"/>
-        </scene>
-        <!--AdvertisePages-->
-        <scene sceneID="Z5E-r5-Uft">
-            <objects>
-                <viewControllerPlaceholder storyboardName="Advertise" referencedIdentifier="AdvertisePages" id="wDI-GF-bTz" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="QxQ-Ec-g6o"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ttG-F1-dQS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1442" y="-70"/>
         </scene>
         <!--Rate-->
         <scene sceneID="p67-FO-UiJ">
