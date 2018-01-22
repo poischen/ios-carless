@@ -14,7 +14,7 @@ import UIKit
 import MapKit
 import GooglePlacePicker
 
-class AdvertisePage5: UIViewController {
+class AdvertisePageContentPickup: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
@@ -69,7 +69,7 @@ class AdvertisePage5: UIViewController {
     
 }
 
-extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDelegate {
+extension AdvertisePageContentPickup : UISearchBarDelegate, GMSAutocompleteViewControllerDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         let searchText: String = place.formattedAddress!
         searchBar.text = searchText
@@ -79,21 +79,18 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
         selectedLattitude =  String (place.coordinate.latitude)
         let selectedLattitudeFloat = Float(selectedLattitude!)
         if (selectedLattitudeFloat != nil) {
-        //pageViewController.advertiseModel.updateDict(input: selectedLattitudeFloat as AnyObject, key: Offering.OFFERING_LATITUDE_KEY, needsConvertion: false, conversionType: "none")
             pageViewController.advertiseHelper.latitude = selectedLattitudeFloat
         }
         
         selectedLongitude =  String (place.coordinate.longitude)
         let selectedLongitudeFloat = Float(selectedLongitude!)
         if (selectedLongitudeFloat != nil) {
-            //pageViewController.advertiseModel.updateDict(input: selectedLongitudeFloat as AnyObject, key: Offering.OFFERING_LONGITUDE_KEY, needsConvertion: false, conversionType: "none")
             pageViewController.advertiseHelper.longitude = selectedLongitudeFloat
         }
         
         for component in place.addressComponents! {            
             if component.type == "locality" {
                 selectedCity = component.name
-                //pageViewController.advertiseModel.updateDict(input: selectedCity as AnyObject, key: Offering.OFFERING_LOCATION_KEY, needsConvertion: false, conversionType: "none")
                 pageViewController.advertiseHelper.location = selectedCity
             }
         }
@@ -165,7 +162,7 @@ extension AdvertisePage5 : UISearchBarDelegate, GMSAutocompleteViewControllerDel
 }
 
 
-extension AdvertisePage5 : CLLocationManagerDelegate {
+extension AdvertisePageContentPickup : CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
             locationManager.requestLocation()
@@ -185,7 +182,7 @@ extension AdvertisePage5 : CLLocationManagerDelegate {
     }
 }
 
-extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
+extension AdvertisePageContentPickup: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -212,17 +209,11 @@ extension AdvertisePage5: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-//TODO: Use value from picker instead
-extension AdvertisePage5: UITextFieldDelegate {
-    //todo: convert format in extra methode
+extension AdvertisePageContentPickup: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         if (textField == self.pickUpTextView){
-            //let pickUpTime: AnyObject = (pickUpTextView.text as AnyObject)
-            //pageViewController.advertise.updateDict(input: pickUpTextView.text as AnyObject, key: Offering.OFFERING_PICKUP_TIME_KEY, needsConvertion: false, conversionType: "none")
             pageViewController.advertiseHelper.pickupTime = pickUpTextView.text
         } else if (textField == self.returnTextView){
-            //let returnTime: AnyObject = (returnTextView.text as AnyObject)
-            //pageViewController.advertise.updateDict(input: returnTextView.text as AnyObject, key: Offering.OFFERING_RETURN_TIME_KEY, needsConvertion: false, conversionType: "none")
             pageViewController.advertiseHelper.returnTime = returnTextView.text
         }
     }

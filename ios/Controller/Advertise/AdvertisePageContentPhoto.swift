@@ -12,7 +12,7 @@ import UIKit
  * advertise vehicle image
  */
 
-class AdvertisePage1: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
+class AdvertisePageContentPhoto: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared

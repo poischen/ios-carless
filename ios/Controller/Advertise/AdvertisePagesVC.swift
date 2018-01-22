@@ -14,13 +14,6 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-        /*//load necessary information into model
-        storageAPI.getBrands(completion: advertise.receiveBrands)
-        storageAPI.getFuels(completion: advertise.receiveFuels)
-        storageAPI.getGears(completion: advertise.receiveGears)
-        storageAPI.getVehicleTypes(completion: advertise.receiveVehicleTypes)
-        storageAPI.getFeatures(completion: advertise.receiveFeatures)*/
     }
     
     //writes offer to db if all inputs are availible

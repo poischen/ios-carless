@@ -13,7 +13,7 @@
 import UIKit
 import JTAppleCalendar
 
-class AdvertisePage4: UIViewController {
+class AdvertisePageConentAvailibilityCalendar: UIViewController {
 
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
@@ -94,7 +94,7 @@ class AdvertisePage4: UIViewController {
     }
 }
 
-extension AdvertisePage4: JTAppleCalendarViewDelegate {
+extension AdvertisePageConentAvailibilityCalendar: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         let myCustomCell = cell as! AvailibilityCalendarCell
         let availibility = Availibility(date: date)
@@ -133,7 +133,7 @@ extension AdvertisePage4: JTAppleCalendarViewDelegate {
     
 }
 
-extension AdvertisePage4: JTAppleCalendarViewDataSource {
+extension AdvertisePageConentAvailibilityCalendar: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         let endDate = Date() + 31104000 // one year from now
         let parameters = ConfigurationParameters(
@@ -149,7 +149,7 @@ extension AdvertisePage4: JTAppleCalendarViewDataSource {
     }
 }
 
-extension AdvertisePage4: UITextFieldDelegate {
+extension AdvertisePageConentAvailibilityCalendar: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool
     {
         let allowedCharacters = CharacterSet.decimalDigits

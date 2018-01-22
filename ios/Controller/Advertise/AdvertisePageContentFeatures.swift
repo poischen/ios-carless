@@ -12,32 +12,12 @@ import UIKit
  * advertise vehicle features
  */
 
-class AdvertisePage3: UIViewController {
+class AdvertisePageContentFeatures: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var featuresCollectionView: UICollectionView!
-    
-    //TODO: Use data from DB
-    /*var featuresImages = [UIImage(named: "navigation"), UIImage(named: "cruise_controll"), UIImage(named: "seat_heater"), UIImage(named: "infant_seat"), UIImage(named: "AC"), UIImage(named: "park_assistant"), UIImage(named: "front-camera"), UIImage(named: "back-camera"), UIImage(named: "cd_radio_mp3"), UIImage(named: "pre-heating"), UIImage(named: "wifi"), UIImage(named: "start_stop")]
-    
-        var featuresLabels = ["Navigation", "Cruise controll", "Seat heater", "Infant seat", "AC", "Park assistant", "Front camera", "Back camera", "CD/Radio/Mp3", "Pre-heating", "Wifi", "Start/Stop"]*/
-    
- /*   func setupFeaturesCollectionView(){
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        featuresCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
-        featuresCollectionView.register(AdvertiseFeaturesCollectionViewCell.self, forCellWithReuseIdentifier: "featureCell")
-        
-        featuresCollectionView.backgroundColor = UIColor.white
-
-        
-        view.addSubview(featuresCollectionView)
-        
-    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,8 +25,7 @@ class AdvertisePage3: UIViewController {
         featuresCollectionView.dataSource = self
         
         pageViewController = self.parent as! AdvertisePagesVC
-      /*  var nib = UINib(nibName: "UICollectionElementKindCell", bundle:nil)
-        self.collectionView.registerNib(nib, forCellReuseIdentifier: "CollectionViewCell")*/
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,7 +33,7 @@ class AdvertisePage3: UIViewController {
     }
 }
 
-extension AdvertisePage3: UICollectionViewDataSource {
+extension AdvertisePageContentFeatures: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return pageViewController.advertise.featuresImages.count
     }
@@ -77,16 +56,12 @@ extension AdvertisePage3: UICollectionViewDataSource {
         featureCell.awakeFromNib()
     }
     
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize{
-        return CGSize(width: (view.frame.width/4), height: 200)
-    }*/
-    
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
 }
 
-extension AdvertisePage3: UICollectionViewDelegate {
+extension AdvertisePageContentFeatures: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let featureCell = featuresCollectionView.cellForItem(at: indexPath) as! AdvertiseFeaturesCollectionViewCell

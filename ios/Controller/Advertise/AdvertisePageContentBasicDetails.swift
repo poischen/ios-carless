@@ -12,7 +12,7 @@ import UIKit
  * advertise vehicle attributes
  */
 
-class AdvertisePage2: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class AdvertisePageContentBasicDetails: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared

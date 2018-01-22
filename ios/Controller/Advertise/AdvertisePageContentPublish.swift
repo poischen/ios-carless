@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AdvertisePage7: UIViewController {
+class AdvertisePageContentPublish: UIViewController {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
@@ -28,14 +28,12 @@ class AdvertisePage7: UIViewController {
                                         return
                                     }
                                     //store image url
-                                    if let imgURL: AnyObject = fileURL as? AnyObject {
+                                    if let imgURL = fileURL as AnyObject? {
                                         //store image-url & user-id to offering
                                         //init offer object
                                         //write offer to db
-                                        let imageUrl = fileURL?.absoluteString
-                                        //strongSelf.pageViewController.advertise.updateDict(input: imageUrl as AnyObject, key: Offering.OFFERING_PICTURE_URL_KEY, needsConvertion: false, conversionType: "none")
-                                        //strongSelf.pageViewController.advertise.updateDict(input: strongSelf.storageAPI.userID() as AnyObject, key: Offering.OFFERING_USER_UID_KEY, needsConvertion: false, conversionType: "none")
-                                        strongSelf.pageViewController.advertiseHelper.pictureURL = imageUrl
+                                        let imageUrl = imgURL.absoluteString
+                                        strongSelf.pageViewController.advertiseHelper.pictureURL = imageUrl!
                                         strongSelf.pageViewController.advertiseHelper.userUID = strongSelf.storageAPI.userID()
                                         strongSelf.pageViewController.writeOfferToDB()
                                         

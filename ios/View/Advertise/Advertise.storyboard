@@ -43,10 +43,10 @@
             </objects>
             <point key="canvasLocation" x="-94" y="9"/>
         </scene>
-        <!--Advertise Page1-->
+        <!--Advertise Page Content Photo-->
         <scene sceneID="1sK-A5-16a">
             <objects>
-                <viewController restorationIdentifier="advertisePage1" storyboardIdentifier="advertisePage1" id="26O-3S-caA" customClass="AdvertisePage1" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage1" storyboardIdentifier="advertisePage1" id="26O-3S-caA" customClass="AdvertisePageContentPhoto" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mxk-lE-02R">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -134,10 +134,10 @@
             </objects>
             <point key="canvasLocation" x="669.60000000000002" y="8.5457271364317844"/>
         </scene>
-        <!--Advertise Page2-->
+        <!--Advertise Page Content Basic Details-->
         <scene sceneID="1W3-Ce-vzG">
             <objects>
-                <viewController restorationIdentifier="advertisePage2" storyboardIdentifier="advertisePage2" id="FVF-ID-eFr" customClass="AdvertisePage2" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage2" storyboardIdentifier="advertisePage2" id="FVF-ID-eFr" customClass="AdvertisePageContentBasicDetails" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="lYD-qN-Xyg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -528,10 +528,10 @@
             </objects>
             <point key="canvasLocation" x="1400.8" y="7.1964017991004505"/>
         </scene>
-        <!--Advertise Page3-->
+        <!--Advertise Page Content Features-->
         <scene sceneID="aqF-7t-Tch">
             <objects>
-                <viewController restorationIdentifier="advertisePage3" storyboardIdentifier="advertisePage3" id="fex-8j-y2u" customClass="AdvertisePage3" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage3" storyboardIdentifier="advertisePage3" id="fex-8j-y2u" customClass="AdvertisePageContentFeatures" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Kpw-A6-MDE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -665,10 +665,10 @@
             </objects>
             <point key="canvasLocation" x="2104.8000000000002" y="5.8470764617691158"/>
         </scene>
-        <!--Advertise Page5-->
+        <!--Advertise Page Content Pickup-->
         <scene sceneID="Td9-Jc-bjB">
             <objects>
-                <viewController restorationIdentifier="advertisePage5" storyboardIdentifier="advertisePage5" id="Naa-RR-YP8" customClass="AdvertisePage5" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage5" storyboardIdentifier="advertisePage5" id="Naa-RR-YP8" customClass="AdvertisePageContentPickup" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="iRs-W2-LBG">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -878,10 +878,10 @@
             </objects>
             <point key="canvasLocation" x="3586" y="6"/>
         </scene>
-        <!--Advertise Page6-->
+        <!--Advertise Page Content Description-->
         <scene sceneID="yif-pt-ojM">
             <objects>
-                <viewController restorationIdentifier="advertisePage6" storyboardIdentifier="advertisePage6" id="FIr-Eh-Opg" customClass="AdvertisePage6" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage6" storyboardIdentifier="advertisePage6" id="FIr-Eh-Opg" customClass="AdvertisePageContentDescription" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="JIP-Z9-gL8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -950,10 +950,10 @@
             </objects>
             <point key="canvasLocation" x="4391" y="9"/>
         </scene>
-        <!--Advertise Page4-->
+        <!--Advertise Page Conent Availibility Calendar-->
         <scene sceneID="JKq-Df-rcI">
             <objects>
-                <viewController restorationIdentifier="advertisePage4" storyboardIdentifier="advertisePage4" id="Ysi-tN-v4c" customClass="AdvertisePage4" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage4" storyboardIdentifier="advertisePage4" id="Ysi-tN-v4c" customClass="AdvertisePageConentAvailibilityCalendar" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E04-zH-5fE">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1180,10 +1180,10 @@
             </objects>
             <point key="canvasLocation" x="2824.8000000000002" y="5.8470764617691158"/>
         </scene>
-        <!--Advertise Page7-->
+        <!--Advertise Page Content Publish-->
         <scene sceneID="aCH-sY-QMK">
             <objects>
-                <viewController restorationIdentifier="advertisePage7" storyboardIdentifier="advertisePage7" id="6ug-qW-kNe" customClass="AdvertisePage7" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController restorationIdentifier="advertisePage7" storyboardIdentifier="advertisePage7" id="6ug-qW-kNe" customClass="AdvertisePageContentPublish" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="07h-OK-rIn">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
