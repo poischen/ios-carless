@@ -71,7 +71,8 @@ class HomePageModel {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
                         // TODO: avoid code duplication
                         let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
-                        let rateable = distanceFromNow.duration > self.rateableAfter
+                        // ratings that are over long enough and have been confirmed are rateable
+                        let rateable = (distanceFromNow.duration > self.rateableAfter) && (renting.confirmationStatus == true)
                         result.append((renting, offering, offeringsBrand, rateable))
                         if (result.count == numberOfRentings) {
                             completion(result)

@@ -271,14 +271,6 @@
                                     <segue destination="wDI-GF-bTz" kind="show" id="ph6-Z0-tFU"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M4w-SU-Tc0">
-                                <rect key="frame" x="230" y="64" width="122" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Ratedebug"/>
-                                <connections>
-                                    <segue destination="DBa-1T-axr" kind="show" id="reA-CD-8Rs"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time to earn some money!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFc-RM-uob">
                                 <rect key="frame" x="68" y="323" width="241" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -298,7 +290,7 @@
                         <viewLayoutGuide key="safeArea" id="8CP-CY-Lv6"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="iconhome" id="ixZ-Hl-Xyo"/>
-                    <navigationItem key="navigationItem" id="qjI-u0-WsN"/>
+                    <navigationItem key="navigationItem" title="Home" id="qjI-u0-WsN"/>
                     <connections>
                         <outlet property="userOfferingsPlaceholderLabel" destination="IFc-RM-uob" id="fov-sE-vC0"/>
                         <outlet property="userRentingRequestsPlaceholderLabel" destination="pfU-3n-HKP" id="JHy-bb-vc0"/>
