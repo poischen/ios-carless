@@ -80,49 +80,6 @@
             </objects>
             <point key="canvasLocation" x="-90.400000000000006" y="33.733133433283363"/>
         </scene>
-        <!--Chat Bot View Controller-->
-        <scene sceneID="NoF-6V-o75">
-            <objects>
-                <viewController storyboardIdentifier="chatbot" id="PoJ-1d-rUw" customClass="ChatBotViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Tz3-tK-epv">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hi" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Pc-Vh-Ugg">
-                                <rect key="frame" x="16" y="54" width="281" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ydc-hy-c2k">
-                                <rect key="frame" x="36" y="339" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FgH-wv-nab">
-                                <rect key="frame" x="66" y="384" width="36" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Send"/>
-                                <connections>
-                                    <action selector="sendToBot:" destination="PoJ-1d-rUw" eventType="touchUpInside" id="7L5-bz-QNW"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="CVc-ac-Pk4"/>
-                    </view>
-                    <connections>
-                        <outlet property="chipResponse" destination="5Pc-Vh-Ugg" id="NG3-Er-Bcd"/>
-                        <outlet property="messageField" destination="Ydc-hy-c2k" id="PjI-UU-7QH"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9yN-5F-Rts" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1210" y="48"/>
-        </scene>
     </scenes>
     <resources>
         <image name="Hintergrund.jpg" width="210" height="315"/>

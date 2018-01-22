@@ -41,7 +41,7 @@ class AvailibilityAndBookingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+    
         if (storageAPI.userID() == offer!.userUID) {
             self.navigationItem.title = "Check Availibility Preview"
             reservationButton.isHidden = true
