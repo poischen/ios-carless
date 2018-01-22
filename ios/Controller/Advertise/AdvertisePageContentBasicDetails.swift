@@ -193,15 +193,18 @@ class AdvertisePageContentBasicDetails: UIViewController, UIPickerViewDelegate, 
         if (textField == self.consumptionInput){
             selectedConsumption = consumptionInput.text
             if let consumption = selectedConsumption {
-                let consumptionInt: Int = Int(consumption)!
-                pageViewController.advertiseHelper.consumption = consumptionInt
+                if let consumptionInt = Int(consumption) {
+                        pageViewController.advertiseHelper.consumption = consumptionInt
+                }
+
             }
             
         } else if (textField == self.speedInput){
             selectedSpeed = speedInput.text
             if let speed = selectedSpeed {
-                let speedInt: Int = Int(speed)!
-                pageViewController.advertiseHelper.hp = speedInt
+                if let speedInt = Int(speed) {
+                    pageViewController.advertiseHelper.hp = speedInt
+                }
             }
             
         } else if (textField == self.modelInput){

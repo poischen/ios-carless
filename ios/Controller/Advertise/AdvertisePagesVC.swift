@@ -26,9 +26,11 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
             
         //store offering
             storageAPI.saveOffering(offer: offer!, completion: {offerWithID in
-                //store avilibility
                 if let offerID = offerWithID.id {
+                    //store avilibility by Offer ID
                     self.storageAPI.saveAvailibility(blockedDates: self.advertiseHelper.blockedDates, offerID: offerID)
+                    //store features by Offer ID
+                    self.storageAPI.saveFeatures(features: self.advertiseHelper.convertFeatures(), offerID: offerID)
                 }
                 
                 //switch to offer view
@@ -38,9 +40,6 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                     self.present(viewController, animated: true, completion: nil)
                 }
             })
-            
-        //store features
-            //todo
             
         } else {
             let alertMissingInputs = UIAlertController(title: "Something is missing", message: "Please check all inputs and try again.", preferredStyle: .alert)

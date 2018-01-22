@@ -40,7 +40,7 @@ class AdvertiseHelper {
     var blockedDates: [Date] = []
     
     //cache input for storing features data into db
-    //todo
+    var features: [String] = []
 
     func convertAndCacheOfferingData(input: String, key: String, conversionType: String){
         if (conversionType == Advertise.ADVERTISE_CONVERSION_SEATS){
@@ -75,6 +75,16 @@ class AdvertiseHelper {
     }
 }
     
+    func convertFeatures() -> [Int] {
+        var convertedFeatures: [Int] = []
+        for feature in self.features{
+            let convertedFeature = advertiseOffer.featuresDict[feature]
+            convertedFeatures.append(convertedFeature!)
+        }
+        print(convertedFeatures)
+        return(convertedFeatures)
+    }
+    
     func getOfferDict() -> [String : AnyObject] {
         var offeringDict: [String : AnyObject] = [ : ]
         
@@ -108,7 +118,14 @@ class AdvertiseHelper {
             }
         }
     }
-        
+
+    func deleteFeature(feature: String){
+        if features.count > 0 {
+            if let index = features.index(of: feature) {
+                features.remove(at: index)
+            }
+        }
+    }
 
     
 }

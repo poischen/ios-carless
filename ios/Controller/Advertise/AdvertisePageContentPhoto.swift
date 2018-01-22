@@ -12,18 +12,30 @@ import UIKit
  * advertise vehicle image
  */
 
-class AdvertisePageContentPhoto: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate {
+class AdvertisePageContentPhoto: UIViewController, UIImagePickerControllerDelegate, UIPopoverControllerDelegate, UINavigationControllerDelegate, UIPopoverPresentationControllerDelegate {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
     
     var picker: UIImagePickerController? = UIImagePickerController()
     
-    @IBOutlet weak var navBackButton: UIBarButtonItem!
     @IBOutlet weak var carImageView: UIImageView!
     @IBAction func chooseImgButton(_ sender: Any) {
         chooseImage()
     }
+    
+    //Switch to pop-over if picture is tapped
+   /* func tappedOnCarImg() {
+        if (pageViewController.carImage != nil) {
+            let vc = self.storyboard?.instantiateViewController(withIdentifier: "advertisePhoto") as! AdvertisePopOverPhotoViewController
+            vc.carImage.image = pageViewController.carImage
+            vc.modalPresentationStyle = .popover
+            let popover = vc.popoverPresentationController!
+            popover.delegate = self
+            popover.sourceView = self.view
+            self.present(vc, animated: true, completion: nil)
+        }
+    }*/
     
     //Camera stuff
     func chooseImage (){
@@ -74,6 +86,12 @@ class AdvertisePageContentPhoto: UIViewController, UIImagePickerControllerDelega
         super.viewDidLoad()
         picker?.delegate = self
         pageViewController = self.parent as! AdvertisePagesVC
+        
+    /*    //picture pop-over
+        let tapOnCarImg = UITapGestureRecognizer(target: self, action: #selector(self.tappedOnCarImg))
+        carImageView.addGestureRecognizer(tapOnCarImg)
+        carImageView.isUserInteractionEnabled = true
+        */
     }
     
     override func didReceiveMemoryWarning() {

@@ -34,15 +34,6 @@ final class Advertise {
     var vehicleTypes: [VehicleType]?
     var features: [Feature]?
 
-/*
-    //storing objects for easy access to id and iconURL via item name as key
-    var brandsDict: [String : AnyObject] = [:]
-    var fuelsDict: [String : AnyObject] = [:]
-    var gearsDict: [String : AnyObject] = [:]
-    var vehicleTypesDict: [String : AnyObject] = [:]
-    var featuresDict: [String : AnyObject] = [:]
- */
-    
     //storing objects for easy access to id via item name as key
     var brandsDict: [String : Int] = [:]
     var fuelsDict: [String : Int] = [:]

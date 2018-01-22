@@ -23,7 +23,7 @@ class AdvertisePageContentFeatures: UIViewController {
         super.viewDidLoad()
         featuresCollectionView.delegate = self
         featuresCollectionView.dataSource = self
-        
+        featuresCollectionView.allowsMultipleSelection = true
         pageViewController = self.parent as! AdvertisePagesVC
 
     }
@@ -66,11 +66,15 @@ extension AdvertisePageContentFeatures: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let featureCell = featuresCollectionView.cellForItem(at: indexPath) as! AdvertiseFeaturesCollectionViewCell
         featureCell.featureChecked.isHidden = false
+        let feature = featureCell.featureLabel.text!
+        pageViewController.advertiseHelper.features.append(feature)
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let featureCell = featuresCollectionView.cellForItem(at: indexPath) as! AdvertiseFeaturesCollectionViewCell
         featureCell.featureChecked.isHidden = true
+        let feature = featureCell.featureLabel.text!
+        pageViewController.advertiseHelper.deleteFeature(feature: feature)
     }
     
 }

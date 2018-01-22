@@ -404,6 +404,15 @@ final class StorageAPI {
 
     }
     
+    //store features of an offer in db
+    func saveFeatures(features: [Int], offerID: String){
+        for feature in features {
+            let featureKey = offeringsFeaturesDBReference.childByAutoId().key
+            offeringsFeaturesDBReference.child(featureKey).child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE).setValue(feature)
+            offeringsFeaturesDBReference.child(featureKey).child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING).setValue(offerID)
+        }
+    }
+    
     
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String, deviceID: String){
