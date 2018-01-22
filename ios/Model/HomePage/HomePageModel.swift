@@ -13,7 +13,8 @@ class HomePageModel {
     static let shared = HomePageModel();
     
     let storageAPI:StorageAPI
-    let maxDistanceFromNow:Double = 30 * 24 * 3600// one month
+    let maxDistanceFromNow:Double = 30 * 24 * 3600 // one month
+    let rateableAfter:Double = 2 * 24 * 3600 // 2 days
     
     init(){
         storageAPI = StorageAPI.shared
@@ -36,9 +37,9 @@ class HomePageModel {
         })
     } */
     
-    func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
+    func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand, Bool)]) -> Void) {
         storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
-            var result:[(Renting, Offering, Brand)] = []
+            var result:[(Renting, Offering, Brand, Bool)] = []
             
             let newerRentings = rentings.filter {renting in
                 if (renting.endDate < Date()){
@@ -57,6 +58,7 @@ class HomePageModel {
                 }
             }
             
+            
             let numberOfRentings = newerRentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
@@ -67,7 +69,10 @@ class HomePageModel {
             } else {
                 for renting in newerRentings {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                        result.append((renting, offering, offeringsBrand))
+                        // TODO: avoid code duplication
+                        let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
+                        let rateable = distanceFromNow.duration > self.rateableAfter
+                        result.append((renting, offering, offeringsBrand, rateable))
                         if (result.count == numberOfRentings) {
                             completion(result)
                         }

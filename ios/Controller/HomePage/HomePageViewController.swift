@@ -26,7 +26,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     @IBOutlet weak var userOfferingsPlaceholderLabel: UILabel!
     @IBOutlet weak var userRentingRequestsPlaceholderLabel: UILabel!
     
-    var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
+    var usersRentingsAndAdditionalInfo: [(Renting, Offering, Brand, Bool)] = []
     var usersOfferingsAndBrands: [(Offering,Brand)] = []
     private var usersRentingRequestsMap: [String:[(Offering, Brand, User, Renting)]] = [:]
     var usersRentingRequests: [(Offering, Brand, User, Renting)] {
@@ -54,7 +54,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         homePageModel.subscribeToUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
-            self.usersRentingsAndOfferings = rentingsAndOfferings
+            self.usersRentingsAndAdditionalInfo = rentingsAndOfferings
             if (rentingsAndOfferings.count == 0){
                 // no rentings -> hide table and show placeholder
                 self.usersRentingsTable.isHidden = true
@@ -112,7 +112,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch tableView {
         case self.usersRentingsTable:
-            count = usersRentingsAndOfferings.count
+            count = usersRentingsAndAdditionalInfo.count
         case self.usersOfferingsTable:
             count = usersOfferingsAndBrands.count
         case self.usersRentingsRequestsTable:
@@ -131,7 +131,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch tableView {
         case self.usersRentingsTable:
-            let (renting, offering, brand) = usersRentingsAndOfferings[indexPath.row]
+            let (renting, offering, brand, rateable) = usersRentingsAndAdditionalInfo[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_RENTINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingsTableViewCell
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.startDateLabel.text = homePageModel.dateToString(date: renting.startDate)
@@ -142,6 +142,12 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             } else {
                 cell.statusLabel.text = UserRentingsTableViewCell.PENDING_STATUS_MESSAGE
             }
+            if (rateable) {
+                // renting is rateable -> show rating button
+                cell.rateButton.isHidden = false
+            }
+            cell.delegate = self
+            cell.showedRenting = renting
             returnCell = cell
         case self.usersOfferingsTable:
             let (offering, brand) = usersOfferingsAndBrands[indexPath.row]
@@ -176,7 +182,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let (selectedOffering,_) = self.usersOfferingsAndBrands[indexPath.row]
             showSelectedOffering(selectedOffering: selectedOffering)
         } else if (tableView == self.usersRentingsTable) {
-            let (_,selectedOffering,_) = self.usersRentingsAndOfferings[indexPath.row]
+            let (_,selectedOffering,_,_) = self.usersRentingsAndAdditionalInfo[indexPath.row]
             showSelectedOffering(selectedOffering: selectedOffering)
         }
 
@@ -228,19 +234,17 @@ extension HomePageViewController: RequestProcessingProtocol{
         homePageModel.denyRenting(renting: renting)
         //removeRequestFromList(renting: renting)
     }
-    
-    
-    
-    func removeRequestFromList(renting: Renting) {
-        if let wantedRentingID = renting.id {
-            /* usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
-                if let currentRentingID = currentRenting.id  {
-                    return currentRentingID != wantedRentingID
-                } else {
-                    return false
-                }
-            }*/
+}
+
+extension HomePageViewController: RatingProtocol{
+    func rateRenting(renting: Renting) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
+                return
         }
-        usersRentingsRequestsTable.reloadData()
+        rateController.rentingBeingRated = renting
+        self.present(rateController, animated: true, completion: nil)
     }
+    
+    
 }

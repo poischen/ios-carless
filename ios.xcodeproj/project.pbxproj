@@ -21,11 +21,12 @@
 		19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19380CB91FD5A29A0057A6D2 /* VehicleType.swift */; };
 		193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966BE1FF57B86008C76A8 /* RateStarControl.swift */; };
 		193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 193966C01FF57BED008C76A8 /* Rate.storyboard */; };
-		193966C41FF57EDE008C76A8 /* 123.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966C31FF57EDE008C76A8 /* 123.swift */; };
+		193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966C31FF57EDE008C76A8 /* RateViewController.swift */; };
 		194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769221FC8480000AB02E4 /* SearchResultsViewController.swift */; };
 		194769251FC848C800AB02E4 /* SearchResultsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */; };
 		1949C5941FC9D05800C5FD91 /* Gear.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1949C5931FC9D05800C5FD91 /* Gear.swift */; };
 		194C2E9A1FE7C44200E34EF8 /* SelectableItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194C2E991FE7C44200E34EF8 /* SelectableItem.swift */; };
+		19636A0C2015490700423927 /* RatingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19636A0B2015490700423927 /* RatingProtocol.swift */; };
 		196FD4E91FAFBFE2000875AE /* Search.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 196FD4E81FAFBFE2000875AE /* Search.storyboard */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
@@ -127,11 +128,12 @@
 		19380CB91FD5A29A0057A6D2 /* VehicleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleType.swift; sourceTree = "<group>"; };
 		193966BE1FF57B86008C76A8 /* RateStarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarControl.swift; sourceTree = "<group>"; };
 		193966C01FF57BED008C76A8 /* Rate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Rate.storyboard; sourceTree = "<group>"; };
-		193966C31FF57EDE008C76A8 /* 123.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = 123.swift; sourceTree = "<group>"; };
+		193966C31FF57EDE008C76A8 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		194769221FC8480000AB02E4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsTableViewCell.swift; sourceTree = "<group>"; };
 		1949C5931FC9D05800C5FD91 /* Gear.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gear.swift; sourceTree = "<group>"; };
 		194C2E991FE7C44200E34EF8 /* SelectableItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableItem.swift; sourceTree = "<group>"; };
+		19636A0B2015490700423927 /* RatingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProtocol.swift; sourceTree = "<group>"; };
 		196FD4E81FAFBFE2000875AE /* Search.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Search.storyboard; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
@@ -254,7 +256,6 @@
 			isa = PBXGroup;
 			children = (
 				1901703F200BA65F00E21080 /* HomePageModel.swift */,
-				19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -263,6 +264,8 @@
 			isa = PBXGroup;
 			children = (
 				19017039200BA32100E21080 /* HomePage.storyboard */,
+				19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */,
+				19636A0B2015490700423927 /* RatingProtocol.swift */,
 				19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */,
 				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
 			);
@@ -314,7 +317,7 @@
 		193966C21FF57ECC008C76A8 /* Rate */ = {
 			isa = PBXGroup;
 			children = (
-				193966C31FF57EDE008C76A8 /* 123.swift */,
+				193966C31FF57EDE008C76A8 /* RateViewController.swift */,
 			);
 			path = Rate;
 			sourceTree = "<group>";
@@ -732,7 +735,6 @@
 				840D63BE1FE9A4B7007A1F16 /* Advertise.storyboard in Resources */,
 				2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */,
 				843107BE2012986F00DE06CE /* ProfileExternView.storyboard in Resources */,
-				2AD4E9791FA8A5AF0013D67E /* GoogleService-Info.plist in Resources */,
 				774EB4F71FD6F8F000FE1FBF /* ChatStoryboard.storyboard in Resources */,
 				2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */,
 				1901703A200BA32100E21080 /* HomePage.storyboard in Resources */,
@@ -973,6 +975,7 @@
 				84FD43781FF52CB600CB546C /* AdvertisePage4.swift in Sources */,
 				19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
+				19636A0C2015490700423927 /* RatingProtocol.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
 				848486F01FFC4395008F7DAF /* Availibility.swift in Sources */,
 				84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */,
@@ -994,7 +997,7 @@
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
 				19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */,
-				193966C41FF57EDE008C76A8 /* 123.swift in Sources */,
+				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,
 				840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */,

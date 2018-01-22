@@ -19,6 +19,17 @@ class UserRentingsTableViewCell: UITableViewCell {
     static let ACCEPTED_STATUS_MESSAGE = "confirmed"
     static let PENDING_STATUS_MESSAGE = "pending"
     
+    var delegate: RatingProtocol?
+    var showedRenting: Renting?
+    
+    @IBAction func rateButtonTapped(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentRenting = showedRenting else {
+                return
+        }
+        currentDelegate.rateRenting(renting: currentRenting)
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
