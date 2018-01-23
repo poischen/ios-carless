@@ -168,12 +168,12 @@ class OfferingViewController: UIViewController {
         offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
         
         //set feature area---------------------------------------------------
-        storageAPI.getOfferingsFeaturesNames { (featuresDict) in
+     /*   storageAPI.getOfferingsFeaturesNames { (featuresDict) in
             print("FEATURESDICT")
             print(featuresDict)
            /* self.features = ...
             self.featuresCollectionView.dataSource = self*/
-        }
+        }*/
 
         features = featuresDummy
         featuresCollectionView.dataSource = self
