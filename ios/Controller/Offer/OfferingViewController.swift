@@ -168,16 +168,10 @@ class OfferingViewController: UIViewController {
         offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
         
         //set feature area---------------------------------------------------
-     /*   storageAPI.getOfferingsFeaturesNames { (featuresDict) in
-            print("FEATURESDICT")
-            print(featuresDict)
-           /* self.features = ...
-            self.featuresCollectionView.dataSource = self*/
-        }*/
-
-        features = featuresDummy
-        featuresCollectionView.dataSource = self
-        self.view.addSubview(featuresCollectionView)
+        showOfferModel.getFeatures(offerID: displayingOffering!.id!, completion: { (features) in
+            self.features = features
+            self.basicDataCollectionView.dataSource = self
+        })
         
         //set information for picking up the car (map & time) area---------------------------------------------------
         let latitude = Double((displayingOffering?.latitude)!)
