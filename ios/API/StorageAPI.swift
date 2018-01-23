@@ -178,6 +178,31 @@ final class StorageAPI {
         }
     }
     
+
+    func getFeatureByID(id: Int, completion: @escaping (_ feature: Feature) -> Void){
+            self.featuresDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+                if snapshot.childrenCount == 1 {
+                    let childRaw = snapshot.children.nextObject()
+                    if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                        let featureID = Int(child.key)!
+                        if let feature = Feature.init(id: featureID, dict: dict) {
+                            completion(feature)
+                        } else {
+                            print("error in get getFeatureByID")
+                        }
+                    } else {
+                        print("error in get getFeatureByID")
+                    }
+                } else {
+                    print("no featureor more than one feature found")
+                }
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+    }
+    
+    
+    
     func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultRentings:[Renting] = []
@@ -402,6 +427,15 @@ final class StorageAPI {
             }
         }
 
+    }
+    
+    //store features of an offer in db
+    func saveFeatures(features: [Int], offerID: String){
+        for feature in features {
+            let featureKey = offeringsFeaturesDBReference.childByAutoId().key
+            offeringsFeaturesDBReference.child(featureKey).child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE).setValue(feature)
+            offeringsFeaturesDBReference.child(featureKey).child(DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING).setValue(offerID)
+        }
     }
     
     

@@ -7,19 +7,13 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     let advertise = Advertise.shared
     let advertiseHelper = AdvertiseHelper()
     
-    @IBAction func navBackButton(_ sender: Any) {
-        back()
+    @IBAction func cancelAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+        dismiss(animated: true, completion: nil)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        
-        /*//load necessary information into model
-        storageAPI.getBrands(completion: advertise.receiveBrands)
-        storageAPI.getFuels(completion: advertise.receiveFuels)
-        storageAPI.getGears(completion: advertise.receiveGears)
-        storageAPI.getVehicleTypes(completion: advertise.receiveVehicleTypes)
-        storageAPI.getFeatures(completion: advertise.receiveFeatures)*/
     }
     
     //writes offer to db if all inputs are availible
@@ -32,9 +26,11 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
             
         //store offering
             storageAPI.saveOffering(offer: offer!, completion: {offerWithID in
-                //store avilibility
                 if let offerID = offerWithID.id {
+                    //store avilibility by Offer ID
                     self.storageAPI.saveAvailibility(blockedDates: self.advertiseHelper.blockedDates, offerID: offerID)
+                    //store features by Offer ID
+                    self.storageAPI.saveFeatures(features: self.advertiseHelper.convertFeatures(), offerID: offerID)
                 }
                 
                 //switch to offer view
@@ -44,9 +40,6 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                     self.present(viewController, animated: true, completion: nil)
                 }
             })
-            
-        //store features
-            //todo
             
         } else {
             let alertMissingInputs = UIAlertController(title: "Something is missing", message: "Please check all inputs and try again.", preferredStyle: .alert)
@@ -81,7 +74,7 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
         }
         let pageControl = UIPageControl.appearance(whenContainedInInstancesOf: [AdvertisePagesVC.self])
         pageControl.pageIndicatorTintColor = .lightGray
-        pageControl.currentPageIndicatorTintColor = UIColor.init(red: 1.00, green: 0.57, blue: 0.57, alpha: 1.0)
+        pageControl.currentPageIndicatorTintColor = UIColor.init(red: 1, green: 0.5804, blue: 0, alpha: 1)
     }
     
     override func viewDidLayoutSubviews() {

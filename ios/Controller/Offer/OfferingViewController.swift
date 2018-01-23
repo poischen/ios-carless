@@ -135,7 +135,6 @@ class OfferingViewController: UIViewController {
         showOfferModel.getBasicDetails(offer: displayingOffering!, completion: { (basicDetails) in
             self.basicDetails = basicDetails
             self.basicDataCollectionView.dataSource = self
-            //view.reload?
         })
         
         //set information about lessor area-------------------------------------------------------------------------------------------------------------------------
@@ -169,7 +168,13 @@ class OfferingViewController: UIViewController {
         offerDescriptionTextView.addConstraint(aspectRatioTextViewConstraint)
         
         //set feature area---------------------------------------------------
-        //features = displayingOffering.getFeatures() //TODO
+     /*   storageAPI.getOfferingsFeaturesNames { (featuresDict) in
+            print("FEATURESDICT")
+            print(featuresDict)
+           /* self.features = ...
+            self.featuresCollectionView.dataSource = self*/
+        }*/
+
         features = featuresDummy
         featuresCollectionView.dataSource = self
         self.view.addSubview(featuresCollectionView)
@@ -285,7 +290,6 @@ extension OfferingViewController: UICollectionViewDataSource {
                     cell.displayContent(image: basicDetail, despcription: "\(basicDetail)" + " seats")
                 }
                 else {
-                    //todo: was, wenn icon nicht local vorhanden? woher download url?
                     cell.displayContent(image: basicDetail, despcription: "\(basicDetail)")
                 }
             }
