@@ -685,7 +685,20 @@ final class StorageAPI {
         return false
     }*/
     
-    
+    func getFeaturesForOffering(offeringID: String, completion: @escaping (_ offerings: [Feature]) -> Void){
+        self.offeringsFeaturesDBReference.queryOrdered(byChild: DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING).queryEqual(toValue: offeringID).observeSingleEvent(of: .value, with: { snapshot in
+            var resultFeatures:[Feature] = []
+            for childRaw in snapshot.children {
+                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let featureID = dict[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] {
+                } else {
+                    print("getFeaturesForOffering: error while converting offering's features")
+                }
+            }
+            completion(resultOfferings)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
     
 }
 
