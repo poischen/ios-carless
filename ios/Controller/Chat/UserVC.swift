@@ -26,6 +26,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func dataReceived(users: [User]) {
+        //don't show the logged in User's name
         self.users = users.filter {$0.id != StorageAPI.shared.userID()}
         myTableView.reloadData()
     }

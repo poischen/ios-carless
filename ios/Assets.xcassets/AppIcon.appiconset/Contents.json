@@ -6,8 +6,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "20x20",
+      "idiom" : "iphone",
+      "filename" : "AppLogoNoti.png",
       "scale" : "3x"
     },
     {
@@ -16,8 +17,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "29x29",
+      "idiom" : "iphone",
+      "filename" : "AppLogosettings.png",
       "scale" : "3x"
     },
     {
@@ -26,8 +28,9 @@
       "scale" : "2x"
     },
     {
-      "idiom" : "iphone",
       "size" : "40x40",
+      "idiom" : "iphone",
+      "filename" : "AppLogoSpotlight.png",
       "scale" : "3x"
     },
     {

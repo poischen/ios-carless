@@ -350,6 +350,7 @@
 		19C9E9A61FB1A2D5002F4C84 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				777EA4412017922700BE219F /* Chat */,
 				1901703E200BA65000E21080 /* HomePage */,
 				19CA79A22007E06500402963 /* general Interfaces */,
 				19CA79A12007E04E00402963 /* Helper */,
@@ -378,7 +379,6 @@
 		19C9E9A71FB1A3A0002F4C84 /* API */ = {
 			isa = PBXGroup;
 			children = (
-				19BF06431FEA84A500E495C2 /* MessageHandler.swift */,
 				19C9E9AA1FB1A4BE002F4C84 /* StorageAPI.swift */,
 				19CB76FB1FD44E8C00B291CE /* DBConstants.swift */,
 			);
@@ -480,6 +480,14 @@
 				2AD4E97B1FA8AA2D0013D67E /* Profil.png */,
 			);
 			path = PictureFiles;
+			sourceTree = "<group>";
+		};
+		777EA4412017922700BE219F /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				19BF06431FEA84A500E495C2 /* MessageHandler.swift */,
+			);
+			path = Chat;
 			sourceTree = "<group>";
 		};
 		779BFE782004EE6400AAB77A /* Chat */ = {

@@ -407,19 +407,11 @@ final class StorageAPI {
     
     //stores User in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String, deviceID: String){
-        /* let data: Dictionary<String, Any> = [DBConstants.NAME: name, DBConstants.EMAIL: email, DBConstants.RATING: rating, DBConstants.PROFILEIMG: profileImg, DBConstants.DEVICE_TOKEN: deviceID]*/
+        
         let newUser = User(id: withID, name: name, email: email, rating: rating, profileImgUrl: profileImg, numberOfRatings: 0, deviceID: deviceID)
         
         usersRef.child(withID).setValue(newUser.dict)
     }
-    //stores User in Database
-   /* func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
-        
-        let user = User(id: withID, name: name, email: email, rating: 0, profileImgUrl: profileImg, numberOfRatings: 0)
-        
-        usersRef.child(withID).setValue(user.dict);
-    }*/
-    
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -673,15 +665,6 @@ final class StorageAPI {
         })
     }
     
-    
-   /* func isLoggedIn() -> Bool {
-        if Auth.auth().currentUser != nil {
-            return true
-        }
-        return false
-    }*/
-    
-    
-    
+
 }
 
