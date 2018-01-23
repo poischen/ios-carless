@@ -362,10 +362,10 @@
             </objects>
             <point key="canvasLocation" x="2554" y="-1308"/>
         </scene>
-        <!--Main-->
+        <!--ChatBot-->
         <scene sceneID="w20-T3-Nct">
             <objects>
-                <viewControllerPlaceholder storyboardName="Main" id="P0G-Aa-NrW" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="ChatBot" id="P0G-Aa-NrW" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="0e8-AS-qsZ"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zf5-ts-M3K" userLabel="First Responder" sceneMemberID="firstResponder"/>
