@@ -17,11 +17,17 @@ class ChatBotViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         chipResponse.numberOfLines = 0;
+        print ("Possible Speech Voices" , AVSpeechSynthesisVoice.speechVoices())
     }
+    
+   
+    
+    
     
     var geocountrylocal: String? = nil
     var consultlocal: String? = nil
     
+   
     
     @IBOutlet weak var chipResponse: UILabel!
 
@@ -126,13 +132,6 @@ class ChatBotViewController: UIViewController {
             }
           
             
-            
-            
-          /*  if let textResponse = response.result.fulfillment.speech {
-               self.speechAndText(text: textResponse)
-            }*/
-            
-            
         }, failure: { (request, error) in
             print(error!)
         })
@@ -141,40 +140,26 @@ class ChatBotViewController: UIViewController {
         messageField.text = ""
     }
     
-    /*      if let textResponse = response.result.fulfillment.speech {
-     if let parameters = response.result.parameters as? [String: AIResponseParameter]{
-     if let geocountry = parameters["geo-country"]?.stringValue, let cousult = parameters ["consults"]?.stringValue {
-     if (geocountry == "") && (consult == "") {
-     self.speechAndText(text: textResponse)
-     } else if (geocountry == "") && (consult != "") {
-     if (geocountylocal != nil) {*/
-    
-    /*  if let parameters = response.result.parameters as? [String: AIResponseParameter] {
-     if let geocountry = parameters["geo-country"]?.stringValue {
-     switch geocountry {
-     case "Germany":
-     print ("it was germany")
-     default:
-     print ("didnt get the value")
-     }
-     }
-     }*/
-    
     
     let speechSynthesizer = AVSpeechSynthesizer()
+  
     
+
     func speechAndText(text: String) {
+        let voice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.Daniel-compact")
         let speechUtterance = AVSpeechUtterance(string: text)
+        speechUtterance.voice = voice
         speechSynthesizer.speak(speechUtterance)
         UIView.animate(withDuration: 1.0, delay: 0.0, options: .curveEaseInOut, animations: {
             self.chipResponse.text = text
         }, completion: nil)
     }
+
     
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
     
     
