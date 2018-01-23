@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="P78-LX-bv2">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -17,9 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
-                                <rect key="frame" x="167" y="318" width="40" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
+                                <rect key="frame" x="167" y="291" width="40" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Send"/>
@@ -27,20 +26,15 @@
                                     <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe">
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe">
                                 <rect key="frame" x="16" y="246" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="robot" translatesAutoresizingMaskIntoConstraints="NO" id="VZ9-WE-pQy">
-                                <rect key="frame" x="111" y="408" width="152" height="171"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="I am Trobot, ask me about Traffic rules" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-GN-UNA">
-                                <rect key="frame" x="0.0" y="79" width="375" height="150"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am Geoffrey, you may know me from the Banks family, ask me anything about traffic rules or just talk to me if you are bored" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-GN-UNA">
+                                <rect key="frame" x="0.0" y="80" width="375" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="4Ka-T1-JVw"/>
                                 </constraints>
@@ -48,15 +42,30 @@
                                 <color key="textColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="geoffrey-1" translatesAutoresizingMaskIntoConstraints="NO" id="VZ9-WE-pQy">
+                                <rect key="frame" x="0.0" y="347" width="375" height="320"/>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="BMu-GN-UNA" firstAttribute="width" secondItem="oLP-Je-hd9" secondAttribute="width" id="11x-uy-sPV"/>
+                            <constraint firstItem="VbU-D4-IoB" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" constant="167" id="598-Gk-2iu"/>
+                            <constraint firstItem="DQG-fw-oW6" firstAttribute="trailing" secondItem="VbU-D4-IoB" secondAttribute="trailing" constant="168" id="Hzd-R5-opq"/>
+                            <constraint firstItem="BWs-cx-XCe" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" constant="16" id="Ks3-ag-pfl"/>
+                            <constraint firstItem="BWs-cx-XCe" firstAttribute="top" secondItem="BMu-GN-UNA" secondAttribute="bottom" constant="17" id="N4z-gh-8Vt"/>
+                            <constraint firstItem="VZ9-WE-pQy" firstAttribute="trailing" secondItem="DQG-fw-oW6" secondAttribute="trailing" id="N5e-cr-VAw"/>
+                            <constraint firstItem="VbU-D4-IoB" firstAttribute="top" secondItem="BWs-cx-XCe" secondAttribute="bottom" constant="15" id="Ril-qh-ahG"/>
                             <constraint firstItem="BMu-GN-UNA" firstAttribute="top" secondItem="DQG-fw-oW6" secondAttribute="top" constant="60" id="SyX-qr-qCR"/>
                             <constraint firstItem="BMu-GN-UNA" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" id="TG2-Aw-Bji"/>
+                            <constraint firstItem="VZ9-WE-pQy" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" id="WvZ-oZ-3fX"/>
                             <constraint firstItem="BMu-GN-UNA" firstAttribute="top" secondItem="DQG-fw-oW6" secondAttribute="top" constant="30" id="emV-QI-bdt"/>
+                            <constraint firstItem="DQG-fw-oW6" firstAttribute="trailing" secondItem="BWs-cx-XCe" secondAttribute="trailing" constant="16" id="gcZ-7U-hWt"/>
+                            <constraint firstItem="VbU-D4-IoB" firstAttribute="top" secondItem="BWs-cx-XCe" secondAttribute="bottom" constant="15" id="i4k-a3-J7v"/>
                             <constraint firstItem="BMu-GN-UNA" firstAttribute="top" secondItem="DQG-fw-oW6" secondAttribute="top" constant="60" id="mbf-rH-79H"/>
+                            <constraint firstItem="VZ9-WE-pQy" firstAttribute="top" secondItem="VbU-D4-IoB" secondAttribute="bottom" constant="26" id="rzA-e8-QSC"/>
+                            <constraint firstItem="VZ9-WE-pQy" firstAttribute="bottom" secondItem="DQG-fw-oW6" secondAttribute="bottom" id="wBA-an-RZF"/>
+                            <constraint firstItem="VZ9-WE-pQy" firstAttribute="top" secondItem="VbU-D4-IoB" secondAttribute="bottom" constant="26" id="xsG-8R-Vcu"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DQG-fw-oW6"/>
                     </view>
@@ -71,6 +80,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="robot" width="225" height="224"/>
+        <image name="geoffrey-1" width="480" height="320"/>
     </resources>
 </document>
