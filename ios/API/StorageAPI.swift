@@ -177,6 +177,64 @@ final class StorageAPI {
             print(error.localizedDescription)
         }
     }
+
+    
+    // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
+    func getOfferingsFeaturesNames(completion: @escaping (_ offeringsFeatures: [String: [String]]) -> Void){
+        self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
+            let receivedData = snapshot.valueInExportFormat() as! NSDictionary  // TODO: Handle error
+            var resultOfferingsFeatures:[String: [String]] = [String: [String]]() // Map with offering ID as key and array of feature IDs a value
+            for (_, associationRaw) in receivedData {
+                guard
+                    let association:NSDictionary = associationRaw as? NSDictionary,
+                    let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
+                    let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
+                        print("error in getOfferingsFeatures")
+                        return
+                }
+                if var currentOfferingsFeatures = resultOfferingsFeatures[offeringID] {
+                    // not the first feature -> add to feature list for this offering
+                    self.getFeatureByID(id: featureID, completion: { (feature) in
+                        currentOfferingsFeatures.append(feature.name)
+                        resultOfferingsFeatures[offeringID] = currentOfferingsFeatures
+                    })
+                } else {
+                    // first feature for this offering -> initialise features array
+                    self.getFeatureByID(id: featureID, completion: { (feature) in
+                        resultOfferingsFeatures[offeringID] = [feature.name]
+                    })
+                }
+            }
+            completion(resultOfferingsFeatures)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    
+        func getFeatureByID(id: Int, completion: @escaping (_ feature: Feature) -> Void){
+            self.featuresDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
+                if snapshot.childrenCount == 1 {
+                    let childRaw = snapshot.children.nextObject()
+                    if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
+                        let featureID = Int(child.key)!
+                        if let feature = Feature.init(id: featureID, dict: dict) {
+                            completion(feature)
+                        } else {
+                            print("error in get getFeatureByID")
+                        }
+                    } else {
+                        print("error in get getFeatureByID")
+                    }
+                } else {
+                    print("no featureor more than one feature found")
+                }
+            }) { (error) in
+                print(error.localizedDescription)
+            }
+        }
+    
+    
     
     func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.observeSingleEvent(of: .value, with: { snapshot in
