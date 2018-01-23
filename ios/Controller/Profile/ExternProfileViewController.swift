@@ -17,6 +17,7 @@ class ExternProfileViewController: UIViewController {
     @IBOutlet weak var profileOwnerImageView: UIImageView!
     @IBOutlet weak var profileOwnerName: UILabel!
     @IBOutlet weak var noCurrentOfferNote: UILabel!
+    @IBOutlet weak var noCurrentRatingsNote: UILabel!
     @IBOutlet weak var profileOwnerRatingStars: CosmosView!
     @IBOutlet weak var otherUsersAboutProfileOwnerHL: UILabel!
     @IBOutlet weak var profileOwnersCurrentOffersHL: UILabel!
@@ -27,21 +28,19 @@ class ExternProfileViewController: UIViewController {
     let collectionViewOffersIdentifier = "OffersCollectionViewCell"
     
     let ratinsHL = "Other users about "
-    let offersHL = " current offers"
+    let offersHL = "'s current offers"
+    let fromString = "from "
+    let currencyString = " €"
     
     var profileOwner: User?
-    
-    //todo: use data from db
-    let ratingNames = ["Hans", "Dieter", "Claudia"]
-    let ratingDescriptions = ["Hat alles super geklappt, vielen Dank!", "1 geile Karre so vong Niceigkeit her!", "Hervorragendes Auto für den Sonntags-Fammilienausflug. Ich bin mit meinem Mann und meinen zwei Töchtern bis in die Fränkische Schweiz gefahren. Mit der Übergabe von und an Daniel war alles bestens."]
-    let ratingStars: [Double] = [4, 5, 5]
+    var usersRatings: [Rating]?
+    var usersOffers: [Offering]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         profileOwnerImageView.layer.cornerRadius = profileOwnerImageView.frame.size.width / 2
         profileOwnerImageView.clipsToBounds = true
-        profileOwnerImageView.layer.borderWidth = 2
+        profileOwnerImageView.layer.borderWidth = 1
         profileOwnerImageView.layer.borderColor = UIColor.black.cgColor
         
         if let user = profileOwner {
@@ -50,38 +49,80 @@ class ExternProfileViewController: UIViewController {
                 self.profileOwnerImageView.kf.indicatorType = .activity
                 self.profileOwnerImageView.kf.setImage(with: profileImgUrl)
             }
+            let name = user.name
+            otherUsersAboutProfileOwnerHL.text = ratinsHL + name
+            profileOwnersCurrentOffersHL.text = name + offersHL
+            
+            profileOwnerName.text = name
+            profileOwnerRatingStars.rating = (Double) (user.rating)
+         
+            storageAPI.getRatingsByUserUID(userUID: profileOwner!.id) { (ratings) in
+                self.usersRatings = ratings
+            }
+            
+            storageAPI.getOfferingsByUserUID(userUID: profileOwner!.id, completion: { (offerings) in
+                self.usersOffers = offerings
+            })
         }
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }    
+    }
+    
+    func presentOfferView(offer: Offering){
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
+            let targetController = navigationController.topViewController as? OfferingViewController else {
+                return
+        }
+        targetController.displayingOffering = offer
+        self.present(navigationController, animated: true, completion: nil)
+    }
 }
 
 extension ExternProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.collectionViewRatings {
-            return ratingNames.count
+            if let ratings = usersRatings {
+                return ratings.count
+            } else {
+                noCurrentRatingsNote.isHidden = false
+                return 0
+            }
         } else {
-            return 0 //todo
+            if let offers = usersOffers {
+                return offers.count
+            } else {
+                noCurrentOfferNote.isHidden = false
+                return 0
+            }
         }
     }
-    
-    //TODO: implement collectionView:willDisplayCell:forItemAtIndexPath: ???
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionViewRatings {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewRatingsIdentifier, for: indexPath) as! RatingsCollectionViewCell
-            
-            cell.userName.text = self.ratingNames[indexPath.row] + ":"
-            cell.userRatingDescription.text = self.ratingDescriptions[indexPath.row]
-            cell.userRatingStars.rating = self.ratingStars[indexPath.row]
+            if let ur = usersRatings {
+                let rating = ur[indexPath.row] as Rating
+                cell.userRatingDescription.text = rating.explanation
+                cell.userRatingStars.rating = Double(rating.rating)
+            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewOffersIdentifier, for: indexPath) as! ProfileUsersOffersCollectionViewCell
-            //todo: fill cell
+            if let uo = usersOffers {
+                cell.eProfileViewController = self
+                let offer = uo[indexPath.row] as Offering
+                cell.offer = offer
+                let imgUrl: URL = URL(string: offer.pictureURL)!
+                cell.offerCarImg.kf.indicatorType = .activity
+                cell.offerCarImg.kf.setImage(with: imgUrl)
+                cell.offerCarName.text = offer.type
+                cell.offerCarPrice.text = fromString + String(offer.basePrice) + currencyString
+            }
             return cell
         }
     }

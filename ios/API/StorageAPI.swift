@@ -497,6 +497,10 @@ final class StorageAPI {
     func deleteRentingByID(rentingID: String){
         self.rentingsDBReference.child(rentingID).removeValue()
     }
+
+    func deleteOfferingByID(offeringID: String){
+        self.offeringsDBReference.child(offeringID).removeValue()
+    }
     
     // get the rentings for a specific user (lessor view)
     func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
@@ -672,5 +676,16 @@ final class StorageAPI {
             })
         })
     }
+    
+    
+   /* func isLoggedIn() -> Bool {
+        if Auth.auth().currentUser != nil {
+            return true
+        }
+        return false
+    }*/
+    
+    
+    
 }
 

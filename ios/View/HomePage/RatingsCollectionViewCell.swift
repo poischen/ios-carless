@@ -11,7 +11,6 @@ import Cosmos
 
 class RatingsCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var userName: UILabel!
     @IBOutlet weak var userRatingDescription: UITextView!
     @IBOutlet weak var userRatingStars: CosmosView!
 }

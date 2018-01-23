@@ -322,7 +322,7 @@
         <scene sceneID="7t9-4N-nmu">
             <objects>
                 <navigationController id="ozT-wq-pBk" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="iconprofil" id="mBr-Rn-LOz"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="iconprince" id="mBr-Rn-LOz"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="xip-NH-bPE">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -349,7 +349,7 @@
         <scene sceneID="DcQ-xK-3R1">
             <objects>
                 <navigationController id="IcQ-qY-zKX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Ask Geoffrey" image="iconchatbot" id="48q-Wb-3IF"/>
+                    <tabBarItem key="tabBarItem" title="Ask Geoffrey" image="icongeoffrey" id="48q-Wb-3IF"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ijk-K8-yDQ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -389,11 +389,11 @@
             </objects>
             <point key="canvasLocation" x="822" y="-1308"/>
         </scene>
-        <!--Search-->
+        <!--Search Car-->
         <scene sceneID="Zx6-u8-eIB">
             <objects>
                 <navigationController id="jg9-T3-WbO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" image="iconsearch" id="0qt-5e-LKp"/>
+                    <tabBarItem key="tabBarItem" title="Search Car" image="iconsearch" id="0qt-5e-LKp"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8J1-c2-NVZ">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -409,9 +409,9 @@
     </scenes>
     <resources>
         <image name="iconchat" width="30" height="30"/>
-        <image name="iconchatbot" width="30" height="30"/>
+        <image name="icongeoffrey" width="30" height="30"/>
         <image name="iconhome" width="30" height="30"/>
-        <image name="iconprofil" width="30" height="30"/>
+        <image name="iconprince" width="30" height="30"/>
         <image name="iconsearch" width="30" height="30"/>
     </resources>
 </document>
