@@ -128,7 +128,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         var returnCell:UITableViewCell
         
         // TODO: better error handling here
-        // TODO: move initialisation into cells
+        // TODO: move initialisation into cells 
         
         switch tableView {
         case self.usersRentingsTable:
