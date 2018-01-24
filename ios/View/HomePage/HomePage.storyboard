@@ -20,7 +20,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="3Ky-Hl-zVh" kind="relationship" relationship="viewControllers" id="3gu-Yl-9VN"/>
-                        <segue destination="jg9-T3-WbO" kind="relationship" relationship="viewControllers" id="LMI-pd-EuF"/>
+                        <segue destination="x4h-Os-y0Q" kind="relationship" relationship="viewControllers" id="vWj-ED-zU3"/>
                         <segue destination="Bql-jj-LeI" kind="relationship" relationship="viewControllers" id="lJV-My-WeK"/>
                         <segue destination="ozT-wq-pBk" kind="relationship" relationship="viewControllers" id="81W-1Z-llp"/>
                         <segue destination="IcQ-qY-zKX" kind="relationship" relationship="viewControllers" id="fp0-hF-MEk"/>
@@ -298,12 +298,12 @@
         <scene sceneID="5Em-hL-QgU">
             <objects>
                 <viewControllerPlaceholder storyboardName="Search" id="x4h-Os-y0Q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="iconsearch" id="lhb-tm-y7J"/>
+                    <tabBarItem key="tabBarItem" title="Search car" image="iconsearch" id="lhb-tm-y7J"/>
                     <navigationItem key="navigationItem" id="4sg-Gf-3bV"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iew-Uq-0eF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-159" y="-815"/>
+            <point key="canvasLocation" x="-185" y="-1634"/>
         </scene>
         <!--Rate-->
         <scene sceneID="p67-FO-UiJ">
@@ -393,23 +393,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zjb-gn-hW3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="822" y="-1308"/>
-        </scene>
-        <!--Search Car-->
-        <scene sceneID="Zx6-u8-eIB">
-            <objects>
-                <navigationController id="jg9-T3-WbO" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search Car" image="iconsearch" id="0qt-5e-LKp"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8J1-c2-NVZ">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="x4h-Os-y0Q" kind="relationship" relationship="rootViewController" id="624-J6-eBE"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LdK-wj-m2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-124" y="-1308"/>
         </scene>
     </scenes>
     <resources>
