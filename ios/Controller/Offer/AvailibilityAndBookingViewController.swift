@@ -23,9 +23,13 @@ class AvailibilityAndBookingViewController: UIViewController {
     @IBOutlet weak var resultView: UILabel!
     @IBOutlet weak var reservationButton: UIButton!
     @IBOutlet weak var priceView: UILabel!
-    @IBOutlet weak var discountView: UILabel!
+    @IBOutlet weak var ratingDiscountView: UILabel!
+    @IBOutlet weak var experienceDiscountView: UILabel!
     @IBOutlet weak var totalPriceView: UILabel!
-    
+    @IBOutlet weak var totalPriceLabel: UILabel!
+    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var hiddenElementsView: UIStackView!
+
     let formatter = DateFormatter()
     var firstDate:Date?
     var lastDate:Date?
@@ -38,16 +42,31 @@ class AvailibilityAndBookingViewController: UIViewController {
     var dates2Check: [Date] = []
     var totalPrice: Float = 0
     
+    let TITLE_OWN = "Check Availibility Preview"
+    let TITLE = "Check Availibility"
+    let RESULT_POSITIVE = "Yey, the car is availible!"
+    let RESULT_NEGATIVE = "Not availible - try another date! :)"
+    let NO_RATING_DISC = "  0 (% from 4,5 *)"
+    let RATING_35 = " (+ 20 % fee)"
+    let RATING_45 = " (- 5 %)"
+    let RATING_5 = " (- 10 %)"
+    let RATING_QUOT_35: Float = -0.2
+    let RATING_QUOT_45: Float = 0.05
+    let RATING_QUOT_5: Float = 0.1
+    let NO_EXP_DISC = "  0 (1% à 10 ratings)"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-    
+        indicator.stopAnimating()
+        reservationButton.isHidden = true
+        hiddenElementsView.isHidden = true
+        
         if (storageAPI.userID() == offer!.userUID) {
-            self.navigationItem.title = "Check Availibility Preview"
+            self.navigationItem.title = TITLE_OWN
             reservationButton.isHidden = true
-            //todo: bearbeiten possibility
         } else {
-            self.navigationItem.title = "Check Availibility"
+            self.navigationItem.title = TITLE
             reservationButton.isEnabled = false
         }
 
@@ -126,7 +145,8 @@ class AvailibilityAndBookingViewController: UIViewController {
     }
 
     func checkAvailibility() -> Void {
-        resultView.text = "Checking for availibility..."
+        self.indicator.startAnimating()
+        self.hiddenElementsView.isHidden = true
         
         var intervall2Check: DateInterval?
         
@@ -142,7 +162,8 @@ class AvailibilityAndBookingViewController: UIViewController {
                 if (renting.confirmationStatus){
                 let rentingIntervall = DateInterval(start: renting.startDate, end: renting.endDate)
                 if (intervall2Check?.intersects(rentingIntervall))!{
-                    self.resultView.text = "Not availible - try another date! :)"
+                    self.resultView.text = self.RESULT_NEGATIVE
+                    self.indicator.stopAnimating()
                     return
                 }
             }
@@ -158,7 +179,8 @@ class AvailibilityAndBookingViewController: UIViewController {
                             let date = Renting.intTimestampToDate(timestamp: day)
                             let blockedDateIntervall = DateInterval(start: date, end: date)
                             if (intervall2Check?.intersects(blockedDateIntervall))!{
-                                self.resultView.text = "Not availible - try another date! :)"
+                                self.resultView.text = self.RESULT_NEGATIVE
+                                self.indicator.stopAnimating()
                                 return
                             }
                         }
@@ -167,59 +189,79 @@ class AvailibilityAndBookingViewController: UIViewController {
             }
         })
         
-        self.resultView.text = "Yey, the car is availible!"
+        self.resultView.text = RESULT_POSITIVE
         calculatePrice(rentingIntervall: intervall2Check!)
     }
     
     func calculatePrice(rentingIntervall: DateInterval) -> Void {
-        let intervalLength : Float = Float(Calendar.current.dateComponents([.day], from: rentingIntervall.start, to: rentingIntervall.end).day!)
-        
-        let priceperDay: Float = Float((offer?.basePrice)!)
-    
-        priceView.text = "Price per day: \(priceperDay)"
-        
+        let userID = storageAPI.userID()
         //calculate discount depending on rating
-        //todo: frühbucherrabatt?
-        storageAPI.getUserByUID(UID: storageAPI.userID()) { (user) in
-            let rating: Float = user.rating
-            var discount: Float = 0
+        storageAPI.getUserByUID(UID: userID) { (user) in
+            let intervalLengthInt = (Calendar.current.dateComponents([.day], from: rentingIntervall.start, to: rentingIntervall.end).day!) + 1
+            let intervalLength : Float = Float(intervalLengthInt)
+            let priceperDay: Float = Float((self.offer!.basePrice))
             
-            if (rating < 4) {
-                self.discountView.text = "No discount yet - go and get at least 4 stars!"
-            } else if (rating >= 4 && rating < 4.9) { //get 5% discount
-                discount = priceperDay*0.05
-                self.discountView.text = "5% discount: -\(discount)"
-            } else if (rating >= 4.9) { //get 10% discount
-                discount = priceperDay*0.1
-                self.discountView.text = "10% discount: -\(discount)"
-            } else {
-                self.discountView.text = "No discount yet - go and get at least 4 stars!"
-            }
+            self.priceView.text = "  \(priceperDay)"
+            let ratingAverageValue: Float = user.rating
+            var ratingDiscount: Float = 0
+            var expDiscount: Float = 0
             
-            self.totalPrice = ((priceperDay - discount) * intervalLength)
-            self.totalPriceView.text = "Total price: \(self.totalPrice)"
-            self.reservationButton.isEnabled = true
+            self.storageAPI.getRatingsByUserUID(userUID: userID, completion: { (ratings) in
+                //discount for average rating value & for experience measured by ammount of ratings
+                if ratings.count > 0 {
+                    if (ratingAverageValue >= 4.9) { //get 10% discount
+                        ratingDiscount = priceperDay*self.RATING_QUOT_5
+                        self.ratingDiscountView.text = "- \(ratingDiscount)" + self.RATING_5
+                    } else if (ratingAverageValue >= 4.5 && ratingAverageValue < 4.9) { //get 5% discount
+                        ratingDiscount = priceperDay * self.RATING_QUOT_45
+                        self.ratingDiscountView.text = "- \(ratingDiscount)" + self.RATING_45
+                    } else if (ratingAverageValue < 4.5 && ratingAverageValue >= 3.5) { //get nothing
+                        self.ratingDiscountView.text = self.NO_RATING_DISC
+                    } else if (ratingAverageValue < 3.5) { //get 20% fee
+                        ratingDiscount = priceperDay * self.RATING_QUOT_35
+                        self.ratingDiscountView.text = "+ \(ratingDiscount*(-1))" + self.RATING_35
+                    }
+                    let expDiscountPercent = (ratings.count - (ratings.count % 10)) / 10
+                    if expDiscount >= 1 {
+                        expDiscount = (priceperDay * Float(expDiscountPercent))/100
+                        self.experienceDiscountView.text = "-  \(expDiscount) (- \(expDiscountPercent) %)"
+                    } else {
+                        self.experienceDiscountView.text = self.NO_EXP_DISC
+                    }
+                } else {
+                    self.ratingDiscountView.text = self.NO_RATING_DISC
+                }
+                self.totalPrice = ((priceperDay - ratingDiscount - expDiscount) * intervalLength)
+                self.totalPriceView.text = "\(self.totalPrice)"
+                
+                if (intervalLengthInt > 1) {
+                    self.totalPriceLabel.text = "\(intervalLengthInt) days total price:"
+                } else {
+                    self.totalPriceLabel.text = "\(intervalLengthInt) day total price:"
+                }
+            })
         }
+        
+        
+        
+        self.reservationButton.isEnabled = true
+        self.indicator.stopAnimating()
+        self.hiddenElementsView.isHidden = false
     }
     
     @IBAction func reserve(_ sender: Any) {
         reservationButton.isEnabled = false
-        resultView.text = "Reservation in progress..."
-        priceView.text = ""
-        discountView.text = ""
-        totalPriceView.text = ""
+        indicator.startAnimating()
         storageAPI.generateRentingKey(completion: {(rentingID) in
             let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
             self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                 if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
-                    //TODO: go back to startseite
-                    //chat message to lessor from default user
-                    //todo: Methoden in MessageHandler erstellen?
-               //     MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, senderName: MessageHandler.defaultUserButtlerJamesName, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €");
                     MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
+                    self.dismiss(animated: true, completion: nil)
                 } else {
                     self.reservationButton.isEnabled = true
                     self.resultView.text = ""
+                    self.hiddenElementsView.isHidden = true
                     let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
                     let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
                     alertMissingInputs.addAction(ok)
@@ -258,7 +300,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                     calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
                     resultView.text = ""
                     priceView.text = ""
-                    discountView.text = ""
+                    ratingDiscountView.text = ""
                     totalPriceView.text = ""
                     reservationButton.isEnabled = false
                     firstDate = date
@@ -270,7 +312,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                         recursiveDeselectionCall = false
                         resultView.text = ""
                         priceView.text = ""
-                        discountView.text = ""
+                        ratingDiscountView.text = ""
                         totalPriceView.text = ""
                         reservationButton.isEnabled = false
                         firstDate = date
