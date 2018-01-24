@@ -16,30 +16,17 @@ class HomePageModel {
     let maxDistanceFromNow:Double = 30 * 24 * 3600 // one month
     let rateableAfter:Double = 2 * 24 * 3600 // 2 days
     
+    var userRentingsCache: [RentingEvent] = []
+    var rentingsOfYourCarsCache: [RentingEvent] = []
+    
     init(){
         storageAPI = StorageAPI.shared
     }
     
-    /* func getUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand)]) -> Void) {
-        var result:[(Renting, Offering, Brand)] = []
-        storageAPI.getRentingsByUserUID(userUID: UID, completion: {rentings in
-            let numberOfRentings = rentings.count
-            // TODO: will the rentings appear in a deterministic order?
-            // TODO: handle errors
-            for renting in rentings {
-                self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                    result.append((renting, offering, offeringsBrand))
-                    if (result.count == numberOfRentings) {
-                        completion(result)
-                    }
-                })
-            }
-        })
-    } */
-    
-    func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [(Renting, Offering, Brand, Bool)]) -> Void) {
+    // TODO: construct YouRented in this function
+    func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [YouRented]) -> Void) {
         storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
-            var result:[(Renting, Offering, Brand, Bool)] = []
+            var result:[YouRented] = []
             
             let newerRentings = rentings.filter {renting in
                 if (renting.endDate < Date()){
@@ -73,7 +60,8 @@ class HomePageModel {
                         let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
                         // ratings that are over long enough and have been confirmed are rateable
                         let rateable = (distanceFromNow.duration > self.rateableAfter) && (renting.confirmationStatus == true)
-                        result.append((renting, offering, offeringsBrand, rateable))
+                        let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
+                        result.append(newYouRented)
                         if (result.count == numberOfRentings) {
                             completion(result)
                         }
@@ -82,6 +70,24 @@ class HomePageModel {
             }
         })
     }
+    
+    func subscribeToFirstTable(UID: String, completion: @escaping (_ data: [RentingEvent]) -> Void){
+        subscribeToUsersRentings(UID: UID, completion: {currentYouRented in
+            // empty cache
+            self.userRentingsCache = []
+            self.userRentingsCache.append(currentYouRented)
+            // TODO: sort results by date
+            // merge the two caches and return them
+            var result: [RentingEvent] = self.userRentingsCache
+            result.append(contentsOf: self.rentingsOfYourCarsCache)
+            completion(result)
+        })
+    }
+    
+    func subscribeToRentingsOfUsersCars(UID: String, completion: @escaping (_ data: [SomebodyRented]) -> Void){
+        subscribeToUsersOfferings(UID: <#T##String#>, completion: <#T##([(Offering, Brand)]) -> Void#>)
+    }
+    
     func subscribeToUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
         // TODO: move into storage API?
         /* var result:[(Offering, Brand)] = []
