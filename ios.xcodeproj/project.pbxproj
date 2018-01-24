@@ -11,7 +11,7 @@
 		1901703D200BA55D00E21080 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703C200BA55D00E21080 /* HomePageViewController.swift */; };
 		19017040200BA65F00E21080 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703F200BA65F00E21080 /* HomePageModel.swift */; };
 		19017042200BA70200E21080 /* RentingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017041200BA70200E21080 /* RentingRequest.swift */; };
-		19017045200BB0B300E21080 /* UserRentingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */; };
+		19017045200BB0B300E21080 /* YouRentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017044200BB0B300E21080 /* YouRentedTableViewCell.swift */; };
 		19017047200BD68600E21080 /* UserRentingRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */; };
 		19017049200BE7B000E21080 /* RequestProcessingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */; };
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
@@ -51,6 +51,7 @@
 		19E458EE20178A0B00B45E7F /* RentingEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E458ED20178A0B00B45E7F /* RentingEventType.swift */; };
 		19E458F020178A5500B45E7F /* RentingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E458EF20178A5500B45E7F /* RentingEvent.swift */; };
 		19E458F220178D4000B45E7F /* SomebodyRented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E458F120178D4000B45E7F /* SomebodyRented.swift */; };
+		19E8583E2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E8583D2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift */; };
 		19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */; };
 		19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19EE8F342006A40700204C73 /* CoordinatePoint.swift */; };
 		2AA80B1C2014C8F700B778C6 /* ChatBot.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2AA80B1B2014C8F700B778C6 /* ChatBot.storyboard */; };
@@ -123,7 +124,7 @@
 		1901703C200BA55D00E21080 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1901703F200BA65F00E21080 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		19017041200BA70200E21080 /* RentingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingRequest.swift; sourceTree = "<group>"; };
-		19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingsTableViewCell.swift; sourceTree = "<group>"; };
+		19017044200BB0B300E21080 /* YouRentedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouRentedTableViewCell.swift; sourceTree = "<group>"; };
 		19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingRequestsTableViewCell.swift; sourceTree = "<group>"; };
 		19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProcessingProtocol.swift; sourceTree = "<group>"; };
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
@@ -163,6 +164,7 @@
 		19E458ED20178A0B00B45E7F /* RentingEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingEventType.swift; sourceTree = "<group>"; };
 		19E458EF20178A5500B45E7F /* RentingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingEvent.swift; sourceTree = "<group>"; };
 		19E458F120178D4000B45E7F /* SomebodyRented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomebodyRented.swift; sourceTree = "<group>"; };
+		19E8583D2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SomebodyRentedTableViewCell.swift; sourceTree = "<group>"; };
 		19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryConvertibleEditable.swift; sourceTree = "<group>"; };
 		19EE8F342006A40700204C73 /* CoordinatePoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatePoint.swift; sourceTree = "<group>"; };
 		213DBECC7DCDEFB7A18EE30C /* Pods-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -280,9 +282,10 @@
 				19017039200BA32100E21080 /* HomePage.storyboard */,
 				19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */,
 				19636A0B2015490700423927 /* RatingProtocol.swift */,
-				19017044200BB0B300E21080 /* UserRentingsTableViewCell.swift */,
+				19017044200BB0B300E21080 /* YouRentedTableViewCell.swift */,
 				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
 				840424C4200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift */,
+				19E8583D2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -1004,7 +1007,8 @@
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
 				771F3762200D023B003FC001 /* ProfileViewController.swift in Sources */,
 				84FD437C1FF52CDA00CB546C /* AdvertisePage6.swift in Sources */,
-				19017045200BB0B300E21080 /* UserRentingsTableViewCell.swift in Sources */,
+				19E8583E2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift in Sources */,
+				19017045200BB0B300E21080 /* YouRentedTableViewCell.swift in Sources */,
 				191DABB11FF00F7000EB0070 /* Time.swift in Sources */,
 				19EE2B931FD9F05B004674F0 /* DictionaryConvertibleEditable.swift in Sources */,
 				19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */,

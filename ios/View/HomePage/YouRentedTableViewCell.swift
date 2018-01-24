@@ -8,7 +8,9 @@
 
 import UIKit
 
-class UserRentingsTableViewCell: UITableViewCell {
+class YouRentedTableViewCell: UITableViewCell {
+    
+    static let identifier = "YouRentedTableViewCell"
 
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
@@ -21,6 +23,29 @@ class UserRentingsTableViewCell: UITableViewCell {
     
     var delegate: RatingProtocol?
     var showedRenting: Renting?
+    
+    var event: RentingEvent? {
+        didSet {
+            guard let event = event as? YouRented else {
+                return
+            }
+            carNameLabel.text = event.brand.name + " " + event.offering.type
+            startDateLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
+            endDateLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
+            if (event.renting.confirmationStatus) {
+                // renting is confirmed
+                statusLabel.text = YouRentedTableViewCell.ACCEPTED_STATUS_MESSAGE
+            } else {
+                statusLabel.text = YouRentedTableViewCell.PENDING_STATUS_MESSAGE
+            }
+            if (event.isRateable) {
+                // renting is rateable -> show rating button
+                rateButton.isHidden = false
+            } else {
+                rateButton.isHidden = true
+            }
+        }
+    }
     
     @IBAction func rateButtonTapped(_ sender: Any) {
         guard let currentDelegate = delegate,

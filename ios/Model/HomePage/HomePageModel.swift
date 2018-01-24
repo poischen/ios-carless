@@ -83,16 +83,22 @@ class HomePageModel {
         })
     }
     
-    func subscribeToFirstTable(UID: String, completion: @escaping (_ data: [RentingEvent]) -> Void){
+    func subscribeToRentingEvents(UID: String, completion: @escaping (_ data: [RentingEvent]) -> Void){
         subscribeToUsersRentings(UID: UID, completion: {(currentYouRented:[YouRented]) in
             // overwrite cache
             self.userRentingsCache = currentYouRented
             let mergedCaches = self.userRentingsCache + self.rentingsOfYourCarsCacheArray
             completion(mergedCaches)
         })
-        subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, rentings) in
+        subscribeToConfirmedRentingsForUsersOfferings(UID: UID, completion: {(offeringID, rentings) in
             // add or overwrite rentings for this offering
-            self.rentingsOfYourCarsCache.updateValue(rentings, forKey: offeringID)
+            if rentings.count > 0 {
+                // overwrite (maybe) existing requests for this offering in the map
+                self.rentingsOfYourCarsCache[offeringID] = rentings
+            } else {
+                // remove key from map if no rentings for the offering exist
+                self.rentingsOfYourCarsCache.removeValue(forKey: offeringID)
+            }
             let mergedCaches = self.userRentingsCache + self.rentingsOfYourCarsCacheArray
             completion(mergedCaches)
         })
@@ -200,6 +206,13 @@ class HomePageModel {
         })
     }
     
+    func subscribeToConfirmedRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
+        subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, peopleRented) in
+            let unconfirmedRequests = peopleRented.filter {$0.renting.confirmationStatus}
+            completion(offeringID, unconfirmedRequests)
+        })
+    }
+    
     // IMPORTANT: The completion callback will be fired individually for each offering.
     func subscribeToRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
@@ -279,7 +292,7 @@ class HomePageModel {
  */
     
     // TODO: move somewhere else?
-    func dateToString(date: Date) -> String {
+    static func dateToString(date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd.MM.yyyy"
         return formatter.string(from: date)
