@@ -31,13 +31,11 @@ class AvailibilityAndBookingViewController: UIViewController {
     @IBOutlet weak var hiddenElementsView: UIStackView!
 
     let formatter = DateFormatter()
-    var firstDate:Date?
-    var lastDate:Date?
+    var firstDate: Date?
+    var lastDate: Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
-    let selectedColor = UIColor(hue: 0.9917, saturation: 0.67, brightness: 0.75, alpha: 1.0)
-    let releasedColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1.0)
-    let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
+    let notInMonthColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.5)
     
     var dates2Check: [Date] = []
     var totalPrice: Float = 0
@@ -57,7 +55,7 @@ class AvailibilityAndBookingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+ 
         indicator.stopAnimating()
         reservationButton.isHidden = true
         hiddenElementsView.isHidden = true
@@ -69,9 +67,12 @@ class AvailibilityAndBookingViewController: UIViewController {
             self.navigationItem.title = TITLE
             reservationButton.isEnabled = false
         }
-
+        
         calendarView.calendarDelegate = self
         calendarView.calendarDataSource = self
+        
+        calendarView.allowsMultipleSelection  = true
+      //  calendarView.isRangeSelectionUsed = true
         
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
@@ -85,9 +86,6 @@ class AvailibilityAndBookingViewController: UIViewController {
         calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
         }
-        
-        calendarView.allowsMultipleSelection = true
-       // calendarView.isRangeSelectionUsed = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -100,41 +98,59 @@ class AvailibilityAndBookingViewController: UIViewController {
     
     func handleSelectionVisually(view: JTAppleCell?, cellState: CellState){
         guard let cell = view as? AvailibilityCalendarCell else {return}
+      
         
-    if cellState.dateBelongsTo == .thisMonth {
         switch cellState.selectedPosition() {
-        case .full, .left, .right, .middle:
-            cell.dateLabel.textColor = selectedColor
+        case .full, .middle, .left, .right:
+            cell.cellSelectionFeedback.isHidden = false
+            cell.cellSelectionFeedback.layer.cornerRadius = 15
+            
+        default:
+            cell.cellSelectionFeedback.isHidden = true
+        }
+        
+      /*  switch cellState.selectedPosition() {
+        case .full:
+            cell.cellSelectionFeedback.isHidden = false
             cell.availibility.isBlocked = false
+            cell.cellSelectionFeedback.clipsToBounds = true
+            cell.cellSelectionFeedback.layer.cornerRadius = 15
+            print("full")
+            
+        case .middle:
+            cell.cellSelectionFeedback.isHidden = false
+            cell.availibility.isBlocked = false
+            print("middle")
+        
+        case .right:
+            cell.cellSelectionFeedback.isHidden = false
+            cell.availibility.isBlocked = false
+            cell.cellSelectionFeedback.clipsToBounds = true
+            cell.cellSelectionFeedback.layer.cornerRadius = 15
+            cell.cellSelectionFeedback.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+            print("right")
+        
+        case .left:
+            cell.cellSelectionFeedback.isHidden = false
+            cell.availibility.isBlocked = false
+            cell.cellSelectionFeedback.clipsToBounds = true
+            cell.cellSelectionFeedback.layer.cornerRadius = 15
+            cell.cellSelectionFeedback.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+            print("left")
 
         default:
-            cell.dateLabel.textColor = releasedColor
+            cell.cellSelectionFeedback.isHidden = true
             cell.availibility.isBlocked = true
-        }
-    }
-        
-     /*   if cellState.dateBelongsTo == .thisMonth {
-            if cellState.isSelected {
-                cell.dateLabel.textColor = selectedColor
-                cell.availibility.isBlocked = false
-            } else {
-                cell.dateLabel.textColor = releasedColor
-                cell.availibility.isBlocked = true
-            }
         }*/
     }
     
     func handleMonthColors(view: JTAppleCell?, cellState: CellState){
         guard let cell = view as? AvailibilityCalendarCell else {return}
         
-        if cellState.isSelected {
-            cell.dateLabel.textColor = selectedColor
-        } else {
-            if cellState.dateBelongsTo == .thisMonth {
-                cell.dateLabel.textColor = releasedColor
-            } else {
-                cell.dateLabel.textColor = notInMonthColor
+        if cellState.dateBelongsTo == .thisMonth {
             }
+        else {
+            cell.dateLabel.textColor = notInMonthColor
         }
     }
     
@@ -276,79 +292,41 @@ class AvailibilityAndBookingViewController: UIViewController {
 
 extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
-        let myCustomCell = cell as! AvailibilityCalendarCell
+        let cell = cell as! AvailibilityCalendarCell
         let availibility = Availibility(date: date)
-        myCustomCell.availibility = availibility
-        myCustomCell.dateLabel.text = cellState.text
-        handleMonthColors(view: myCustomCell, cellState: cellState)
+        cell.availibility = availibility
+        cell.dateLabel.text = cellState.text
+        handleMonthColors(view: cell, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        let myCustomCell = calendar.dequeueReusableCell(withReuseIdentifier: "availibilityCalendarCell", for: indexPath) as! AvailibilityCalendarCell
-        self.calendar(calendar, willDisplay: myCustomCell, forItemAt: date, cellState: cellState, indexPath: indexPath)
-        return myCustomCell
+        let cell = calendar.dequeueReusableCell(withReuseIdentifier: "availibilityCalendarCell", for: indexPath) as! AvailibilityCalendarCell
+        self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
+        return cell
+    }
+    
+    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        guard let selectedDate = cell as? AvailibilityCalendarCell else {return false}
+        return true
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        dates2Check.append(date)
         guard let selectedDate = cell as? AvailibilityCalendarCell else {return}
-        handleSelectionVisually(view: selectedDate, cellState: cellState)
-        
-        if recursiveSelectionCall == false {
-            if let currentFirstDate = firstDate {
-                if lastDate != nil {
-                    calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
-                    resultView.text = ""
-                    priceView.text = ""
-                    ratingDiscountView.text = ""
-                    totalPriceView.text = ""
-                    reservationButton.isEnabled = false
-                    firstDate = date
-                    lastDate = nil
-                } else {
-                    if (date < currentFirstDate){
-                        recursiveDeselectionCall = true
-                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
-                        recursiveDeselectionCall = false
-                        resultView.text = ""
-                        priceView.text = ""
-                        ratingDiscountView.text = ""
-                        totalPriceView.text = ""
-                        reservationButton.isEnabled = false
-                        firstDate = date
-                        lastDate = nil
-                    } else {
-                        lastDate = date
-                        if (firstDate != lastDate) {
-                            recursiveSelectionCall = true
-                            calendarView.selectDates(from: currentFirstDate, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
-                            checkAvailibility()
-                            print("a valid intervall is selected selected, check availibility")
-                            recursiveSelectionCall = false
-                        }
-                    }
-                }
-            } else {
-                firstDate = date
-                lastDate = firstDate
-                checkAvailibility()
-                print("only on cell selected, check availibility")
-            }
+        if firstDate != nil {
+            calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+        } else {
+            firstDate = date
         }
+        handleSelectionVisually(view: selectedDate, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        print(cellState.selectedPosition)
-        if !(cellState.selectedPosition() == .middle) {
-            if dates2Check.count > 0 {
-                if let index = dates2Check.index(of: date) {
-                    dates2Check.remove(at: index)
-                }
-            }
-            
             guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
-            handleSelectionVisually(view: releasedDate, cellState: cellState)
+        firstDate = nil
+        if calendarView.selectedDates.count > 1 {
+            calendarView.deselectAllDates()
         }
+            handleSelectionVisually(view: releasedDate, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
@@ -356,6 +334,8 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        return true
+        /*
         // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
@@ -372,7 +352,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                 lastDate = nil
             }
             return false
-        }
+        }*/
     }
 
 

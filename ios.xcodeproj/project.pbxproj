@@ -507,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				840D63BD1FE9A4B7007A1F16 /* Advertise.storyboard */,
+				840D63C51FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift */,
 			);
 			path = Advertise;
 			sourceTree = "<group>";
@@ -517,6 +518,7 @@
 				840D63CA1FE9A565007A1F16 /* Offering.storyboard */,
 				840D63CC1FE9A56C007A1F16 /* BasicDataCollectionViewCell.swift */,
 				840D63CD1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift */,
+				840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */,
 			);
 			path = Offer;
 			sourceTree = "<group>";
@@ -552,8 +554,6 @@
 				84FD43791FF52CCD00CB546C /* AdvertisePageContentPickup.swift */,
 				84FD437B1FF52CDA00CB546C /* AdvertisePageContentDescription.swift */,
 				84FD437D1FF52CE600CB546C /* AdvertisePageContentPublish.swift */,
-				840D63BF1FE9A4BE007A1F16 /* AvailibilityCalendarCell.swift */,
-				840D63C51FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift */,
 				84FD74BE2016AD0F00A2286E /* AdvertisePopOverPhotoViewController.swift */,
 			);
 			path = Advertise;
