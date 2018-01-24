@@ -24,9 +24,7 @@ class AdvertisePageConentAvailibilityCalendar: UIViewController {
     
     let formatter = DateFormatter()
     
-    let blockedColor = UIColor(hue: 0.9917, saturation: 0.67, brightness: 0.75, alpha: 1.0)
-    let releasedColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 1.0)
-    let notInMonthColor = UIColor(hue: 0.7306, saturation: 0.07, brightness: 0.43, alpha: 1.0)
+    let notInMonthColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.5)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,12 +60,11 @@ class AdvertisePageConentAvailibilityCalendar: UIViewController {
         guard let cell = view as? AvailibilityCalendarCell else {return}
     if cellState.dateBelongsTo == .thisMonth {
         if cellState.isSelected {
-            print("blocked")
-            cell.dateLabel.textColor = blockedColor
+            cell.cellSelectionFeedback.isHidden = false
             cell.availibility.isBlocked = false
         } else {
             print("released")
-            cell.dateLabel.textColor = releasedColor
+            cell.cellSelectionFeedback.isHidden = true
             cell.availibility.isBlocked = true
         }
     }
@@ -77,10 +74,10 @@ class AdvertisePageConentAvailibilityCalendar: UIViewController {
         guard let cell = view as? AvailibilityCalendarCell else {return}
         
         if cellState.isSelected {
-            cell.dateLabel.textColor = blockedColor
+            cell.cellSelectionFeedback.isHidden = false
         } else {
             if cellState.dateBelongsTo == .thisMonth {
-                cell.dateLabel.textColor = releasedColor
+                cell.cellSelectionFeedback.isHidden = true
             } else {
             cell.dateLabel.textColor = notInMonthColor
             }
@@ -112,7 +109,6 @@ extension AdvertisePageConentAvailibilityCalendar: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        //todo: necessary to filter duplicates?
         pageViewController.advertiseHelper.blockedDates.append(date)
         print(pageViewController.advertiseHelper.blockedDates)
         
@@ -159,7 +155,6 @@ extension AdvertisePageConentAvailibilityCalendar: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         let priceInt = Int(textField.text!)!
-            //pageViewController.advertiseModel.updateDict(input: priceInt as AnyObject, key: Offering.OFFERING_PRICE_KEY, needsConvertion: false, conversionType: "none")
         pageViewController.advertiseHelper.basePrice = priceInt
     }
 }

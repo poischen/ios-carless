@@ -13,16 +13,6 @@ class AdvertiseFeaturesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var featureIconImageView: UIImageView!
     @IBOutlet weak var featureChecked: UILabel!
     @IBOutlet weak var featureLabel: UILabel!
-        
-   /* override func awakeFromNib() {
-        featureIconImageView = UIImageView(frame: contentView.frame)
-        featureIconImageView.contentMode = .scaleToFill
-        featureIconImageView.clipsToBounds = true
-        
-       featureLabel = UILabel(frame: contentView.frame)
-        
-        contentView.addSubview(featureIconImageView)
-        contentView.addSubview(featureLabel)
-    }*/
+    
 }
 
