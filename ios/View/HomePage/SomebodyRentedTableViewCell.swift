@@ -19,6 +19,8 @@ class SomebodyRentedTableViewCell: UITableViewCell {
     @IBOutlet weak var rentingStartLabel: UILabel!
     @IBOutlet weak var rentingEndLabel: UILabel!
     
+    var delegate: RatingProtocol?
+    
     var event: RentingEvent? {
         didSet {
             guard let event = event as? SomebodyRented else {
@@ -35,6 +37,22 @@ class SomebodyRentedTableViewCell: UITableViewCell {
                 rateButton.isHidden = true
             }
         }
+    }
+    
+    @IBAction func userButtonClicked(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentEvent = event as? SomebodyRented else {
+                return
+        }
+        currentDelegate.goToProfile(user: currentEvent.userThatRented)
+    }
+    
+    @IBAction func rateButtonClicked(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentEvent = event as? SomebodyRented else {
+                return
+        }
+        currentDelegate.rateLessee(renting: currentEvent.renting, lesseeUser: currentEvent.userThatRented)
     }
     
     override func awakeFromNib() {

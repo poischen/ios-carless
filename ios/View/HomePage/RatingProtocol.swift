@@ -9,5 +9,7 @@
 import Foundation
 
 protocol RatingProtocol {
-    func rateRenting(renting: Renting);
+    func rateLessor(renting: Renting)
+    func rateLessee(renting: Renting, lesseeUser: User)
+    func goToProfile(user: User)
 }

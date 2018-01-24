@@ -31,6 +31,7 @@ class RateModel {
         }) */
     }
     
+    /*
     static func getAdditionalInformationForLesseeRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lesseeUser: User) -> Void){
         /* // first the offering from the DB (the car the user rented) in order to assemble the car model name
         StorageAPI.shared.getOfferingByID(id: rentingBeingRated.inseratID, completion: {offering in
@@ -50,6 +51,14 @@ class RateModel {
                 let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
                 completion(offeringCarModelName, lesseeUser)
             })
+        })
+    }*/
+    
+    static func getCarModelName(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String) -> Void){
+        // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
+        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {(offering, offeringsBrand) in
+            let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
+            completion(offeringCarModelName)
         })
     }
     

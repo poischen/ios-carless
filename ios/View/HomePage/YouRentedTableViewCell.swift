@@ -51,7 +51,7 @@ class YouRentedTableViewCell: UITableViewCell {
             let currentEvent = event as? YouRented else {
                 return
         }
-        currentDelegate.rateRenting(renting: currentEvent.renting)
+        currentDelegate.rateLessor(renting: currentEvent.renting)
     }
     
     override func awakeFromNib() {

@@ -172,6 +172,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             case .somebodyRented:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell {
                     cell.event = event
+                    cell.delegate = self
                     returnCell = cell
                 }
             case .youRented:
@@ -254,18 +255,19 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(navigationController, animated: true, completion: nil)
     }
     
-
-}
-
-extension HomePageViewController: RequestProcessingProtocol{
+    // needed by both RequestProcessingProtocol and RatingProtocol
     func goToProfile(user: User) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
         guard let profileController = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as? ExternProfileViewController else {
-                return
+            return
         }
         profileController.profileOwner = user
         self.present(profileController, animated: true, completion: nil)
     }
+
+}
+
+extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
@@ -279,12 +281,24 @@ extension HomePageViewController: RequestProcessingProtocol{
 }
 
 extension HomePageViewController: RatingProtocol{
-    func rateRenting(renting: Renting) {
+    // TODO: avoid code duplication here?
+    
+    func rateLessee(renting: Renting, lesseeUser: User) {
         let storyboard = UIStoryboard(name: "Rate", bundle: nil)
         guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
                 return
         }
         rateController.rentingBeingRated = renting
+        rateController.lesseeUser = lesseeUser
+        self.present(rateController, animated: true, completion: nil)
+    }
+    func rateLessor(renting: Renting) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
+            return
+        }
+        rateController.rentingBeingRated = renting
+        rateController.rateLessee = false
         self.present(rateController, animated: true, completion: nil)
     }
     

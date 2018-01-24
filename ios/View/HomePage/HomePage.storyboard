@@ -194,6 +194,9 @@
                                                     <rect key="frame" x="135" y="2" width="92" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="rate this"/>
+                                                    <connections>
+                                                        <action selector="rateButtonClicked:" destination="Vbe-vt-G7H" eventType="touchUpInside" id="R45-M4-xVq"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="User:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QrH-if-cqs">
                                                     <rect key="frame" x="15" y="22" width="120" height="21"/>
@@ -206,6 +209,9 @@
                                                     <rect key="frame" x="135" y="22" width="92" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <state key="normal" title="username"/>
+                                                    <connections>
+                                                        <action selector="userButtonClicked:" destination="Vbe-vt-G7H" eventType="touchUpInside" id="F1S-J2-cPJ"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
