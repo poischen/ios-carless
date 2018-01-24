@@ -22,7 +22,6 @@ class YouRentedTableViewCell: UITableViewCell {
     static let PENDING_STATUS_MESSAGE = "pending"
     
     var delegate: RatingProtocol?
-    var showedRenting: Renting?
     
     var event: RentingEvent? {
         didSet {
@@ -49,10 +48,10 @@ class YouRentedTableViewCell: UITableViewCell {
     
     @IBAction func rateButtonTapped(_ sender: Any) {
         guard let currentDelegate = delegate,
-            let currentRenting = showedRenting else {
+            let currentEvent = event as? YouRented else {
                 return
         }
-        currentDelegate.rateRenting(renting: currentRenting)
+        currentDelegate.rateRenting(renting: currentEvent.renting)
     }
     
     override func awakeFromNib() {
