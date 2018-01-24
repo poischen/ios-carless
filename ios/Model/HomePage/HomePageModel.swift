@@ -17,10 +17,25 @@ class HomePageModel {
     let rateableAfter:Double = 2 * 24 * 3600 // 2 days
     
     var userRentingsCache: [RentingEvent] = []
-    var rentingsOfYourCarsCache: [RentingEvent] = []
+    var rentingsOfYourCarsCache: [String:[RentingEvent]] = [:] // key: offering's ID, value: rentings
+    var rentingsOfYourCarsCacheArray: [RentingEvent] {
+        var result:[RentingEvent] = []
+        for (_, rentings) in rentingsOfYourCarsCache {
+            result += rentings
+        }
+        return result
+    }
+    
+    // offerings being watched for new rentings
+    var watchedOfferingsIDs:Set = Set<String>()
     
     init(){
         storageAPI = StorageAPI.shared
+    }
+    
+    func isRentingRateable(renting: Renting) -> Bool {
+        let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
+        return (distanceFromNow.duration > self.rateableAfter) && (renting.confirmationStatus == true)
     }
     
     // TODO: construct YouRented in this function
@@ -56,10 +71,7 @@ class HomePageModel {
             } else {
                 for renting in newerRentings {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                        // TODO: avoid code duplication
-                        let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
-                        // ratings that are over long enough and have been confirmed are rateable
-                        let rateable = (distanceFromNow.duration > self.rateableAfter) && (renting.confirmationStatus == true)
+                        let rateable = self.isRentingRateable(renting: renting)
                         let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
                         result.append(newYouRented)
                         if (result.count == numberOfRentings) {
@@ -72,21 +84,20 @@ class HomePageModel {
     }
     
     func subscribeToFirstTable(UID: String, completion: @escaping (_ data: [RentingEvent]) -> Void){
-        subscribeToUsersRentings(UID: UID, completion: {currentYouRented in
-            // empty cache
-            self.userRentingsCache = []
-            self.userRentingsCache.append(currentYouRented)
-            // TODO: sort results by date
-            // merge the two caches and return them
-            var result: [RentingEvent] = self.userRentingsCache
-            result.append(contentsOf: self.rentingsOfYourCarsCache)
-            completion(result)
+        subscribeToUsersRentings(UID: UID, completion: {(currentYouRented:[YouRented]) in
+            // overwrite cache
+            self.userRentingsCache = currentYouRented
+            let mergedCaches = self.userRentingsCache + self.rentingsOfYourCarsCacheArray
+            completion(mergedCaches)
+        })
+        subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, rentings) in
+            // add or overwrite rentings for this offering
+            self.rentingsOfYourCarsCache.updateValue(rentings, forKey: offeringID)
+            let mergedCaches = self.userRentingsCache + self.rentingsOfYourCarsCacheArray
+            completion(mergedCaches)
         })
     }
     
-    func subscribeToRentingsOfUsersCars(UID: String, completion: @escaping (_ data: [SomebodyRented]) -> Void){
-        subscribeToUsersOfferings(UID: <#T##String#>, completion: <#T##([(Offering, Brand)]) -> Void#>)
-    }
     
     func subscribeToUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
         // TODO: move into storage API?
@@ -148,7 +159,7 @@ class HomePageModel {
     // TODO: make this more efficient by only returning the offering once for all requests for that offering
     // TODO: merge with subscribeToUsersOfferings?
     // TODO: Does this method have to handle empty arrays like the others do?
-    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
+    /* func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [(Offering, Brand, User, Renting)]) -> Void){
         var watchedOfferingsIDs:Set = Set<String>()
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
             for (offering, brand) in usersOfferings {
@@ -180,7 +191,49 @@ class HomePageModel {
                 }
             }
         })
+    } */
+    
+    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
+        subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, peopleRented) in
+            let unconfirmedRequests = peopleRented.filter {!$0.renting.confirmationStatus}
+            completion(offeringID, unconfirmedRequests)
+        })
     }
+    
+    // IMPORTANT: The completion callback will be fired individually for each offering.
+    func subscribeToRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
+        storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
+            for (offering, brand) in usersOfferings {
+                // TODO: find better solution for offeringID here
+                if (offering.id != nil && (!self.watchedOfferingsIDs.contains(offering.id!))){
+                    // offering has an ID and is not watched yet -> add it to the watched offerings and create listener for this offering
+                    self.watchedOfferingsIDs.insert(offering.id!)
+                    self.storageAPI.subscribeToRentingsForOffering(offeringID: offering.id!, completion: {offeringsRentings in
+                        var resultsForThisOffering:[SomebodyRented] = []
+                        if (offeringsRentings.count > 0) {
+                            // rentings exist -> proceed with them
+                            for renting in offeringsRentings {
+                                self.storageAPI.getUserByUID(UID: renting.userID, completion: {rentingUser in
+                                    let isRateable = self.isRentingRateable(renting: renting)
+                                    let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable)
+                                    resultsForThisOffering.append(somebodyRented)
+                                    if (resultsForThisOffering.count == offeringsRentings.count) {
+                                        // all rentings for this offering processed -> offering processed -> fire callback
+                                        completion(offering.id!, resultsForThisOffering)
+                                    }
+                                })
+                            }
+                        } else {
+                            // no unconfirmed ratings exists -> fire callback
+                            // this is necessary to make accepted requests disappear
+                            completion(offering.id!, [])
+                        }
+                    })
+                }
+            }
+        })
+    }
+
     
     func acceptRenting(renting: Renting) {
         renting.confirmationStatus = true
