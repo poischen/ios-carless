@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="CV2-sL-xQo">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G4L-xg-hpA">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,24 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="ZXH-OZ-i98">
+            <objects>
+                <navigationController id="G4L-xg-hpA" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="iconprince" id="7aY-13-iMx"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="8j6-IW-GNQ">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="CV2-sL-xQo" kind="relationship" relationship="rootViewController" id="8bN-El-iH6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="auj-Oc-iED" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="513" y="-1962"/>
+        </scene>
         <!--Profile-->
         <scene sceneID="vEn-XW-wTY">
             <objects>
@@ -19,17 +37,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9vr-n9-myy" userLabel="Images">
-                                <rect key="frame" x="0.0" y="20" width="375" height="200"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="221.5"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HomePicture.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="y9j-jo-AUS">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="177"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" alpha="0.60000002384185791" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pWe-UI-lbq">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="160"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="177"/>
                                         <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Profil.png" translatesAutoresizingMaskIntoConstraints="NO" id="ch8-83-Mx4" userLabel="Profile Image">
-                                        <rect key="frame" x="112.5" y="50" width="150" height="150"/>
+                                        <rect key="frame" x="112.5" y="71.5" width="150" height="150"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="150" id="F3t-wn-RiZ"/>
                                             <constraint firstAttribute="width" constant="150" id="cb7-vI-wgt"/>
@@ -51,7 +69,7 @@
                                 </constraints>
                             </view>
                             <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4R-1a-01L">
-                                <rect key="frame" x="112" y="235" width="150" height="3"/>
+                                <rect key="frame" x="112" y="300.5" width="150" height="3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="RbR-IO-9f0"/>
                                 </constraints>
@@ -59,7 +77,7 @@
                                 <color key="trackTintColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                             </progressView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZy-xB-BXL">
-                                <rect key="frame" x="62" y="318" width="250" height="30"/>
+                                <rect key="frame" x="62" y="383.5" width="250" height="30"/>
                                 <color key="backgroundColor" red="1" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zoi-AW-WzP"/>
@@ -73,7 +91,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9LK-Yf-c0H">
-                                <rect key="frame" x="62" y="373" width="250" height="30"/>
+                                <rect key="frame" x="62" y="438.5" width="250" height="30"/>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Logout">
@@ -89,7 +107,7 @@
                             <constraint firstItem="9vr-n9-myy" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" id="CTs-X5-KU7"/>
                             <constraint firstItem="PZy-xB-BXL" firstAttribute="top" secondItem="r4R-1a-01L" secondAttribute="bottom" constant="80" id="EZp-xG-Vwc"/>
                             <constraint firstItem="9LK-Yf-c0H" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" multiplier="1:1.5" id="NW6-EP-W7S"/>
-                            <constraint firstItem="9vr-n9-myy" firstAttribute="height" secondItem="0O5-l0-MlS" secondAttribute="height" multiplier="0.3" id="RQ4-68-JEp"/>
+                            <constraint firstItem="9vr-n9-myy" firstAttribute="height" secondItem="EcE-3l-eZR" secondAttribute="height" multiplier="0.4" id="RQ4-68-JEp"/>
                             <constraint firstItem="r4R-1a-01L" firstAttribute="centerX" secondItem="0O5-l0-MlS" secondAttribute="centerX" id="RWe-NA-CdC"/>
                             <constraint firstItem="PZy-xB-BXL" firstAttribute="width" secondItem="0O5-l0-MlS" secondAttribute="width" multiplier="1:1.5" id="T4T-mA-31q"/>
                             <constraint firstItem="9vr-n9-myy" firstAttribute="top" secondItem="EcE-3l-eZR" secondAttribute="top" id="Ydm-4a-jTf"/>
@@ -102,6 +120,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="EcE-3l-eZR"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Profile" id="kcZ-Cf-nYk"/>
                     <connections>
                         <outlet property="profileImage" destination="ch8-83-Mx4" id="5QT-0O-HYH"/>
                         <outlet property="profileImageUploadProgress" destination="r4R-1a-01L" id="pFd-mX-Tdy"/>
@@ -115,5 +134,6 @@
     <resources>
         <image name="HomePicture.jpg" width="1920" height="1080"/>
         <image name="Profil.png" width="500" height="500"/>
+        <image name="iconprince" width="30" height="30"/>
     </resources>
 </document>
