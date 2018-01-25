@@ -982,6 +982,11 @@
                         <viewLayoutGuide key="safeArea" id="LCN-MR-u6f"/>
                     </view>
                     <navigationItem key="navigationItem" title="Offering" leftItemsSupplementBackButton="YES" id="LNH-hR-qXf">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="e99-HY-dNe">
+                            <connections>
+                                <action selector="cancelButton:" destination="ydo-nl-Bdg" id="CS8-3p-Alf"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="Nhs-c6-fUb">
                             <connections>
                                 <action selector="actionItem:" destination="ydo-nl-Bdg" id="CxY-GI-FRN"/>
@@ -1012,6 +1017,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aAh-Z6-83y" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2186" y="565"/>
+        </scene>
+        <!--Storyboard Reference-->
+        <scene sceneID="qJF-cq-9w4">
+            <objects>
+                <viewControllerPlaceholder id="7wG-sp-VPR" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="w5k-DU-ghi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2022" y="1631"/>
         </scene>
     </scenes>
     <resources>
