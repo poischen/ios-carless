@@ -384,7 +384,7 @@
                                 <rect key="frame" x="0.0" y="20" width="375" height="1980"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nqb-7b-KOm" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="20" width="375" height="1268"/>
+                                        <rect key="frame" x="0.0" y="20" width="375" height="1157"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NHG-UT-G0Y" userLabel="Basic Details Area">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="394"/>
@@ -670,7 +670,7 @@
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qfi-Yg-P1D" userLabel="Features Area">
-                                                <rect key="frame" x="0.0" y="618" width="375" height="241"/>
+                                                <rect key="frame" x="0.0" y="618" width="375" height="130"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="siK-tZ-hyu" userLabel="separator">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -683,7 +683,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ib5-qT-C6O">
-                                                        <rect key="frame" x="10" y="16" width="355" height="225"/>
+                                                        <rect key="frame" x="10" y="16" width="355" height="114"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Further extras:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dav-bw-c6Q">
                                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="14.5"/>
@@ -694,28 +694,28 @@
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-Jx-RHH">
-                                                                <rect key="frame" x="0.0" y="29.5" width="355" height="195.5"/>
-                                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kcy-d8-pGH">
+                                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-Jx-RHH">
+                                                                <rect key="frame" x="0.0" y="29.5" width="355" height="84.5"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="kcy-d8-pGH">
                                                                     <size key="itemSize" width="70" height="70"/>
                                                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                                 </collectionViewFlowLayout>
                                                                 <cells>
-                                                                    <collectionViewCell hidden="YES" clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featuresCollectionViewCell" id="7SC-uc-sTB" customClass="FeaturesCollectionViewCell" customModule="ios" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
+                                                                    <collectionViewCell clipsSubviews="YES" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="featuresCollectionViewCell" id="7SC-uc-sTB" customClass="FeaturesCollectionViewCell" customModule="ios" customModuleProvider="target">
+                                                                        <rect key="frame" x="0.0" y="7.5" width="70" height="70"/>
                                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                                                             <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                                             <autoresizingMask key="autoresizingMask"/>
                                                                             <subviews>
-                                                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vtQ-Li-Xrb">
+                                                                                <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="vtQ-Li-Xrb">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
                                                                                 </imageView>
                                                                             </subviews>
                                                                         </view>
-                                                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <constraints>
                                                                             <constraint firstItem="vtQ-Li-Xrb" firstAttribute="top" secondItem="7SC-uc-sTB" secondAttribute="top" id="3Yr-6Y-vxg"/>
                                                                             <constraint firstAttribute="bottom" secondItem="vtQ-Li-Xrb" secondAttribute="bottom" id="En1-s3-Bj6"/>
@@ -732,14 +732,26 @@
                                                                     <outlet property="delegate" destination="ydo-nl-Bdg" id="Z6w-67-U7R"/>
                                                                 </connections>
                                                             </collectionView>
+                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This car does not have additional features." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XaA-C6-Ezx">
+                                                                <rect key="frame" x="0.0" y="29.5" width="355" height="25"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="height" constant="25" id="1F4-lw-ghE"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
                                                         </subviews>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="ah6-Jx-RHH" secondAttribute="bottom" id="JUo-BF-u6B"/>
                                                             <constraint firstItem="dav-bw-c6Q" firstAttribute="leading" secondItem="ib5-qT-C6O" secondAttribute="leading" id="Sf5-8Q-Emm"/>
                                                             <constraint firstItem="ah6-Jx-RHH" firstAttribute="leading" secondItem="ib5-qT-C6O" secondAttribute="leading" id="Vea-H5-HUB"/>
                                                             <constraint firstAttribute="trailing" secondItem="ah6-Jx-RHH" secondAttribute="trailing" id="WuZ-NI-eJn"/>
+                                                            <constraint firstItem="XaA-C6-Ezx" firstAttribute="top" secondItem="dav-bw-c6Q" secondAttribute="bottom" constant="15" id="XAk-tC-Pdh"/>
                                                             <constraint firstAttribute="trailing" secondItem="dav-bw-c6Q" secondAttribute="trailing" id="kaH-Fy-Aai"/>
                                                             <constraint firstItem="dav-bw-c6Q" firstAttribute="top" secondItem="ib5-qT-C6O" secondAttribute="top" id="kb1-dp-4xY"/>
+                                                            <constraint firstAttribute="trailing" secondItem="XaA-C6-Ezx" secondAttribute="trailing" id="mfS-ox-yZP"/>
+                                                            <constraint firstItem="XaA-C6-Ezx" firstAttribute="leading" secondItem="ib5-qT-C6O" secondAttribute="leading" id="qbF-Yy-P9s"/>
                                                             <constraint firstItem="ah6-Jx-RHH" firstAttribute="top" secondItem="dav-bw-c6Q" secondAttribute="bottom" constant="15" id="vcX-6n-Xz7"/>
                                                         </constraints>
                                                     </view>
@@ -750,13 +762,13 @@
                                                     <constraint firstAttribute="bottom" secondItem="ib5-qT-C6O" secondAttribute="bottom" id="9va-f6-zgi"/>
                                                     <constraint firstAttribute="trailing" secondItem="siK-tZ-hyu" secondAttribute="trailing" id="DFn-pp-sIZ"/>
                                                     <constraint firstItem="siK-tZ-hyu" firstAttribute="leading" secondItem="Qfi-Yg-P1D" secondAttribute="leading" id="JhB-eD-fjB"/>
-                                                    <constraint firstAttribute="height" constant="241" id="KU8-aD-fOC"/>
+                                                    <constraint firstAttribute="height" constant="130" id="KU8-aD-fOC"/>
                                                     <constraint firstItem="siK-tZ-hyu" firstAttribute="top" secondItem="Qfi-Yg-P1D" secondAttribute="top" id="ZLQ-1R-L4z"/>
                                                     <constraint firstItem="ib5-qT-C6O" firstAttribute="leading" secondItem="Qfi-Yg-P1D" secondAttribute="leading" constant="10" id="bOS-bJ-qT2"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XGd-Eu-us6" userLabel="Pick Up Information Area">
-                                                <rect key="frame" x="0.0" y="874" width="375" height="296"/>
+                                                <rect key="frame" x="0.0" y="763" width="375" height="296"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N2x-Zf-VST">
                                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1"/>
@@ -986,11 +998,11 @@
                         <outlet property="carLocationMap" destination="e6m-0U-08p" id="btL-53-PzO"/>
                         <outlet property="carNameLabel" destination="CNv-ly-3dS" id="F3s-J2-5Gn"/>
                         <outlet property="chatBtn" destination="ULL-Yo-YwP" id="RKF-iO-wzc"/>
-                        <outlet property="featuresCVSuperView" destination="siK-tZ-hyu" id="g4X-m8-fNw"/>
                         <outlet property="featuresCollectionView" destination="ah6-Jx-RHH" id="Gtg-1f-Tep"/>
                         <outlet property="lessorNameLabel" destination="OIi-Fz-e6D" id="Xxc-V9-IBq"/>
                         <outlet property="lessorProfileImageView" destination="q6U-Uc-JB5" id="yE6-We-iCn"/>
                         <outlet property="lessorRateView" destination="tB5-jA-nBw" id="bae-2l-gRc"/>
+                        <outlet property="noFeaturesLabel" destination="XaA-C6-Ezx" id="S65-Vq-YXe"/>
                         <outlet property="offerDescriptionTextView" destination="FAP-R4-0hf" id="Iwx-Q9-576"/>
                         <outlet property="pickUpLabel" destination="dIi-Os-FI3" id="vV4-6o-P7u"/>
                         <outlet property="priceLabel" destination="bai-PG-j3t" id="xuI-YZ-tEN"/>

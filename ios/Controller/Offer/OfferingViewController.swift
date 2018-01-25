@@ -34,7 +34,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var lessorProfileImageView: UIImageView!
     @IBOutlet weak var offerDescriptionTextView: UITextView!
     @IBOutlet weak var featuresCollectionView: UICollectionView!
-    @IBOutlet weak var featuresCVSuperView: UILabel!
+    @IBOutlet weak var noFeaturesLabel: UILabel!
     var features: [String]?
     let regionRadius: CLLocationDistance = 200
     @IBOutlet weak var carLocationMap: MKMapView!
@@ -135,6 +135,7 @@ class OfferingViewController: UIViewController {
         showOfferModel.getBasicDetails(offer: displayingOffering!, completion: { (basicDetails) in
             self.basicDetails = basicDetails
             self.basicDataCollectionView.dataSource = self
+            self.basicDataCollectionView.reloadData()
         })
         
         //set information about lessor area-------------------------------------------------------------------------------------------------------------------------
@@ -170,7 +171,8 @@ class OfferingViewController: UIViewController {
         //set feature area---------------------------------------------------
         showOfferModel.getFeatures(offerID: displayingOffering!.id!, completion: { (features) in
             self.features = features
-            self.basicDataCollectionView.dataSource = self
+            self.featuresCollectionView.dataSource = self
+            self.featuresCollectionView.reloadData()
         })
         
         //set information for picking up the car (map & time) area---------------------------------------------------
@@ -227,13 +229,6 @@ class OfferingViewController: UIViewController {
             }
         }
     }
-
-    
-    override func viewDidAppear(_ animated: Bool) {
-        
-        basicDataCollectionView.reloadData()
-        featuresCollectionView.reloadData()
-    }
     
     //set car location
     func centerMapOnLocation(location: CLLocation) {
@@ -261,18 +256,17 @@ extension OfferingViewController: UICollectionViewDataSource {
         if (collectionView == self.basicDataCollectionView){
             if let bd = basicDetails {
                 return bd.count
-            } else {
-                print("No basic details yet")
-                return 0
             }
         } else {
             if let f = features {
+                if f.count < 1 {
+                    noFeaturesLabel.isHidden = true
+                }
                 return f.count
-            } else {
-                print("No features yet")
-                return 0
             }
         }
+        
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

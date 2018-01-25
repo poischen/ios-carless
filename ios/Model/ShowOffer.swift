@@ -37,6 +37,7 @@ class ShowOffer {
             for feature in features {
                 featureList?.append(feature.name)
             }
+            completion(featureList)
         }
     }
     
