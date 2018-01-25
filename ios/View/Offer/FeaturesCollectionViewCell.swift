@@ -12,10 +12,16 @@ class FeaturesCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var featureImageView: UIImageView!
     
-    func displayContent(image: String){
+    func displayContent(feature: Feature){
         
-        let icon : UIImage = UIImage(named:image)!
-        featureImageView.image = icon
+        if let icon : UIImage = UIImage(named: feature.name){
+            featureImageView.image = icon
+        }
+        else {
+            let iconUrl = URL(string: (feature.iconURL))
+            featureImageView.kf.indicatorType = .activity
+            featureImageView.kf.setImage(with: iconUrl)
+        }
 
     }
     

@@ -35,7 +35,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var offerDescriptionTextView: UITextView!
     @IBOutlet weak var featuresCollectionView: UICollectionView!
     @IBOutlet weak var noFeaturesLabel: UILabel!
-    var features: [String]?
+    var features: [Feature]?
     let regionRadius: CLLocationDistance = 200
     @IBOutlet weak var carLocationMap: MKMapView!
     @IBOutlet weak var pickUpLabel: UILabel!
@@ -286,8 +286,10 @@ extension OfferingViewController: UICollectionViewDataSource {
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: identifierFeaturesCollectionView, for: indexPath) as! FeaturesCollectionViewCell
             if let f = features{
-                let feature = f[indexPath.row]
-                cell.displayContent(image: feature)
+                if f.count > 0 {
+                    let feature = f[indexPath.row]
+                    cell.displayContent(feature: feature)
+                }
             }
             return cell
         }
