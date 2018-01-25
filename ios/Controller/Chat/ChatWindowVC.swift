@@ -25,32 +25,44 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     var receiverName: String = ""
     var receiverImage: UIImage?
     var selectedUser: String?
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    
+    var cameFromOffer: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tabBarController?.tabBar.isHidden = true
         
-        let navBarView = UIView()
+        let navBarImgAndNameView = UIView()
         
         let title = UILabel()
         title.text = receiverName
         title.sizeToFit()
-        title.center = navBarView.center
+        title.center = navBarImgAndNameView.center
         title.textAlignment = NSTextAlignment.center
-        navBarView.addSubview(title)
+        navBarImgAndNameView.addSubview(title)
         
-        if let image = receiverImage {
+       if let image = receiverImage {
             imageView.contentMode = .scaleAspectFit
             imageView.image = image
             let imageAspect = imageView.image!.size.width/imageView.image!.size.height
             imageView.frame = CGRect(x: title.frame.origin.x-title.frame.size.height*imageAspect, y: title.frame.origin.y, width: title.frame.size.height*imageAspect, height: title.frame.size.height)
-            navBarView.addSubview(imageView)
+            navBarImgAndNameView.addSubview(imageView)
         }
 
-        self.navigationItem.titleView = navBarView
-        navBarView.sizeToFit()
+        self.navigationItem.titleView = navBarImgAndNameView
+        navBarImgAndNameView.sizeToFit()
+        
+        if cameFromOffer{
+            let cancelButton = UIBarButtonItem(
+                title: "Cancel",
+                style: .plain,
+                target: self,
+                action: #selector(cancelButton(sender:))
+            )
+            self.navigationItem.rightBarButtonItem = cancelButton
+        }
         
         picker.delegate = self
         
@@ -65,6 +77,10 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func cancelButton(sender: UIBarButtonItem) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     //COLLECTION VIEW FUNCTIONS

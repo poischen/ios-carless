@@ -52,10 +52,24 @@ class OfferingViewController: UIViewController {
     @IBAction func chatButton(_ sender: UIButton) {
         if let lessorUser = lessor {
             let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ChatWithUser") as! ChatWindowVC
+            let nc = storyboard.instantiateViewController(withIdentifier: "NavControllerChatWindow") as! UINavigationController
+            let vc = nc.topViewController as! ChatWindowVC
+            
             vc.selectedUser = lessorUser.id
+            vc.cameFromOffer = true
+
+            let profileImageView = UIImageView()
+            profileImageView.image = UIImage(named: "ProfilePic")
+            let profileLessorImgUrl = URL(string: (lessorUser.profileImgUrl))
+            profileImageView.kf.setImage(with: profileLessorImgUrl)
+            vc.receiverImage = profileImageView.image
+            
             self.present(vc, animated: true, completion: nil)
         }
+    }
+    
+    @IBAction func cancelButton(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func actionItem(_ sender: Any) {
@@ -237,19 +251,6 @@ class OfferingViewController: UIViewController {
     }
     
 }
-
-//calc round images
-extension UIImageView {
-    public func maskCircle(anyImage: UIImage) {
-        self.contentMode = UIViewContentMode.scaleAspectFill
-        self.layer.cornerRadius = self.frame.height / 2
-        self.layer.masksToBounds = false
-        self.clipsToBounds = true
-        
-        self.image = anyImage
-    }
-}
-
 
 extension OfferingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

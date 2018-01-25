@@ -19,6 +19,7 @@ class AdvertisePageContentPublish: UIViewController {
     
     @IBAction func publishNow(_ sender: Any) {
         //upload car image
+        publishButton.isEnabled = false
         progressBar.isHidden = false
         progressLabel.isHidden = false
         if pageViewController.carImage != nil {
@@ -38,6 +39,7 @@ class AdvertisePageContentPublish: UIViewController {
                                         strongSelf.pageViewController.writeOfferToDB()
                                         
                                     } else {
+                                        strongSelf.publishButton.isEnabled = true
                                         let message: String = "\(errorMassage ?? "") Please try again later."
                                         let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
                                         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
@@ -47,6 +49,7 @@ class AdvertisePageContentPublish: UIViewController {
             })
         } else {
             let message: String = "Image is missing."
+            self.publishButton.isEnabled = true
             let alert = UIAlertController(title: "Please provide an image of your car :)", message: message, preferredStyle: UIAlertControllerStyle.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
