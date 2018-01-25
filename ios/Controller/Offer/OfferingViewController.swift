@@ -100,6 +100,9 @@ class OfferingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("OFFERING")
+        print(displayingOffering)
+        
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
