@@ -102,11 +102,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
+      /*  profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
         profileImage.clipsToBounds = true
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.black.cgColor
-        profileImage.contentMode = .scaleAspectFill
+        profileImage.contentMode = .scaleAspectFill*/
+        
+        profileImage.maskCircle(anyImage: profileImage.image!)
+        profileImage.layer.borderWidth = 1
+        profileImage.layer.borderColor = UIColor.black.cgColor
         
         storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
             let profileImgUrl = URL(string: path)

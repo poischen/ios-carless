@@ -38,8 +38,7 @@ class ExternProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileOwnerImageView.layer.cornerRadius = profileOwnerImageView.frame.size.width / 2
-        profileOwnerImageView.clipsToBounds = true
+        profileOwnerImageView.maskCircle(anyImage: profileOwnerImageView.image!)
         profileOwnerImageView.layer.borderWidth = 1
         profileOwnerImageView.layer.borderColor = UIColor.black.cgColor
         

@@ -222,9 +222,9 @@ class AvailibilityAndBookingViewController: UIViewController {
             var ratingDiscount: Float = 0
             var expDiscount: Float = 0
             
-            self.storageAPI.getRatingsByUserUID(userUID: userID, completion: { (ratings) in
+            let ratings = user.numberOfRatings
                 //discount for average rating value & for experience measured by ammount of ratings
-                if ratings.count > 0 {
+                if ratings > 0 {
                     if (ratingAverageValue >= 4.9) { //get 10% discount
                         ratingDiscount = priceperDay*self.RATING_QUOT_5
                         self.ratingDiscountView.text = "- \(ratingDiscount)" + self.RATING_5
@@ -237,7 +237,7 @@ class AvailibilityAndBookingViewController: UIViewController {
                         ratingDiscount = priceperDay * self.RATING_QUOT_35
                         self.ratingDiscountView.text = "+ \(ratingDiscount*(-1))" + self.RATING_35
                     }
-                    let expDiscountPercent = (ratings.count - (ratings.count % 10)) / 10
+                    let expDiscountPercent = (ratings - (ratings % 10)) / 10
                     if expDiscount >= 1 {
                         expDiscount = (priceperDay * Float(expDiscountPercent))/100
                         self.experienceDiscountView.text = "-  \(expDiscount) (- \(expDiscountPercent) %)"
@@ -255,7 +255,6 @@ class AvailibilityAndBookingViewController: UIViewController {
                 } else {
                     self.totalPriceLabel.text = "\(intervalLengthInt) day total price:"
                 }
-            })
         }
         
         

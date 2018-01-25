@@ -238,19 +238,6 @@ class OfferingViewController: UIViewController {
     
 }
 
-//calc round images
-extension UIImageView {
-    public func maskCircle(anyImage: UIImage) {
-        self.contentMode = UIViewContentMode.scaleAspectFill
-        self.layer.cornerRadius = self.frame.height / 2
-        self.layer.masksToBounds = false
-        self.clipsToBounds = true
-        
-        self.image = anyImage
-    }
-}
-
-
 extension OfferingViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if (collectionView == self.basicDataCollectionView){

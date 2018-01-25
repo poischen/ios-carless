@@ -25,7 +25,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     var receiverName: String = ""
     var receiverImage: UIImage?
     var selectedUser: String?
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     
     override func viewDidLoad() {
         super.viewDidLoad()
