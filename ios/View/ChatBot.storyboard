@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="P78-LX-bv2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="8JS-LZ-jSY">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Chat Bot View Controller-->
+        <!--Ask Geoffrey-->
         <scene sceneID="XrZ-Nw-FSC">
             <objects>
                 <viewController storyboardIdentifier="chatbot" id="P78-LX-bv2" customClass="ChatBotViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,7 +34,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am Geoffrey, you may know me from the Banks family, ask me anything about traffic rules or just talk to me if you are bored" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-GN-UNA">
-                                <rect key="frame" x="0.0" y="80" width="375" height="150"/>
+                                <rect key="frame" x="0.0" y="124" width="375" height="150"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="4Ka-T1-JVw"/>
                                 </constraints>
@@ -69,6 +69,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DQG-fw-oW6"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Ask Geoffrey" id="ghT-Qa-ckT"/>
                     <connections>
                         <outlet property="chipResponse" destination="BMu-GN-UNA" id="Rlx-Tw-Wwv"/>
                         <outlet property="messageField" destination="BWs-cx-XCe" id="cYv-sS-D4K"/>
@@ -78,8 +79,27 @@
             </objects>
             <point key="canvasLocation" x="1008.8" y="710.19490254872574"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Pte-h7-ego">
+            <objects>
+                <navigationController id="8JS-LZ-jSY" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="" image="icongeoffrey" id="gIl-4u-BMa"/>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ay-rI-yeE">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="P78-LX-bv2" kind="relationship" relationship="rootViewController" id="ffn-dV-F1s"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zoN-Be-eFP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="225" y="710"/>
+        </scene>
     </scenes>
     <resources>
         <image name="geoffrey-1" width="480" height="320"/>
+        <image name="icongeoffrey" width="30" height="30"/>
     </resources>
 </document>

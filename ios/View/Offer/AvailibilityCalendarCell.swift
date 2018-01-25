@@ -11,6 +11,8 @@ import JTAppleCalendar
 
 class AvailibilityCalendarCell: JTAppleCell{
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var cellSelectionFeedback: UIView!
+    
     var availibility: Availibility!
     
 }

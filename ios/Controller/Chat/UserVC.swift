@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ChatViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -14,7 +15,9 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     //receiverID
     var selectedUser: String = ""
-   
+    var selectedUserName: String = ""
+    var selectedUserImage: UIImage?
+    
     @IBOutlet weak var myTableView: UITableView!
     
     private let CHAT_SEGUE = "ChatSegue"
@@ -23,6 +26,11 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     override func viewDidLoad() {
         super.viewDidLoad()
         StorageAPI.shared.getUsers(completion: dataReceived)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.tabBarController?.tabBar.isHidden = false
     }
     
     func dataReceived(users: [User]) {
@@ -48,24 +56,37 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = users[indexPath.row].name
+        let userImg = URL(string: users[indexPath.row].profileImgUrl)
+        cell.imageView?.kf.indicatorType = .activity
+        cell.imageView?.kf.setImage(with: userImg, placeholder: UIImage(named: "ProfilePic"))
+
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedUserObject = self.users[indexPath.row]
         self.selectedUser = selectedUserObject.id
-        performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
-    
+        self.selectedUserName = selectedUserObject.name
+        
+        if let image: UIImage = tableView.cellForRow(at: indexPath)?.imageView?.image {
+            self.selectedUserImage = image
+        }
+       //performSegue(withIdentifier: CHAT_SEGUE, sender: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationNavigationController = segue.destination as! UINavigationController
-        let targetController = destinationNavigationController.topViewController
-       if let chatVC = targetController as? ChatWindowVC {
+        if (segue.identifier == CHAT_SEGUE) {
+
+            print(self.selectedUser)
+            let chatVC = segue.destination as! ChatWindowVC
             chatVC.receiverID = self.selectedUser
-             chatVC.selectedUser = self.selectedUser
+            chatVC.selectedUser = self.selectedUser
+            chatVC.receiverName = self.selectedUserName
+            
+            if let image: UIImage = self.selectedUserImage {
+                chatVC.receiverImage = image
+            }
         }
-        
     }
     
     

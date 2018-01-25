@@ -22,13 +22,37 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     let picker = UIImagePickerController()
     
     var receiverID: String = ""
-    
+    var receiverName: String = ""
+    var receiverImage: UIImage?
     var selectedUser: String?
+    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-          picker.delegate = self
+        self.tabBarController?.tabBar.isHidden = true
+        
+        let navBarView = UIView()
+        
+        let title = UILabel()
+        title.text = receiverName
+        title.sizeToFit()
+        title.center = navBarView.center
+        title.textAlignment = NSTextAlignment.center
+        navBarView.addSubview(title)
+        
+        if let image = receiverImage {
+            imageView.contentMode = .scaleAspectFit
+            imageView.image = image
+            let imageAspect = imageView.image!.size.width/imageView.image!.size.height
+            imageView.frame = CGRect(x: title.frame.origin.x-title.frame.size.height*imageAspect, y: title.frame.origin.y, width: title.frame.size.height*imageAspect, height: title.frame.size.height)
+            navBarView.addSubview(imageView)
+        }
+
+        self.navigationItem.titleView = navBarView
+        navBarView.sizeToFit()
+        
+        picker.delegate = self
         
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
@@ -261,12 +285,5 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             })
         }
     }
-    
-
-    @IBAction func backButtonChatWindow(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
-    }
-    
-    
    
 }

@@ -31,12 +31,13 @@ class ShowOffer {
         })
     }
     
-    func getFeatures(offerID: String, completion: @escaping (_ features: [String]?) -> Void) {
-        var featureList: [String]? = []
+    func getFeatures(offerID: String, completion: @escaping (_ features: [Feature]?) -> Void) {
+        var featureList: [Feature]? = []
         storageAPI.getFeaturesForOffering(offeringID: offerID) { (features) in
             for feature in features {
-                featureList?.append(feature.name)
+                featureList?.append(feature)
             }
+            completion(featureList)
         }
     }
     

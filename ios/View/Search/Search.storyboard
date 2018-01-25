@@ -10,11 +10,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Search Car-->
+        <!--Navigation Controller-->
         <scene sceneID="Nng-gg-qEj">
             <objects>
                 <navigationController storyboardIdentifier="SearchNavigation" id="uNj-Ny-eGd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search Car" image="iconsearch" id="OVM-zr-ZsU"/>
+                    <tabBarItem key="tabBarItem" title="" image="iconsearch" id="OVM-zr-ZsU"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LFp-gu-ZIE">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

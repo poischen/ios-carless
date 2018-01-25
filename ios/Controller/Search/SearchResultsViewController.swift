@@ -114,6 +114,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         targetController.displayingOffering = selectedOffering
         self.present(navigationController, animated: true, completion: nil)
     }
+
     
     func receiveOfferings(_ offerings: [Offering]) {
         if (offerings.count <= 0) {

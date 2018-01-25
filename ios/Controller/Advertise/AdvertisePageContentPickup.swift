@@ -21,10 +21,9 @@ class AdvertisePageContentPickup: UIViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var pickUpTextView: UITextField!
-    @IBOutlet weak var pickUpPicker: UIPickerView!
-    @IBOutlet weak var returnTextView: UITextField!
-    @IBOutlet weak var returnPicker: UIPickerView!
+    @IBOutlet weak var pickUpPicker: UIDatePicker!
+    @IBOutlet weak var returnPicker: UIDatePicker!
+    
     
     let locationManager = CLLocationManager()
     var searchController: UISearchController!
@@ -54,19 +53,36 @@ class AdvertisePageContentPickup: UIViewController {
         locationManager.requestLocation()
         
         searchBar.delegate = self
-        pickUpPicker.delegate = self
-        returnPicker.delegate = self
         
-        pickUpTextView.delegate = self
-        returnTextView.delegate = self
-        
+        pickUpPicker.date = Filter.dateToNext30(date: Date())
+        returnPicker.date = Filter.dateToNext30(date: Date() + 1800)
+        pickUpPicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+        returnPicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
+        cacheTimes(picker: pickUpPicker)
+        cacheTimes(picker: returnPicker)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
+    func datePickerChanged(picker: UIDatePicker) {
+        cacheTimes(picker: picker)
+    }
     
+    func cacheTimes(picker: UIDatePicker){
+        let time: Date = picker.date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH:mm"
+        let timeString = dateFormatter.string(from: time)
+        if(picker == self.pickUpPicker) {
+            pageViewController.advertiseHelper.pickupTime = timeString
+        } else {
+            pageViewController.advertiseHelper.returnTime = timeString
+        }
+
+    }
 }
 
 extension AdvertisePageContentPickup : UISearchBarDelegate, GMSAutocompleteViewControllerDelegate {
@@ -182,7 +198,8 @@ extension AdvertisePageContentPickup : CLLocationManagerDelegate {
     }
 }
 
-extension AdvertisePageContentPickup: UIPickerViewDelegate, UIPickerViewDataSource {
+
+/*extension AdvertisePageContentPickup: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -225,6 +242,6 @@ extension AdvertisePageContentPickup: UITextFieldDelegate {
             self.returnPicker.isHidden = false
         }
     }
+ 
     
-    
-}
+} */
