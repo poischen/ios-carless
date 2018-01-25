@@ -20,10 +20,7 @@ class OfferingViewController: UIViewController {
     var preselectedStartDate: Date?
     
     var lessor: User?
-    
-    //TODO Use featurelist from db
-    let featuresDummy = ["AC", "navigation", "cruise_control"]
-    
+
     @IBOutlet weak var carImageView: UIImageView!
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var basicDataCollectionView: UICollectionView!
@@ -106,7 +103,7 @@ class OfferingViewController: UIViewController {
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
-            actionItem.title = "Check Availibility"
+            actionItem.isEnabled = false
         } else { // Offer is the users own offer
             self.navigationItem.title = "Preview"
             actionItem.image = UIImage(named: "icondelete")

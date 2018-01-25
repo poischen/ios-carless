@@ -618,6 +618,7 @@
                                             <outlet property="photo" destination="nWq-Uu-MA7" id="Oiz-G9-APN"/>
                                             <outlet property="priceLabel" destination="tlF-qz-KOE" id="xMU-eY-ur5"/>
                                             <outlet property="seatsLabel" destination="gpB-WD-uJj" id="b70-a8-PFn"/>
+                                            <segue destination="Jm1-5W-4Na" kind="showDetail" identifier="SearchOfferingSegue" id="HAA-9r-rNJ"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -646,6 +647,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mm5-nh-hOy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1141.5999999999999" y="103.89805097451276"/>
+        </scene>
+        <!--Offering-->
+        <scene sceneID="evZ-RV-PFe">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Offering" id="Jm1-5W-4Na" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qlw-hA-lpD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1839" y="-553"/>
         </scene>
         <!--Ib Calendar Data Source-->
         <scene sceneID="dvd-C5-BHL">

@@ -17,6 +17,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     var preselectedStartDate: Date?
     var preselectedEndDate: Date?
     
+    var selectedOffering: Offering?
+    let SEARCH_OFFERING_SEAGUE = "SearchOfferingSegue"
+    
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let storageAPI = StorageAPI.shared
@@ -101,18 +104,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     // go to offering's detail view when the user taps an offering in the search results
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedOffering = self.offerings[indexPath.row]
-        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
-            let targetController = navigationController.topViewController as? OfferingViewController else {
-                return
-        }
-        if let psd = preselectedStartDate, let ped = preselectedEndDate {
-            targetController.preselectedStartDate = psd
-            targetController.preselectedEndDate = ped
-        }
-        targetController.displayingOffering = selectedOffering
-        self.present(navigationController, animated: true, completion: nil)
+        self.selectedOffering = self.offerings[indexPath.row]
     }
     
     func receiveOfferings(_ offerings: [Offering]) {
@@ -152,6 +144,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 // pass current filter to the filter screen to be able to modify it there
                 filterViewController.searchFilter = self.searchFilter
             }
+        } else if (segue.identifier == SEARCH_OFFERING_SEAGUE) {
+            
+            let navigationController = segue.destination as! UINavigationController
+            let offeringController = navigationController.topViewController as! OfferingViewController
+            
+            if let psd = preselectedStartDate, let ped = preselectedEndDate {
+                offeringController.preselectedStartDate = psd
+                offeringController.preselectedEndDate = ped
+            }
+            offeringController.displayingOffering = selectedOffering
         }
     }
 }
