@@ -209,7 +209,7 @@ class AvailibilityAndBookingViewController: UIViewController {
         discountView.text = ""
         totalPriceView.text = ""
         storageAPI.generateRentingKey(completion: {(rentingID) in
-            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
+            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice, lessorRated: false, lesseeRated: false)
             self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                 if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
                     //TODO: go back to startseite

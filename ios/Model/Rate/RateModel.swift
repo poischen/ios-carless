@@ -31,7 +31,8 @@ class RateModel {
     }
     
     // save a new rating (score, explanation) and update the users average rating and total ratings
-    static func saveRating(rating: Int, ratedUser: User, explanation: String){
+    // if ratingLessee is false we assume that the lessor is being rated
+    static func saveRating(rating: Int, ratedUser: User, explanation: String, renting: Renting, ratingLessee: Bool){
         // construct rating object, ID is later filled by StorageAPI with a unique ID provided by Firebase
         let newRating = Rating(id: nil, userUID: ratedUser.id, explanation: explanation, rating: rating)
         // save rating to DB
@@ -45,5 +46,15 @@ class RateModel {
         ratedUser.rating = newAverageRating
         ratedUser.numberOfRatings = newNumberOfRatings
         StorageAPI.shared.updateUser(user: ratedUser) // update user's rating in the DB
+        // update renting to prevent repeated rating of one renting
+        if (ratingLessee) {
+            // lessee is being rated -> lessor wrote this rating
+            renting.lessorHasRated = true
+            StorageAPI.shared.updateRenting(renting: renting)
+        } else {
+            // lessor is being rated -> lessee wrote this rating
+            renting.lesseeHasRated = true
+            StorageAPI.shared.updateRenting(renting: renting)
+        }
     }
 }

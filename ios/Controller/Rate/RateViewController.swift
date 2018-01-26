@@ -9,7 +9,7 @@
  How to use this class:
  - set retingBeingRated before showing the rating view
  - set rateLessee to false if a lessor should be rated
- - if a lessee should be rated: set lesseeUser to the lessee's user
+ - if a lessee should be rated: set userBeingRated to the lessee's user
  */
 
 import UIKit
@@ -29,9 +29,9 @@ class RateViewController: UIViewController, UITextViewDelegate {
     //var rentingBeingRated: Renting? = Renting(id: "1", inseratID: "-L2GGCQf0M-9rPzx3Wx4", userID: "W7VPwDFSTyNwW0WJl38MhsVmcdX2", startDate: Date(), endDate: Date(), confirmationStatus: true, rentingPrice: 10.0) // TODO: set from profile, only here for testing
     
     var rentingBeingRated: Renting?
-    var lesseeUser: User?
+    var userBeingRated: User?
     // If a leesor should be rated additional information is necessary (default: true)
-    var rateLessee: Bool = true
+    var ratingLessee: Bool = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,8 +41,8 @@ class RateViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        if rateLessee {
-            if let currentRentingBeingRated = rentingBeingRated, let currentUserBeingRated = lesseeUser {
+        if ratingLessee {
+            if let currentRentingBeingRated = rentingBeingRated, let currentUserBeingRated = userBeingRated {
                 // lessee should be rated and we already have the lessee's user -> get car model name
                 RateModel.getCarModelName(rentingBeingRated: currentRentingBeingRated, completion: {carModelName in
                     self.initView(carModelName: carModelName, username: currentUserBeingRated.name)
@@ -53,6 +53,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
                 // lessor should be rated and we have the renting that should be rated -> get lessor's user and car model name from DB
                 RateModel.getAdditionalInformationForLessorRating(rentingBeingRated: currentRentingBeingRated, completion: {(carModelName, lessorUser) in
                     self.initView(carModelName: carModelName, username: lessorUser.name)
+                    self.userBeingRated = lessorUser
                 })
             }
         }
@@ -79,12 +80,14 @@ class RateViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func saveRatingButtonClicked(_ sender: Any) {
-        if lesseeUser != nil {
+        if userBeingRated != nil {
             // checking whether the explanation has the right length (although it shouldn't be possible to enter one that's too long)
             if ratingExplanation.text.count >= MIN_EXPLANATION_LENGTH && ratingExplanation.text.count <= MAX_EXPLANATION_LENGTH {
-                // save rating, update user's average rating and go back to the profile
-                RateModel.saveRating(rating: ratingStars.rating, ratedUser: lesseeUser!, explanation: ratingExplanation.text)
-                goBackToProfile()
+                if let currentRentingBeingRated = rentingBeingRated {
+                    // save rating, update user's average rating and go back to the profile
+                    RateModel.saveRating(rating: ratingStars.rating, ratedUser: userBeingRated!, explanation: ratingExplanation.text, renting: currentRentingBeingRated, ratingLessee: ratingLessee)
+                    goBackToProfile()
+                }
             } else {
                 // explanation doesn't have the right length -> prepare alert with error message and show it
                 let alertController = UIAlertController(title: "Sorry", message: "Your explanation is too long or too short. :(", preferredStyle: .alert)

@@ -295,7 +295,7 @@ extension HomePageViewController: RatingProtocol{
                 return
         }
         rateController.rentingBeingRated = renting
-        rateController.lesseeUser = lesseeUser
+        rateController.userBeingRated = lesseeUser
         self.present(rateController, animated: true, completion: nil)
     }
     func rateLessor(renting: Renting) {
@@ -304,7 +304,7 @@ extension HomePageViewController: RatingProtocol{
             return
         }
         rateController.rentingBeingRated = renting
-        rateController.rateLessee = false
+        rateController.ratingLessee = false
         self.present(rateController, animated: true, completion: nil)
     }
     
