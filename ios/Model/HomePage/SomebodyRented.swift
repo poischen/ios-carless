@@ -8,8 +8,10 @@
 
 import Foundation
 
+// This class represents a renting of a car that belongs to the user that's currently logged in for display on the home page.
+
 class SomebodyRented: RentingEvent {
-    let type: RentingEventType = .somebodyRented
+    let type: RentingEventType = .somebodyRented // necessary for identifiying the type of an element in an array of elements of different types
     let renting: Renting
     let offering: Offering
     let brand: Brand

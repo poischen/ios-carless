@@ -55,8 +55,8 @@ class SearchViewController: UIViewController {
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
-        pickupTimePicker.date = Filter.dateToNext30(date: Date()) // "round" time to next XX:00 or XX:30 time
-        returnTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
+        pickupTimePicker.date = DateHelper.dateToNext30(date: Date()) // "round" time to next XX:00 or XX:30 time
+        returnTimePicker.date = DateHelper.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
     }
 
     override func didReceiveMemoryWarning() {
@@ -115,14 +115,14 @@ class SearchViewController: UIViewController {
             return
         } else {
             let currentFirstDate = firstDate!
-            let desiredFirstDate = Filter.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
+            let desiredFirstDate = DateHelper.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: pickupTimePicker.date)
             var desiredLastDate: Date
             if let currentLastDate = lastDate {
                 // last date set -> user didn't select a one day interval -> merge calendar dates with pickup and return time
-                desiredLastDate = Filter.mergeDates(dayDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
+                desiredLastDate = DateHelper.mergeDates(dayDate: currentLastDate, hoursMinutesDate: returnTimePicker.date)
             } else {
                 // no last date set -> user picker one day interval -> merge calendar dates with pickup and return time
-                desiredLastDate = Filter.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
+                desiredLastDate = DateHelper.mergeDates(dayDate: currentFirstDate, hoursMinutesDate: returnTimePicker.date)
             }
             if desiredLastDate < desiredFirstDate {
                 // user picked reverse date interval -> show error and don't proceed to the search results

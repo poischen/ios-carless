@@ -55,7 +55,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             }
         } */
         
-        task.resume()
+        //task.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -25,7 +25,7 @@ class SearchModel {
             // get rentings from DB as they're necessary to determine whether a car is still free on the desired date
             self.storageAPI.getRentings(completion: {rentings in
                 if filter.featureIDs != nil {
-                    // get the offerings' features from the DB as they're necessary to determine whether an offering has the desired features if the user wants to filter by features
+                    // get the offerings' features from the DB as they're necessary to determine whether an offering has the desired features (if the user wants to filter by features)
                     self.storageAPI.getOfferingsFeatures(completion: {offeringsFeatures in
                         // convert filter object to filter function
                         let filterFunctions = self.filterToFilterFunctions(filter: filter, rentings: rentings, offeringsFeatures: offeringsFeatures)
@@ -57,7 +57,7 @@ class SearchModel {
     }
     
     /* converts a filter object to an array of filter functions that take an offering and return whether is satisfies the filter criterion
-     IMPORTANT: features filter function is only added to the array offeringsFeatures is not null and the featureIDs attribute in the filter object is set
+     IMPORTANT: features filter function is only added to the array if offeringsFeatures is not null and the featureIDs attribute in the filter object is set
     */
     func filterToFilterFunctions(filter: Filter, rentings: [Renting], offeringsFeatures: [String:[Int]]?) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
@@ -81,10 +81,6 @@ class SearchModel {
         if let minHP = filter.minHP {
             filterFunctions.append {$0.hp >= minHP}
         }
-        // add location filter function if filter criterion is set
-        /* if let location = filter.location {
-            filterFunctions.append {$0.location == location}
-         }*/ // TODO: remove
         // add price filter function if filter criterion is set
         if let maxPrice = filter.maxPrice {
             filterFunctions.append {$0.basePrice <= maxPrice}
@@ -132,11 +128,6 @@ class SearchModel {
     }
     
     func filterOfferingByDate(offering: Offering, rentings: [Renting], desiredDateInterval: DateInterval) -> Bool{
-        // renting is not possible if the desired return time is later than the offering's return time
-        // or the desired renting time is earlier than the offering's renting time
-        /*if (!offering.pickupTime.timeOfDayIsEarlierOrEqual(date: desiredDateInterval.start)) || (offering.returnTime.timeOfDayIsEarlierOrEqual(date: desiredDateInterval.end)){
-            return false
-        }*/
         // we only need the rentings of the desired offering meaning ...
         let rentingsOfDesiredCar = rentings.filter {renting in
             if renting.id != nil, let offeringID = offering.id {
@@ -158,39 +149,6 @@ class SearchModel {
             }
         })
     }
-    
-    /* func filterOfferingByDateOld(offering: Offering, rentings: [Renting], desiredDateInterval: DateInterval) -> Bool{
-        // TODO: filter rentings beforehand
-        let rentingsOfDesiredCar = rentings.filter {$0.inseratID == offering.id}
-        return rentingsOfDesiredCar.reduce(true, {prevResult, renting in
-            if (prevResult == false){
-                // already found intersection of reting times -> renting not possible
-                return false
-            } else {
-                let rentingDateInterval = DateInterval(start: renting.startDate, end: renting.endDate)
-                if (rentingDateInterval.intersects(desiredDateInterval)){
-                    let intersection = desiredDateInterval.intersection(with: rentingDateInterval)
-                    if (intersection!.duration == 0){
-                        // intersection with duration 0 -> intervals only overlap on one day
-                        if ((desiredDateInterval.start == rentingDateInterval.end || desiredDateInterval.end == rentingDateInterval.start) && rentingDateInterval.duration > 0){
-                            // allow desire date interval and renting to overlap at the end or the start of the desired date interval as a car can be returned in the morning and picked up in the evening and vice versa
-                            // make sure that the renting is not a one day renting as the car would not be ready for the next customer at the end of that day
-                            return true
-                        } else {
-                            // intervals overlap but not at the start or the end -> renting not possible
-                            return false
-                        }
-                    } else {
-                        // intersection is larger than one day -> renting not possible
-                        return false
-                    }
-                } else {
-                    return true
-                }
-                
-            }
-        })
-    } */
     
     // HELPER FUNCTIONS
     

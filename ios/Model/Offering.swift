@@ -49,13 +49,6 @@ class Offering: DictionaryConvertibleEditable {
                 return nil
         }
         
-        //PROBLEM: Versuch "Time" in Firebase DB zu schreiben
-        // alte Version mit pickupTime und returnTime as Time
-        /*if let offeringPickupTime = Time(timestring: offeringPickupTimeRaw), let offeringReturnTime = Time(timestring: offeringReturnTimeRaw){
-            self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTime, returnTime: offeringReturnTime)
-        } else {
-            return nil
-        } */
         self.init(id: id, brandID: offeringBrandID, consumption: offeringConsumption, description: offeringDescription, fuelID: offeringFuelID, gearID: offeringGearID, hp: offeringHP, latitude: offeringLatitude, location: offeringLocation, longitude: offeringLongitude, pictureURL: offeringPictureURL, basePrice: offeringPrice, seats: offeringSeats, type: offeringType, vehicleTypeID: offeringVehicleTypeID, userUID: offeringUserUID, pickupTime: offeringPickupTimeString, returnTime: offeringReturnTimeString)
         
     }

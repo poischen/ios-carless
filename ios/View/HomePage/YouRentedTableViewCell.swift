@@ -29,8 +29,8 @@ class YouRentedTableViewCell: UITableViewCell {
                 return
             }
             carNameLabel.text = event.brand.name + " " + event.offering.type
-            startDateLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
-            endDateLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
+            startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             if (event.renting.confirmationStatus) {
                 // renting is confirmed
                 statusLabel.text = YouRentedTableViewCell.ACCEPTED_STATUS_MESSAGE

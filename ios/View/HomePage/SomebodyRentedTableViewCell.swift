@@ -28,8 +28,8 @@ class SomebodyRentedTableViewCell: UITableViewCell {
             }
             carNameLabel.text = event.brand.name + " " + event.offering.type
             userButton.setTitle(event.userThatRented.name, for: .normal)
-            rentingStartLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
-            rentingEndLabel.text = HomePageModel.dateToString(date: event.renting.startDate)
+            rentingStartLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            rentingEndLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             if (event.isRateable) {
                 // renting is rateable -> show rating button
                 rateButton.isHidden = false

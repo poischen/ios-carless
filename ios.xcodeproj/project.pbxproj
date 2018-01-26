@@ -10,7 +10,6 @@
 		1901703A200BA32100E21080 /* HomePage.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 19017039200BA32100E21080 /* HomePage.storyboard */; };
 		1901703D200BA55D00E21080 /* HomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703C200BA55D00E21080 /* HomePageViewController.swift */; };
 		19017040200BA65F00E21080 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703F200BA65F00E21080 /* HomePageModel.swift */; };
-		19017042200BA70200E21080 /* RentingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017041200BA70200E21080 /* RentingRequest.swift */; };
 		19017045200BB0B300E21080 /* YouRentedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017044200BB0B300E21080 /* YouRentedTableViewCell.swift */; };
 		19017047200BD68600E21080 /* UserRentingRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */; };
 		19017049200BE7B000E21080 /* RequestProcessingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */; };
@@ -32,6 +31,7 @@
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
 		196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */; };
 		19714D411FF6419100067565 /* RateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19714D401FF6419100067565 /* RateModel.swift */; };
+		198A33B5201BD5DF004BDCE4 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A33B4201BD5DF004BDCE4 /* DateHelper.swift */; };
 		199A68651FFD027A00047E5D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68641FFD027A00047E5D /* CustomCell.swift */; };
 		199A68671FFD03FE00047E5D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68661FFD03FE00047E5D /* SearchViewController.swift */; };
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
@@ -123,7 +123,6 @@
 		19017039200BA32100E21080 /* HomePage.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HomePage.storyboard; sourceTree = "<group>"; };
 		1901703C200BA55D00E21080 /* HomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageViewController.swift; sourceTree = "<group>"; };
 		1901703F200BA65F00E21080 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
-		19017041200BA70200E21080 /* RentingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingRequest.swift; sourceTree = "<group>"; };
 		19017044200BB0B300E21080 /* YouRentedTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouRentedTableViewCell.swift; sourceTree = "<group>"; };
 		19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingRequestsTableViewCell.swift; sourceTree = "<group>"; };
 		19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProcessingProtocol.swift; sourceTree = "<group>"; };
@@ -145,6 +144,7 @@
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
 		196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerOld.swift; sourceTree = "<group>"; };
 		19714D401FF6419100067565 /* RateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateModel.swift; sourceTree = "<group>"; };
+		198A33B4201BD5DF004BDCE4 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		199A68641FFD027A00047E5D /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		199A68661FFD03FE00047E5D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
@@ -388,7 +388,6 @@
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				84BD53FC2005290900BE9790 /* AdvertiseHelper.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
-				19017041200BA70200E21080 /* RentingRequest.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -417,6 +416,7 @@
 			children = (
 				191DABB01FF00F7000EB0070 /* Time.swift */,
 				19EE8F342006A40700204C73 /* CoordinatePoint.swift */,
+				198A33B4201BD5DF004BDCE4 /* DateHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -999,11 +999,11 @@
 				19636A0C2015490700423927 /* RatingProtocol.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
 				848486F01FFC4395008F7DAF /* Availibility.swift in Sources */,
+				198A33B5201BD5DF004BDCE4 /* DateHelper.swift in Sources */,
 				84FD43761FF52C9E00CB546C /* AdvertisePage3.swift in Sources */,
 				19D87BF22018B83C00FCB93D /* YouRented.swift in Sources */,
 				84FD437A1FF52CCD00CB546C /* AdvertisePage5.swift in Sources */,
 				193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */,
-				19017042200BA70200E21080 /* RentingRequest.swift in Sources */,
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
 				771F3762200D023B003FC001 /* ProfileViewController.swift in Sources */,
 				84FD437C1FF52CDA00CB546C /* AdvertisePage6.swift in Sources */,
