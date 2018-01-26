@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 import ApiAI
 
-class ChatBotViewController: UIViewController {
+class ChatBotViewController: UIViewController, UITextFieldDelegate {
 
     
     
@@ -18,6 +18,7 @@ class ChatBotViewController: UIViewController {
         super.viewDidLoad()
         chipResponse.numberOfLines = 0;
         print ("Possible Speech Voices" , AVSpeechSynthesisVoice.speechVoices())
+        messageField.delegate = self
     }
     
    
@@ -154,7 +155,16 @@ class ChatBotViewController: UIViewController {
             self.chipResponse.text = text
         }, completion: nil)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        self.view.endEditing(true)
+        
+        return true
+        
+    }
 
+  
     
     
     override func didReceiveMemoryWarning() {
