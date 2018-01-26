@@ -10,9 +10,9 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ViewController: UIViewController, MessagingDelegate {
+class ViewController: UIViewController {
     
-    var fcmTokenLocal: String! = ""
+    //var fcmTokenLocal: String! = ""
     
     //outlets
     @IBOutlet weak var username: UITextField!
@@ -21,7 +21,7 @@ class ViewController: UIViewController, MessagingDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        Messaging.messaging().delegate = self
+        //Messaging.messaging().delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -114,7 +114,7 @@ class ViewController: UIViewController, MessagingDelegate {
                 
                 self.goToHome()
                 
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: self.fcmTokenLocal)
+                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: "eY5-hVrpyEc:APA91bFUW8KpMvOPLSUH_nFEaetkqmlbPfYFO9E9r0xQecY6NuFp8ZdkeD2cmzD3PxSv3U8aSVCO_GDcv-Tv-86A1N-MTh61CTBeAzqx1PnhhLwBpzNtqsG_ZzVOdpLPiIWfpRF8AnHp")
                 
             } else {
                 let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
@@ -129,7 +129,7 @@ class ViewController: UIViewController, MessagingDelegate {
         
     }
     
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    /*func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
         fcmTokenLocal = fcmToken
         
@@ -143,7 +143,7 @@ class ViewController: UIViewController, MessagingDelegate {
         
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
-    }
+    }*/
 
 }
         
