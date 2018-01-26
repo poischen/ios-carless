@@ -9,8 +9,6 @@
 import UIKit
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
     let userUID = StorageAPI.shared.userID()
     
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
@@ -37,9 +35,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
         return result
     }
-    var volume: Double {
-        return 5.0
-    }
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
@@ -50,6 +45,17 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersOfferingsTable.delegate = self
         usersRentingsRequestsTable.dataSource = self
         usersRentingsRequestsTable.delegate = self
+        
+        // TEST
+        /* let url = URL(string: "https://us-central1-ioscars-32e69.cloudfunctions.net/acceptRenting?userID=aBnV7X3oLFP3HX1msV4LlvtEbt62")
+        
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            if (error != nil) {
+                print(error!);
+            }
+        } */
+        
+        task.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {
