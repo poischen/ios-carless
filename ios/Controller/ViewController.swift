@@ -29,16 +29,25 @@ class ViewController: UIViewController, MessagingDelegate {
         super.viewDidAppear(animated)
         if Auth.auth().currentUser != nil {
             goToHome()
+            StorageAPI.shared.getUserByUID(UID: Auth.auth().currentUser!.uid, completion: {userTokenCheck in
+                if (self.fcmTokenLocal != userTokenCheck.deviceID) {
+                    userTokenCheck.deviceID = self.fcmTokenLocal
+                    StorageAPI.shared.updateUser(user: userTokenCheck)
+                }
+            })
+            
+            
+            
         }
     }
     
     /*override func viewDidAppear(_ animated: Bool) {
-        if StorageAPI.shared.isLoggedIn(){
-            let loginController = ViewController()
-            present(loginController, animated: true, completion: nil)
-        }
-    }*/
-
+     if StorageAPI.shared.isLoggedIn(){
+     let loginController = ViewController()
+     present(loginController, animated: true, completion: nil)
+     }
+     }*/
+    
     //actions
     @IBAction func loginButton(_ sender: Any) {
         login()
@@ -70,8 +79,17 @@ class ViewController: UIViewController, MessagingDelegate {
                     //Print into the console if successfully logged in
                     print("You have successfully logged in")
                     
+                    StorageAPI.shared.getUserByUID(UID: user!.uid, completion: {userTokenCheck in
+                        if (self.fcmTokenLocal != userTokenCheck.deviceID) {
+                            userTokenCheck.deviceID = self.fcmTokenLocal
+                            StorageAPI.shared.updateUser(user: userTokenCheck)
+                        }
+                    })
+                    
+                    
                     //Go to the HomeViewController if the login is sucessful
                     self.goToHome()
+                    
                     
                     
                 } else {
@@ -104,25 +122,25 @@ class ViewController: UIViewController, MessagingDelegate {
             alertController.addAction(defaultAction)
             
             present(alertController, animated:true, completion:nil)
-        
+            
         } else {
             Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (user, error) in
-            
-            if error == nil {
-                print("You have successfully signed up")
-                //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
                 
-                self.goToHome()
-                
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: self.fcmTokenLocal)
-                
-            } else {
-                let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
-                
-                let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(defaultAction)
-                
-                self.present(alertController, animated: true, completion: nil)
+                if error == nil {
+                    print("You have successfully signed up")
+                    //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
+                    
+                    self.goToHome()
+                    
+                    StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: self.fcmTokenLocal)
+                    
+                } else {
+                    let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
+                    
+                    let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(defaultAction)
+                    
+                    self.present(alertController, animated: true, completion: nil)
                 }
             }
         }
@@ -144,12 +162,6 @@ class ViewController: UIViewController, MessagingDelegate {
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
-
+    
 }
-        
-        
-        
-        
-        
-
 

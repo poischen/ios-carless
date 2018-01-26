@@ -13,7 +13,7 @@ import Kingfisher
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let storageAPI = StorageAPI.shared
-
+    
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileImageUploadProgress: UIProgressView!
     
@@ -28,6 +28,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePickerController.sourceType = .camera
                 self.present(imagePickerController, animated: true, completion: nil)
+                
+                
             }else {
                 print ("Camera not available")
             }
@@ -42,13 +44,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler:nil ))
         
         self.present(actionSheet, animated: true, completion:nil)
-
+        
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         let image = info[UIImagePickerControllerOriginalImage] as! UIImage
         
         uploadImage(image: image)
+        
         
         picker.dismiss(animated:true, completion:nil)
     }
@@ -67,18 +70,19 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         } catch let error as NSError {
             print(error.localizedDescription)
         }
-    
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Main")
         self.present(vc, animated: true, completion: nil)
     }
     
-/*
- * Upload new profile image to Storage and hand it to Database
- */
+    /*
+     * Upload new profile image to Storage and hand it to Database
+     */
     func uploadImage(image: UIImage){
         //Todo: profileImageUploadProgress.isHidden = false
-        storageAPI.uploadImage(profileImage.image!, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
+        // profileImage.image!
+        storageAPI.uploadImage(image, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
                                completionBlock: { [weak self] (fileURL, errorMassage) in
                                 guard let strongSelf = self else {
                                     return
@@ -108,15 +112,15 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.black.cgColor
         
-       storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
+        storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
             let profileImgUrl = URL(string: path)
             self.profileImage.kf.indicatorType = .activity
             self.profileImage.kf.setImage(with: profileImgUrl)
         }
         
-       /* if Auth.auth().currentUser?.uid == nil {
-            handleLogout()
-        }*/
+        /* if Auth.auth().currentUser?.uid == nil {
+         handleLogout()
+         }*/
     }
     
     override func didReceiveMemoryWarning() {
@@ -125,3 +129,4 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
 }
+
