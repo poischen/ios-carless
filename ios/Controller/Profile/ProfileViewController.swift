@@ -10,12 +10,23 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 import Kingfisher
+import Cosmos
 
 class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let storageAPI = StorageAPI.shared
     
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var profileImageUploadProgress: UIProgressView!
+    @IBOutlet weak var profileStars: CosmosView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var ratingsCollectionView: UICollectionView!
+    
+    var usersRatings: [Rating]?
+    var user: User?
+    
+    let collectionViewRatingsIdentifier = "RatingsCollectionViewCell"
+
+    let userUID = StorageAPI.shared.userID()
     
     @IBAction func chooseImage(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
@@ -118,7 +129,21 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.profileImage.kf.setImage(with: profileImgUrl)
         }
         
-        /* if Auth.auth().currentUser?.uid == nil {
+        storageAPI.getUserByUID(UID: storageAPI.userID(), completion: {user in
+            self.user = user
+            self.nameLabel.text = user.name
+            self.profileStars.rating = (Double) (user.rating)
+            
+        })
+        
+        storageAPI.getRatingsByUserUID(userUID: storageAPI.userID(), completion: {ratings in
+            self.usersRatings = ratings
+        })
+        
+        print (usersRatings)
+        print ("second user ratings")
+        
+       /* if Auth.auth().currentUser?.uid == nil {
          handleLogout()
          }*/
     }
@@ -129,4 +154,27 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
 }
+
+extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let ratings = usersRatings {
+            return ratings.count
+        } else {
+            return 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewRatingsIdentifier, for: indexPath) as! RatingsCollectionViewCell
+            if let ur = usersRatings {
+                let rating = ur[indexPath.row] as Rating
+                cell.userRatingDescription.text = rating.explanation
+                cell.userRatingStars.rating = Double(rating.rating)
+            }
+            return cell
+        
+    }
+}
+
 
