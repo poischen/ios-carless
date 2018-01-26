@@ -33,9 +33,17 @@ class HomePageModel {
         storageAPI = StorageAPI.shared
     }
     
-    func isRentingRateable(renting: Renting) -> Bool {
+    func isRentingRateable(renting: Renting, ratingUserIsLessor: Bool) -> Bool {
         let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
-        return (distanceFromNow.duration > self.rateableAfter) && (renting.confirmationStatus == true)
+        let rentingIsConfirmed = renting.confirmationStatus == true
+        let rentingIsOldEnough = distanceFromNow.duration > self.rateableAfter
+        var userHasAlreadyRatedRenting:Bool
+        if (ratingUserIsLessor) {
+            userHasAlreadyRatedRenting = renting.lessorHasRated
+        } else {
+            userHasAlreadyRatedRenting = renting.lesseeHasRated
+        }
+        return rentingIsConfirmed && rentingIsOldEnough && (!userHasAlreadyRatedRenting)
     }
     
     // TODO: construct YouRented in this function
@@ -71,7 +79,7 @@ class HomePageModel {
             } else {
                 for renting in newerRentings {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                        let rateable = self.isRentingRateable(renting: renting)
+                        let rateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: false)
                         let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
                         result.append(newYouRented)
                         if (result.count == numberOfRentings) {
@@ -136,7 +144,7 @@ class HomePageModel {
                             // rentings exist -> proceed with them
                             for renting in offeringsRentings {
                                 self.storageAPI.getUserByUID(UID: renting.userID, completion: {rentingUser in
-                                    let isRateable = self.isRentingRateable(renting: renting)
+                                    let isRateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: true)
                                     let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable)
                                     resultsForThisOffering.append(somebodyRented)
                                     if (resultsForThisOffering.count == offeringsRentings.count) {
