@@ -17,6 +17,7 @@ class MessageHandler {
     static let defaultUserButtlerJamesName = "Geoffrey"
     static let DEFAULT_MESSAGE_RENTING_REQUEST = "Hi! You have a new request for one of your offers. How exciting! Go to your home page and have a look!"
     static let DEFAULT_MESSAGE_RENTING_REQUEST_ACCEPTED = "Hi! The lessor has accepted your request. Visit your home page for details."
+    static let DEFAULT_MESSAGE_RENTING_REQUEST_DENIED = "Hi! The lessor has denied your request. Sorry :("
     
     private init() {}
     

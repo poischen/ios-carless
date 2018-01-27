@@ -181,6 +181,8 @@ class HomePageModel {
     func denyRenting(renting: Renting){
         if let rentingID = renting.id {
             storageAPI.deleteRentingByID(rentingID: rentingID)
+            // send notification (via butler) to user that his renting has been accepted
+            MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: renting.userID, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST_DENIED)
         }
     }
 }
