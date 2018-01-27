@@ -54,12 +54,13 @@ class OfferingViewController: UIViewController {
     
     @IBAction func chatButton(_ sender: UIButton) {
         if let lessorUser = lessor {
-            let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-            let nc = storyboard.instantiateViewController(withIdentifier: "NavControllerChatWindow") as! UINavigationController
+            let storyboard = UIStoryboard(name: ChatWindowVC.CHAT_STORYBOARD_IDENTIFIER, bundle: nil)
+            let nc = storyboard.instantiateViewController(withIdentifier: ChatWindowVC.CHATWITHUSER_NAVCONTROLLER_IDENTIFIER) as! UINavigationController
             let vc = nc.topViewController as! ChatWindowVC
             
             vc.selectedUser = lessorUser.id
             vc.cameFromOffer = true
+            vc.receiverName = lessorUser.name
 
             let profileImageView = UIImageView()
             profileImageView.image = UIImage(named: "ProfilePic")
@@ -67,7 +68,7 @@ class OfferingViewController: UIViewController {
             profileImageView.kf.setImage(with: profileLessorImgUrl)
             vc.receiverImage = profileImageView.image
             
-            self.present(vc, animated: true, completion: nil)
+            self.present(nc, animated: true, completion: nil)
         }
     }
     

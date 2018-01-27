@@ -27,6 +27,10 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     var selectedUser: String?
     let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     
+    static let CHATWITHUSER_VIEWCONTROLLER_IDENTIFIER = "ChatWithUser"
+    static let CHATWITHUSER_NAVCONTROLLER_IDENTIFIER = "NavControllerChatWindow"
+    static let CHAT_STORYBOARD_IDENTIFIER = "ChatStoryboard"
+    
     var cameFromOffer: Bool = false
     
     override func viewDidLoad() {
