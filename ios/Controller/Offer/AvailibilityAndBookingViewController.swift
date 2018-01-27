@@ -377,6 +377,12 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         handleSelectionVisually(view: cell, cellState: cellState)
     }
     
+    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        // prevent user from selecting dates in the past
+        let now = Date()
+        return date > now
+    }
+    
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         setupMonthYear(from: visibleDates)
     }
