@@ -27,23 +27,28 @@ class HomePageModel {
     }
     
     // offerings being watched for new rentings
-    var watchedOfferingsIDs:Set = Set<String>()
+    //var watchedOfferingsIDs:Set = Set<String>()
     
     init(){
         storageAPI = StorageAPI.shared
     }
     
     func isRentingRateable(renting: Renting, ratingUserIsLessor: Bool) -> Bool {
-        let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
-        let rentingIsConfirmed = renting.confirmationStatus == true
-        let rentingIsOldEnough = distanceFromNow.duration > self.rateableAfter
-        var userHasAlreadyRatedRenting:Bool
-        if (ratingUserIsLessor) {
-            userHasAlreadyRatedRenting = renting.lessorHasRated
+        if (renting.endDate > Date()){
+            // renting is in the future -> not rateable
+            return false
         } else {
-            userHasAlreadyRatedRenting = renting.lesseeHasRated
+            let distanceFromNow = DateInterval(start: renting.endDate, end: Date())
+            let rentingIsConfirmed = renting.confirmationStatus == true
+            let rentingIsOldEnough = distanceFromNow.duration > self.rateableAfter
+            var userHasAlreadyRatedRenting:Bool
+            if (ratingUserIsLessor) {
+                userHasAlreadyRatedRenting = renting.lessorHasRated
+            } else {
+                userHasAlreadyRatedRenting = renting.lesseeHasRated
+            }
+            return rentingIsConfirmed && rentingIsOldEnough && (!userHasAlreadyRatedRenting)
         }
-        return rentingIsConfirmed && rentingIsOldEnough && (!userHasAlreadyRatedRenting)
     }
     
     // TODO: construct YouRented in this function
@@ -133,11 +138,13 @@ class HomePageModel {
     
     // IMPORTANT: The completion callback will be fired individually for each offering.
     func subscribeToRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
+        // offerings being watched for new rentings
+        var watchedOfferingsIDs:Set = Set<String>()
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: {usersOfferings in
             for (offering, brand) in usersOfferings {
-                if (offering.id != nil && (!self.watchedOfferingsIDs.contains(offering.id!))){
+                if (offering.id != nil && (!watchedOfferingsIDs.contains(offering.id!))){
                     // offering has an ID and is not watched yet -> add it to the watched offerings and create listener for this offering
-                    self.watchedOfferingsIDs.insert(offering.id!)
+                    watchedOfferingsIDs.insert(offering.id!)
                     self.storageAPI.subscribeToRentingsForOffering(offeringID: offering.id!, completion: {offeringsRentings in
                         var resultsForThisOffering:[SomebodyRented] = []
                         if (offeringsRentings.count > 0) {
@@ -167,6 +174,8 @@ class HomePageModel {
     func acceptRenting(renting: Renting) {
         renting.confirmationStatus = true
         storageAPI.updateRenting(renting: renting)
+        // send notification (via butler) to user that his renting has been accepted
+        MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: renting.userID, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST_ACCEPTED)
     }
     
     func denyRenting(renting: Renting){

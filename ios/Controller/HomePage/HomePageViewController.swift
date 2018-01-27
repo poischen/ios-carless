@@ -277,7 +277,6 @@ extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
-        //removeRequestFromList(renting: renting)
     }
     
     func denyRequest(renting: Renting) {
