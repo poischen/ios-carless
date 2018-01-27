@@ -28,25 +28,28 @@ class MessageHandler {
      sort messages by User IDs in "user-messages" node */
     //func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
     func handleSend(senderID: String, receiverID: String, text: String) {
-        let ref = StorageAPI.shared.messagesRef
-        //let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
-        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.TEXT: text]
-        
-        ref.childByAutoId().updateChildValues(values){ (error, ref) in
-            if error != nil {
-                print("Oops something went wrong")
-                return
+        if let currentUserID = StorageAPI.shared.userID() {
+            let ref = StorageAPI.shared.messagesRef
+            
+            let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.TEXT: text]
+            
+            ref.childByAutoId().updateChildValues(values){ (error, ref) in
+                if error != nil {
+                    print("Oops something went wrong")
+                    return
+                }
+                //add new node "user-messages"
+                let userMessagesRef = StorageAPI.shared.userMessagesRef.child(currentUserID)
+                
+                //gets key of messages
+                let messageID = ref.key
+                userMessagesRef.updateChildValues([messageID: 1])
+                
+                let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
+                receiverUserMessageRef.updateChildValues([messageID: 1])
             }
-            //add new node "user-messages"
-            let userMessagesRef = StorageAPI.shared.userMessagesRef.child(StorageAPI.shared.userID())
-            
-            //gets key of messages
-            let messageID = ref.key
-            userMessagesRef.updateChildValues([messageID: 1])
-            
-            let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
-            receiverUserMessageRef.updateChildValues([messageID: 1])
         }
+       
     }
     
     func uploadImageToFirebase(senderID: String, receiverID: String, image: UIImage) {
@@ -84,25 +87,28 @@ class MessageHandler {
     }
     
     func sendMessageWithUrl(senderID: String, receiverID: String, url: String) {
-        let ref = StorageAPI.shared.messagesRef
-        //let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.SENDER_NAME: senderName, DBConstants.TEXT: text]
-        let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.URL: url]
-        
-        ref.childByAutoId().updateChildValues(values){ (error, ref) in
-            if error != nil {
-                print("Oops something went wrong")
-                return
+        if let currentUserID = StorageAPI.shared.userID() {
+            let ref = StorageAPI.shared.messagesRef
+            
+            let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.URL: url]
+            
+            ref.childByAutoId().updateChildValues(values){ (error, ref) in
+                if error != nil {
+                    print("Oops something went wrong")
+                    return
+                }
+                //add new node "user-messages"
+                let userMessagesRef = StorageAPI.shared.userMessagesRef.child(currentUserID)
+                
+                //gets key of messages
+                let messageID = ref.key
+                userMessagesRef.updateChildValues([messageID: 1])
+                
+                let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
+                receiverUserMessageRef.updateChildValues([messageID: 1])
             }
-            //add new node "user-messages"
-            let userMessagesRef = StorageAPI.shared.userMessagesRef.child(StorageAPI.shared.userID())
-            
-            //gets key of messages
-            let messageID = ref.key
-            userMessagesRef.updateChildValues([messageID: 1])
-            
-            let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
-            receiverUserMessageRef.updateChildValues([messageID: 1])
         }
+        
     }
     
   

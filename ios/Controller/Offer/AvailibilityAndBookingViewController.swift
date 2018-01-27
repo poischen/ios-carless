@@ -210,19 +210,18 @@ class AvailibilityAndBookingViewController: UIViewController {
     }
     
     func calculatePrice(rentingIntervall: DateInterval) -> Void {
-        let userID = storageAPI.userID()
-        //calculate discount depending on rating
-        storageAPI.getUserByUID(UID: userID) { (user) in
-            let intervalLengthInt = (Calendar.current.dateComponents([.day], from: rentingIntervall.start, to: rentingIntervall.end).day!) + 1
-            let intervalLength : Float = Float(intervalLengthInt)
-            let priceperDay: Float = Float((self.offer!.basePrice))
-            
-            self.priceView.text = "  \(priceperDay)"
-            let ratingAverageValue: Float = user.rating
-            var ratingDiscount: Float = 0
-            var expDiscount: Float = 0
-            
-            let ratings = user.numberOfRatings
+        if let userID = storageAPI.userID() {
+            storageAPI.getUserByUID(UID: userID) { (user) in
+                let intervalLengthInt = (Calendar.current.dateComponents([.day], from: rentingIntervall.start, to: rentingIntervall.end).day!) + 1
+                let intervalLength : Float = Float(intervalLengthInt)
+                let priceperDay: Float = Float((self.offer!.basePrice))
+                
+                self.priceView.text = "  \(priceperDay)"
+                let ratingAverageValue: Float = user.rating
+                var ratingDiscount: Float = 0
+                var expDiscount: Float = 0
+                
+                let ratings = user.numberOfRatings
                 //discount for average rating value & for experience measured by ammount of ratings
                 if ratings > 0 {
                     if (ratingAverageValue >= 4.9) { //get 10% discount
@@ -255,37 +254,43 @@ class AvailibilityAndBookingViewController: UIViewController {
                 } else {
                     self.totalPriceLabel.text = "\(intervalLengthInt) day total price:"
                 }
+            }
+            
+            
+            
+            self.reservationButton.isEnabled = true
+            self.indicator.stopAnimating()
+            self.hiddenElementsView.isHidden = false
         }
+        //calculate discount depending on rating
         
-        
-        
-        self.reservationButton.isEnabled = true
-        self.indicator.stopAnimating()
-        self.hiddenElementsView.isHidden = false
     }
     
     @IBAction func reserve(_ sender: Any) {
-        reservationButton.isEnabled = false
-        indicator.startAnimating()
-        storageAPI.generateRentingKey(completion: {(rentingID) in
-            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
-            self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
-                if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
-                    MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
-                    self.dismiss(animated: true, completion: nil)
-                } else {
-                    self.reservationButton.isEnabled = true
-                    self.resultView.text = ""
-                    self.hiddenElementsView.isHidden = true
-                    let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
-                    let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
-                    alertMissingInputs.addAction(ok)
-                    self.present(alertMissingInputs, animated: true, completion: nil)
-                }
+        if let currentUserID = StorageAPI.shared.userID() {
+            reservationButton.isEnabled = false
+            indicator.startAnimating()
+            storageAPI.generateRentingKey(completion: {(rentingID) in
+                let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: currentUserID, startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
+                self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
+                    if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
+                        MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
+                        self.dismiss(animated: true, completion: nil)
+                    } else {
+                        self.reservationButton.isEnabled = true
+                        self.resultView.text = ""
+                        self.hiddenElementsView.isHidden = true
+                        let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
+                        let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+                        alertMissingInputs.addAction(ok)
+                        self.present(alertMissingInputs, animated: true, completion: nil)
+                    }
+                })
+                
             })
-
-        })
-    }
+        }
+        }
+       
 
 }
 

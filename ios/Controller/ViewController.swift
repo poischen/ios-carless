@@ -149,7 +149,7 @@ class ViewController: UIViewController, MessagingDelegate {
     }
     
     func updateToken() {
-        if let currentToken = self.fcmTokenLocal, let userID = StorageAPI.shared.userIDOptional() {
+        if let currentToken = self.fcmTokenLocal, let userID = StorageAPI.shared.userID() {
             StorageAPI.shared.getUserByUID(UID: userID, completion: {user in
                 if (user.deviceID != currentToken) {
                     user.deviceID = currentToken

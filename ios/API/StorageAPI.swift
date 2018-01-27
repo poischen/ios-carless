@@ -459,6 +459,7 @@ final class StorageAPI {
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
             var resultUsers:[User] = []
             for childRaw in snapshot.children {
+                let test = childRaw as? NSDictionary
                 if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let user = User.init(id: stringID, dict: dict) {
                     resultUsers.append(user)
                 } else {
@@ -583,11 +584,7 @@ final class StorageAPI {
     
     //gets UserID in Firebase
     // TODO: return optional and merge with next method
-    func userID() -> String {
-        return Auth.auth().currentUser!.uid
-    }
-    
-    func userIDOptional() -> String? {
+    func userID() -> String? {
         if let currentUser = Auth.auth().currentUser {
             return currentUser.uid
         } else {

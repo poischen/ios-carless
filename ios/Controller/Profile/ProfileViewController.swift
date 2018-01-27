@@ -76,26 +76,29 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
      * Show Image in View
      */
     func uploadImage(image: UIImage){
-        profileImageUploadProgress.isHidden = false
-        storageAPI.uploadImage(image, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
-                               completionBlock: { [weak self] (fileURL, errorMassage) in
-                                guard let strongSelf = self else {
-                                    return
-                                }
-                                //store image url to user
-                                if let imgURL = fileURL {
-                                    strongSelf.profileImageUploadProgress.isHidden = true
-                                    let imageUrl = imgURL.absoluteString
-                                    strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
-                                    strongSelf.profileImage.image = image
-                                } else {
-                                    strongSelf.profileImageUploadProgress.isHidden = true
-                                    let message: String = "\(errorMassage ?? "") Please try again later."
-                                    let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
-                                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                                    strongSelf.present(alert, animated: true, completion: nil)
-                                }
-        })
+        if let currentUserID = StorageAPI.shared.userID() {
+            profileImageUploadProgress.isHidden = false
+            storageAPI.uploadImage(image, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
+                                   completionBlock: { [weak self] (fileURL, errorMassage) in
+                                    guard let strongSelf = self else {
+                                        return
+                                    }
+                                    //store image url to user
+                                    if let imgURL = fileURL {
+                                        strongSelf.profileImageUploadProgress.isHidden = true
+                                        let imageUrl = imgURL.absoluteString
+                                        strongSelf.storageAPI.updateUserProfilePicture(userID: currentUserID, imgUrl: imageUrl)
+                                        strongSelf.profileImage.image = image
+                                    } else {
+                                        strongSelf.profileImageUploadProgress.isHidden = true
+                                        let message: String = "\(errorMassage ?? "") Please try again later."
+                                        let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
+                                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                                        strongSelf.present(alert, animated: true, completion: nil)
+                                    }
+            })
+            
+        }
         
     }
     
@@ -111,11 +114,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         profileImage.maskCircle(anyImage: profileImage.image!)
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.black.cgColor
+        if let currentUserID = StorageAPI.shared.userID() {
+            storageAPI.getUserProfileImageUrl(uID: currentUserID) { (path) in
+                let profileImgUrl = URL(string: path)
+                self.profileImage.kf.indicatorType = .activity
+                self.profileImage.kf.setImage(with: profileImgUrl)
+        }
         
-        storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
-            let profileImgUrl = URL(string: path)
-            self.profileImage.kf.indicatorType = .activity
-            self.profileImage.kf.setImage(with: profileImgUrl)
         }
         
         /* if Auth.auth().currentUser?.uid == nil {

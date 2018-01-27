@@ -38,18 +38,22 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        homePageModel.getUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
+        if let currentUserID = StorageAPI.shared.userID() {
+        
+            homePageModel.getUsersRentings(UID: currentUserID, completion: {rentingsAndOfferings in
             self.usersRentingsAndOfferings = rentingsAndOfferings
             self.usersRentingsTable.reloadData()
         })
-        homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
+        homePageModel.getUsersOfferings(UID: currentUserID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
         })
-        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
+        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: currentUserID, completion: {offeringsBrandsAndUsers in
             self.usersRentingRequests = offeringsBrandsAndUsers
             self.usersRentingRequestsTable.reloadData()
         })
+            
+        }
     }
 
     override func didReceiveMemoryWarning() {
