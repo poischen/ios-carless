@@ -582,8 +582,17 @@ final class StorageAPI {
     
     
     //gets UserID in Firebase
+    // TODO: return optional and merge with next method
     func userID() -> String {
         return Auth.auth().currentUser!.uid
+    }
+    
+    func userIDOptional() -> String? {
+        if let currentUser = Auth.auth().currentUser {
+            return currentUser.uid
+        } else {
+            return nil
+        }
     }
     
     func getUserProfileImageUrl(uID: String, completion: @escaping (_ profileImgUrl: String) -> Void){

@@ -35,7 +35,7 @@ class User {
     var rating: Float
     let profileImgUrl: String
     var numberOfRatings: Int
-    let deviceID: String
+    var deviceID: String
     
     //create Users when fetching them from Database
     init(id: String, name: String, email: String, rating: Float, profileImgUrl: String, numberOfRatings: Int, deviceID: String){

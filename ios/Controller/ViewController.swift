@@ -10,9 +10,9 @@ import UIKit
 import Firebase
 import FirebaseDatabase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MessagingDelegate {
     
-    //var fcmTokenLocal: String! = ""
+    var fcmTokenLocal: String?
     
     //outlets
     @IBOutlet weak var username: UITextField!
@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //Messaging.messaging().delegate = self
+        Messaging.messaging().delegate = self
         // Do any additional setup after loading the view, typically from a nib.
     }
     
@@ -70,8 +70,11 @@ class ViewController: UIViewController {
                     //Print into the console if successfully logged in
                     print("You have successfully logged in")
                     
+                    self.updateToken()
+                    
                     //Go to the HomeViewController if the login is sucessful
                     self.goToHome()
+                    
                     
                     
                 } else {
@@ -114,7 +117,13 @@ class ViewController: UIViewController {
                 
                 self.goToHome()
                 
-                StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: "eY5-hVrpyEc:APA91bFUW8KpMvOPLSUH_nFEaetkqmlbPfYFO9E9r0xQecY6NuFp8ZdkeD2cmzD3PxSv3U8aSVCO_GDcv-Tv-86A1N-MTh61CTBeAzqx1PnhhLwBpzNtqsG_ZzVOdpLPiIWfpRF8AnHp")
+                if let currentToken = self.fcmTokenLocal {
+                    StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: currentToken)
+                } else {
+                    print("Error: token is empty")
+                }
+                
+                
                 
             } else {
                 let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
@@ -129,15 +138,28 @@ class ViewController: UIViewController {
         
     }
     
-    /*func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
         fcmTokenLocal = fcmToken
+        
+        updateToken()
         
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
     
-    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
+    func updateToken() {
+        if let currentToken = self.fcmTokenLocal, let userID = StorageAPI.shared.userIDOptional() {
+            StorageAPI.shared.getUserByUID(UID: userID, completion: {user in
+                if (user.deviceID != currentToken) {
+                    user.deviceID = currentToken
+                    StorageAPI.shared.updateUser(user: user)
+                }
+            })
+        }
+    }
+    
+   /* func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
         print("Firebase registration token: \(fcmToken)")
         fcmTokenLocal = fcmToken
         
