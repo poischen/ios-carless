@@ -39,7 +39,7 @@ class MessageHandler {
                     return
                 }
                 //add new node "user-messages"
-                let userMessagesRef = StorageAPI.shared.userMessagesRef.child(currentUserID)
+                let userMessagesRef = StorageAPI.shared.userMessagesRef.child(senderID)
                 
                 //gets key of messages
                 let messageID = ref.key

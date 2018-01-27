@@ -28,6 +28,7 @@ class ViewController: UIViewController, MessagingDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if Auth.auth().currentUser != nil {
+            updateToken()
             goToHome()
         }
     }
