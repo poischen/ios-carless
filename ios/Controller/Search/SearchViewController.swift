@@ -282,6 +282,12 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
         setupCalendarLabels(from: visibleDates)
     }
     
+    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+        // prevent user from selecting dates in the past
+        let now = Date()
+        return date > now
+    }
+    
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
         // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient

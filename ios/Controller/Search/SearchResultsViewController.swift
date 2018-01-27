@@ -17,6 +17,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     var preselectedStartDate: Date?
     var preselectedEndDate: Date?
     
+    var cameFromOffering = false
+    
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let SEARCH_OFFER_SEGUE = "SearchOfferSegue"
@@ -38,12 +40,16 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewWillAppear(animated)
         // empty offerings to prevent showing an offering that doesn't fit the search filter in the background of the "no cars found" popup
         // offerings will be filled again if the search is successfull
-        if (self.offerings.count > 0){
-            self.offerings = []
-            self.searchResultsTable.reloadData()
+
+        if (!cameFromOffering) {
+            // only search (again) if the last screen was not the offering
+            if (self.offerings.count > 0){
+                self.offerings = []
+                self.searchResultsTable.reloadData()
+            }
+            // last screen that was shown is the filter -> get new offerings to apply filter
+            self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
         }
-        
-        self.searchModel.getFilteredOfferings(filter: self.searchFilter!, completion: self.receiveOfferings)
     }
 
     override func didReceiveMemoryWarning() {
@@ -147,6 +153,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                     offeringController.preselectedEndDate = ped
                 }
                 offeringController.displayingOffering = selectedOffering
+            
+            // remember that the offering controller is shown
+            cameFromOffering = true
         } else if (segue.identifier == "showFilter") {
             // next screen: filter
             if let filterViewController = segue.destination as? FilterViewController {
@@ -166,6 +175,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 
                 // pass current filter to the filter screen to be able to modify it there
                 filterViewController.searchFilter = self.searchFilter
+                
+                // remember that the filter controller is shown
+                cameFromOffering = false
             }
         }
         
