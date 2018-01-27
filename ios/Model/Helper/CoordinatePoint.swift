@@ -18,7 +18,7 @@ class CoordinatePoint {
         self.longitude = longitude
     }
     
-    // How far is this point away from another point (in meters)?
+    // How far is this point away from another point (in METERS)?
     func distanceToPoint(otherPoint: CoordinatePoint) -> Double {
         return CoordinatePoint.distanceBetweenCoordinates(place1Latitude: self.latitude, place1Longitude: self.longitude, place2Latitude: otherPoint.latitude, place2Longitude: otherPoint.longitude)
     }

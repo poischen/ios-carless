@@ -9,8 +9,6 @@
 import UIKit
 
 class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
-    
     let userUID = StorageAPI.shared.userID()
     
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
@@ -19,11 +17,24 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 
     @IBOutlet weak var usersRentingsTable: UITableView!
     @IBOutlet weak var usersOfferingsTable: UITableView!
-    @IBOutlet weak var usersRentingRequestsTable: UITableView!
+    @IBOutlet weak var usersRentingsRequestsTable: UITableView!
     
-    var usersRentingsAndOfferings: [(Renting, Offering, Brand)] = []
+
+    @IBOutlet weak var usersRentingsPlaceholderLabel: UILabel!
+    @IBOutlet weak var userOfferingsPlaceholderLabel: UILabel!
+    @IBOutlet weak var userRentingRequestsPlaceholderLabel: UILabel!
+    
+    var rentingEvents: [RentingEvent] = []
     var usersOfferingsAndBrands: [(Offering,Brand)] = []
-    var usersRentingRequests: [(Offering, Brand, User, Renting)] = []
+    private var usersRentingRequestsMap: [String:[SomebodyRented]] = [:]
+    // TODO: move into model?
+    var usersRentingRequests: [SomebodyRented] {
+        var result:[SomebodyRented] = []
+        for (_, requestData) in usersRentingRequestsMap {
+            result += requestData
+        }
+        return result
+    }
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
@@ -32,23 +43,83 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersRentingsTable.delegate = self
         usersOfferingsTable.dataSource = self
         usersOfferingsTable.delegate = self
-        usersRentingRequestsTable.dataSource = self
-        usersRentingRequestsTable.delegate = self
+        usersRentingsRequestsTable.dataSource = self
+        usersRentingsRequestsTable.delegate = self
+        
+        // TEST
+        /* let url = URL(string: "https://us-central1-ioscars-32e69.cloudfunctions.net/acceptRenting?userID=aBnV7X3oLFP3HX1msV4LlvtEbt62")
+        
+        let task = URLSession.shared.dataTask(with: url!) {(data, response, error) in
+            if (error != nil) {
+                print(error!);
+            }
+        } */
+        
+        //task.resume()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        homePageModel.getUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
-            self.usersRentingsAndOfferings = rentingsAndOfferings
-            self.usersRentingsTable.reloadData()
+        /* homePageModel.subscribeToUsersRentings(UID: userUID, completion: {rentingsAndOfferings in
+            self.usersRentingsAndAdditionalInfo = rentingsAndOfferings
+            if (rentingsAndOfferings.count == 0){
+                // no rentings -> hide table and show placeholder
+                self.usersRentingsTable.isHidden = true
+                self.usersRentingsPlaceholderLabel.isHidden = false
+            } else {
+                // rentings exist -> hide placeholder and show table
+                self.usersRentingsTable.reloadData()
+                self.usersRentingsTable.isHidden = false
+                self.usersRentingsPlaceholderLabel.isHidden = true
+            }
+        }) */
+        
+        homePageModel.subscribeToRentingEvents(UID: userUID, completion: {rentingEvents in
+            self.rentingEvents = rentingEvents
+            if (self.rentingEvents.count == 0){
+                // no events -> hide table and show placeholder
+                self.usersRentingsTable.isHidden = true
+                self.usersRentingsPlaceholderLabel.isHidden = false
+            } else {
+                // events exist -> hide placeholder and show table
+                self.usersRentingsTable.reloadData()
+                self.usersRentingsTable.isHidden = false
+                self.usersRentingsPlaceholderLabel.isHidden = true
+            }
         })
-        homePageModel.getUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
+        homePageModel.subscribeToUsersOfferings(UID: userUID, completion: {offeringsAndBrands in
             self.usersOfferingsAndBrands = offeringsAndBrands
             self.usersOfferingsTable.reloadData()
+            if (offeringsAndBrands.count == 0){
+                // no offerings -> hide table and show placeholder
+                self.usersOfferingsTable.isHidden = true
+                self.userOfferingsPlaceholderLabel.isHidden = false
+            } else {
+                // offering exist -> hide placeholder and show table
+                self.usersOfferingsTable.reloadData()
+                self.usersOfferingsTable.isHidden = false
+                self.userOfferingsPlaceholderLabel.isHidden = true
+            }
         })
-        homePageModel.getUnconfirmedOfferingsForUsersOfferings(UID: userUID, completion: {offeringsBrandsAndUsers in
-            self.usersRentingRequests = offeringsBrandsAndUsers
-            self.usersRentingRequestsTable.reloadData()
+        homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: userUID, completion: {offeringID, rentingData in
+            // operations here will also change the computed property usersRentingRequests which is the data source of the table
+            if rentingData.count > 0 {
+                // overwrite (maybe) existing requests for this offering in the map
+                self.usersRentingRequestsMap[offeringID] = rentingData
+            } else {
+                // remove key from map if no requests for the offering exist
+                self.usersRentingRequestsMap.removeValue(forKey: offeringID)
+            }
+            if (self.usersRentingRequestsMap.count == 0) {
+                // no requests -> hide table and show placeholder
+                self.usersRentingsRequestsTable.isHidden = true
+                self.userRentingRequestsPlaceholderLabel.isHidden = false
+            } else {
+                // requests exist -> update table, show it and hide the placeholder
+                self.usersRentingsRequestsTable.reloadData()
+                self.usersRentingsRequestsTable.isHidden = false
+                self.userRentingRequestsPlaceholderLabel.isHidden = true
+            }
         })
     }
 
@@ -62,10 +133,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch tableView {
         case self.usersRentingsTable:
-            count = usersRentingsAndOfferings.count
+            count = rentingEvents.count
         case self.usersOfferingsTable:
             count = usersOfferingsAndBrands.count
-        case self.usersRentingRequestsTable:
+        case self.usersRentingsRequestsTable:
             count = usersRentingRequests.count
         default:
             count = 0
@@ -75,33 +146,63 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var returnCell:UITableViewCell
+        var returnCell:UITableViewCell = UITableViewCell()
         
         // TODO: better error handling here
+        // TODO: move initialisation into cells 
         
         switch tableView {
         case self.usersRentingsTable:
-            let (renting, offering, brand) = usersRentingsAndOfferings[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: USER_RENTINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingsTableViewCell
+            /* let (renting, offering, brand, rateable) = youRentedOrSomebodyRented[indexPath.row]
+            let cell = tableView.dequeueReusableCell(withIdentifier: USER_RENTINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! YouRentedTableViewCell
             cell.carNameLabel.text = brand.name + " " + offering.type
             cell.startDateLabel.text = homePageModel.dateToString(date: renting.startDate)
             cell.endDateLabel.text = homePageModel.dateToString(date: renting.startDate)
-            returnCell = cell
+            if (renting.confirmationStatus) {
+                // renting is confirmed
+                cell.statusLabel.text = YouRentedTableViewCell.ACCEPTED_STATUS_MESSAGE
+            } else {
+                cell.statusLabel.text = YouRentedTableViewCell.PENDING_STATUS_MESSAGE
+            }
+            if (rateable) {
+                // renting is rateable -> show rating button
+                cell.rateButton.isHidden = false
+            } else {
+                cell.rateButton.isHidden = true
+            }
+            cell.delegate = self
+            cell.showedRenting = renting
+            returnCell = cell*/
+            let event = self.rentingEvents[indexPath.row]
+            switch event.type {
+            case .somebodyRented:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell {
+                    cell.event = event
+                    cell.delegate = self
+                    returnCell = cell
+                }
+            case .youRented:
+                if let cell = tableView.dequeueReusableCell(withIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as? YouRentedTableViewCell {
+                    cell.event = event
+                    cell.delegate = self
+                    returnCell = cell
+                }
+            }
         case self.usersOfferingsTable:
             let (offering, brand) = usersOfferingsAndBrands[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath)
             cell.textLabel?.text = brand.name + " " + offering.type
             returnCell = cell
-        case self.usersRentingRequestsTable:
-            let (offering, brand, user, renting) = usersRentingRequests[indexPath.row]
+        case self.usersRentingsRequestsTable:
+            let somebodyRented = usersRentingRequests[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
-            cell.usernameButton.setTitle(user.name, for: .normal)
-            cell.ratingScoreLabel.text = String(user.rating)
-            cell.carNameLabel.text = brand.name + " " + offering.type
-            cell.numberOfRatingsLabel.text = "(\(user.numberOfRatings) ratings)"
+            cell.usernameButton.setTitle(somebodyRented.userThatRented.name, for: .normal)
+            cell.ratingScoreLabel.text = String(somebodyRented.userThatRented.rating)
+            cell.carNameLabel.text = somebodyRented.brand.name + " " + somebodyRented.offering.type
+            cell.numberOfRatingsLabel.text = "(\(somebodyRented.userThatRented.numberOfRatings) ratings)"
             // setting data necessary for using the buttons in the cell as gateway to other views
-            cell.showedRenting = renting
-            cell.rentingUser = user
+            cell.showedRenting = somebodyRented.renting
+            cell.rentingUser = somebodyRented.userThatRented
             cell.delegate = self
             returnCell = cell
         default:
@@ -120,8 +221,18 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             let (selectedOffering,_) = self.usersOfferingsAndBrands[indexPath.row]
             showSelectedOffering(selectedOffering: selectedOffering)
         } else if (tableView == self.usersRentingsTable) {
-            let (_,selectedOffering,_) = self.usersRentingsAndOfferings[indexPath.row]
-            showSelectedOffering(selectedOffering: selectedOffering)
+            let event = self.rentingEvents[indexPath.row]
+            switch event.type {
+            case .somebodyRented:
+                if let somebodyRented = event as? SomebodyRented {
+                    // TODO: avoid code duplication?
+                    showSelectedOffering(selectedOffering: somebodyRented.offering)
+                }
+            case .youRented:
+                if let youRented = event as? YouRented {
+                    showSelectedOffering(selectedOffering: youRented.offering)
+                }
+            }
         }
 
     }
@@ -150,41 +261,52 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(navigationController, animated: true, completion: nil)
     }
     
-
-}
-
-extension HomePageViewController: RequestProcessingProtocol{
+    // needed by both RequestProcessingProtocol and RatingProtocol
     func goToProfile(user: User) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        guard let profileController = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as? ProfileViewController else {
+        guard let profileController = storyboard.instantiateViewController(withIdentifier: "NavProfile") as? ProfileViewController else {
                 return
         }
         profileController.profileOwner = user
         self.present(profileController, animated: true, completion: nil)
     }
+
+}
+
+extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
     
     func denyRequest(renting: Renting) {
         homePageModel.denyRenting(renting: renting)
-        removeRequestFromList(renting: renting)
+        //removeRequestFromList(renting: renting)
     }
+}
+
+extension HomePageViewController: RatingProtocol{
+    // TODO: avoid code duplication here?
     
-    
-    
-    func removeRequestFromList(renting: Renting) {
-        if let wantedRentingID = renting.id {
-            usersRentingRequests = usersRentingRequests.filter {(_,_,_,currentRenting) in
-                if let currentRentingID = currentRenting.id  {
-                    return currentRentingID != wantedRentingID
-                } else {
-                    return false
-                }
-            }
+    func rateLessee(renting: Renting, lesseeUser: User) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
+                return
         }
-        usersRentingRequestsTable.reloadData()
+        rateController.rentingBeingRated = renting
+        rateController.userBeingRated = lesseeUser
+        self.present(rateController, animated: true, completion: nil)
     }
+    func rateLessor(renting: Renting) {
+        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
+        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
+            return
+        }
+        rateController.rentingBeingRated = renting
+        rateController.ratingLessee = false
+        self.present(rateController, animated: true, completion: nil)
+    }
+    
+    
 }

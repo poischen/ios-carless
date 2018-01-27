@@ -8,8 +8,6 @@
 
 import Foundation
 
-// TODO: let gear, engine and feature inherit from one class or union these classes?
-// TODO: more sophisticated object needed here?
 
 class Gear: DictionaryConvertibleStatic, SelectableItem {
     

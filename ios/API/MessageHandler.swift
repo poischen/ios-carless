@@ -11,11 +11,12 @@ import SDWebImage
 import Photos
 
 class MessageHandler {
-
+    
     static let _shared = MessageHandler()
     static let defaultUserButtlerJamesID = "YouicSlsCSepkKJ27R0HN4buWCZ2"
-    static let defaultUserButtlerJamesName = "James"
+    static let defaultUserButtlerJamesName = "Geoffrey"
     static let DEFAULT_MESSAGE_RENTING_REQUEST = "Hi! You have a new request for one of your offers. How exciting! Go to your home page and have a look!"
+    static let DEFAULT_MESSAGE_RENTING_REQUEST_ACCEPTED = "Hi! The lessor has accepted your request. Visit your home page for details."
     
     private init() {}
     
@@ -23,7 +24,7 @@ class MessageHandler {
     static let shared = MessageHandler()
     
     //weak var delegate: AddMessageDelegate?
-   
+    
     /* fanning out of messages,
      sort messages by User IDs in "user-messages" node */
     //func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
@@ -71,7 +72,7 @@ class MessageHandler {
     func uploadVideoToFirebase(senderID: String, receiverID: String, vidUrl: URL?) {
         let fileName = NSUUID().uuidString
         StorageAPI.shared.videoStorageRef.child(fileName).putFile(from: vidUrl!, metadata: nil) { (metadata, error) in
-       
+            
             if error != nil {
                 print("Failed to upload video!")
                 return
@@ -105,6 +106,6 @@ class MessageHandler {
         }
     }
     
-  
+    
     
 }

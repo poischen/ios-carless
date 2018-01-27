@@ -38,8 +38,8 @@ class SearchViewControllerOld: UIViewController, UIPickerViewDelegate, UIPickerV
          */
         startTimeDatePicker.minimumDate = Date() + 86400 // adding one day
         endTimeDatePicker.minimumDate = Date() + 86400 // adding one day
-        startTimeTimePicker.date = Filter.dateToNext30(date: Date())
-        endTimeTimePicker.date = Filter.dateToNext30(date: Date() + 1800) // adding half an hour
+        startTimeTimePicker.date = DateHelper.dateToNext30(date: Date())
+        endTimeTimePicker.date = DateHelper.dateToNext30(date: Date() + 1800) // adding half an hour
     }
     
     override func didReceiveMemoryWarning() {
@@ -112,8 +112,8 @@ class SearchViewControllerOld: UIViewController, UIPickerViewDelegate, UIPickerV
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == "showSearchResults") {
-            let mergedStartDate = Filter.mergeDates(dayDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
-            let mergedEndDate = Filter.mergeDates(dayDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
+            let mergedStartDate = DateHelper.mergeDates(dayDate: startTimeDatePicker.date, hoursMinutesDate: startTimeTimePicker.date)
+            let mergedEndDate = DateHelper.mergeDates(dayDate: endTimeDatePicker.date, hoursMinutesDate: endTimeTimePicker.date)
             // next screen: search results
             if let searchResultsViewController = segue.destination as? SearchResultsViewController {
                 let newFilter:Filter = Filter(

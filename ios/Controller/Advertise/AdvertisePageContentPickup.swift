@@ -54,8 +54,8 @@ class AdvertisePageContentPickup: UIViewController {
         
         searchBar.delegate = self
         
-        pickUpPicker.date = Filter.dateToNext30(date: Date())
-        returnPicker.date = Filter.dateToNext30(date: Date() + 1800)
+        pickUpPicker.date = DateHelper.dateToNext30(date: Date())
+        returnPicker.date = DateHelper.dateToNext30(date: Date() + 1800)
         pickUpPicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         returnPicker.addTarget(self, action: #selector(datePickerChanged(picker:)), for: .valueChanged)
         cacheTimes(picker: pickUpPicker)

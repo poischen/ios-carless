@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Ljw-1U-NAU">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -14,7 +11,7 @@
             <objects>
                 <viewController storyboardIdentifier="Rate" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Ljw-1U-NAU" customClass="RateViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ish-Bl-JWP">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Rating" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dih-hv-kGj">
@@ -123,8 +120,8 @@
                         <outlet property="characterCountLabel" destination="D0O-6f-aV7" id="4Qt-b2-d1c"/>
                         <outlet property="ratingCarModel" destination="Opm-Jl-pxb" id="skw-Dk-pyH"/>
                         <outlet property="ratingExplanation" destination="we0-UB-TSN" id="qUe-uv-P2g"/>
-                        <outlet property="ratingLessorUsername" destination="GeL-DJ-bSL" id="RAQ-z7-v8P"/>
                         <outlet property="ratingStars" destination="CHU-WM-oxe" id="Ibw-OU-VQm"/>
+                        <outlet property="userBeingRatedUsernameLabel" destination="GeL-DJ-bSL" id="RAQ-z7-v8P"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="35u-Oj-NYA" userLabel="First Responder" sceneMemberID="firstResponder"/>

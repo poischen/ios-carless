@@ -270,7 +270,7 @@ class AvailibilityAndBookingViewController: UIViewController {
         reservationButton.isEnabled = false
         indicator.startAnimating()
         storageAPI.generateRentingKey(completion: {(rentingID) in
-            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice)
+            let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: self.storageAPI.userID(), startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice, lessorRated: false, lesseeRated: false)
             self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                 if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
                     MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
