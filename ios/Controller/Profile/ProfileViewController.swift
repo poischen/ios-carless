@@ -25,7 +25,10 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var collectionViewOffers: UICollectionView!
     @IBOutlet weak var profileImageUploadProgress: UIProgressView!
     
-    var cameFromOffering = false
+    var cancelButtonNeeded = false
+    
+    static let PROFILE_NAVIGATION_IDENTIFIER = "NavProfile"
+    static let PROFILE_STORYBOARD_IDENTIFIER = "Profile"
     
     let collectionViewRatingsIdentifier = "RatingsCollectionViewCell"
     let collectionViewOffersIdentifier = "OffersCollectionViewCell"
@@ -67,7 +70,7 @@ class ProfileViewController: UIViewController {
                 self.navigationItem.title = user.name + title3rd
             }
             
-            if cameFromOffering {
+            if cancelButtonNeeded {
                 navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
                 self.tabBarController?.tabBar.isHidden = true
             }

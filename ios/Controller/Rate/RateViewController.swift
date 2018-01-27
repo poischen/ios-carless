@@ -13,15 +13,16 @@
  */
 
 import UIKit
+import Cosmos
 
 class RateViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet weak var ratingExplanation: UITextView!
-    @IBOutlet weak var ratingStars: RateStarControl!
     @IBOutlet weak var ratingCarModel: UILabel!
     @IBOutlet weak var userBeingRatedUsernameLabel: UILabel!
     @IBOutlet weak var characterCountLabel: UILabel!
     
+    @IBOutlet weak var ratingStarsView: CosmosView!
     private let MIN_EXPLANATION_LENGTH = 50
     private let MAX_EXPLANATION_LENGTH = 300
     private let CHARACTER_COUNT_LABEL_LIMIT = "/50"
@@ -85,7 +86,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
             if ratingExplanation.text.count >= MIN_EXPLANATION_LENGTH && ratingExplanation.text.count <= MAX_EXPLANATION_LENGTH {
                 if let currentRentingBeingRated = rentingBeingRated {
                     // save rating, update user's average rating and go back to the profile
-                    RateModel.saveRating(rating: ratingStars.rating, ratedUser: userBeingRated!, explanation: ratingExplanation.text, renting: currentRentingBeingRated, ratingLessee: ratingLessee)
+                    RateModel.saveRating(rating: Int(ratingStarsView.rating), ratedUser: userBeingRated!, explanation: ratingExplanation.text, renting: currentRentingBeingRated, ratingLessee: ratingLessee)
                     goBackToProfile()
                 }
             } else {
@@ -99,16 +100,14 @@ class RateViewController: UIViewController, UITextViewDelegate {
             }
         }
     }
+
+    private func goBackToProfile(){
+        self.dismiss(animated: true, completion: nil)
+    }
     
-    @IBAction func cancelButtonClicked(_ sender: Any) {
+    @IBAction func cancelButton(_ sender: Any) {
         goBackToProfile()
     }
     
-    // TODO: replace with navigation controller
-    private func goBackToProfile(){
-        /* let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Home")
-        self.present(vc, animated: true, completion: nil)*/
-        self.dismiss(animated: true, completion: nil)
-    }
+    
 }

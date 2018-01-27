@@ -16,7 +16,6 @@
 		191DABB11FF00F7000EB0070 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191DABB01FF00F7000EB0070 /* Time.swift */; };
 		1922178D1FBDA5BE00D7FDFE /* Fuel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1922178C1FBDA5BE00D7FDFE /* Fuel.swift */; };
 		19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19380CB91FD5A29A0057A6D2 /* VehicleType.swift */; };
-		193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966BE1FF57B86008C76A8 /* RateStarControl.swift */; };
 		193966C11FF57BED008C76A8 /* Rate.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 193966C01FF57BED008C76A8 /* Rate.storyboard */; };
 		193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 193966C31FF57EDE008C76A8 /* RateViewController.swift */; };
 		194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 194769221FC8480000AB02E4 /* SearchResultsViewController.swift */; };
@@ -128,7 +127,6 @@
 		191DABB01FF00F7000EB0070 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
 		1922178C1FBDA5BE00D7FDFE /* Fuel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fuel.swift; sourceTree = "<group>"; };
 		19380CB91FD5A29A0057A6D2 /* VehicleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VehicleType.swift; sourceTree = "<group>"; };
-		193966BE1FF57B86008C76A8 /* RateStarControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateStarControl.swift; sourceTree = "<group>"; };
 		193966C01FF57BED008C76A8 /* Rate.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Rate.storyboard; sourceTree = "<group>"; };
 		193966C31FF57EDE008C76A8 /* RateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateViewController.swift; sourceTree = "<group>"; };
 		194769221FC8480000AB02E4 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
@@ -325,7 +323,6 @@
 		193966BD1FF57B6D008C76A8 /* Rate */ = {
 			isa = PBXGroup;
 			children = (
-				193966BE1FF57B86008C76A8 /* RateStarControl.swift */,
 				193966C01FF57BED008C76A8 /* Rate.storyboard */,
 			);
 			path = Rate;
@@ -1009,7 +1006,6 @@
 				84FD437A1FF52CCD00CB546C /* AdvertisePageContentPickup.swift in Sources */,
 				198A33B5201BD5DF004BDCE4 /* DateHelper.swift in Sources */,
 				19D87BF22018B83C00FCB93D /* YouRented.swift in Sources */,
-				193966BF1FF57B86008C76A8 /* RateStarControl.swift in Sources */,
 				847D337B2002A53D00493402 /* ShowOffer.swift in Sources */,
 				84FD437C1FF52CDA00CB546C /* AdvertisePageContentDescription.swift in Sources */,
 				19E8583E2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift in Sources */,

@@ -14,6 +14,8 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
     let USER_OFFERINGS_TABLE_CELL_IDENTIFIER = "usersOfferingsCell"
     let USER_REQUESTS_TABLE_CELL_IDENTIFIER = "userRentingRequestsCell"
+    let RATING_NAVIGATION_IDENTIFIER = "RatingNav"
+    let RATE_STORYBOARD_IDENTIFIER = "Rate"
     
     @IBOutlet weak var usersRentingsTable: UITableView!
     @IBOutlet weak var usersOfferingsTable: UITableView!
@@ -232,12 +234,6 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         self.present(vc, animated: true, completion: nil)
     }
     
-    /*  @IBAction func ratingTestButtonClicked(_ sender: Any) {
-     let storyboard = UIStoryboard(name: "Rate", bundle: nil)
-     let vc = storyboard.instantiateViewController(withIdentifier: "Rate")
-     self.present(vc, animated: true, completion: nil)
-     }*/
-    
     func showSelectedOffering(selectedOffering: Offering){
         // show selected offering
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
@@ -251,12 +247,14 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     // needed by both RequestProcessingProtocol and RatingProtocol
     func goToProfile(user: User) {
-        let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        guard let profileController = storyboard.instantiateViewController(withIdentifier: "NavProfile") as? ProfileViewController else {
+        let storyboard = UIStoryboard(name: ProfileViewController.PROFILE_STORYBOARD_IDENTIFIER, bundle: nil)
+        guard let navProfileController = storyboard.instantiateViewController(withIdentifier: ProfileViewController.PROFILE_NAVIGATION_IDENTIFIER) as? UINavigationController,
+              let profileController = navProfileController.topViewController as? ProfileViewController else {
             return
         }
         profileController.profileOwner = user
-        self.present(profileController, animated: true, completion: nil)
+        profileController.cancelButtonNeeded = true
+        self.present(navProfileController, animated: true, completion: nil)
     }
     
 }
@@ -265,37 +263,34 @@ extension HomePageViewController: RequestProcessingProtocol{
     
     func acceptRequest(renting: Renting) {
         homePageModel.acceptRenting(renting: renting)
-        //removeRequestFromList(renting: renting)
     }
     
     func denyRequest(renting: Renting) {
         homePageModel.denyRenting(renting: renting)
-        //removeRequestFromList(renting: renting)
     }
+    
 }
 
 extension HomePageViewController: RatingProtocol{
-    // TODO: avoid code duplication here?
-    
     func rateLessee(renting: Renting, lesseeUser: User) {
-        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
-        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
-            return
-        }
+        let (navController, rateController) = goToRenting()
         rateController.rentingBeingRated = renting
         rateController.userBeingRated = lesseeUser
-        self.present(rateController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
     }
     func rateLessor(renting: Renting) {
-        let storyboard = UIStoryboard(name: "Rate", bundle: nil)
-        guard let rateController = storyboard.instantiateViewController(withIdentifier: "Rate") as? RateViewController else {
-            return
-        }
+        let (navController, rateController) = goToRenting()
         rateController.rentingBeingRated = renting
         rateController.ratingLessee = false
-        self.present(rateController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
     }
     
+    func goToRenting() -> (UINavigationController, RateViewController) {
+        let storyboard = UIStoryboard(name: RATE_STORYBOARD_IDENTIFIER, bundle: nil)
+        let rateNavController = storyboard.instantiateViewController(withIdentifier: RATING_NAVIGATION_IDENTIFIER) as! UINavigationController
+        let rateController = rateNavController.topViewController as! RateViewController
+        return (rateNavController, rateController)
+    }
     
 }
 

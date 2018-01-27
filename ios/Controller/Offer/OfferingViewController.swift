@@ -118,7 +118,7 @@ class OfferingViewController: UIViewController {
             let navController = storyboard.instantiateViewController(withIdentifier: "NavProfile") as! UINavigationController
             let vc = navController.topViewController as! ProfileViewController
             vc.profileOwner = lessorUser
-            vc.cameFromOffering = true
+            vc.cancelButtonNeeded = true
             self.present(navController, animated: true, completion: nil)
         }
     }
