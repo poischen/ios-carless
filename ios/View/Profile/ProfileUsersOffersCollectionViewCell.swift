@@ -14,7 +14,7 @@ class ProfileUsersOffersCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var offerCarPrice: UILabel!
     
     var offer: Offering?
-    var eProfileViewController: ExternProfileViewController?
+    var eProfileViewController: ProfileViewController?
     
     @IBAction func moreDetailsButton(_ sender: Any) {
         if let offer = self.offer, let eProfileViewController = self.eProfileViewController {

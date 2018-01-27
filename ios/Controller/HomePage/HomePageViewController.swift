@@ -156,7 +156,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
 extension HomePageViewController: RequestProcessingProtocol{
     func goToProfile(user: User) {
         let storyboard = UIStoryboard(name: "Profile", bundle: nil)
-        guard let profileController = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as? ExternProfileViewController else {
+        guard let profileController = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as? ProfileViewController else {
                 return
         }
         profileController.profileOwner = user

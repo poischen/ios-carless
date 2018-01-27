@@ -1,34 +1,125 @@
 //
-//  ProfileViewController.swift
+//  ExternProfileViewController.swift
 //  ios
 //
-//  Created by Hila Safi on 19.12.17.
-//  Copyright © 2017 Hila Safi. All rights reserved.
+//  Created by admin on 14.01.18.
+//  Copyright © 2018 Hila Safi. All rights reserved.
 //
 
 import UIKit
 import Firebase
 import FirebaseDatabase
-import Kingfisher
 import Cosmos
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController {
     let storageAPI = StorageAPI.shared
     
-    @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var profileOwnerImageView: UIImageView!
+    @IBOutlet weak var profileOwnerName: UILabel!
+    @IBOutlet weak var noCurrentOfferNote: UILabel!
+    @IBOutlet weak var noCurrentRatingsNote: UILabel!
+    @IBOutlet weak var profileOwnerRatingStars: CosmosView!
+    @IBOutlet weak var otherUsersAboutProfileOwnerHL: UILabel!
+    @IBOutlet weak var profileOwnersCurrentOffersHL: UILabel!
+    @IBOutlet weak var collectionViewRatings: UICollectionView!
+    @IBOutlet weak var collectionViewOffers: UICollectionView!
     @IBOutlet weak var profileImageUploadProgress: UIProgressView!
-    @IBOutlet weak var profileStars: CosmosView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var ratingsCollectionView: UICollectionView!
     
-    var usersRatings: [Rating]?
-    var user: User?
+    var cameFromOffering = false
     
     let collectionViewRatingsIdentifier = "RatingsCollectionViewCell"
-
-    let userUID = StorageAPI.shared.userID()
+    let collectionViewOffersIdentifier = "OffersCollectionViewCell"
     
-    @IBAction func chooseImage(_ sender: Any) {
+    let ratinsHL = "Other users about "
+    let offersHL = "'s current offers"
+    let fromString = "from "
+    let currencyString = " €"
+    let title3rd = "'s Profile"
+    let titleOwn = "Your Profile"
+    
+    var profileOwner: User?
+    var usersRatings: [Rating]?
+    var usersOffers: [Offering]?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        profileOwnerImageView.maskCircle(anyImage: profileOwnerImageView.image!)
+        profileOwnerImageView.layer.borderWidth = 1
+        profileOwnerImageView.layer.borderColor = UIColor.black.cgColor
+        
+        if profileOwner == nil {
+            storageAPI.getUserByUID(UID: storageAPI.userID(), completion: { (user) in
+                self.setup(user: user)
+            })
+        } else {
+            self.setup(user: self.profileOwner!)
+        }
+        
+    }
+    
+    func setup(user: User) {
+            if user.id == storageAPI.userID() { //profile belongs to user -> enable logout and change profile pic
+                self.navigationItem.title = titleOwn
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logoutTapped))
+                
+            } else { //profile belongs to another user
+                self.navigationItem.title = user.name + title3rd
+            }
+            
+            if cameFromOffering {
+                navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelTapped))
+                self.tabBarController?.tabBar.isHidden = true
+            }
+            
+            storageAPI.getUserProfileImageUrl(uID: user.id) { (path) in
+                let profileImgUrl = URL(string: path)
+                self.profileOwnerImageView.kf.indicatorType = .activity
+                self.profileOwnerImageView.kf.setImage(with: profileImgUrl)
+                
+                if user.id == self.storageAPI.userID() {
+                    let profileImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.profileImageTapped(tapGestureRecognizer:)))
+                    self.profileOwnerImageView.isUserInteractionEnabled = true
+                    self.profileOwnerImageView.addGestureRecognizer(profileImageTapGestureRecognizer)
+                }
+            }
+            let name = user.name
+            otherUsersAboutProfileOwnerHL.text = ratinsHL + name
+            profileOwnersCurrentOffersHL.text = name + offersHL
+            
+            profileOwnerName.text = name
+            profileOwnerRatingStars.rating = (Double) (user.rating)
+            
+            storageAPI.getRatingsByUserUID(userUID: user.id) { (ratings) in
+                self.usersRatings = ratings
+            }
+            
+            storageAPI.getOfferingsByUserUID(userUID: user.id, completion: { (offerings) in
+                self.usersOffers = offerings
+            })
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func cancelTapped(){
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func logoutTapped(){
+        do {
+            try Auth.auth().signOut()
+        } catch let error as NSError {
+            print(error.localizedDescription)
+        }
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func profileImageTapped(tapGestureRecognizer: UITapGestureRecognizer) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
         
@@ -55,33 +146,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler:nil ))
         
         self.present(actionSheet, animated: true, completion:nil)
-        
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        uploadImage(image: selectedImage)
-        picker.dismiss(animated:true, completion:nil)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated:true, completion:nil)
-    }
-    
-    @IBAction func logout(_ sender: Any) {
-        handleLogout()
-    }
-    
-    func handleLogout() {
-        do {
-            try Auth.auth().signOut()
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "Main")
-        self.present(vc, animated: true, completion: nil)
     }
     
     /*
@@ -100,7 +164,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                                     strongSelf.profileImageUploadProgress.isHidden = true
                                     let imageUrl = imgURL.absoluteString
                                     strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
-                                    strongSelf.profileImage.image = image
+                                    strongSelf.profileOwnerImageView.image = image
                                 } else {
                                     strongSelf.profileImageUploadProgress.isHidden = true
                                     let message: String = "\(errorMassage ?? "") Please try again later."
@@ -112,56 +176,41 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        profileImage.maskCircle(anyImage: profileImage.image!)
-        profileImage.layer.borderWidth = 1
-        profileImage.layer.borderColor = UIColor.black.cgColor
-        
-        storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()) { (path) in
-            let profileImgUrl = URL(string: path)
-            self.profileImage.kf.indicatorType = .activity
-            self.profileImage.kf.setImage(with: profileImgUrl)
+    func presentOfferView(offer: Offering){
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
+            let targetController = navigationController.topViewController as? OfferingViewController else {
+                return
         }
-        
-        storageAPI.getUserByUID(UID: storageAPI.userID(), completion: {user in
-            self.user = user
-            self.nameLabel.text = user.name
-            self.profileStars.rating = (Double) (user.rating)
-            
-        })
-        
-        storageAPI.getRatingsByUserUID(userUID: storageAPI.userID(), completion: {ratings in
-            self.usersRatings = ratings
-        })
-        
-        print (usersRatings)
-        print ("second user ratings")
-        
-       if Auth.auth().currentUser?.uid == nil {
-         handleLogout()
-         }
+        targetController.displayingOffering = offer
+        self.present(navigationController, animated: true, completion: nil)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if let ratings = usersRatings {
-            return ratings.count
+        if collectionView == self.collectionViewRatings {
+            if let ratings = usersRatings {
+                return ratings.count
+            } else {
+                noCurrentRatingsNote.isHidden = false
+                return 0
+            }
         } else {
-            return 0
+            if let offers = usersOffers {
+                return offers.count
+            } else {
+                noCurrentOfferNote.isHidden = false
+                return 0
+            }
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if collectionView == self.collectionViewRatings {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewRatingsIdentifier, for: indexPath) as! RatingsCollectionViewCell
             if let ur = usersRatings {
                 let rating = ur[indexPath.row] as Rating
@@ -169,8 +218,31 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 cell.userRatingStars.rating = Double(rating.rating)
             }
             return cell
-        
+        } else {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.collectionViewOffersIdentifier, for: indexPath) as! ProfileUsersOffersCollectionViewCell
+            if let uo = usersOffers {
+                cell.eProfileViewController = self
+                let offer = uo[indexPath.row] as Offering
+                cell.offer = offer
+                let imgUrl: URL = URL(string: offer.pictureURL)!
+                cell.offerCarImg.kf.indicatorType = .activity
+                cell.offerCarImg.kf.setImage(with: imgUrl)
+                cell.offerCarName.text = offer.type
+                cell.offerCarPrice.text = fromString + String(offer.basePrice) + currencyString
+            }
+            return cell
+        }
     }
 }
 
-
+extension ProfileViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate{
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        uploadImage(image: selectedImage)
+        picker.dismiss(animated:true, completion:nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated:true, completion:nil)
+    }
+}

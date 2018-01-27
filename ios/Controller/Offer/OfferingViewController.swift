@@ -106,10 +106,12 @@ class OfferingViewController: UIViewController {
     //Switch to User Profile Storyboard when Lessor's Profile Image was tapped
     func tappedOnLessorImg() {
         if let lessorUser = lessor {
-            let storyboard = UIStoryboard(name: "ProfileExternView", bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: "ExternProfile") as! ExternProfileViewController
+            let storyboard = UIStoryboard(name: "Profile", bundle: nil)
+            let navController = storyboard.instantiateViewController(withIdentifier: "NavProfile") as! UINavigationController
+            let vc = navController.topViewController as! ProfileViewController
             vc.profileOwner = lessorUser
-            self.present(vc, animated: true, completion: nil)
+            vc.cameFromOffering = true
+            self.present(navController, animated: true, completion: nil)
         }
     }
     
