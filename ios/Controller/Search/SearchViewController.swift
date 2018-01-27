@@ -10,7 +10,7 @@ import UIKit
 import JTAppleCalendar
 import GooglePlacePicker
 
-class SearchViewController: UIViewController {
+class SearchViewController: CalendarViewController {
 
     // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
@@ -25,12 +25,12 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var searchButton: UIButton!
     
     // attributes for the calendar
-    var firstDate:Date?
+    /*var firstDate:Date?
     var lastDate:Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
     private let formatter = DateFormatter()
-    private let currentCalendar = Calendar.current
+    private let currentCalendar = Calendar.current*/
     
     let occupantNumbers = Array(1...8)
     
@@ -49,10 +49,12 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        super.initCalendar(calendarView: calendarView, yearLabel: yearLabel, monthLabel: monthLabel)
+        
         searchBar.delegate = self
         
-        setupCalendarView()
-        calendarView.allowsMultipleSelection  = true
+        /* setupCalendarView()
+        calendarView.allowsMultipleSelection  = true */
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
@@ -65,7 +67,7 @@ class SearchViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func setupCalendarView() {
+    /* func setupCalendarView() {
         // setup calendar spacing
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
@@ -74,7 +76,7 @@ class SearchViewController: UIViewController {
         calendarView.visibleDates({visibleDates in
             self.setupCalendarLabels(from: visibleDates)
         })
-    }
+    } */
     
     // show error message in alert
     func showAlert(message: String){
@@ -127,7 +129,7 @@ class SearchViewController: UIViewController {
     }
     
     // change calendar cell text color depending on whether the cell belongs to the current month
-    func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
+    /*func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as? CustomCell else {
             return
         }
@@ -166,7 +168,7 @@ class SearchViewController: UIViewController {
     func updateCellVisuals(for cell: JTAppleCell, withState cellState: CellState){
         handleSelection(cell: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
-    }
+    }*/
     
     // set the filter values in the next view controller (search results)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -200,7 +202,7 @@ class SearchViewController: UIViewController {
 
 }
 
-extension SearchViewController: JTAppleCalendarViewDataSource{
+/*extension SearchViewController: JTAppleCalendarViewDataSource{
     // method that JTAppleCalendar needs for initialisation, should always be similar to cellForItemAt
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         updateCellVisuals(for: cell, withState: cellState)
@@ -307,7 +309,7 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
             return false
         }
     }
-}
+}*/
 
 extension SearchViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

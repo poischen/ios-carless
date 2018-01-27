@@ -11,6 +11,7 @@
 		19017040200BA65F00E21080 /* HomePageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1901703F200BA65F00E21080 /* HomePageModel.swift */; };
 		19017047200BD68600E21080 /* UserRentingRequestsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */; };
 		19017049200BE7B000E21080 /* RequestProcessingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */; };
+		19087868201D33FA007DD55F /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19087867201D33FA007DD55F /* CalendarViewController.swift */; };
 		190DB08C1FBF30E90027F5CD /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 190DB08B1FBF30E90027F5CD /* Filter.swift */; };
 		191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191BBBA01FB5078A00D95B26 /* FilterViewController.swift */; };
 		191DABB11FF00F7000EB0070 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 191DABB01FF00F7000EB0070 /* Time.swift */; };
@@ -122,6 +123,7 @@
 		1901703F200BA65F00E21080 /* HomePageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomePageModel.swift; sourceTree = "<group>"; };
 		19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRentingRequestsTableViewCell.swift; sourceTree = "<group>"; };
 		19017048200BE7B000E21080 /* RequestProcessingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestProcessingProtocol.swift; sourceTree = "<group>"; };
+		19087867201D33FA007DD55F /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		190DB08B1FBF30E90027F5CD /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		191BBBA01FB5078A00D95B26 /* FilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		191DABB01FF00F7000EB0070 /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
@@ -558,6 +560,7 @@
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
 				199A68661FFD03FE00047E5D /* SearchViewController.swift */,
+				19087867201D33FA007DD55F /* CalendarViewController.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -991,6 +994,7 @@
 				19E458F020178A5500B45E7F /* RentingEvent.swift in Sources */,
 				8409DEDC201CC01A001043BF /* YouRentedTableViewCell.swift in Sources */,
 				19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */,
+				19087868201D33FA007DD55F /* CalendarViewController.swift in Sources */,
 				19380CBA1FD5A29B0057A6D2 /* VehicleType.swift in Sources */,
 				196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */,
 				19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */,
