@@ -79,9 +79,10 @@ class AvailibilityAndBookingViewController: UIViewController {
        if let psd = preselectedStartDate, let ped = preselectedEndDate {
             calendarView.scrollToHeaderForDate(psd)
             calendarView.scrollToDate(psd)
-            firstDate = psd
+            /* firstDate = psd
             let preselectionEndDate: [Date] = [ped]
-            calendarView.selectDates(preselectionEndDate)
+            calendarView.selectDates(preselectionEndDate)*/
+            calendarView.selectDates(from: psd, to: ped)
         }
         
         calendarView.visibleDates { visibleDates in
