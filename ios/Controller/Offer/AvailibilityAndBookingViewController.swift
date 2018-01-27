@@ -57,7 +57,6 @@ class AvailibilityAndBookingViewController: UIViewController {
         super.viewDidLoad()
  
         indicator.stopAnimating()
-        reservationButton.isHidden = true
         hiddenElementsView.isHidden = true
         
         if (storageAPI.userID() == offer!.userUID) {
@@ -78,9 +77,11 @@ class AvailibilityAndBookingViewController: UIViewController {
         calendarView.minimumInteritemSpacing = 0
         
        if let psd = preselectedStartDate, let ped = preselectedEndDate {
-            print("PRESELECTED DATES")
             calendarView.scrollToHeaderForDate(psd)
-            calendarView.selectDates(from: psd, to: ped)
+            calendarView.scrollToDate(psd)
+            firstDate = psd
+            let preselectionEndDate: [Date] = [ped]
+            calendarView.selectDates(preselectionEndDate)
         }
         
         calendarView.visibleDates { visibleDates in
@@ -303,11 +304,6 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         let cell = calendar.dequeueReusableCell(withReuseIdentifier: "availibilityCalendarCell", for: indexPath) as! AvailibilityCalendarCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
-    }
-    
-    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        guard let selectedDate = cell as? AvailibilityCalendarCell else {return false}
-        return true
     }
     
    /* func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {

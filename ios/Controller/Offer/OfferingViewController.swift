@@ -42,6 +42,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var actionItem: UIBarButtonItem!
     @IBOutlet weak var priceLabel: UILabel!
     
+    let SEGUE_AVAILIBILITY_CHECK = "availibilityCheckSegue"
     let identifierBasicDataCollectionView = "basicDetailsCollectionViewCell"
     let identifierFeaturesCollectionView = "featuresCollectionViewCell"
     
@@ -113,10 +114,7 @@ class OfferingViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        print("OFFERING")
-        print(displayingOffering)
-        
+        super.viewDidLoad()        
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
@@ -232,13 +230,11 @@ class OfferingViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        print("segueidentifier")
-        print(segue.identifier ?? "defaultsegue")
-        if segue.identifier == "availibilityCheckSegue" {
+        if segue.identifier == SEGUE_AVAILIBILITY_CHECK {
             let aNbVC: AvailibilityAndBookingViewController = segue.destination as! AvailibilityAndBookingViewController
             aNbVC.offer = displayingOffering
             if let psd = preselectedStartDate, let ped = preselectedEndDate {
-                aNbVC.preselectedEndDate = psd
+                aNbVC.preselectedStartDate = psd
                 aNbVC.preselectedEndDate = ped
             }
         }

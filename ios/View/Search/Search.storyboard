@@ -177,7 +177,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xf-Zt-ujR">
-                                <rect key="frame" x="0.0" y="64" width="375" height="1087"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="1180"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-yq-ywS">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1200"/>
@@ -544,7 +544,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="150" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dxT-GA-A4g">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultsCell" id="rxe-zL-z0H" customClass="SearchResultsTableViewCell" customModule="ios" customModuleProvider="target">
@@ -618,7 +618,7 @@
                                             <outlet property="photo" destination="nWq-Uu-MA7" id="Oiz-G9-APN"/>
                                             <outlet property="priceLabel" destination="tlF-qz-KOE" id="xMU-eY-ur5"/>
                                             <outlet property="seatsLabel" destination="gpB-WD-uJj" id="b70-a8-PFn"/>
-                                            <segue destination="tJq-66-gqc" kind="showDetail" identifier="SearchOfferSegue" id="HxF-OP-0Ez"/>
+                                            <segue destination="tJq-66-gqc" kind="show" identifier="SearchOfferSegue" action="showDetailViewController:sender:" id="HxF-OP-0Ez"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -665,27 +665,27 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" placeholder="Search car at..." translatesAutoresizingMaskIntoConstraints="NO" id="7qv-II-zNV">
-                                <rect key="frame" x="0.0" y="64" width="375" height="44.5"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="52"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25c-y1-a9W" userLabel="Calendar">
-                                <rect key="frame" x="0.0" y="108.5" width="375" height="232.5"/>
+                                <rect key="frame" x="0.0" y="72" width="375" height="271.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ohX-C6-96J" userLabel="space">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="6.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="7.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="3Gz-ay-vhu" userLabel="yearmonth">
-                                        <rect key="frame" x="0.0" y="6.5" width="375" height="28"/>
+                                        <rect key="frame" x="0.0" y="7.5" width="375" height="32.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="year" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lic-rZ-7ys">
-                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="28"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="187.5" height="32.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="month" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zNf-Li-1OO">
-                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="28"/>
+                                                <rect key="frame" x="187.5" y="0.0" width="187.5" height="32.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -693,46 +693,46 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="Wkx-PL-P5q" userLabel="Days">
-                                        <rect key="frame" x="0.0" y="34.5" width="375" height="19"/>
+                                        <rect key="frame" x="0.0" y="40" width="375" height="22.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Mon" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e0r-Y1-lNk">
-                                                <rect key="frame" x="0.0" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tue" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Thl-bd-7Hh">
-                                                <rect key="frame" x="53.5" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="53.5" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wed" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZNs-BT-aPV">
-                                                <rect key="frame" x="107" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="107" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thu" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="viE-M7-WwT">
-                                                <rect key="frame" x="160.5" y="0.0" width="54" height="19"/>
+                                                <rect key="frame" x="160.5" y="0.0" width="54" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fri" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nr8-aR-sQm">
-                                                <rect key="frame" x="214.5" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="214.5" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cOq-b7-aYg">
-                                                <rect key="frame" x="268" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="268" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sun" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahd-El-zLr">
-                                                <rect key="frame" x="321.5" y="0.0" width="53.5" height="19"/>
+                                                <rect key="frame" x="321.5" y="0.0" width="53.5" height="22.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -740,7 +740,7 @@
                                         </subviews>
                                     </stackView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="qyR-me-pu9" customClass="JTAppleCalendarView" customModule="JTAppleCalendar">
-                                        <rect key="frame" x="0.0" y="53.5" width="375" height="179"/>
+                                        <rect key="frame" x="0.0" y="62.5" width="375" height="209"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="5cv-4z-NJj">
                                             <size key="itemSize" width="50" height="50"/>
@@ -816,23 +816,23 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="R2m-fi-zOg" userLabel="Picker">
-                                <rect key="frame" x="0.0" y="341" width="375" height="277"/>
+                                <rect key="frame" x="0.0" y="343.5" width="375" height="323.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kif-x2-xYB" userLabel="space">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="8.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="10"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <stackView opaque="NO" contentMode="bottom" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="PXU-iI-N1I" userLabel="labels">
-                                        <rect key="frame" x="47" y="8.5" width="281.5" height="19"/>
+                                        <rect key="frame" x="47" y="10" width="281.5" height="22"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pickup time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="s0s-BZ-shM">
-                                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="19"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="94.5" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Return time:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Uc-hF-Rul">
-                                                <rect key="frame" x="188" y="0.0" width="93.5" height="19"/>
+                                                <rect key="frame" x="188" y="0.0" width="93.5" height="22"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -840,16 +840,16 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="center" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ojr-nd-kAS" userLabel="datepicker">
-                                        <rect key="frame" x="0.0" y="27.5" width="375" height="96.5"/>
+                                        <rect key="frame" x="0.0" y="32" width="375" height="113"/>
                                         <subviews>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="l46-dE-4X0">
-                                                <rect key="frame" x="0.0" y="0.0" width="182.5" height="96.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="182.5" height="113"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="531171072.73155397">
                                                     <!--2017-10-31 19:31:12 +0000-->
                                                 </date>
                                             </datePicker>
                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="qXQ-rC-MTX">
-                                                <rect key="frame" x="192.5" y="0.0" width="182.5" height="96.5"/>
+                                                <rect key="frame" x="192.5" y="0.0" width="182.5" height="113"/>
                                                 <date key="date" timeIntervalSinceReferenceDate="531171072.73155397">
                                                     <!--2017-10-31 19:31:12 +0000-->
                                                 </date>
@@ -857,7 +857,7 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Z8-b9-C79">
-                                        <rect key="frame" x="0.0" y="200" width="375" height="77.5"/>
+                                        <rect key="frame" x="0.0" y="233.5" width="375" height="90.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                         <state key="normal" title="Search"/>
                                         <connections>
@@ -865,19 +865,19 @@
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="center" distribution="fillEqually" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="TBq-Wq-hr0" userLabel="persons">
-                                        <rect key="frame" x="0.0" y="124" width="375" height="76"/>
+                                        <rect key="frame" x="0.0" y="145" width="375" height="88.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="for" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEi-LR-30t">
-                                                <rect key="frame" x="0.0" y="28" width="118.5" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="34" width="118.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f4P-3O-0vR">
-                                                <rect key="frame" x="128.5" y="0.0" width="118" height="76"/>
+                                                <rect key="frame" x="128.5" y="0.0" width="118" height="88.5"/>
                                             </pickerView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="person(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4B4-92-HMH">
-                                                <rect key="frame" x="256.5" y="28" width="118.5" height="20.5"/>
+                                                <rect key="frame" x="256.5" y="34" width="118.5" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -950,7 +950,7 @@
         <image name="iconsearch" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BvB-ri-T8X"/>
-        <segue reference="m9X-t4-fPa"/>
+        <segue reference="ItP-EN-zJR"/>
+        <segue reference="4fO-Ws-Ssu"/>
     </inferredMetricsTieBreakers>
 </document>
