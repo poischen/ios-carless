@@ -193,6 +193,8 @@ class SearchViewController: UIViewController {
             )
             // send filter to the next view controller by setting an attribute of it to the filter
             searchResultsViewController.searchFilter = newFilter
+            searchResultsViewController.preselectedStartDate = currentDesiredRentingStart
+            searchResultsViewController.preselectedEndDate = currentDesiredRentingEnd
         }
     }
 

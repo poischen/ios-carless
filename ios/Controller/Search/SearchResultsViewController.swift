@@ -142,7 +142,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
       
                 let index = indexPath.row
                 let selectedOffering = self.offerings[index]
-            
                 if let psd = preselectedStartDate, let ped = preselectedEndDate {
                     offeringController.preselectedStartDate = psd
                     offeringController.preselectedEndDate = ped

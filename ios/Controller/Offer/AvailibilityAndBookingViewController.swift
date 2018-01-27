@@ -57,7 +57,6 @@ class AvailibilityAndBookingViewController: UIViewController {
         super.viewDidLoad()
  
         indicator.stopAnimating()
-        reservationButton.isHidden = true
         hiddenElementsView.isHidden = true
         
         if (storageAPI.userID() == offer!.userUID) {
@@ -77,11 +76,13 @@ class AvailibilityAndBookingViewController: UIViewController {
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
         
-       /* if let psd = preselectedStartDate, let ped = preselectedEndDate {
-            print("preselected dates")
+       if let psd = preselectedStartDate, let ped = preselectedEndDate {
             calendarView.scrollToHeaderForDate(psd)
-            calendarView.selectDates(from: psd, to: ped)
-        } */
+            calendarView.scrollToDate(psd)
+            firstDate = psd
+            let preselectionEndDate: [Date] = [ped]
+            calendarView.selectDates(preselectionEndDate)
+        }
         
         calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
@@ -103,7 +104,7 @@ class AvailibilityAndBookingViewController: UIViewController {
         switch cellState.selectedPosition() {
         case .full, .middle, .left, .right:
             cell.cellSelectionFeedback.isHidden = false
-            cell.cellSelectionFeedback.layer.cornerRadius = 15
+            cell.cellSelectionFeedback.layer.cornerRadius = 25
             
         default:
             cell.cellSelectionFeedback.isHidden = true
@@ -161,6 +162,7 @@ class AvailibilityAndBookingViewController: UIViewController {
     }
 
     func checkAvailibility() -> Void {
+        self.reservationButton.isEnabled = false
         self.indicator.startAnimating()
         self.hiddenElementsView.isHidden = true
         
@@ -304,12 +306,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         return cell
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, shouldSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        guard let selectedDate = cell as? AvailibilityCalendarCell else {return false}
-        return true
-    }
-    
-    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+   /* func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let selectedDate = cell as? AvailibilityCalendarCell else {return}
         if firstDate != nil {
             calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
@@ -317,15 +314,61 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
             firstDate = date
         }
         handleSelectionVisually(view: selectedDate, cellState: cellState)
+    }*/
+    
+    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        guard let cell = cell as? AvailibilityCalendarCell else {return}
+        handleSelectionVisually(view: cell, cellState: cellState)
+        if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
+            if let currentFirstDate = firstDate {
+                // first date set
+                if lastDate != nil {
+                    // date range already set -> remove and set new first date
+                    calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
+                    firstDate = date
+                    lastDate = nil
+                } else {
+                    // first date set, last date not set
+                    if (date < currentFirstDate){
+                        /* new date is before first date -> remove first date and set current date as new first date
+                         first deselect current date interval
+                         deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
+                        recursiveDeselectionCall = true
+                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
+                        recursiveDeselectionCall = false
+                        firstDate = date // deselection resets first date -> set after deselection
+                        lastDate = nil // for safety :)
+                    } else {
+                        // new date is on or after first date -> set last date
+                        lastDate = date
+                        if (firstDate != lastDate) {
+                            // first date and last date are not on the same day -> select cells in between
+                            recursiveSelectionCall = true // prevent endless recursion
+                            calendarView.selectDates(from: currentFirstDate, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
+                            recursiveSelectionCall = false
+                        }
+                    }
+                }
+            } else {
+                // first date not set yet -> set first date
+                firstDate = date
+            }
+        }
+        checkAvailibility()
     }
     
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+   /* func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
             guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
         firstDate = nil
         if calendarView.selectedDates.count > 1 {
             calendarView.deselectAllDates()
         }
             handleSelectionVisually(view: releasedDate, cellState: cellState)
+    }*/
+    
+    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+        guard let cell = cell as? AvailibilityCalendarCell else {return}
+        handleSelectionVisually(view: cell, cellState: cellState)
     }
     
     func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
@@ -333,8 +376,6 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        return true
-        /*
         // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
@@ -349,9 +390,11 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                 // unset first date and last date
                 firstDate = nil
                 lastDate = nil
+                hiddenElementsView.isHidden = true
+                reservationButton.isEnabled = false
             }
             return false
-        }*/
+        }
     }
 
 
