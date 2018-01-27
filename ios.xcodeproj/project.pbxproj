@@ -26,7 +26,6 @@
 		19636A0C2015490700423927 /* RatingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19636A0B2015490700423927 /* RatingProtocol.swift */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		196FD4EE1FAFC0F0000875AE /* CarTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */; };
-		196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */; };
 		19714D411FF6419100067565 /* RateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19714D401FF6419100067565 /* RateModel.swift */; };
 		198A33B5201BD5DF004BDCE4 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A33B4201BD5DF004BDCE4 /* DateHelper.swift */; };
 		199A68651FFD027A00047E5D /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68641FFD027A00047E5D /* CustomCell.swift */; };
@@ -139,7 +138,6 @@
 		19636A0B2015490700423927 /* RatingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProtocol.swift; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		196FD4EB1FAFC0F0000875AE /* CarTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarTableViewCell.swift; sourceTree = "<group>"; };
-		196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewControllerOld.swift; sourceTree = "<group>"; };
 		19714D401FF6419100067565 /* RateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateModel.swift; sourceTree = "<group>"; };
 		198A33B4201BD5DF004BDCE4 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		199A68641FFD027A00047E5D /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
@@ -561,7 +559,6 @@
 			isa = PBXGroup;
 			children = (
 				191BBBA01FB5078A00D95B26 /* FilterViewController.swift */,
-				196FD4F21FAFC46E000875AE /* SearchViewControllerOld.swift */,
 				194769221FC8480000AB02E4 /* SearchResultsViewController.swift */,
 				199A68661FFD03FE00047E5D /* SearchViewController.swift */,
 			);
@@ -990,7 +987,6 @@
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,
 				84D95BAD2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift in Sources */,
 				849F46FB200D08D6001C216C /* UserVC.swift in Sources */,
-				196FD4F31FAFC46E000875AE /* SearchViewControllerOld.swift in Sources */,
 				84FB20BA1FFFD78300E351C1 /* Advertise.swift in Sources */,
 				840424C5200CC2C100D2EBA4 /* RatingsCollectionViewCell.swift in Sources */,
 				191BBBA11FB5078A00D95B26 /* FilterViewController.swift in Sources */,
