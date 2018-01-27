@@ -19,6 +19,8 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     @IBOutlet weak var searchResultsTable: UITableView!
     
+    let SEARCH_OFFER_SEGUE = "SearchOfferSegue"
+    
     let storageAPI = StorageAPI.shared
     
     // error message
@@ -101,7 +103,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     
     // go to offering's detail view when the user taps an offering in the search results
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let selectedOffering = self.offerings[indexPath.row]
+      /*  let selectedOffering = self.offerings[indexPath.row]
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
         guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
             let targetController = navigationController.topViewController as? OfferingViewController else {
@@ -112,8 +114,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             targetController.preselectedEndDate = ped
         }
         targetController.displayingOffering = selectedOffering
-        self.present(navigationController, animated: true, completion: nil)
+        self.present(navigationController, animated: true, completion: nil)*/
     }
+
     
     func receiveOfferings(_ offerings: [Offering]) {
         if (offerings.count <= 0) {
@@ -132,7 +135,19 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "showFilter") {
+        if (segue.identifier == SEARCH_OFFER_SEGUE),
+            let offeringNavigationController = segue.destination as? UINavigationController,
+            let offeringController = offeringNavigationController.topViewController as? OfferingViewController,
+            let indexPath = searchResultsTable.indexPathForSelectedRow {
+      
+                let index = indexPath.row
+                let selectedOffering = self.offerings[index]
+                if let psd = preselectedStartDate, let ped = preselectedEndDate {
+                    offeringController.preselectedStartDate = psd
+                    offeringController.preselectedEndDate = ped
+                }
+                offeringController.displayingOffering = selectedOffering
+        } else if (segue.identifier == "showFilter") {
             // next screen: filter
             if let filterViewController = segue.destination as? FilterViewController {
                 // set filter screen's default values here
@@ -153,5 +168,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 filterViewController.searchFilter = self.searchFilter
             }
         }
+        
     }
 }

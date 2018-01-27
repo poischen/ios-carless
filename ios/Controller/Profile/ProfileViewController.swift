@@ -59,11 +59,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        let image = info[UIImagePickerControllerOriginalImage] as! UIImage
-        
-        uploadImage(image: image)
-        
-        
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        uploadImage(image: selectedImage)
         picker.dismiss(animated:true, completion:nil)
     }
     
@@ -89,10 +86,10 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     
     /*
      * Upload new profile image to Storage and hand it to Database
+     * Show Image in View
      */
     func uploadImage(image: UIImage){
-        //Todo: profileImageUploadProgress.isHidden = false
-        // profileImage.image!
+        profileImageUploadProgress.isHidden = false
         storageAPI.uploadImage(image, ref: storageAPI.profileImageStorageRef, progressBar: profileImageUploadProgress, progressLabel: nil,
                                completionBlock: { [weak self] (fileURL, errorMassage) in
                                 guard let strongSelf = self else {
@@ -100,7 +97,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                                 }
                                 //store image url to user
                                 if let imgURL = fileURL {
-                                    //Todo: strongSelf.profileImageUploadProgress.isHidden = true
+                                    strongSelf.profileImageUploadProgress.isHidden = true
                                     let imageUrl = imgURL.absoluteString
                                     strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
                                     strongSelf.profileImage.image = image
@@ -109,7 +106,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
                                     let message: String = "\(errorMassage ?? "") Please try again later."
                                     let alert = UIAlertController(title: "Something went wrong :(", message: message, preferredStyle: UIAlertControllerStyle.alert)
                                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                                    //Todo: strongSelf.present(alert, animated: true, completion: nil)
+                                    strongSelf.present(alert, animated: true, completion: nil)
                                 }
         })
         
@@ -118,8 +115,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        profileImage.layer.cornerRadius = profileImage.frame.size.width / 2
-        profileImage.clipsToBounds = true
+        profileImage.maskCircle(anyImage: profileImage.image!)
         profileImage.layer.borderWidth = 1
         profileImage.layer.borderColor = UIColor.black.cgColor
         
@@ -143,9 +139,9 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         print (usersRatings)
         print ("second user ratings")
         
-       /* if Auth.auth().currentUser?.uid == nil {
+       if Auth.auth().currentUser?.uid == nil {
          handleLogout()
-         }*/
+         }
     }
     
     override func didReceiveMemoryWarning() {

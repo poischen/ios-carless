@@ -18,11 +18,10 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var monthLabel: UILabel!
     
     // other UI components
+    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var pickupTimePicker: UIDatePicker!
     @IBOutlet weak var returnTimePicker: UIDatePicker!
     @IBOutlet weak var occupantsPicker: UIPickerView!
-    @IBOutlet weak var locationNameLabel: UILabel!
-    @IBOutlet weak var pickPlaceButton: UIButton!
     @IBOutlet weak var searchButton: UIButton!
     
     // attributes for the calendar
@@ -50,6 +49,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
         occupantsPicker.dataSource = self
@@ -73,18 +74,6 @@ class SearchViewController: UIViewController {
         calendarView.visibleDates({visibleDates in
             self.setupCalendarLabels(from: visibleDates)
         })
-    }
-    
-    // show place picker when "pick place" button is clicked
-    @IBAction func pickPlaceButtonClicked(_ sender: Any) {
-        let autocompleteController = GMSAutocompleteViewController()
-        // create filter so that the picker only shows cities
-        let filter = GMSAutocompleteFilter()
-        //filter.type = .city
-        autocompleteController.autocompleteFilter = filter
-        autocompleteController.delegate = self
-        // show place picker
-        present(autocompleteController, animated: true, completion: nil)
     }
     
     // show error message in alert
@@ -204,6 +193,8 @@ class SearchViewController: UIViewController {
             )
             // send filter to the next view controller by setting an attribute of it to the filter
             searchResultsViewController.searchFilter = newFilter
+            searchResultsViewController.preselectedStartDate = currentDesiredRentingStart
+            searchResultsViewController.preselectedEndDate = currentDesiredRentingEnd
         }
     }
 
@@ -328,12 +319,12 @@ extension SearchViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
 }
 
-extension SearchViewController: GMSAutocompleteViewControllerDelegate {
+extension SearchViewController: GMSAutocompleteViewControllerDelegate, UISearchBarDelegate {
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         // user picked place -> safe picked place and hide place picker
         self.pickedPlace = place
-        print(place.placeID)
-        locationNameLabel.text = place.formattedAddress
+        let searchText: String = place.formattedAddress!
+        searchBar.text = searchText
         dismiss(animated: true, completion: nil)
     }
     
@@ -346,7 +337,13 @@ extension SearchViewController: GMSAutocompleteViewControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        let autocompleteController = GMSAutocompleteViewController()
+        let filter = GMSAutocompleteFilter()
+        //filter.type = .address
+        autocompleteController.autocompleteFilter = filter
+        autocompleteController.delegate = self
+        present(autocompleteController, animated: true, completion: nil)
+    }
     
 }
-
-
