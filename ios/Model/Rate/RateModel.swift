@@ -12,21 +12,27 @@ class RateModel {
     static func getAdditionalInformationForLessorRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
         // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
         // (using the getCarModelName function here is not possible as we can't get the lessor's user ID directly from the renting)
-        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {(offering, offeringsBrand) in
-            // then get the lessor user from the DB in order to return it
-            StorageAPI.shared.getUserByUID(UID: offering.userUID, completion: { lessorUser in
-                let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
-                completion(offeringCarModelName, lessorUser)
-            })
+        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {offeringResult in
+            if let (offering, offeringsBrand) = offeringResult {
+                // offering found -> assemble car name
+                let carName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
+                // get the lessor user from the DB in order to return it
+                StorageAPI.shared.getUserByUID(UID: offering.userUID, completion: { lessorUser in
+                    completion(carName, lessorUser)
+                })
+            }
         })
         
     }
     
     static func getCarModelName(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String) -> Void){
         // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
-        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {(offering, offeringsBrand) in
-            let offeringCarModelName = offeringsBrand.name + " " + offering.type // assemble car model from brand name and model name
-            completion(offeringCarModelName)
+        StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {offeringResult in
+            if let (offering, offeringsBrand) = offeringResult {
+                // offering found -> assemble car model from brand name and model name
+                let offeringCarModelName = offeringsBrand.name + " " + offering.type
+                completion(offeringCarModelName)
+            }
         })
     }
     

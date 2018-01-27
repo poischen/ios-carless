@@ -117,7 +117,7 @@ final class StorageAPI {
         }
     }
     
-    func getOfferingByID(id: String, completion: @escaping (_ offering: Offering) -> Void){
+    func getOfferingByID(id: String, completion: @escaping (_ offering: Offering?) -> Void){
         self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
@@ -126,8 +126,11 @@ final class StorageAPI {
                 } else {
                     print("error in get getOfferingByID")
                 }
-            } else {
-                print("no offering or more than one offering found")
+            } else if (snapshot.childrenCount == 0){
+                // no offering with that ID found
+                completion(nil)
+            } else if (snapshot.childrenCount > 1) {
+                print("getOfferingByID: more than one offering found")
             }
         }) { (error) in
             print(error.localizedDescription)
@@ -459,7 +462,6 @@ final class StorageAPI {
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
             var resultUsers:[User] = []
             for childRaw in snapshot.children {
-                let test = childRaw as? NSDictionary
                 if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let user = User.init(id: stringID, dict: dict) {
                     resultUsers.append(user)
                 } else {
@@ -741,11 +743,17 @@ final class StorageAPI {
         }
     } */
     
-    func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)) -> Void){
+    func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)?) -> Void){
         self.getOfferingByID(id: offeringID, completion: {offering in
-            self.getBrandByID(id: offering.brandID, completion: { offeringBrand in
-                completion((offering, offeringBrand))
-            })
+            if let currentOffering = offering {
+                // offering found -> get brand
+                self.getBrandByID(id: currentOffering.brandID, completion: { offeringBrand in
+                    completion((currentOffering, offeringBrand))
+                })
+            } else {
+                // offering not found
+                completion(nil)
+            }
         })
     }
     

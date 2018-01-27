@@ -74,7 +74,7 @@ class HomePageModel {
             }
             
             
-            let numberOfRentings = newerRentings.count
+            var numberOfRentings = newerRentings.count
             // TODO: will the rentings appear in a deterministic order?
             // TODO: handle errors
             if numberOfRentings == 0 {
@@ -83,10 +83,15 @@ class HomePageModel {
                 completion([])
             } else {
                 for renting in newerRentings {
-                    self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {(offering,offeringsBrand) in
-                        let rateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: false)
-                        let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
-                        result.append(newYouRented)
+                    self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {offeringResult in
+                        if let (offering,offeringsBrand) = offeringResult {
+                            let rateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: false)
+                            let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
+                            result.append(newYouRented)
+                        } else {
+                            // offering not found -> decrease number of offerings needed for completion
+                            numberOfRentings = numberOfRentings - 1
+                        }
                         if (result.count == numberOfRentings) {
                             completion(result)
                         }
