@@ -48,7 +48,8 @@ class ProfileViewController: UIViewController {
         profileOwnerImageView.layer.borderColor = UIColor.black.cgColor
         
         if profileOwner == nil {
-            storageAPI.getUserByUID(UID: storageAPI.userID(), completion: { (user) in
+            storageAPI.getUserByUID(UID: storageAPI.userID()!, completion: { (user) in
+                self.profileOwner = user
                 self.setup(user: user)
             })
         } else {
@@ -163,7 +164,7 @@ class ProfileViewController: UIViewController {
                                 if let imgURL = fileURL {
                                     strongSelf.profileImageUploadProgress.isHidden = true
                                     let imageUrl = imgURL.absoluteString
-                                    strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.storageAPI.userID(), imgUrl: imageUrl)
+                                    strongSelf.storageAPI.updateUserProfilePicture(userID: strongSelf.profileOwner!.id, imgUrl: imageUrl)
                                     strongSelf.profileOwnerImageView.image = image
                                 } else {
                                     strongSelf.profileImageUploadProgress.isHidden = true
@@ -188,6 +189,7 @@ class ProfileViewController: UIViewController {
     
     
 }
+
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     

@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 class ViewController: UIViewController, MessagingDelegate {
     
-    var fcmTokenLocal: String! = ""
+    var fcmTokenLocal: String?
     
     //outlets
     @IBOutlet weak var username: UITextField!
@@ -28,25 +28,10 @@ class ViewController: UIViewController, MessagingDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if Auth.auth().currentUser != nil {
+            updateToken()
             goToHome()
-            StorageAPI.shared.getUserByUID(UID: Auth.auth().currentUser!.uid, completion: {userTokenCheck in
-                if (self.fcmTokenLocal != userTokenCheck.deviceID) {
-                    userTokenCheck.deviceID = self.fcmTokenLocal
-                    StorageAPI.shared.updateUser(user: userTokenCheck)
-                }
-            })
-            
-            
-            
         }
     }
-    
-    /*override func viewDidAppear(_ animated: Bool) {
-     if StorageAPI.shared.isLoggedIn(){
-     let loginController = ViewController()
-     present(loginController, animated: true, completion: nil)
-     }
-     }*/
     
     //actions
     @IBAction func loginButton(_ sender: Any) {
@@ -78,14 +63,7 @@ class ViewController: UIViewController, MessagingDelegate {
                     
                     //Print into the console if successfully logged in
                     print("You have successfully logged in")
-                    
-                    StorageAPI.shared.getUserByUID(UID: user!.uid, completion: {userTokenCheck in
-                        if (self.fcmTokenLocal != userTokenCheck.deviceID) {
-                            userTokenCheck.deviceID = self.fcmTokenLocal
-                            StorageAPI.shared.updateUser(user: userTokenCheck)
-                        }
-                    })
-                    
+                    self.updateToken()
                     
                     //Go to the HomeViewController if the login is sucessful
                     self.goToHome()
@@ -125,16 +103,19 @@ class ViewController: UIViewController, MessagingDelegate {
             
         } else {
             Auth.auth().createUser(withEmail: email.text!, password: password.text!) { (user, error) in
+            if error == nil {
+                print("You have successfully signed up")
+                //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
                 
-                if error == nil {
-                    print("You have successfully signed up")
-                    //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
-                    
-                    self.goToHome()
-                    
-                    StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: self.fcmTokenLocal)
-                    
+                self.goToHome()
+                
+                if let currentToken = self.fcmTokenLocal {
+                    StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: currentToken)
                 } else {
+                    print("Error: token is empty")
+                }
+                
+            } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
                     
                     let defaultAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
@@ -151,16 +132,21 @@ class ViewController: UIViewController, MessagingDelegate {
         print("Firebase registration token: \(fcmToken)")
         fcmTokenLocal = fcmToken
         
+        updateToken()
+        
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
     }
     
-    func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        fcmTokenLocal = fcmToken
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
+    func updateToken() {
+        if let currentToken = self.fcmTokenLocal, let userID = StorageAPI.shared.userID() {
+            StorageAPI.shared.getUserByUID(UID: userID, completion: {user in
+                if (user.deviceID != currentToken) {
+                    user.deviceID = currentToken
+                    StorageAPI.shared.updateUser(user: user)
+                }
+            })
+        }
     }
     
 }
