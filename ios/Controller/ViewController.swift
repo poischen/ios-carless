@@ -33,13 +33,6 @@ class ViewController: UIViewController, MessagingDelegate {
         }
     }
     
-    /*override func viewDidAppear(_ animated: Bool) {
-        if StorageAPI.shared.isLoggedIn(){
-            let loginController = ViewController()
-            present(loginController, animated: true, completion: nil)
-        }
-    }*/
-
     //actions
     @IBAction func loginButton(_ sender: Any) {
         login()
@@ -159,14 +152,6 @@ class ViewController: UIViewController, MessagingDelegate {
             })
         }
     }
-    
-   /* func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        fcmTokenLocal = fcmToken
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
-    }*/
 
 }
         

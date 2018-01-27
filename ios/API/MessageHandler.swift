@@ -21,14 +21,10 @@ class MessageHandler {
     
     
     static let shared = MessageHandler()
-    
-    //weak var delegate: AddMessageDelegate?
    
     /* fanning out of messages,
      sort messages by User IDs in "user-messages" node */
-    //func handleSend(senderID: String, receiverID: String, senderName: String, text: String) {
     func handleSend(senderID: String, receiverID: String, text: String) {
-        if let currentUserID = StorageAPI.shared.userID() {
             let ref = StorageAPI.shared.messagesRef
             
             let values = [DBConstants.SENDER_ID: senderID, DBConstants.RECEIVER_ID: receiverID, DBConstants.TEXT: text]
@@ -48,7 +44,6 @@ class MessageHandler {
                 let receiverUserMessageRef = StorageAPI.shared.userMessagesRef.child(receiverID)
                 receiverUserMessageRef.updateChildValues([messageID: 1])
             }
-        }
        
     }
     
