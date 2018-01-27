@@ -7,6 +7,8 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
     let advertise = Advertise.shared
     let advertiseHelper = AdvertiseHelper()
     
+    let IDENTIFIER_OFFERING_NAV = "OfferingNavigation"
+    
     @IBAction func cancelAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
         dismiss(animated: true, completion: nil)
@@ -35,10 +37,13 @@ class AdvertisePagesVC: UIPageViewController, UIPageViewControllerDataSource, UI
                 
                 //switch to offer view
                 let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-                if let viewController = storyboard.instantiateViewController(withIdentifier: "Offering") as? OfferingViewController{
-                    viewController.displayingOffering = offerWithID
-                    self.present(viewController, animated: true, completion: nil)
-                }
+                let navController = storyboard.instantiateViewController(withIdentifier: self.IDENTIFIER_OFFERING_NAV) as! UINavigationController
+                let offeringController = navController.topViewController as! OfferingViewController
+                offeringController.displayingOffering = offerWithID
+                offeringController.cameFromAdvertise = true
+                offeringController.advertisePagesController = self
+                self.present(navController, animated: true, completion: nil)
+                
             })
             
         } else {

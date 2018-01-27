@@ -20,6 +20,8 @@ class OfferingViewController: UIViewController {
     var preselectedStartDate: Date?
     
     var lessor: User?
+    var cameFromAdvertise = false
+    var advertisePagesController: AdvertisePagesVC?
 
     @IBOutlet weak var carImageView: UIImageView!
     @IBOutlet weak var carNameLabel: UILabel!
@@ -70,7 +72,13 @@ class OfferingViewController: UIViewController {
     }
     
     @IBAction func cancelButton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        if (cameFromAdvertise) {
+            self.dismiss(animated: true, completion: nil)
+            advertisePagesController!.dismiss(animated: true, completion: nil)
+        }
+        else {
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func actionItem(_ sender: Any) {
