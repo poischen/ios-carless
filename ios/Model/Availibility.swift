@@ -6,6 +6,8 @@
 //  Copyright © 2018 Hila Safi. All rights reserved.
 //
 
+// TODO: remove?
+
 import Foundation
 
 class Availibility {

@@ -51,7 +51,7 @@ class SearchViewController: CalendarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        super.initCalendar(calendarView: calendarView, yearLabel: yearLabel, monthLabel: monthLabel)
+        super.initCalendar(calendarView: calendarView, yearLabel: yearLabel, monthLabel: monthLabel, fireAfterSelection: nil)
         
         searchBar.delegate = self
         
@@ -199,6 +199,16 @@ class SearchViewController: CalendarViewController {
             searchResultsViewController.searchFilter = newFilter
             searchResultsViewController.preselectedStartDate = currentDesiredRentingStart
             searchResultsViewController.preselectedEndDate = currentDesiredRentingEnd
+        }
+    }
+    
+    override func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
+        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCalendarCell {
+            cell.dateLabel.text = cellState.text
+            updateCellVisuals(for: cell, withState: cellState)
+            return cell
+        } else {
+            return JTAppleCell()
         }
     }
 

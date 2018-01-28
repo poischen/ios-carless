@@ -9,9 +9,9 @@
 import UIKit
 import JTAppleCalendar
 
-class AvailibilityCalendarCell: JTAppleCell{
+class AvailibilityCalendarCell: JTAppleCell, CalendarCell {
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var cellSelectionFeedback: UIView!
+    @IBOutlet weak var selectedView: UIView!
     
     var availibility: Availibility!
     

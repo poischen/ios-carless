@@ -26,6 +26,7 @@
 		19636A0C2015490700423927 /* RatingProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19636A0B2015490700423927 /* RatingProtocol.swift */; };
 		196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196FD4EA1FAFC0F0000875AE /* Offering.swift */; };
 		19714D411FF6419100067565 /* RateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19714D401FF6419100067565 /* RateModel.swift */; };
+		1977C7FB201E1C50004F9B7D /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1977C7FA201E1C50004F9B7D /* CalendarCell.swift */; };
 		198A33B5201BD5DF004BDCE4 /* DateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 198A33B4201BD5DF004BDCE4 /* DateHelper.swift */; };
 		199A68651FFD027A00047E5D /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68641FFD027A00047E5D /* CustomCalendarCell.swift */; };
 		199A68671FFD03FE00047E5D /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199A68661FFD03FE00047E5D /* SearchViewController.swift */; };
@@ -136,6 +137,7 @@
 		19636A0B2015490700423927 /* RatingProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingProtocol.swift; sourceTree = "<group>"; };
 		196FD4EA1FAFC0F0000875AE /* Offering.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Offering.swift; sourceTree = "<group>"; };
 		19714D401FF6419100067565 /* RateModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateModel.swift; sourceTree = "<group>"; };
+		1977C7FA201E1C50004F9B7D /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		198A33B4201BD5DF004BDCE4 /* DateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHelper.swift; sourceTree = "<group>"; };
 		199A68641FFD027A00047E5D /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		199A68661FFD03FE00047E5D /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -279,7 +281,6 @@
 				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
 				19E8583D2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift */,
 				8409DEDB201CC01A001043BF /* YouRentedTableViewCell.swift */,
-				199A68641FFD027A00047E5D /* CustomCalendarCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -571,8 +572,10 @@
 		840D63D31FE9A6D8007A1F16 /* Search */ = {
 			isa = PBXGroup;
 			children = (
+				199A68641FFD027A00047E5D /* CustomCalendarCell.swift */,
 				8409DEDF201CC6AA001043BF /* Search.storyboard */,
 				194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */,
+				1977C7FA201E1C50004F9B7D /* CalendarCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -967,6 +970,7 @@
 				84FD74BF2016AD0F00A2286E /* AdvertisePopOverPhotoViewController.swift in Sources */,
 				840E94B7201A3D2100CCDBC8 /* circleImages.swift in Sources */,
 				19E458EE20178A0B00B45E7F /* RentingEventType.swift in Sources */,
+				1977C7FB201E1C50004F9B7D /* CalendarCell.swift in Sources */,
 				845AD974200903FE0037D053 /* BlockedDay.swift in Sources */,
 				19714D411FF6419100067565 /* RateModel.swift in Sources */,
 				19017040200BA65F00E21080 /* HomePageModel.swift in Sources */,

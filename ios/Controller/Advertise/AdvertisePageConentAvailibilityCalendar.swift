@@ -60,11 +60,11 @@ class AdvertisePageConentAvailibilityCalendar: UIViewController {
         guard let cell = view as? AvailibilityCalendarCell else {return}
     if cellState.dateBelongsTo == .thisMonth {
         if cellState.isSelected {
-            cell.cellSelectionFeedback.isHidden = false
+            cell.selectedView.isHidden = false
             cell.availibility.isBlocked = false
         } else {
             print("released")
-            cell.cellSelectionFeedback.isHidden = true
+            cell.selectedView.isHidden = true
             cell.availibility.isBlocked = true
         }
     }
@@ -74,10 +74,10 @@ class AdvertisePageConentAvailibilityCalendar: UIViewController {
         guard let cell = view as? AvailibilityCalendarCell else {return}
         
         if cellState.isSelected {
-            cell.cellSelectionFeedback.isHidden = false
+            cell.selectedView.isHidden = false
         } else {
             if cellState.dateBelongsTo == .thisMonth {
-                cell.cellSelectionFeedback.isHidden = true
+                cell.selectedView.isHidden = true
             } else {
             cell.dateLabel.textColor = notInMonthColor
             }

@@ -9,7 +9,7 @@
 import UIKit
 import JTAppleCalendar
 
-class AvailibilityAndBookingViewController: UIViewController {
+class AvailibilityAndBookingViewController: CalendarViewController {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
@@ -19,7 +19,6 @@ class AvailibilityAndBookingViewController: UIViewController {
     var preselectedStartDate: Date?
     
     @IBOutlet weak var calendarView: JTAppleCalendarView!
-    @IBOutlet weak var monthAndYear: UILabel!
     @IBOutlet weak var resultView: UILabel!
     @IBOutlet weak var reservationButton: UIButton!
     @IBOutlet weak var priceView: UILabel!
@@ -29,12 +28,14 @@ class AvailibilityAndBookingViewController: UIViewController {
     @IBOutlet weak var totalPriceLabel: UILabel!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var hiddenElementsView: UIStackView!
-
-    let formatter = DateFormatter()
+    @IBOutlet weak var yearLabel: UILabel!
+    @IBOutlet weak var monthLabel: UILabel!
+    
+    /* let formatter = DateFormatter()
     var firstDate: Date?
     var lastDate: Date?
     var recursiveSelectionCall = false
-    var recursiveDeselectionCall = false
+    var recursiveDeselectionCall = false */
     let notInMonthColor = UIColor(hue: 0, saturation: 0, brightness: 1, alpha: 0.5)
     
     var dates2Check: [Date] = []
@@ -67,14 +68,16 @@ class AvailibilityAndBookingViewController: UIViewController {
             reservationButton.isEnabled = false
         }
         
-        calendarView.calendarDelegate = self
-        calendarView.calendarDataSource = self
+        /* calendarView.calendarDelegate = self
+        calendarView.calendarDataSource = self */
         
-        calendarView.allowsMultipleSelection  = true
+        /* calendarView.allowsMultipleSelection  = true
       //  calendarView.isRangeSelectionUsed = true
         
         calendarView.minimumLineSpacing = 0
-        calendarView.minimumInteritemSpacing = 0
+        calendarView.minimumInteritemSpacing = 0 */
+        
+        initCalendar(calendarView: calendarView, yearLabel: yearLabel, monthLabel: monthLabel, fireAfterSelection: checkAvailibility)
         
        if let psd = preselectedStartDate, let ped = preselectedEndDate {
             calendarView.scrollToHeaderForDate(psd)
@@ -85,9 +88,9 @@ class AvailibilityAndBookingViewController: UIViewController {
             calendarView.selectDates(from: psd, to: ped)
         }
         
-        calendarView.visibleDates { visibleDates in
+        /* calendarView.visibleDates { visibleDates in
             self.setupMonthYear(from: visibleDates)
-        }
+        } */
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -98,7 +101,7 @@ class AvailibilityAndBookingViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
-    func handleSelectionVisually(view: JTAppleCell?, cellState: CellState){
+    /* func handleSelectionVisually(view: JTAppleCell?, cellState: CellState){
         guard let cell = view as? AvailibilityCalendarCell else {return}
       
         
@@ -109,7 +112,7 @@ class AvailibilityAndBookingViewController: UIViewController {
             
         default:
             cell.cellSelectionFeedback.isHidden = true
-        }
+        }*/
         
       /*  switch cellState.selectedPosition() {
         case .full:
@@ -143,10 +146,10 @@ class AvailibilityAndBookingViewController: UIViewController {
         default:
             cell.cellSelectionFeedback.isHidden = true
             cell.availibility.isBlocked = true
-        }*/
-    }
+        }
+    }*/
     
-    func handleMonthColors(view: JTAppleCell?, cellState: CellState){
+    /* func handleMonthColors(view: JTAppleCell?, cellState: CellState){
         guard let cell = view as? AvailibilityCalendarCell else {return}
         
         if cellState.dateBelongsTo == .thisMonth {
@@ -154,13 +157,13 @@ class AvailibilityAndBookingViewController: UIViewController {
         else {
             cell.dateLabel.textColor = notInMonthColor
         }
-    }
+    } */
     
-    func setupMonthYear(from visibleDates: DateSegmentInfo){
+    /* func setupMonthYear(from visibleDates: DateSegmentInfo){
         let date = visibleDates.monthDates.first!.date
         formatter.dateFormat = "MMMM yy"
         monthAndYear.text = formatter.string(from: date)
-    }
+    } */
 
     func checkAvailibility() -> Void {
         self.reservationButton.isEnabled = false
@@ -297,7 +300,7 @@ class AvailibilityAndBookingViewController: UIViewController {
 
 
 
-extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
+/* extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         let cell = cell as! AvailibilityCalendarCell
         let availibility = Availibility(date: date)
@@ -310,7 +313,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         let cell = calendar.dequeueReusableCell(withReuseIdentifier: "availibilityCalendarCell", for: indexPath) as! AvailibilityCalendarCell
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
-    }
+    } */
     
    /* func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let selectedDate = cell as? AvailibilityCalendarCell else {return}
@@ -322,7 +325,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         handleSelectionVisually(view: selectedDate, cellState: cellState)
     }*/
     
-    func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    /* func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? AvailibilityCalendarCell else {return}
         handleSelectionVisually(view: cell, cellState: cellState)
         if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
@@ -361,7 +364,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
             }
         }
         checkAvailibility()
-    }
+    } */
     
    /* func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
             guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
@@ -372,7 +375,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
             handleSelectionVisually(view: releasedDate, cellState: cellState)
     }*/
     
-    func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
+    /* func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? AvailibilityCalendarCell else {return}
         handleSelectionVisually(view: cell, cellState: cellState)
     }
@@ -381,13 +384,13 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         // prevent user from selecting dates in the past
         let now = Date()
         return date > now
-    }
+    } */
     
-    func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
+    /* func calendar(_ calendar: JTAppleCalendarView, didScrollToDateSegmentWith visibleDates: DateSegmentInfo) {
         setupMonthYear(from: visibleDates)
-    }
+    } */
     
-    func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
+    /*func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
         // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
@@ -410,9 +413,9 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     }
 
 
-}
+} */
 
-extension AvailibilityAndBookingViewController: JTAppleCalendarViewDataSource {
+/* extension AvailibilityAndBookingViewController: JTAppleCalendarViewDataSource {
     func configureCalendar(_ calendar: JTAppleCalendarView) -> ConfigurationParameters {
         let endDate = Date() + 31104000 // one year from now
         let parameters = ConfigurationParameters(
@@ -426,4 +429,4 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDataSource {
         )
         return parameters
     }
-}
+} */

@@ -20,8 +20,11 @@ class CalendarViewController: UIViewController {
     var lastDate:Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
-    private let formatter = DateFormatter()
-    private let currentCalendar = Calendar.current
+    let formatter = DateFormatter()
+    let currentCalendar = Calendar.current
+    var fireAfterSelection: (() -> Void)?
+    
+    let CELL_IDENTIFIER = "CustomCell"
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,10 +35,15 @@ class CalendarViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    func initCalendar(calendarView: JTAppleCalendarView, yearLabel: UILabel, monthLabel: UILabel){
+    func initCalendar(calendarView: JTAppleCalendarView, yearLabel: UILabel, monthLabel: UILabel, fireAfterSelection: (() -> Void)?){
+        // fore safety :)
+        calendarView.calendarDelegate = self
+        calendarView.calendarDataSource = self
+        
         monthLabelNew = monthLabel
         yearLabelNew = yearLabel
         calendarViewNew = calendarView
+        self.fireAfterSelection = fireAfterSelection
         
         setupCalendarView()
         calendarView.allowsMultipleSelection  = true
@@ -120,7 +128,7 @@ extension CalendarViewController: JTAppleCalendarViewDataSource{
 extension CalendarViewController: JTAppleCalendarViewDelegate{
     // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCalendarCell {
+        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: cell, for: indexPath) as? CustomCalendarCell {
             cell.dateLabel.text = cellState.text
             updateCellVisuals(for: cell, withState: cellState)
             return cell
@@ -166,6 +174,10 @@ extension CalendarViewController: JTAppleCalendarViewDelegate{
             } else {
                 // first date not set yet -> set first date
                 firstDate = date
+            }
+            // fire passed function
+            if let callbackToFire = fireAfterSelection {
+                callbackToFire()
             }
         }
     }
