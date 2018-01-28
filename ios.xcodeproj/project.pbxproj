@@ -31,7 +31,7 @@
 		199BFDA61FC1CB81002A0101 /* SearchModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199BFDA51FC1CB81002A0101 /* SearchModel.swift */; };
 		19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A3F8611FF5AAEE00FA2D95 /* Rating.swift */; };
 		19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19A7FA791FD2D2C900FA7C8D /* Renting.swift */; };
-		19B51042201E2639006A6AE4 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B51041201E2639006A6AE4 /* CustomCell.swift */; };
+		19B51042201E2639006A6AE4 /* SearchCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19B51041201E2639006A6AE4 /* SearchCalendarCell.swift */; };
 		19BBB891200A57B500723339 /* ChatBotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BBB890200A57B500723339 /* ChatBotViewController.swift */; };
 		19BF06421FEA83D700E495C2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06411FEA83D700E495C2 /* ViewController.swift */; };
 		19BF06441FEA84A500E495C2 /* MessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19BF06431FEA84A500E495C2 /* MessageHandler.swift */; };
@@ -143,7 +143,7 @@
 		199BFDA51FC1CB81002A0101 /* SearchModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchModel.swift; sourceTree = "<group>"; };
 		19A3F8611FF5AAEE00FA2D95 /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		19A7FA791FD2D2C900FA7C8D /* Renting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renting.swift; sourceTree = "<group>"; };
-		19B51041201E2639006A6AE4 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		19B51041201E2639006A6AE4 /* SearchCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCalendarCell.swift; sourceTree = "<group>"; };
 		19BBB890200A57B500723339 /* ChatBotViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBotViewController.swift; sourceTree = "<group>"; };
 		19BF06411FEA83D700E495C2 /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		19BF06431FEA84A500E495C2 /* MessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageHandler.swift; sourceTree = "<group>"; };
@@ -283,7 +283,6 @@
 				19017046200BD68600E21080 /* UserRentingRequestsTableViewCell.swift */,
 				19E8583D2018E6CB007F17F2 /* SomebodyRentedTableViewCell.swift */,
 				8409DEDB201CC01A001043BF /* YouRentedTableViewCell.swift */,
-				199A68641FFD027A00047E5D /* CustomCalendarCell.swift */,
 			);
 			path = HomePage;
 			sourceTree = "<group>";
@@ -594,7 +593,8 @@
 			children = (
 				8409DEDF201CC6AA001043BF /* Search.storyboard */,
 				194769241FC848C800AB02E4 /* SearchResultsTableViewCell.swift */,
-				19B51041201E2639006A6AE4 /* CustomCell.swift */,
+				199A68641FFD027A00047E5D /* CustomCalendarCell.swift */,
+				19B51041201E2639006A6AE4 /* SearchCalendarCell.swift */,
 			);
 			path = Search;
 			sourceTree = "<group>";
@@ -990,7 +990,7 @@
 				840E94B7201A3D2100CCDBC8 /* circleImages.swift in Sources */,
 				19E458EE20178A0B00B45E7F /* RentingEventType.swift in Sources */,
 				845AD974200903FE0037D053 /* BlockedDay.swift in Sources */,
-				19B51042201E2639006A6AE4 /* CustomCell.swift in Sources */,
+				19B51042201E2639006A6AE4 /* SearchCalendarCell.swift in Sources */,
 				19714D411FF6419100067565 /* RateModel.swift in Sources */,
 				19017040200BA65F00E21080 /* HomePageModel.swift in Sources */,
 				19D4126B1FB707D500794F1F /* Feature.swift in Sources */,

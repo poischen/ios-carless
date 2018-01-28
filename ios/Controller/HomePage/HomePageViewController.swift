@@ -42,6 +42,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let uid = userUID {
+            // data for the first table on the home page
             homePageModel.subscribeToRentingEvents(UID: uid, completion: {rentingEvents in
                 self.rentingEvents = rentingEvents
                 if (rentingEvents.count == 0){
@@ -55,6 +56,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                     self.usersRentingsPlaceholderLabel.isHidden = true
                 }
             })
+            // data for the second table on the home page
             homePageModel.subscribeToUsersOfferings(UID: uid, completion: {offeringsAndBrands in
                 self.usersOfferingsAndBrands = offeringsAndBrands
                 self.usersOfferingsTable.reloadData()
@@ -69,6 +71,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                     self.userOfferingsPlaceholderLabel.isHidden = true
                 }
             })
+            // data for the third table on the home page
             homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: uid, completion: {rentingData in
                 self.usersRentingRequests = rentingData
                 if (rentingData.count == 0) {
@@ -121,15 +124,18 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         case self.usersRentingsTable:
             if let currentRentingEvents = rentingEvents {
                 let event = currentRentingEvents[indexPath.row]
+                // check type of event and then get the right kind of table cell
                 switch event.type {
                 case .somebodyRented:
                     if let cell = tableView.dequeueReusableCell(withIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell {
+                        // pass event to cell to fill the labels
                         cell.event = event
                         cell.delegate = self
                         returnCell = cell
                     }
                 case .youRented:
                     if let cell = tableView.dequeueReusableCell(withIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as? YouRentedTableViewCell {
+                        // pass event to cell to fill the labels
                         cell.event = event
                         cell.delegate = self
                         returnCell = cell
@@ -148,6 +154,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
             if let currentUsersRentingRequests = usersRentingRequests {
                 let somebodyRented = currentUsersRentingRequests[indexPath.row]
                 if let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as? UserRentingRequestsTableViewCell {
+                    // pass event to cell to fill the labels
                     cell.somebodyRented = somebodyRented
                     cell.delegate = self
                     returnCell = cell
@@ -165,12 +172,14 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if (tableView == self.usersOfferingsTable) {
             if let currentUsersOfferingsAndBrands = usersOfferingsAndBrands {
+                // user selected offering -> show offering
                 let (selectedOffering,_) = currentUsersOfferingsAndBrands[indexPath.row]
                 showSelectedOffering(selectedOffering: selectedOffering)
             }
         } else if (tableView == self.usersRentingsTable) {
             if let currentRentingEvents = rentingEvents {
                 let event = currentRentingEvents[indexPath.row]
+                // user selected offering -> show offering
                 switch event.type {
                 case .somebodyRented:
                     if let somebodyRented = event as? SomebodyRented {
@@ -233,17 +242,20 @@ extension HomePageViewController: RequestProcessingProtocol{
 extension HomePageViewController: RatingProtocol{
     func rateLessee(renting: Renting, lesseeUser: User) {
         let (navController, rateController) = goToRenting()
+        // pass necessary information for rating to rating view
         rateController.rentingBeingRated = renting
         rateController.userBeingRated = lesseeUser
         self.present(navController, animated: true, completion: nil)
     }
     func rateLessor(renting: Renting) {
         let (navController, rateController) = goToRenting()
+        // pass necessary information for rating to rating view
         rateController.rentingBeingRated = renting
         rateController.ratingLessee = false
         self.present(navController, animated: true, completion: nil)
     }
     
+    // find navigation controller and rate view controller
     func goToRenting() -> (UINavigationController, RateViewController) {
         let storyboard = UIStoryboard(name: RATE_STORYBOARD_IDENTIFIER, bundle: nil)
         let rateNavController = storyboard.instantiateViewController(withIdentifier: RATING_NAVIGATION_IDENTIFIER) as! UINavigationController

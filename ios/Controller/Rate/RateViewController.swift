@@ -42,7 +42,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
         
         if ratingLessee {
             if let currentRentingBeingRated = rentingBeingRated, let currentUserBeingRated = userBeingRated {
-                // lessee should be rated and we already have the lessee's user -> get car model name
+                // lessee should be rated and we already have the lessee's user -> get car model name (as we already have the user)
                 RateModel.getCarModelName(rentingBeingRated: currentRentingBeingRated, completion: {carModelName in
                     self.initView(carModelName: carModelName, username: currentUserBeingRated.name)
                 })
@@ -58,6 +58,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
         }
     }
     
+    // initialise view
     func initView(carModelName: String, username: String) {
         self.ratingCarModel.text = carModelName
         self.userBeingRatedUsernameLabel.text = username
@@ -75,6 +76,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
         // update character count label
         characterCountLabel.text = String(numberOfChars) + CHARACTER_COUNT_LABEL_LIMIT
         
+        // prevent further typing if the max explanation limit is reached
         return numberOfChars < MAX_EXPLANATION_LENGTH
     }
 

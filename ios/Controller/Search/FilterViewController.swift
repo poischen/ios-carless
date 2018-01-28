@@ -51,11 +51,11 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var brandsFilterStatusLabel: UILabel!
     
     // arrays for the filters' elements
-    var features:[Feature] = [Feature]()
-    var vehicleTypes:[VehicleType] = [VehicleType]()
-    var fuels:[Fuel] = [Fuel]()
-    var brands:[Brand] = [Brand]()
-    var gears:[Gear] = [Gear]()
+    var features:[Feature]?
+    var vehicleTypes:[VehicleType]?
+    var fuels:[Fuel]?
+    var brands:[Brand]?
+    var gears:[Gear]?
     
     // references to DB and search model
     let storageAPI: StorageAPI = StorageAPI.shared
@@ -133,21 +133,31 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // get number of rows in a table
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var count: Int
+        // default count that is overwritten if one of the cases matches
+        var count = 0
         
         switch tableView {
         case self.pickExtraTable:
-            count = features.count
+            if let currentFeatures = features {
+                count = currentFeatures.count
+            }
         case self.pickFuelTable:
-            count = fuels.count
+            if let currentFuels = fuels {
+                count = currentFuels.count
+            }
         case self.pickBrandTable:
-            count = brands.count
+            if let currentBrands = brands {
+                count = currentBrands.count
+            }
         case self.pickGearTable:
-            count = gears.count
+            if let currentGears = gears {
+                count = currentGears.count
+            }
         case self.pickVehicleTypeTable:
-            count = vehicleTypes.count;
+            if let currentVehicleTypes = vehicleTypes {
+                count = currentVehicleTypes.count;
+            }
         default:
-            count = 0
             print("non-intended use of FilterViewController as delegate for an unknown table view (in numberOfRowsInSection)")
         }
         return count
@@ -155,64 +165,90 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     // get cell for specific row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cellContent:SelectableItem
-        var cellIdentifier:String
+        var cellContent:SelectableItem?
+        var cellIdentifier:String?
         
         switch tableView {
         case self.pickExtraTable:
-            cellIdentifier = PICK_EXTRA_TABLE_CELL_IDENTIFIER
-            cellContent = self.features[indexPath.row]
+            if let currentFeatures = features {
+                cellIdentifier = PICK_EXTRA_TABLE_CELL_IDENTIFIER
+                cellContent = currentFeatures[indexPath.row]
+            }
         case self.pickFuelTable:
-            cellIdentifier = PICK_FUEL_TABLE_CELL_IDENTIFIER
-            cellContent = fuels[indexPath.row]
+            if let currentFuels = fuels {
+                cellIdentifier = PICK_FUEL_TABLE_CELL_IDENTIFIER
+                cellContent = currentFuels[indexPath.row]
+            }
         case self.pickBrandTable:
-            cellIdentifier = PICK_BRAND_TABLE_CELL_IDENTIFIER
-            cellContent = brands[indexPath.row]
+            if let currentBrands = brands {
+                cellIdentifier = PICK_BRAND_TABLE_CELL_IDENTIFIER
+                cellContent = currentBrands[indexPath.row]
+            }
         case self.pickGearTable:
-            cellIdentifier = PICK_GEAR_TABLE_CELL_IDENTIFIER
-            cellContent = gears[indexPath.row]
+            if let currentGears = gears {
+                cellIdentifier = PICK_GEAR_TABLE_CELL_IDENTIFIER
+                cellContent = currentGears[indexPath.row]
+            }
         case self.pickVehicleTypeTable:
-            cellIdentifier = PICK_VEHICLE_TYPE_TABLE_CELL_IDENTIFIER
-            cellContent = vehicleTypes[indexPath.row]
+            if let currentVehicleTypes = vehicleTypes {
+                cellIdentifier = PICK_VEHICLE_TYPE_TABLE_CELL_IDENTIFIER
+                cellContent = currentVehicleTypes[indexPath.row]
+            }
         default:
             print("non-intended use of FilterViewController as delegate for an unknown table view (in numberOfRowsInSection)")
             return UITableViewCell()
         }
         
-        let returnCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        returnCell.textLabel!.text = cellContent.name // set cell's text to items name
-        if (cellContent.isSelected){
-            returnCell.accessoryType = UITableViewCellAccessoryType.checkmark // add checkmark if item is selected
+        
+        if let currentCellContent = cellContent, let currentCellIdentifier = cellIdentifier {
+            let returnCell = tableView.dequeueReusableCell(withIdentifier: currentCellIdentifier, for: indexPath)
+            returnCell.textLabel!.text = currentCellContent.name // set cell's text to items name
+            if (currentCellContent.isSelected){
+                returnCell.accessoryType = UITableViewCellAccessoryType.checkmark // add checkmark if item is selected
+            } else {
+                returnCell.accessoryType = UITableViewCellAccessoryType.none // no checkmark if item is not selected
+            }
+            returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue background selection style
+            return returnCell
         } else {
-            returnCell.accessoryType = UITableViewCellAccessoryType.none // no checkmark if item is not selected
+            print("error getting cellContent or cellIdentifier (in numberOfRowsInSection in FilterViewController)")
+            return UITableViewCell()
         }
-        returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue background selection style
-        return returnCell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableView {
             // get corresponding item for table view, update selection status of the item and then update the list of selected items of that type in the filter
             case self.pickExtraTable:
-                var feature = self.features[indexPath.row]
-                feature.toggleSelected()
-                self.updateSelectedFeaturesInFilter()
+                if let currentFeatures = features {
+                    var feature = currentFeatures[indexPath.row]
+                    feature.toggleSelected()
+                    self.updateSelectedFeaturesInFilter()
+                }
             case self.pickFuelTable:
-                var engine = self.fuels[indexPath.row]
-                engine.toggleSelected()
-                self.updateSelectedFuelsInFilter()
+                if let currentFuels = fuels {
+                    var engine = currentFuels[indexPath.row]
+                    engine.toggleSelected()
+                    self.updateSelectedFuelsInFilter()
+                }
             case self.pickBrandTable:
-                var brand = self.brands[indexPath.row]
-                brand.toggleSelected()
-                self.updateSelectedBrandsInFilter()
+                if let currentBrands = brands {
+                    var brand = currentBrands[indexPath.row]
+                    brand.toggleSelected()
+                    self.updateSelectedBrandsInFilter()
+                }
             case self.pickGearTable:
-                var gear = self.gears[indexPath.row]
-                gear.toggleSelected()
-                self.updateSelectedGearsInFilter()
+                if let currentGears = gears {
+                    var gear = currentGears[indexPath.row]
+                    gear.toggleSelected()
+                    self.updateSelectedGearsInFilter()
+                }
             case self.pickVehicleTypeTable:
-                var carType:VehicleType = self.vehicleTypes[indexPath.row]
-                carType.toggleSelected()
-                self.updateSelectedVehicleTypesInFilter()
+                if let currentVehicleTypes = vehicleTypes {
+                    var carType:VehicleType = currentVehicleTypes[indexPath.row]
+                    carType.toggleSelected()
+                    self.updateSelectedVehicleTypesInFilter()
+                }
             default:
                 print("non-intended use of FilterViewController as delegate for an unknown table view (in didSelectRowAt)")
                 return
@@ -225,10 +261,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickExtraTable.reloadData() // reload to show new items
 
         // if a feature filter is set in the filter object ...
-        if let selectedFeatureIDs = self.searchFilter?.featureIDs {
+        if let selectedFeatureIDs = self.searchFilter?.featureIDs, let currentFeatures = self.features {
             for selectedFeatureID in selectedFeatureIDs {
                 // ... get the corresponding feature object for each feature ID by filtering the feature objects
-                let featureWithSelectedID = self.features.filter{$0.id == selectedFeatureID}
+                let featureWithSelectedID = currentFeatures.filter{$0.id == selectedFeatureID}
                 if featureWithSelectedID.count == 1 {
                     // corresponding feature object found -> set it to selected
                     featureWithSelectedID[0].isSelected = true
@@ -244,10 +280,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickVehicleTypeTable.reloadData() // reload to show new items
         
         // if a vehicle type filter is set in the filter object ...
-        if let selectedVehicleTypeIDs = self.searchFilter?.vehicleTypeIDs {
+        if let selectedVehicleTypeIDs = self.searchFilter?.vehicleTypeIDs, let currentVehicleTypes = self.vehicleTypes {
             for selectedVehicleTypeID in selectedVehicleTypeIDs {
                 // ... get the corresponding vehicle type object for each vehicle type ID by filtering the vehicle type objects
-                let vehicleTypeWithSelectedID = self.vehicleTypes.filter{$0.id == selectedVehicleTypeID}
+                let vehicleTypeWithSelectedID = currentVehicleTypes.filter{$0.id == selectedVehicleTypeID}
                 if vehicleTypeWithSelectedID.count == 1 {
                     // corresponding vehicle type object found -> set it to selected
                     vehicleTypeWithSelectedID[0].isSelected = true
@@ -263,10 +299,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickFuelTable.reloadData() // reload to show new items
         
         // if a fuel filter is set in the filter object ...
-        if let selectedFuelIDs = self.searchFilter?.fuelIDs {
+        if let selectedFuelIDs = self.searchFilter?.fuelIDs, let currentFuels = self.fuels {
             for selectedFuelID in selectedFuelIDs {
                 // ... get the corresponding fuel object for each fuel ID by filtering the fuel objects
-                let fuelWithSelectedID = self.fuels.filter{$0.id == selectedFuelID}
+                let fuelWithSelectedID = currentFuels.filter{$0.id == selectedFuelID}
                 if fuelWithSelectedID.count == 1 {
                     // corresponding fuel object found -> set it to selected
                     fuelWithSelectedID[0].isSelected = true
@@ -282,10 +318,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickBrandTable.reloadData() // reload to show new items
         
         // if a brand filter is set in the filter object ...
-        if let selectedBrandIDs = self.searchFilter?.brandIDs {
+        if let selectedBrandIDs = self.searchFilter?.brandIDs, let currentBrands = self.brands {
              for selectedBrandID in selectedBrandIDs {
                 // ... get the corresponding brand object for each brand ID by filtering the brand objects
-                let brandWithSelectedID = self.brands.filter{$0.id == selectedBrandID}
+                let brandWithSelectedID = currentBrands.filter{$0.id == selectedBrandID}
                 if brandWithSelectedID.count == 1 {
                     // corresponding brand object found -> set it to selected
                     brandWithSelectedID[0].isSelected = true
@@ -301,10 +337,10 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.pickGearTable.reloadData() // reload to show new items
         
         // if a gear filter is set in the filter object ...
-        if let selectedGearIDs = self.searchFilter?.gearIDs {
+        if let selectedGearIDs = self.searchFilter?.gearIDs, let currentGears = self.gears {
             for selectedGearID in selectedGearIDs {
                 // ... get the corresponding gear object for each gear ID by filtering the gear objects
-                let gearWithSelectedID = self.gears.filter{$0.id == selectedGearID}
+                let gearWithSelectedID = currentGears.filter{$0.id == selectedGearID}
                 if gearWithSelectedID.count == 1 {
                     // corresponding gear object found -> set it to selected
                     gearWithSelectedID[0].isSelected = true
@@ -316,8 +352,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
         
     func updateSelectedFeaturesInFilter(){
-        if let currentSearchFilter = self.searchFilter {
-            let selectedFeatures = self.features.filter{$0.isSelected}
+        if let currentSearchFilter = self.searchFilter, let currentFeatures = features {
+            let selectedFeatures = currentFeatures.filter{$0.isSelected}
             if (selectedFeatures.count == 0){
                 // no features selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.featureIDs = nil
@@ -331,8 +367,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func updateSelectedBrandsInFilter(){
-        if let currentSearchFilter = self.searchFilter {
-            let selectedBrands = self.brands.filter{$0.isSelected}
+        if let currentSearchFilter = self.searchFilter, let currentBrands = brands {
+            let selectedBrands = currentBrands.filter{$0.isSelected}
             if (selectedBrands.count == 0){
                 // no brands selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.brandIDs = nil
@@ -346,8 +382,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func updateSelectedGearsInFilter(){
-        if let currentSearchFilter = self.searchFilter {
-            let selectedGears = self.gears.filter{$0.isSelected}
+        if let currentSearchFilter = self.searchFilter, let currentGears = gears {
+            let selectedGears = currentGears.filter{$0.isSelected}
             if (selectedGears.count == 0){
                 // no gears selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.gearIDs = nil
@@ -361,8 +397,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func updateSelectedVehicleTypesInFilter(){
-        if let currentSearchFilter = self.searchFilter {
-            let selectedVehicleTypes = self.vehicleTypes.filter{$0.isSelected}
+        if let currentSearchFilter = self.searchFilter, let currentVehicleTypes = vehicleTypes {
+            let selectedVehicleTypes = currentVehicleTypes.filter{$0.isSelected}
             if (selectedVehicleTypes.count == 0){
                 // no vehicle types selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.vehicleTypeIDs = nil
@@ -376,8 +412,8 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func updateSelectedFuelsInFilter(){
-        if let currentSearchFilter = self.searchFilter {
-            let selectedFuels = self.fuels.filter{$0.isSelected}
+        if let currentSearchFilter = self.searchFilter, let currentFuels = fuels {
+            let selectedFuels = currentFuels.filter{$0.isSelected}
             if (selectedFuels.count == 0){
                 // no fuels selected -> disable filter and indicate to the user that the filter is disabled
                 currentSearchFilter.fuelIDs = nil

@@ -44,6 +44,9 @@ class SearchViewController: UIViewController {
     private let ERROR_NO_FIRST_DATE_PICKED = "Please select a pickup date."
     private let ERROR_REVERSE_DATE_INTERVAL = "Please pick a return time after the pickup time."
     
+    let CELL_IDENTIFIER = "SearchCalendarCell"
+    let SEARCH_RESULTS_SEQUE_IDENTIFIER = "showSearchResultsNew"
+    
     private var alertController: UIAlertController?
     
     override func viewDidLoad() {
@@ -122,33 +125,33 @@ class SearchViewController: UIViewController {
             desiredRentingStart = desiredFirstDate
             desiredRentingEnd = desiredLastDate
             // ... proceed to search results
-            performSegue(withIdentifier: "showSearchResultsNew", sender: nil)
+            performSegue(withIdentifier: SEARCH_RESULTS_SEQUE_IDENTIFIER, sender: nil)
         }
     }
     
     // change calendar cell text color depending on whether the cell belongs to the current month
     func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
-        guard let validCell = view as? CustomCell else {
+        guard let currentCell = view as? SearchCalendarCell else {
             return
         }
         if cellState.dateBelongsTo == .thisMonth {
-            validCell.dateLabel.textColor = UIColor.black
+            currentCell.dateLabel.textColor = UIColor.black
         } else {
-            validCell.dateLabel.textColor = UIColor.darkGray
+            currentCell.dateLabel.textColor = UIColor.darkGray
         }
     }
     
     // change calendar cell background according to the cell's selection status
     func handleSelection(cell: JTAppleCell?, cellState: CellState) {
-        guard let myCustomCell = cell as? CustomCell else {
+        guard let currentCell = cell as? SearchCalendarCell else {
             return
         }
-        if myCustomCell.isSelected {
+        if currentCell.isSelected {
             // cell is selected -> show special background
-            myCustomCell.selectedView.isHidden = false
+            currentCell.selectedView.isHidden = false
         } else {
             // cell is not selected -> hide special background
-            myCustomCell.selectedView.isHidden = true
+            currentCell.selectedView.isHidden = true
         }
         
     }
@@ -170,7 +173,7 @@ class SearchViewController: UIViewController {
     
     // set the filter values in the next view controller (search results)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "showSearchResultsNew") {
+        if (segue.identifier == SEARCH_RESULTS_SEQUE_IDENTIFIER) {
             // next screen: search results
             guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
                 let currentDesiredRentingStart = desiredRentingStart,
@@ -225,10 +228,14 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
     // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
         // TODO: error handling
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
-        cell.dateLabel.text = cellState.text
-        updateCellVisuals(for: cell, withState: cellState)
-        return cell
+        if let currentCell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: CELL_IDENTIFIER, for: indexPath) as? SearchCalendarCell {
+            currentCell.dateLabel.text = cellState.text
+            updateCellVisuals(for: currentCell, withState: cellState)
+            return currentCell
+        } else {
+            return JTAppleCell()
+        }
+
     }
     
     // handle the selection of a cell, select other cells between first and last date if necessary
