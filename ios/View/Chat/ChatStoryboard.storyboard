@@ -95,17 +95,60 @@
         <!--Open Picture View Controller-->
         <scene sceneID="4lu-Wf-KpG">
             <objects>
-                <viewController storyboardIdentifier="openImage" id="QK4-IT-4R3" customClass="OpenPictureViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="openImage" modalTransitionStyle="crossDissolve" modalPresentationStyle="overCurrentContext" id="QK4-IT-4R3" customClass="OpenPictureViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wKl-ME-WtC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleAspectFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tY0-Mg-zeq">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="7ma-mt-LAN">
+                                        <rect key="frame" x="62" y="249" width="250" height="128"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="2dj-ky-Ys3"/>
+                                            <constraint firstAttribute="height" constant="128" id="c8C-aS-GMw"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wxm-hp-qQM">
+                                        <rect key="frame" x="0.0" y="583" width="375" height="84"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="84" id="2CY-qx-aAi"/>
+                                        </constraints>
+                                        <state key="normal" title="Dismiss">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="dismissPicView:" destination="QK4-IT-4R3" eventType="touchUpInside" id="5AJ-dl-UnU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.79797535206901415" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="centerY" secondItem="tY0-Mg-zeq" secondAttribute="centerY" id="3Sk-lW-BCR"/>
+                                    <constraint firstAttribute="bottom" secondItem="wxm-hp-qQM" secondAttribute="bottom" constant="28" id="LkR-zD-ZxR"/>
+                                    <constraint firstItem="wxm-hp-qQM" firstAttribute="leading" secondItem="tY0-Mg-zeq" secondAttribute="leading" id="NLp-eE-abi"/>
+                                    <constraint firstItem="wxm-hp-qQM" firstAttribute="top" secondItem="7ma-mt-LAN" secondAttribute="bottom" constant="178" id="SGe-AV-nsJ"/>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="centerX" secondItem="tY0-Mg-zeq" secondAttribute="centerX" id="SIj-OZ-zLX"/>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="centerY" secondItem="tY0-Mg-zeq" secondAttribute="centerY" id="Uwt-pE-dAu"/>
+                                    <constraint firstAttribute="trailing" secondItem="wxm-hp-qQM" secondAttribute="trailing" id="iRb-Nr-DI0"/>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="centerX" secondItem="tY0-Mg-zeq" secondAttribute="centerX" id="m3b-eJ-DsO"/>
+                                    <constraint firstAttribute="trailing" secondItem="7ma-mt-LAN" secondAttribute="trailing" constant="63" id="oGp-wz-LNK"/>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="leading" secondItem="tY0-Mg-zeq" secondAttribute="leading" constant="62" id="wro-Yt-Suh"/>
+                                    <constraint firstItem="7ma-mt-LAN" firstAttribute="top" secondItem="tY0-Mg-zeq" secondAttribute="top" constant="249" id="x2N-4F-had"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="v4u-ss-7bt"/>
                     </view>
+                    <connections>
+                        <outlet property="imageView" destination="7ma-mt-LAN" id="iiy-84-rv3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1I4-6F-Nxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1951" y="-216"/>
+            <point key="canvasLocation" x="1949.5999999999999" y="-216.34182908545728"/>
         </scene>
         <!--Navigation Controller from Offer-->
         <scene sceneID="QJw-sA-Wec">
@@ -125,6 +168,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="car1" width="250" height="250"/>
         <image name="iconchat" width="30" height="30"/>
     </resources>
     <inferredMetricsTieBreakers>

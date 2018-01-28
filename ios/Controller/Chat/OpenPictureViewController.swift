@@ -10,6 +10,10 @@ import UIKit
 
 class OpenPictureViewController: UIViewController {
 
+    @IBOutlet weak var imageView: UIImageView!
+    @IBAction func dismissPicView(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
