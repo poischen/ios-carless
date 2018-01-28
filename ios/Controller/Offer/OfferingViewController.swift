@@ -75,7 +75,7 @@ class OfferingViewController: UIViewController {
     @IBAction func cancelButton(_ sender: Any) {
         if (cameFromAdvertise) {
             self.dismiss(animated: true, completion: nil)
-            advertisePagesController!.dismiss(animated: true, completion: nil)
+            advertisePagesController!.dismiss(animated: false, completion: nil)
         }
         else {
             self.dismiss(animated: true, completion: nil)

@@ -52,6 +52,7 @@ class AvailibilityAndBookingViewController: UIViewController {
     let RATING_QUOT_45: Float = 0.05
     let RATING_QUOT_5: Float = 0.1
     let NO_EXP_DISC = "  0 (1% à 10 ratings)"
+    let SUCCESS_MESSAGE_BOOKING = "The reservation was successful! Just wait for the lessors reply now :)"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +72,6 @@ class AvailibilityAndBookingViewController: UIViewController {
         calendarView.calendarDataSource = self
         
         calendarView.allowsMultipleSelection  = true
-      //  calendarView.isRangeSelectionUsed = true
         
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
@@ -79,9 +79,6 @@ class AvailibilityAndBookingViewController: UIViewController {
        if let psd = preselectedStartDate, let ped = preselectedEndDate {
             calendarView.scrollToHeaderForDate(psd)
             calendarView.scrollToDate(psd)
-            /* firstDate = psd
-            let preselectionEndDate: [Date] = [ped]
-            calendarView.selectDates(preselectionEndDate)*/
             calendarView.selectDates(from: psd, to: ped)
         }
         
@@ -105,45 +102,11 @@ class AvailibilityAndBookingViewController: UIViewController {
         switch cellState.selectedPosition() {
         case .full, .middle, .left, .right:
             cell.cellSelectionFeedback.isHidden = false
-            cell.cellSelectionFeedback.layer.cornerRadius = 25
+            cell.cellSelectionFeedback.layer.cornerRadius = 15
             
         default:
             cell.cellSelectionFeedback.isHidden = true
         }
-        
-      /*  switch cellState.selectedPosition() {
-        case .full:
-            cell.cellSelectionFeedback.isHidden = false
-            cell.availibility.isBlocked = false
-            cell.cellSelectionFeedback.clipsToBounds = true
-            cell.cellSelectionFeedback.layer.cornerRadius = 15
-            print("full")
-            
-        case .middle:
-            cell.cellSelectionFeedback.isHidden = false
-            cell.availibility.isBlocked = false
-            print("middle")
-        
-        case .right:
-            cell.cellSelectionFeedback.isHidden = false
-            cell.availibility.isBlocked = false
-            cell.cellSelectionFeedback.clipsToBounds = true
-            cell.cellSelectionFeedback.layer.cornerRadius = 15
-            cell.cellSelectionFeedback.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
-            print("right")
-        
-        case .left:
-            cell.cellSelectionFeedback.isHidden = false
-            cell.availibility.isBlocked = false
-            cell.cellSelectionFeedback.clipsToBounds = true
-            cell.cellSelectionFeedback.layer.cornerRadius = 15
-            cell.cellSelectionFeedback.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
-            print("left")
-
-        default:
-            cell.cellSelectionFeedback.isHidden = true
-            cell.availibility.isBlocked = true
-        }*/
     }
     
     func handleMonthColors(view: JTAppleCell?, cellState: CellState){
@@ -278,7 +241,14 @@ class AvailibilityAndBookingViewController: UIViewController {
                 self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                     if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
                         MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
-                        self.dismiss(animated: true, completion: nil)
+                        
+                            let alert = UIAlertController(title: "Yey", message: self.SUCCESS_MESSAGE_BOOKING, preferredStyle: UIAlertControllerStyle.alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.destructive, handler: {
+                            action in
+                            self.dismiss(animated: true, completion: nil)
+                            }))
+                            self.present(alert, animated: true, completion: nil)
+                        
                     } else {
                         self.reservationButton.isEnabled = true
                         self.resultView.text = ""
@@ -311,16 +281,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         self.calendar(calendar, willDisplay: cell, forItemAt: date, cellState: cellState, indexPath: indexPath)
         return cell
     }
-    
-   /* func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-        guard let selectedDate = cell as? AvailibilityCalendarCell else {return}
-        if firstDate != nil {
-            calendarView.selectDates(from: firstDate!, to: date,  triggerSelectionDelegate: true, keepSelectionIfMultiSelectionAllowed: true)
-        } else {
-            firstDate = date
-        }
-        handleSelectionVisually(view: selectedDate, cellState: cellState)
-    }*/
+
     
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? AvailibilityCalendarCell else {return}
@@ -363,14 +324,6 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
         checkAvailibility()
     }
     
-   /* func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
-            guard let releasedDate = cell as? AvailibilityCalendarCell else {return}
-        firstDate = nil
-        if calendarView.selectedDates.count > 1 {
-            calendarView.deselectAllDates()
-        }
-            handleSelectionVisually(view: releasedDate, cellState: cellState)
-    }*/
     
     func calendar(_ calendar: JTAppleCalendarView, didDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? AvailibilityCalendarCell else {return}
