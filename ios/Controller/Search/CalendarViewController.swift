@@ -25,8 +25,6 @@ class CalendarViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,11 +120,13 @@ extension CalendarViewController: JTAppleCalendarViewDataSource{
 extension CalendarViewController: JTAppleCalendarViewDelegate{
     // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        // TODO: error handling
-        let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as! CustomCell
-        cell.dateLabel.text = cellState.text
-        updateCellVisuals(for: cell, withState: cellState)
-        return cell
+        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+            cell.dateLabel.text = cellState.text
+            updateCellVisuals(for: cell, withState: cellState)
+            return cell
+        } else {
+            return JTAppleCell()
+        }
     }
     
     // handle the selection of a cell, select other cells between first and last date if necessary

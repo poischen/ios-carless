@@ -314,9 +314,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
             }
         }
     }
-    
-    // TODO: Do these methods belong in the model (-> filter class)?
-    
+        
     func updateSelectedFeaturesInFilter(){
         if let currentSearchFilter = self.searchFilter {
             let selectedFeatures = self.features.filter{$0.isSelected}

@@ -22,6 +22,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let SEARCH_OFFER_SEGUE = "SearchOfferSegue"
+    let FILTER_SEGUE = "showFilter"
     
     let storageAPI = StorageAPI.shared
     
@@ -107,23 +108,6 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         return cell
     }
     
-    // go to offering's detail view when the user taps an offering in the search results
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-      /*  let selectedOffering = self.offerings[indexPath.row]
-        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
-        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
-            let targetController = navigationController.topViewController as? OfferingViewController else {
-                return
-        }
-        if let psd = preselectedStartDate, let ped = preselectedEndDate {
-            targetController.preselectedStartDate = psd
-            targetController.preselectedEndDate = ped
-        }
-        targetController.displayingOffering = selectedOffering
-        self.present(navigationController, animated: true, completion: nil)*/
-    }
-
-    
     func receiveOfferings(_ offerings: [Offering]) {
         if (offerings.count <= 0) {
             // show error message if no offerings were received (because the search returned no results)
@@ -156,7 +140,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             
             // remember that the offering controller is shown
             cameFromOffering = true
-        } else if (segue.identifier == "showFilter") {
+        } else if (segue.identifier == FILTER_SEGUE) {
             // next screen: filter
             if let filterViewController = segue.destination as? FilterViewController {
                 // set filter screen's default values here

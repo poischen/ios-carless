@@ -24,6 +24,8 @@ class SearchViewController: CalendarViewController {
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var searchButton: UIButton!
     
+    // TODO: remove all these comments if the inheritance approach works
+    
     // attributes for the calendar
     /*var firstDate:Date?
     var lastDate:Date?
@@ -176,7 +178,8 @@ class SearchViewController: CalendarViewController {
             // next screen: search results
             guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
                 let currentDesiredRentingStart = desiredRentingStart,
-                let currentDesiredRentingEnd = desiredRentingEnd else {
+                let currentDesiredRentingEnd = desiredRentingEnd,
+                let currentPickedPlace = pickedPlace else {
                     return
             }
             let newFilter:Filter = Filter(
@@ -185,13 +188,12 @@ class SearchViewController: CalendarViewController {
                 fuelIDs: nil,
                 gearIDs: nil,
                 minHP: nil,
-                // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
                 maxPrice: nil,
                 minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                 vehicleTypeIDs: nil,
                 dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                 featureIDs: nil,
-                placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
+                placePoint: CoordinatePoint(latitude: currentPickedPlace.coordinate.latitude, longitude: currentPickedPlace.coordinate.longitude)
             )
             // send filter to the next view controller by setting an attribute of it to the filter
             searchResultsViewController.searchFilter = newFilter
