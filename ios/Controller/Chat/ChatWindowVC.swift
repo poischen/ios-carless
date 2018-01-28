@@ -127,14 +127,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             self.present(playerController, animated: true, completion: nil)
           }
             
-           /* if let picItem = msg.media as? JSQPhotoMediaItem {
-                
+           if let picItem = msg.media as? JSQPhotoMediaItem {
+                print("you clicked an image")
                 let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
                 let vc = storyboard.instantiateViewController(withIdentifier: "openImage") as! OpenPictureViewController
-               
+               //vc.imageView = picItem as? UIImageView
                 self.present(vc, animated: true, completion: nil)
                 
-            }*/
+            }
         }
     }
 
@@ -306,23 +306,6 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                 }
             })
         }
-    }
-    
-    /*func popUpWindow() {
-        let ImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabImageView(tapGestureRecognizer:)))
-       // carImageView.isUserInteractionEnabled = true
-        //carImageView.addGestureRecognizer(carImageTapGestureRecognizer)
-        
-    }*/
-    
-    func tabImageView(tapGestureRecognizer: UITapGestureRecognizer) {
-        
-        let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "openImage") as! OpenPictureViewController
-        //guard let image = self.carImageView.image else { return }
-       // vc.carImage = image
-        self.present(vc, animated: true, completion: nil)
-        
     }
    
 }
