@@ -10,8 +10,8 @@ import UIKit
 import JTAppleCalendar
 import GooglePlacePicker
 
-class SearchViewController: CalendarViewController {
-
+class SearchViewController: UIViewController {
+    
     // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var yearLabel: UILabel!
@@ -24,15 +24,13 @@ class SearchViewController: CalendarViewController {
     @IBOutlet weak var occupantsPicker: UIPickerView!
     @IBOutlet weak var searchButton: UIButton!
     
-    // TODO: remove all these comments if the inheritance approach works
-    
     // attributes for the calendar
-    /*var firstDate:Date?
+    var firstDate:Date?
     var lastDate:Date?
     var recursiveSelectionCall = false
     var recursiveDeselectionCall = false
     private let formatter = DateFormatter()
-    private let currentCalendar = Calendar.current*/
+    private let currentCalendar = Calendar.current
     
     let occupantNumbers = Array(1...8)
     
@@ -51,25 +49,23 @@ class SearchViewController: CalendarViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        super.initCalendar(calendarView: calendarView, yearLabel: yearLabel, monthLabel: monthLabel)
-        
         searchBar.delegate = self
         
-        /* setupCalendarView()
-        calendarView.allowsMultipleSelection  = true */
+        setupCalendarView()
+        calendarView.allowsMultipleSelection  = true
         occupantsPicker.dataSource = self
         occupantsPicker.delegate = self
         
         pickupTimePicker.date = DateHelper.dateToNext30(date: Date()) // "round" time to next XX:00 or XX:30 time
         returnTimePicker.date = DateHelper.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    /* func setupCalendarView() {
+    func setupCalendarView() {
         // setup calendar spacing
         calendarView.minimumLineSpacing = 0
         calendarView.minimumInteritemSpacing = 0
@@ -78,7 +74,7 @@ class SearchViewController: CalendarViewController {
         calendarView.visibleDates({visibleDates in
             self.setupCalendarLabels(from: visibleDates)
         })
-    } */
+    }
     
     // show error message in alert
     func showAlert(message: String){
@@ -131,7 +127,7 @@ class SearchViewController: CalendarViewController {
     }
     
     // change calendar cell text color depending on whether the cell belongs to the current month
-    /*func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
+    func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
         guard let validCell = view as? CustomCell else {
             return
         }
@@ -170,7 +166,7 @@ class SearchViewController: CalendarViewController {
     func updateCellVisuals(for cell: JTAppleCell, withState cellState: CellState){
         handleSelection(cell: cell, cellState: cellState)
         handleCellTextColor(view: cell, cellState: cellState)
-    }*/
+    }
     
     // set the filter values in the next view controller (search results)
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -178,8 +174,7 @@ class SearchViewController: CalendarViewController {
             // next screen: search results
             guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
                 let currentDesiredRentingStart = desiredRentingStart,
-                let currentDesiredRentingEnd = desiredRentingEnd,
-                let currentPickedPlace = pickedPlace else {
+                let currentDesiredRentingEnd = desiredRentingEnd else {
                     return
             }
             let newFilter:Filter = Filter(
@@ -188,12 +183,13 @@ class SearchViewController: CalendarViewController {
                 fuelIDs: nil,
                 gearIDs: nil,
                 minHP: nil,
+                // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
                 maxPrice: nil,
                 minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                 vehicleTypeIDs: nil,
                 dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                 featureIDs: nil,
-                placePoint: CoordinatePoint(latitude: currentPickedPlace.coordinate.latitude, longitude: currentPickedPlace.coordinate.longitude)
+                placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
             )
             // send filter to the next view controller by setting an attribute of it to the filter
             searchResultsViewController.searchFilter = newFilter
@@ -201,10 +197,10 @@ class SearchViewController: CalendarViewController {
             searchResultsViewController.preselectedEndDate = currentDesiredRentingEnd
         }
     }
-
+    
 }
 
-/*extension SearchViewController: JTAppleCalendarViewDataSource{
+extension SearchViewController: JTAppleCalendarViewDataSource{
     // method that JTAppleCalendar needs for initialisation, should always be similar to cellForItemAt
     func calendar(_ calendar: JTAppleCalendarView, willDisplay cell: JTAppleCell, forItemAt date: Date, cellState: CellState, indexPath: IndexPath) {
         updateCellVisuals(for: cell, withState: cellState)
@@ -251,8 +247,8 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
                     // first date set, last date not set
                     if (date < currentFirstDate){
                         /* new date is before first date -> remove first date and set current date as new first date
-                        first deselect current date interval
-                        deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
+                         first deselect current date interval
+                         deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
                         recursiveDeselectionCall = true
                         calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
                         recursiveDeselectionCall = false
@@ -311,7 +307,7 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
             return false
         }
     }
-}*/
+}
 
 extension SearchViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
