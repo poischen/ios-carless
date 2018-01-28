@@ -24,6 +24,7 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
             guard let currentSomebodyRented = somebodyRented else {
                 return
             }
+            // setting labels'/buttons' texts
             usernameButton.setTitle(currentSomebodyRented.userThatRented.name, for: .normal)
             ratingScoreLabel.text = String(currentSomebodyRented.userThatRented.rating)
             carNameLabel.text = currentSomebodyRented.brand.name + " " + currentSomebodyRented.offering.type
@@ -36,13 +37,10 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
     @IBAction func acceptButtonTapped(_ sender: Any) {
