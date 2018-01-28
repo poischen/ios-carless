@@ -652,7 +652,7 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCell" id="pIa-Fu-Ub0" customClass="CustomCell" customModule="ios" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SearchCalendarCell" id="pIa-Fu-Ub0" customClass="SearchCalendarCell" customModule="ios" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
@@ -687,8 +687,8 @@
                                                     <constraint firstItem="IGV-Uw-DdA" firstAttribute="centerY" secondItem="pIa-Fu-Ub0" secondAttribute="centerY" id="uhX-cf-jCc"/>
                                                 </constraints>
                                                 <connections>
-                                                    <outlet property="dateLabel" destination="IGV-Uw-DdA" id="PWa-Q5-9Oc"/>
-                                                    <outlet property="selectedView" destination="XmU-gh-aq6" id="vlT-R1-vEk"/>
+                                                    <outlet property="dateLabel" destination="IGV-Uw-DdA" id="BYe-Yo-BOa"/>
+                                                    <outlet property="selectedView" destination="XmU-gh-aq6" id="17s-VC-Td5"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>

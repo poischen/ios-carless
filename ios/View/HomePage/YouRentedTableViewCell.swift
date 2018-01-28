@@ -28,13 +28,15 @@ class YouRentedTableViewCell: UITableViewCell {
             guard let event = event as? YouRented else {
                 return
             }
+            // setting labels'/buttons' texts
             carNameLabel.text = event.brand.name + " " + event.offering.type
             startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             if (event.renting.confirmationStatus) {
-                // renting is confirmed
+                // renting is confirmed -> show message
                 statusLabel.text = YouRentedTableViewCell.ACCEPTED_STATUS_MESSAGE
             } else {
+                // renting is pending -> show message
                 statusLabel.text = YouRentedTableViewCell.PENDING_STATUS_MESSAGE
             }
             if (event.isRateable) {
@@ -56,13 +58,10 @@ class YouRentedTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
 }

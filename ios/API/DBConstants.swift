@@ -19,7 +19,7 @@ class DBConstants {
     static let PROPERTY_NAME_FUELS = "fuel"
     static let PROPERTY_NAME_RATINGS = "ratings"
     
-    // constants for offering's features
+    // constants for offering's features as they don't have their own class
     static let PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE = "feature"
     static let PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING = "inserat"
     static let PROPERTY_NAME_OFFERINGS_AVAILIBILITY = "availibility_blocked"

@@ -11,7 +11,7 @@ import Foundation
 class RateModel {
     static func getAdditionalInformationForLessorRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String, _ lessorUser: User) -> Void){
         // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
-        // (using the getCarModelName function here is not possible as we can't get the lessor's user ID directly from the renting)
+        // (using the getCarModelNameForLesseeRating function here is not possible as we can't get the lessor's user ID directly from the renting)
         StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {offeringResult in
             if let (offering, offeringsBrand) = offeringResult {
                 // offering found -> assemble car name
@@ -25,7 +25,7 @@ class RateModel {
         
     }
     
-    static func getCarModelName(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String) -> Void){
+    static func getCarModelNameForLesseeRating(rentingBeingRated: Renting, completion: @escaping (_ carModelName: String) -> Void){
         // first get the offering (the car the user rented) and it's brand from the DB in order to assemble the car model name
         StorageAPI.shared.getOfferingWithBrandByOfferingID(offeringID: rentingBeingRated.inseratID, completion: {offeringResult in
             if let (offering, offeringsBrand) = offeringResult {

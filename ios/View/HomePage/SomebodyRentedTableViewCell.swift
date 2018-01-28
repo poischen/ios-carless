@@ -26,6 +26,7 @@ class SomebodyRentedTableViewCell: UITableViewCell {
             guard let event = event as? SomebodyRented else {
                 return
             }
+            // setting labels'/buttons' texts
             carNameLabel.text = event.brand.name + " " + event.offering.type
             userButton.setTitle(event.userThatRented.name, for: .normal)
             rentingStartLabel.text = DateHelper.dateToString(date: event.renting.startDate)

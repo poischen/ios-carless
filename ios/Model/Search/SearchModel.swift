@@ -53,7 +53,7 @@ class SearchModel {
     }
     
     /* converts a filter object to an array of filter functions that take an offering and return whether is satisfies the filter criterion
-     IMPORTANT: features filter function is only added to the array if offeringsFeatures is not null and the featureIDs attribute in the filter object is set
+     IMPORTANT: features filter function is only added to the array if offeringsFeatures is not nill and the featureIDs attribute in the filter object is set
     */
     func filterToFilterFunctions(filter: Filter, rentings: [Renting], offeringsFeatures: [String:[Int]]?) -> [(_ offering: Offering) -> Bool] {
         var filterFunctions:[(_ offering: Offering) -> Bool] = []
@@ -95,7 +95,7 @@ class SearchModel {
                 self.filterOfferingByDate(offering: offering, rentings: rentings, desiredDateInterval: desiredDateInterval)
             })
         }
-        // add vehicle type filter function if filter criterion is set AND if the offerings' features were given to the function
+        // add feature filter function if filter criterion is set AND if the offerings' features were given to the function
         if let currentOfferingsFeatures = offeringsFeatures, let featureIDs = filter.featureIDs {
             filterFunctions.append({offering in
                 if let offeringID = offering.id {
