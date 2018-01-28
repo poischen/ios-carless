@@ -33,7 +33,6 @@ final class StorageAPI {
     private let ratingsDBReference: DatabaseReference
     private let lessorRatings: DatabaseReference
     
-    var dbRef: DatabaseReference
     var usersRef: DatabaseReference
     var messagesRef: DatabaseReference
     var userMessagesRef: DatabaseReference
@@ -41,6 +40,8 @@ final class StorageAPI {
     var storageRef: StorageReference
     var imageStorageRef: StorageReference
     var videoStorageRef: StorageReference
+    
+    let STORAGE_URL = "gs://ioscars-32e69.appspot.com"
     
     static let STORAGE_API_SUCCESS = "Successfully saved"
     
@@ -71,35 +72,21 @@ final class StorageAPI {
         self.ratingsDBReference = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         self.lessorRatings = self.fireBaseDBAccess.child(DBConstants.PROPERTY_NAME_RATINGS)
         
-        self.dbRef = Database.database().reference()
-        self.usersRef = self.dbRef.child(DBConstants.USERS)
-        self.messagesRef = self.dbRef.child(DBConstants.MESSAGES)
-        self.userMessagesRef = self.dbRef.child(DBConstants.USER_MESSAGES)
-        self.mediaMessagesRef = self.dbRef.child(DBConstants.MEDIA_MESSAGES)
-        self.storageRef = Storage.storage().reference(forURL: "gs://ioscars-32e69.appspot.com")
+        self.usersRef = fireBaseDBAccess.child(DBConstants.USERS)
+        self.messagesRef = fireBaseDBAccess.child(DBConstants.MESSAGES)
+        self.userMessagesRef = fireBaseDBAccess.child(DBConstants.USER_MESSAGES)
+        self.mediaMessagesRef = fireBaseDBAccess.child(DBConstants.MEDIA_MESSAGES)
+        self.storageRef = Storage.storage().reference(forURL: STORAGE_URL)
         self.imageStorageRef = storageRef.child(DBConstants.IMAGE_STORAGE)
         self.videoStorageRef = storageRef.child(DBConstants.VIDEO_STORAGE)
-        
-        // tryong to avoid caching problems by keeping references synced until queried for the first time
-        // TODO: find better solution?
-        self.offeringsDBReference.keepSynced(true)
-        self.rentingsDBReference.keepSynced(true)
-        self.featuresDBReference.keepSynced(true)
-        self.offeringsFeaturesDBReference.keepSynced(true)
-        self.vehicleTypesDBReference.keepSynced(true)
-        self.gearsDBReference.keepSynced(true)
-        self.brandsDBReference.keepSynced(true)
-        self.fuelDBReference.keepSynced(true)
-        self.lessorRatings.keepSynced(true)
-        self.usersRef.keepSynced(true)
-
     }
     
+    // get all offerings
     func getOfferings(completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
                     resultOfferings.append(offering)
                 } else {
                     print("getOfferings: error while converting offering")
@@ -111,11 +98,12 @@ final class StorageAPI {
         }
     }
     
+    // get a specific offering by ID
     func getOfferingByID(id: String, completion: @escaping (_ offering: Offering?) -> Void){
         self.offeringsDBReference.queryOrderedByKey().queryEqual(toValue: id).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw!), let offering = Offering.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw!), let offering = Offering.init(id: stringID, dict: dict) {
                     completion(offering)
                 } else {
                     print("error in get getOfferingByID")
@@ -131,11 +119,12 @@ final class StorageAPI {
         }
     }
     
+    // get all features
     func getFeatures(completion: @escaping (_ features: [Feature]) -> Void){
         self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFeatures:[Feature] = []
             for childRaw in snapshot.children {
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let feature = Feature.init(id: intID, dict: dict){
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw), let feature = Feature.init(id: intID, dict: dict){
                     resultFeatures.append(feature)
                 } else {
                     print("getFeatures: error while converting feature")
@@ -147,11 +136,12 @@ final class StorageAPI {
         }
     }
     
+    // get a dictionary with the ID of an offering as key and a list of the ID's of it's features as value
     // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
     func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [String: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
             if let receivedData = snapshot.valueInExportFormat() as? NSDictionary{
-                var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
+                var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // dictionary with offering ID as key and array of feature IDs a value
                 for (_, associationRaw) in receivedData {
                     guard
                         let association:NSDictionary = associationRaw as? NSDictionary,
@@ -202,13 +192,12 @@ final class StorageAPI {
             }
     }
     
-    
-    
+    // get all rentings
     func getRentings(completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
                     resultRentings.append(renting)
                 } else {
                     print("getRentings: error while converting renting")
@@ -220,11 +209,12 @@ final class StorageAPI {
         }
     }
     
+    // get all vehicle types
     func getVehicleTypes(completion: @escaping (_ vehicleTypes: [VehicleType]) -> Void){
         self.vehicleTypesDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultTypes:[VehicleType] = []
             for childRaw in snapshot.children {
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let type = VehicleType.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw), let type = VehicleType.init(id: intID, dict: dict) {
                     resultTypes.append(type)
                 } else {
                     print("getVehicleTypes: error while converting feature")
@@ -236,6 +226,7 @@ final class StorageAPI {
         }
     }
     
+    // get a specific vehicle type by ID
     func getVehicleTypeByID(id: Int, completion: @escaping (_ fuel: VehicleType) -> Void){
         self.vehicleTypesDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
@@ -258,11 +249,12 @@ final class StorageAPI {
         }
     }
     
+    // get all brands
     func getBrands(completion: @escaping (_ brands: [Brand]) -> Void){
         self.brandsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultBrands:[Brand] = []
             for childRaw in snapshot.children {
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let brand = Brand.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw), let brand = Brand.init(id: intID, dict: dict) {
                     resultBrands.append(brand)
                 } else {
                     print("getBrands: error while converting brand")
@@ -274,11 +266,12 @@ final class StorageAPI {
         }
     }
     
+    // get a specific brand by ID
     func getBrandByID(id: Int, completion: @escaping (_ brand: Brand) -> Void){
         self.brandsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw!), let brand = Brand.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw!), let brand = Brand.init(id: intID, dict: dict) {
                     completion(brand)
                 } else {
                     print("error in get getBrandByID")
@@ -291,11 +284,12 @@ final class StorageAPI {
         }
     }
     
+    // get all fuels
     func getFuels(completion: @escaping (_ fuels: [Fuel]) -> Void){
         self.fuelDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultFuels:[Fuel] = []
             for childRaw in snapshot.children {
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let fuel = Fuel.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw), let fuel = Fuel.init(id: intID, dict: dict) {
                     resultFuels.append(fuel)
                 } else {
                     print("getBrands: error while converting brand")
@@ -307,11 +301,12 @@ final class StorageAPI {
         }
     }
     
+    // get a specific fuel by ID
     func getFuelByID(id: Int, completion: @escaping (_ fuel: Fuel) -> Void){
         self.fuelDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let (intID,dict) = self.childToIntIDAndDict(childRaw: childRaw!), let fuel = Fuel.init(id: intID, dict: dict) {
+                if let (intID,dict) = self.snapshotToIntIDAndDict(childRaw: childRaw!), let fuel = Fuel.init(id: intID, dict: dict) {
                     completion(fuel)
                 } else {
                     print("error in get getFuelByID")
@@ -324,11 +319,12 @@ final class StorageAPI {
         }
     }
     
+    // get all gears
     func getGears(completion: @escaping (_ gears: [Gear]) -> Void){
         self.gearsDBReference.observeSingleEvent(of: .value, with: { snapshot in
             var resultGears:[Gear] = []
             for childRaw in snapshot.children {
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let gear = Gear.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw), let gear = Gear.init(id: intID, dict: dict) {
                     resultGears.append(gear)
                 } else {
                     print("getGears: error while converting gear")
@@ -340,11 +336,12 @@ final class StorageAPI {
         }
     }
     
+    // get a specific gear by ID
     func getGearByID(id: Int, completion: @escaping (_ gear: Gear) -> Void){
         self.gearsDBReference.queryOrderedByKey().queryEqual(toValue: String(id)).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw!), let gear = Gear.init(id: intID, dict: dict) {
+                if let (intID, dict) = self.snapshotToIntIDAndDict(childRaw: childRaw!), let gear = Gear.init(id: intID, dict: dict) {
                     completion(gear)
                 } else {
                     print("error in get getGearByID")
@@ -357,6 +354,7 @@ final class StorageAPI {
         }
     }
     
+    // save a rating to the DB
     func saveRating(rating: Rating){
         let ratingAsDict = rating.dict
         self.ratingsDBReference.childByAutoId().setValue(ratingAsDict) {(error,_) in
@@ -367,6 +365,7 @@ final class StorageAPI {
         }
     }
     
+    // update a user
     func updateUser(user: User){
         let userAsDict = user.dict
         self.usersRef.child(user.id).setValue(userAsDict)
@@ -392,11 +391,13 @@ final class StorageAPI {
         }
     }
     
+    // generate a unique ID for a renting
     func generateRentingKey(completion: @escaping (_ rentingID: String) -> Void){
         let rentingKey = rentingsDBReference.childByAutoId().key
         completion(rentingKey)
     }
     
+    // save a renting to the DB
     func saveRenting(renting: Renting, completion: @escaping (_ status: String) -> Void){
         let rentingAsDict = renting.dict
         self.rentingsDBReference.child(renting.id!).setValue(rentingAsDict) { (error, ref) in
@@ -440,18 +441,19 @@ final class StorageAPI {
     }
     
     
-    //stores User in Database
+    //stores a new user in Database
     func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String, deviceID: String){
         let newUser = User(id: withID, name: name, email: email, rating: rating, profileImgUrl: profileImg, numberOfRatings: 0, deviceID: deviceID)
         
         usersRef.child(withID).setValue(newUser.dict)
     }
     
+    // get all users
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
             var resultUsers:[User] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let user = User.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let user = User.init(id: stringID, dict: dict) {
                     resultUsers.append(user)
                 } else {
                     print("getUsers: error while converting user")
@@ -463,11 +465,12 @@ final class StorageAPI {
         }
     }
     
+    // get a specific user by his ID
     func getUserByUID(UID: String, completion: @escaping (_ user: User) -> Void){
         self.usersRef.queryOrderedByKey().queryEqual(toValue: UID).observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.childrenCount == 1 {
                 let childRaw = snapshot.children.nextObject()
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw!), let user = User(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw!), let user = User(id: stringID, dict: dict) {
                     completion(user)
                 } else {
                     print("error in get getUserByUID")
@@ -480,12 +483,12 @@ final class StorageAPI {
         }
     }
     
-    // gets the cars the rentings for a specific user (lessee view)
+    // gets the cars the rentings for a specific user
     func getRentingsByUserUID(userUID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
                     resultRentings.append(renting)
                 } else {
                     print("getRentingsByUserUID: error while converting renting")
@@ -497,11 +500,12 @@ final class StorageAPI {
         }
     }
     
+    // subscript to the rentings of a specific user (callback is called on change)
     func subscribeToUsersRentings(userUID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_USER_ID_KEY).queryEqual(toValue: userUID).observe(.value, with: {snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
                     resultRentings.append(renting)
                 } else {
                     print("subscribeToUsersRenting: error while converting renting")
@@ -513,11 +517,12 @@ final class StorageAPI {
         }
     }
     
+    // subscript to the rentings of a specific offering (callback is called on change)
     func subscribeToRentingsForOffering(offeringID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_OFFERING_ID_KEY).queryEqual(toValue: offeringID).observe(.value, with: {snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
                     resultRentings.append(renting)
                 } else {
                     print("subscribeToRentingsForOffering: error while converting renting")
@@ -529,11 +534,12 @@ final class StorageAPI {
         }
     }
     
+    // subscript all rentings of a specific offering
     func getRentingsByOfferingID(offeringID: String, completion: @escaping (_ rentings: [Renting]) -> Void){
         self.rentingsDBReference.queryOrdered(byChild: Renting.RENTING_OFFERING_ID_KEY).queryEqual(toValue: offeringID).observeSingleEvent(of: .value, with: {snapshot in
             var resultRentings:[Renting] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let renting = Renting.init(id: stringID, dict: dict) {
                     resultRentings.append(renting)
                 } else {
                     print("getRentingsByOfferingID: error while converting renting")
@@ -545,6 +551,7 @@ final class StorageAPI {
         }
     }
     
+    // update a renting in the DB
     func updateRenting(renting: Renting){
         let rentingAsDict = renting.dict
         if let rentingID = renting.id {
@@ -560,12 +567,12 @@ final class StorageAPI {
         self.offeringsDBReference.child(offeringID).removeValue()
     }
     
-    // get the rentings for a specific user (lessor view)
+    // get the offerings of a specific user
     func getOfferingsByUserUID(userUID: String, completion: @escaping (_ offerings: [Offering]) -> Void){
         self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
             var resultOfferings:[Offering] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
                     resultOfferings.append(offering)
                 } else {
                     print("getOfferingsByUserUID: error while converting offering")
@@ -606,7 +613,6 @@ final class StorageAPI {
     
     
     //gets UserID in Firebase
-    // TODO: return optional and merge with next method
     func userID() -> String? {
         if let currentUser = Auth.auth().currentUser {
             return currentUser.uid
@@ -660,11 +666,12 @@ final class StorageAPI {
         }
     }
     
+    // get all ratings of a specific user
     func getRatingsByUserUID(userUID: String, completion: @escaping (_ rentings: [Rating]) -> Void){
         self.ratingsDBReference.queryOrdered(byChild: Rating.RATING_UID_KEY).queryEqual(toValue: userUID).observeSingleEvent(of: .value, with: {snapshot in
             var resultRatings:[Rating] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let rating = Rating.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let rating = Rating.init(id: stringID, dict: dict) {
                     resultRatings.append(rating)
                 } else {
                     print("getRatingsByUserUID: error while converting rating")
@@ -676,7 +683,8 @@ final class StorageAPI {
         }
     }
     
-    func childToStringIDAndDict(childRaw: Any) -> (String, [String:AnyObject])?{
+    // converts a firebase snapshot to a string ID (snapshot key) and a dictionary (snapshot value)
+    func snapshotToStringIDAndDict(childRaw: Any) -> (String, [String:AnyObject])?{
         if let child = childRaw as? DataSnapshot, let dict = child.value as? [String:AnyObject] {
             return (child.key,dict)
         } else {
@@ -684,26 +692,16 @@ final class StorageAPI {
         }
     }
     
-    func childToIntIDAndDict(childRaw: Any) -> (Int, [String:AnyObject])?{
-        if let (stringID, dict) = childToStringIDAndDict(childRaw: childRaw), let intID = Int(stringID) {
+    // converts a firebase snapshot to a int ID (snapshot key) and a dictionary (snapshot value)
+    func snapshotToIntIDAndDict(childRaw: Any) -> (Int, [String:AnyObject])?{
+        if let (stringID, dict) = snapshotToStringIDAndDict(childRaw: childRaw), let intID = Int(stringID) {
             return (intID,dict)
         } else {
             return nil
         }
     }
     
-    func snapshotToObjects(snapshot:DataSnapshot, constructor: ((Int, [String:AnyObject]) -> DictionaryConvertibleStatic?)) -> [DictionaryConvertibleStatic]? {
-        var resultObjects:[DictionaryConvertibleStatic] = []
-        for childRaw in snapshot.children {
-            if let (intID, dict) = self.childToIntIDAndDict(childRaw: childRaw), let object = constructor(intID, dict) {
-                resultObjects.append(object)
-            } else {
-                print("childToObject: error while converting renting")
-            }
-        }
-        return resultObjects
-    }
-    
+    // get a specific offering and the brand of the offered car
     func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)?) -> Void){
         self.getOfferingByID(id: offeringID, completion: {offering in
             if let currentOffering = offering {
@@ -718,11 +716,12 @@ final class StorageAPI {
         })
     }
     
+    // subscribe to the offerings of a user (returned with the brands of the offered cars)
     func subscribeToUsersOfferingsWithBrands(userUID: String, completion: @escaping (_ result: [(Offering, Brand)]) -> Void){
         self.offeringsDBReference.queryOrdered(byChild: Offering.OFFERING_USER_UID_KEY).queryEqual(toValue: userUID).observe(.value, with: {snapshot in
             var resultOfferings:[(Offering, Brand)] = []
             for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
+                if let (stringID, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
                     self.getBrandByID(id: offering.brandID, completion: {offeringsBrand in
                         resultOfferings.append((offering, offeringsBrand))
                         if (resultOfferings.count == snapshot.childrenCount){
@@ -740,12 +739,13 @@ final class StorageAPI {
 
     }
     
+    // get the features of a specific offering
     func getFeaturesForOffering(offeringID: String, completion: @escaping (_ offerings: [Feature]) -> Void){
         self.offeringsFeaturesDBReference.queryOrdered(byChild: DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING).queryEqual(toValue: offeringID).observeSingleEvent(of: .value, with: { snapshot in
             var resultFeatures:[Feature] = []
             for childRaw in snapshot.children {
                 let numberOfFeaturesForOffering = snapshot.childrenCount
-                if let (_, dict) = self.childToStringIDAndDict(childRaw: childRaw), let featureID = dict[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int {
+                if let (_, dict) = self.snapshotToStringIDAndDict(childRaw: childRaw), let featureID = dict[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int {
                     self.getFeatureByID(id: featureID, completion: {feature in
                         resultFeatures.append(feature)
                         if (resultFeatures.count == numberOfFeaturesForOffering) {
