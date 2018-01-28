@@ -240,7 +240,7 @@ class AvailibilityAndBookingViewController: UIViewController {
                 let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: uid, startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice, lessorRated: false, lesseeRated: false)
                 self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                     if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
-                        MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.id!, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
+                        MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.userUID, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
                         
                             let alert = UIAlertController(title: "Yey", message: self.SUCCESS_MESSAGE_BOOKING, preferredStyle: UIAlertControllerStyle.alert)
                             alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.destructive, handler: {
