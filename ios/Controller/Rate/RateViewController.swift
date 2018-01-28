@@ -43,7 +43,7 @@ class RateViewController: UIViewController, UITextViewDelegate {
         if ratingLessee {
             if let currentRentingBeingRated = rentingBeingRated, let currentUserBeingRated = userBeingRated {
                 // lessee should be rated and we already have the lessee's user -> get car model name (as we already have the user)
-                RateModel.getCarModelName(rentingBeingRated: currentRentingBeingRated, completion: {carModelName in
+                RateModel.getCarModelNameForLesseeRating(rentingBeingRated: currentRentingBeingRated, completion: {carModelName in
                     self.initView(carModelName: carModelName, username: currentUserBeingRated.name)
                 })
             }

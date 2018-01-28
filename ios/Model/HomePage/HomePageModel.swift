@@ -56,11 +56,9 @@ class HomePageModel {
         }
     }
     
-    // TODO: construct YouRented in this function
     func subscribeToUsersRentings(UID: String, completion: @escaping (_ data: [YouRented]) -> Void) {
         storageAPI.subscribeToUsersRentings(userUID: UID, completion: {rentings in
             var result:[YouRented] = []
-            
             let newerRentings = rentings.filter {renting in
                 if (renting.endDate < Date()){
                     // renting has already ended -> check how long ago it ended
@@ -77,11 +75,7 @@ class HomePageModel {
                     return true
                 }
             }
-            
-            
             var numberOfRentings = newerRentings.count
-            // TODO: will the rentings appear in a deterministic order?
-            // TODO: handle errors
             if numberOfRentings == 0 {
                 // empty array should also fire callback to pass on that the user has no rentings
                 // (can e.g. happen when a renting of the user is denied)
@@ -98,6 +92,7 @@ class HomePageModel {
                             numberOfRentings = numberOfRentings - 1
                         }
                         if (result.count == numberOfRentings) {
+                            // all offerings processed -> fire completion callback
                             completion(result)
                         }
                     })
@@ -106,6 +101,7 @@ class HomePageModel {
         })
     }
     
+    // IMPORTANT: The completion callback will be fired whenever a request for one of the renting events changes/appears
     func subscribeToRentingEvents(UID: String, completion: @escaping (_ data: [RentingEvent]) -> Void){
         subscribeToUsersRentings(UID: UID, completion: {(currentYouRented:[YouRented]) in
             // overwrite cache
@@ -127,11 +123,11 @@ class HomePageModel {
         })
     }
     
-    
     func subscribeToUsersOfferings(UID: String, completion: @escaping (_ data: [(Offering, Brand)]) -> Void) {
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: completion)
     }
     
+    // IMPORTANT: The completion callback will be fired whenever a request for one of the offerings changes/appears
     func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [SomebodyRented]) -> Void){
         subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, peopleRented) in
             let unconfirmedRequests = peopleRented.filter {!$0.renting.confirmationStatus}
