@@ -63,7 +63,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         cell.imageView?.maskCircle(anyImage: palceholderImg)
         
         let userImg = URL(string: users[indexPath.row].profileImgUrl)
-        cell.imageView?.kf.setImage(with: userImg)
+        //cell.imageView?.kf.setImage(with: userImg)
+        
+        cell.imageView?.kf.setImage(with: userImg, completionHandler: {
+            (image, error, cacheType, imageUrl) in
+            cell.imageView?.maskCircle(anyImage: (cell.imageView?.image)!)
+        })
         
         return cell
     }

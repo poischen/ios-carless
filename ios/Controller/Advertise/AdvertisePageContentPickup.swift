@@ -25,7 +25,6 @@ class AdvertisePageContentPickup: UIViewController {
     @IBOutlet weak var returnPicker: UIDatePicker!
     
     
-    let locationManager = CLLocationManager()
     var searchController: UISearchController!
     var annotation: MKAnnotation!
     var localSearchRequest: MKLocalSearchRequest!
@@ -46,11 +45,6 @@ class AdvertisePageContentPickup: UIViewController {
         super.viewDidLoad()
         
         pageViewController = self.parent as! AdvertisePagesVC
-        
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
         
         searchBar.delegate = self
         
@@ -176,72 +170,3 @@ extension AdvertisePageContentPickup : UISearchBarDelegate, GMSAutocompleteViewC
 
     }
 }
-
-
-extension AdvertisePageContentPickup : CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        if status == .authorizedWhenInUse {
-            locationManager.requestLocation()
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            let span = MKCoordinateSpanMake(0.05, 0.05)
-            let region = MKCoordinateRegion(center: location.coordinate, span: span)
-            mapView.setRegion(region, animated: true)
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("error: (error)")
-    }
-}
-
-
-/*extension AdvertisePageContentPickup: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pageViewController.advertise.timeContent.count;
-    }
-    
-     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pageViewController.advertise.timeContent[row]
-     }
-    
-   
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if (pickerView == pickUpPicker) {
-            selectedPickUpTime = self.pageViewController.advertise.timeContent[row]
-            self.pickUpTextView.text = selectedPickUpTime
-            self.pickUpPicker.isHidden = true
-        } else if (pickerView == returnPicker){
-            selectedReturnTime = self.pageViewController.advertise.timeContent[row]
-            self.returnTextView.text = selectedReturnTime
-            self.returnPicker.isHidden = true
-        }
-    }
-}
-
-extension AdvertisePageContentPickup: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        if (textField == self.pickUpTextView){
-            pageViewController.advertiseHelper.pickupTime = pickUpTextView.text
-        } else if (textField == self.returnTextView){
-            pageViewController.advertiseHelper.returnTime = returnTextView.text
-        }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if (textField == self.pickUpTextView){
-            self.pickUpPicker.isHidden = false
-        } else if (textField == self.returnTextView){
-            self.returnPicker.isHidden = false
-        }
-    }
- 
-    
-} */
