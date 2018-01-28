@@ -25,6 +25,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        //gets all the useres that are saved in the database
         StorageAPI.shared.getUsers(completion: dataReceived)
     }
     
@@ -34,6 +35,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     func dataReceived(users: [User]) {
+        //filters out your own name
         self.users = users.filter {$0.id != StorageAPI.shared.userID()}
         myTableView.reloadData()
     }
@@ -66,10 +68,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-    }
-
+    /* when a user is tapped his chat window opens */
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if  segue.identifier == CHAT_SEGUE,
         let chatVC = segue.destination as? ChatWindowVC,
@@ -77,6 +76,7 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             let index = indexPath.row
             
+            //get the UID (receiverID for the message) of the selected User
             let selectedUserObject = self.users[index]
             self.selectedUser = selectedUserObject.id
             self.selectedUserName = selectedUserObject.name

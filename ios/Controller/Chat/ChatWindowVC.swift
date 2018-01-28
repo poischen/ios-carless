@@ -40,6 +40,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         
         let navBarImgAndNameView = UIView()
         
+        //writes name of the receiver in NavBar
         let title = UILabel()
         title.text = receiverName
         title.sizeToFit()
@@ -47,6 +48,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         title.textAlignment = NSTextAlignment.center
         navBarImgAndNameView.addSubview(title)
         
+        //gives every user a picture in the user list
        if let image = receiverImage {
             imageView.contentMode = .scaleAspectFit
             imageView.image = image
@@ -88,7 +90,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     }
     
     //COLLECTION VIEW FUNCTIONS
-    
+    //gives incoming message bubbles gray & incoming ones blue
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
         let bubbleFactory = JSQMessagesBubbleImageFactory()
         let message = messages[indexPath.item]
@@ -101,17 +103,17 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         
     }
     
-    //profile icon
+    //message icon picture
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
         return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "ProfilePic"), diameter: 30)
     }
 
-    //display messages
+    //displays messages
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData {
         return messages[indexPath.item]
     }
     
-    //play videos
+    //plays videos
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
         
         let msg = messages[indexPath.item]
@@ -124,6 +126,15 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
             
             self.present(playerController, animated: true, completion: nil)
           }
+            
+           /* if let picItem = msg.media as? JSQPhotoMediaItem {
+                
+                let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
+                let vc = storyboard.instantiateViewController(withIdentifier: "openImage") as! OpenPictureViewController
+               
+                self.present(vc, animated: true, completion: nil)
+                
+            }*/
         }
     }
 
@@ -140,20 +151,19 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     //pressing send button
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
-        
-      /* MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.selectedUser!, senderName: senderDisplayName, text: text)*/
-        
         MessageHandler.shared.handleSend(senderID: senderId, receiverID: self.selectedUser!, text: text)
         
         //remove text from textfield
         finishSendingMessage()
     }
     
+    //appends message in Chat Window
     func addMessage(senderID: String, receiverID: String, text: String) {
        messages.append(JSQMessage(senderId: senderID, displayName: "empty", text: text))
         collectionView.reloadData()
     }
     
+    //appends picture or video in Chat Window
     func addMediaMessage(senderID: String, receiverID: String, url: String){
         if let mediaURL = URL(string: url){
             
@@ -174,10 +184,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                                 photo?.appliesMediaViewMaskAsOutgoing = false;
                             }
                             
-                            
                             self.messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: photo));
                             self.collectionView.reloadData();
-                            
                         }
                     })
                 } else {
@@ -187,8 +195,6 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                     } else {
                         video?.appliesMediaViewMaskAsOutgoing = false;
                     }
-                    
-                    
                     messages.append(JSQMessage(senderId: senderID, displayName: "empty", media: video));
                     self.collectionView.reloadData();
                     
@@ -200,7 +206,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
 
     }
     
-    //Sending media button
+    //Sending media button, pressing the pin
     override func didPressAccessoryButton(_ sender: UIButton!) {
         let alert = UIAlertController(title: "Media Messages", message: "Please select Media", preferredStyle: .actionSheet)
         
@@ -225,18 +231,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         present(picker, animated: true, completion: nil)
     }
     
+    // saves video or picture to firebase after choosing it
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
       
         if let pic = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            
-            //let img = JSQPhotoMediaItem(image: pic)
-           // messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: img))
             MessageHandler.shared.uploadImageToFirebase(senderID: senderId, receiverID: receiverID, image: pic)
             
         }
         else if let vidUrl = info[UIImagePickerControllerMediaURL] as? URL {
-            //let video = JSQVideoMediaItem(fileURL: vidUrl, isReadyToPlay: true)
-              //messages.append(JSQMessage(senderId: senderId, displayName: senderDisplayName, media: video))
             MessageHandler.shared.uploadVideoToFirebase(senderID: senderId, receiverID: receiverID, vidUrl: vidUrl)
            
         }
@@ -244,22 +246,22 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         self.dismiss(animated: true, completion: nil)
         collectionView.reloadData()
     }
-
+//END FUNCTIONS PICKER VIEW
     
-    //END FUNCTIONS PICKER VIEW
-    
+    /* observes text messages in firebase and appends them in the chat */
     func observeUserMessages() {
-        //logged in user's ID
         guard  let uid = Auth.auth().currentUser?.uid else {
             return
         }
-        
+        //observes "user-messages" node, snapshot are the ids of the messages
         let ref = StorageAPI.shared.userMessagesRef.child(uid)
         ref.observe(DataEventType.childAdded) { (snapshot: DataSnapshot) in
             
             let messageID = snapshot.key
+            //observing the "messages" node
             let messageRef = StorageAPI.shared.messagesRef.child(messageID)
             
+            //gets entire values from "messages"
             messageRef.observeSingleEvent(of: .value, with: {snapshot in
                 if let data = snapshot.value as? NSDictionary {
                     if let senderID = data[DBConstants.SENDER_ID] as? String, let receiverID = data[DBConstants.RECEIVER_ID] as? String, let text = data[DBConstants.TEXT] as? String {
@@ -277,8 +279,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         }
     }
     
+     /* observes media messages in firebase and appends them in the chat */
     func observeUserMediaMessages() {
-        //logged in user's ID
         guard  let uid = Auth.auth().currentUser?.uid else {
             return
         }
@@ -304,6 +306,23 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                 }
             })
         }
+    }
+    
+    /*func popUpWindow() {
+        let ImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabImageView(tapGestureRecognizer:)))
+       // carImageView.isUserInteractionEnabled = true
+        //carImageView.addGestureRecognizer(carImageTapGestureRecognizer)
+        
+    }*/
+    
+    func tabImageView(tapGestureRecognizer: UITapGestureRecognizer) {
+        
+        let storyboard = UIStoryboard(name: "ChatStoryboard", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "openImage") as! OpenPictureViewController
+        //guard let image = self.carImageView.image else { return }
+       // vc.carImage = image
+        self.present(vc, animated: true, completion: nil)
+        
     }
    
 }

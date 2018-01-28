@@ -92,6 +92,21 @@
             </objects>
             <point key="canvasLocation" x="884" y="43"/>
         </scene>
+        <!--Open Picture View Controller-->
+        <scene sceneID="4lu-Wf-KpG">
+            <objects>
+                <viewController storyboardIdentifier="openImage" id="QK4-IT-4R3" customClass="OpenPictureViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wKl-ME-WtC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="v4u-ss-7bt"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1I4-6F-Nxt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1951" y="-216"/>
+        </scene>
         <!--Navigation Controller from Offer-->
         <scene sceneID="QJw-sA-Wec">
             <objects>
