@@ -11,7 +11,7 @@ import JTAppleCalendar
 import GooglePlacePicker
 
 class SearchViewController: UIViewController {
-
+    
     // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
     @IBOutlet weak var yearLabel: UILabel!
@@ -59,7 +59,7 @@ class SearchViewController: UIViewController {
         pickupTimePicker.date = DateHelper.dateToNext30(date: Date()) // "round" time to next XX:00 or XX:30 time
         returnTimePicker.date = DateHelper.dateToNext30(date: Date() + 1800) // adding half an hour to the rounded time
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -197,7 +197,7 @@ class SearchViewController: UIViewController {
             searchResultsViewController.preselectedEndDate = currentDesiredRentingEnd
         }
     }
-
+    
 }
 
 extension SearchViewController: JTAppleCalendarViewDataSource{
@@ -247,8 +247,8 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
                     // first date set, last date not set
                     if (date < currentFirstDate){
                         /* new date is before first date -> remove first date and set current date as new first date
-                        first deselect current date interval
-                        deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
+                         first deselect current date interval
+                         deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
                         recursiveDeselectionCall = true
                         calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
                         recursiveDeselectionCall = false

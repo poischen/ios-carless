@@ -19,6 +19,20 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
     var showedRenting: Renting?
     var delegate: RequestProcessingProtocol?
     var rentingUser: User?
+    var somebodyRented: SomebodyRented? {
+        didSet {
+            guard let currentSomebodyRented = somebodyRented else {
+                return
+            }
+            usernameButton.setTitle(currentSomebodyRented.userThatRented.name, for: .normal)
+            ratingScoreLabel.text = String(currentSomebodyRented.userThatRented.rating)
+            carNameLabel.text = currentSomebodyRented.brand.name + " " + currentSomebodyRented.offering.type
+            numberOfRatingsLabel.text = "(\(currentSomebodyRented.userThatRented.numberOfRatings) ratings)"
+            // setting data necessary for using the buttons in the cell as gateway to other views
+            showedRenting = currentSomebodyRented.renting
+            rentingUser = currentSomebodyRented.userThatRented
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()

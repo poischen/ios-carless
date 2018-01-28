@@ -48,10 +48,6 @@ class SearchModel {
                     }
                     completion(filteredOfferings)
                 }
-                
-                
-                // TODO: get only when matching filter is set?
-                
             })
         });
     }
@@ -152,7 +148,6 @@ class SearchModel {
     
     // HELPER FUNCTIONS
     
-    // TODO: is this function necessary? we could just use sets for the data
     static func arrayContainsArray(baseArray: [Int], shouldContain: [Int]) -> Bool{
         // convert baseArray to a set
         let selfSet = Set(baseArray)
