@@ -54,7 +54,7 @@ class CalendarViewController: UIViewController {
     
     // change calendar cell text color depending on whether the cell belongs to the current month
     func handleCellTextColor(view: JTAppleCell?, cellState: CellState){
-        guard let validCell = view as? CustomCell else {
+        guard let validCell = view as? CustomCalendarCell else {
             return
         }
         if cellState.dateBelongsTo == .thisMonth {
@@ -66,7 +66,7 @@ class CalendarViewController: UIViewController {
     
     // change calendar cell background according to the cell's selection status
     func handleSelection(cell: JTAppleCell?, cellState: CellState) {
-        guard let myCustomCell = cell as? CustomCell else {
+        guard let myCustomCell = cell as? CustomCalendarCell else {
             return
         }
         if myCustomCell.isSelected {
@@ -120,7 +120,7 @@ extension CalendarViewController: JTAppleCalendarViewDataSource{
 extension CalendarViewController: JTAppleCalendarViewDelegate{
     // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCell {
+        if let cell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: "CustomCell", for: indexPath) as? CustomCalendarCell {
             cell.dateLabel.text = cellState.text
             updateCellVisuals(for: cell, withState: cellState)
             return cell

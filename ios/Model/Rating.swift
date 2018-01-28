@@ -21,7 +21,6 @@ class Rating: DictionaryConvertibleEditable {
               let ratingRating = dict[Rating.RATING_RATING] as? Int else {
             return nil
         }
-        // TODO: use id?
         self.init(id: id, userUID: ratingUserUID, explanation: ratingExplanation, rating: ratingRating)
     }
     

@@ -10,7 +10,6 @@ import Foundation
 
 class DateHelper {
     // "rounds" a date to the next XX:30 time of day (removes seconds in this process)
-    // TODO: move somewhere else?
     static func dateToNext30(date: Date) -> Date{
         var editedDate = date
         let calendar = Calendar.current

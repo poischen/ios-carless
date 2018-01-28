@@ -15,8 +15,6 @@ import UIKit
 
 
 // singleton class for access to Firebase and maybe to local storage in the future
-// TODO: don't use forced typecasting -> handle errors gracefully
-// TODO: Is it OK that the StorageAPI relies on constants from the Model Classes?
 
 final class StorageAPI {
     static let shared = StorageAPI()
@@ -43,12 +41,8 @@ final class StorageAPI {
     var storageRef: StorageReference
     var imageStorageRef: StorageReference
     var videoStorageRef: StorageReference
-
-    
-    //var userName = ""
     
     static let STORAGE_API_SUCCESS = "Successfully saved"
-    
     
     var offerImageStorageRef: StorageReference {
         return storageRef.child(DBConstants.IMAGE_STORAGE_OFFER)
@@ -156,26 +150,30 @@ final class StorageAPI {
     // this method does not follow the dictionary convertible scheme as the offerings' features are best reprensented by a map and not by an object
     func getOfferingsFeatures(completion: @escaping (_ offeringsFeatures: [String: [Int]]) -> Void){
         self.offeringsFeaturesDBReference.observeSingleEvent(of: .value, with: { (snapshot) in
-            let receivedData = snapshot.valueInExportFormat() as! NSDictionary  // TODO: Handle error
-            var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
-            for (_, associationRaw) in receivedData {
-                guard
-                    let association:NSDictionary = associationRaw as? NSDictionary,
-                    let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
-                    let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
-                        print("error in getOfferingsFeatures")
-                        return
+            if let receivedData = snapshot.valueInExportFormat() as? NSDictionary{
+                var resultOfferingsFeatures:[String: [Int]] = [String: [Int]]() // Map with offering ID as key and array of feature IDs a value
+                for (_, associationRaw) in receivedData {
+                    guard
+                        let association:NSDictionary = associationRaw as? NSDictionary,
+                        let featureID:Int = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_FEATURE] as? Int,
+                        let offeringID:String = association[DBConstants.PROPERTY_NAME_OFFERINGS_FEATURES_OFFERING] as? String else {
+                            print("error in getOfferingsFeatures")
+                            return
+                    }
+                    if var currentOfferingsFeatures = resultOfferingsFeatures[offeringID] {
+                        // not the first feature -> add to feature list for this offering
+                        currentOfferingsFeatures.append(featureID)
+                        resultOfferingsFeatures[offeringID] = currentOfferingsFeatures
+                    } else {
+                        // first feature for this offering -> initialise features array
+                        resultOfferingsFeatures[offeringID] = [featureID]
+                    }
                 }
-                if var currentOfferingsFeatures = resultOfferingsFeatures[offeringID] {
-                    // not the first feature -> add to feature list for this offering
-                    currentOfferingsFeatures.append(featureID)
-                    resultOfferingsFeatures[offeringID] = currentOfferingsFeatures
-                } else {
-                    // first feature for this offering -> initialise features array
-                    resultOfferingsFeatures[offeringID] = [featureID]
-                }
+                completion(resultOfferingsFeatures)
+
+            } else {
+                print("could not convert snapshot in getOfferingsFeatures")
             }
-            completion(resultOfferingsFeatures)
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -449,14 +447,6 @@ final class StorageAPI {
         
         usersRef.child(withID).setValue(newUser.dict)
     }
-    //stores User in Database
-   /* func saveUser(withID: String, name: String, email: String, rating: Float, profileImg: String){
-        
-        let user = User(id: withID, name: name, email: email, rating: 0, profileImgUrl: profileImg, numberOfRatings: 0)
-        
-        usersRef.child(withID).setValue(user.dict);
-    }*/
-    
     
     func getUsers(completion: @escaping (_ users: [User]) -> Void){
         self.usersRef.observeSingleEvent(of: .value, with: { snapshot in
@@ -714,34 +704,6 @@ final class StorageAPI {
         }
         return resultObjects
     }
-    
-    // TODO: remove
-    /* func getFeaturesTest(completion: @escaping (_ features: [Feature]) -> Void){
-        self.featuresDBReference.observeSingleEvent(of: .value, with: { snapshot in
-            if let resultObjects = self.snapshotToObjects(snapshot: snapshot, constructor: Feature.init) as? [Feature] {
-                completion(resultObjects)
-            }
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    } */
-    
-    // TODO: remove
-    /* func getOfferingsNearbyTest(completion: @escaping (_ features: [Offering]) -> Void){
-        self.offeringsDBReference.observeSingleEvent(of: .value, with: { snapshot in
-            var resultOfferings:[Offering] = []
-            for childRaw in snapshot.children {
-                if let (stringID, dict) = self.childToStringIDAndDict(childRaw: childRaw), let offering = Offering.init(id: stringID, dict: dict) {
-                    resultOfferings.append(offering)
-                } else {
-                    print("getOfferings: error while converting offering")
-                }
-            }
-            completion(resultOfferings)
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    } */
     
     func getOfferingWithBrandByOfferingID(offeringID: String, completion: @escaping (_ result: (Offering, Brand)?) -> Void){
         self.getOfferingByID(id: offeringID, completion: {offering in
