@@ -44,6 +44,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var actionItem: UIBarButtonItem!
     @IBOutlet weak var priceLabel: UILabel!
     
+    
     let SEGUE_AVAILIBILITY_CHECK = "availibilityCheckSegue"
     let identifierBasicDataCollectionView = "basicDetailsCollectionViewCell"
     let identifierFeaturesCollectionView = "featuresCollectionViewCell"
@@ -124,7 +125,7 @@ class OfferingViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
@@ -220,6 +221,8 @@ class OfferingViewController: UIViewController {
         }
         
         priceLabel.text = "\(displayingOffering!.basePrice)" + CURRENCY
+        
+        self.popUpWindow()
 
     }
     
@@ -300,6 +303,23 @@ extension OfferingViewController: UICollectionViewDataSource {
             }
             return cell
         }
+        
+    }
+    
+    func popUpWindow() {
+        let carImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabCarImageView(tapGestureRecognizer:)))
+        carImageView.isUserInteractionEnabled = true
+        carImageView.addGestureRecognizer(carImageTapGestureRecognizer)
+        
+    }
+    
+    func tabCarImageView(tapGestureRecognizer: UITapGestureRecognizer) {
+        
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PopUp") as! PopUpViewController
+        guard let image = self.carImageView.image else { return }
+            vc.carImage = image
+            self.present(vc, animated: true, completion: nil)
         
     }
 

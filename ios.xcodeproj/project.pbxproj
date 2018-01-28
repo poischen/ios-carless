@@ -59,6 +59,8 @@
 		2AD4E97C1FA8AA2D0013D67E /* Profil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97B1FA8AA2D0013D67E /* Profil.png */; };
 		2AD4E97E1FA8AA3B0013D67E /* HomePicture.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */; };
 		2AD4E9801FA8AA580013D67E /* Hintergrund.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */; };
+		772322A2201CF34A00FF0FB7 /* PopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772322A1201CF34A00FF0FB7 /* PopUpViewController.swift */; };
+		772322A4201CF9D000FF0FB7 /* OpenPictureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 772322A3201CF9D000FF0FB7 /* OpenPictureViewController.swift */; };
 		772A6A4C2014F53E0071F7E8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 772A6A4B2014F53E0071F7E8 /* Main.storyboard */; };
 		7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */; };
 		7734A9A41FD6F2750013A923 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7734A9A31FD6F2750013A923 /* User.swift */; };
@@ -179,6 +181,8 @@
 		2AD4E97D1FA8AA3B0013D67E /* HomePicture.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = HomePicture.jpg; sourceTree = "<group>"; };
 		2AD4E97F1FA8AA580013D67E /* Hintergrund.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hintergrund.jpg; sourceTree = "<group>"; };
 		3B72885CBF880C627F6B01F6 /* Pods-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios/Pods-ios.release.xcconfig"; sourceTree = "<group>"; };
+		772322A1201CF34A00FF0FB7 /* PopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpViewController.swift; sourceTree = "<group>"; };
+		772322A3201CF9D000FF0FB7 /* OpenPictureViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenPictureViewController.swift; sourceTree = "<group>"; };
 		772A6A4B2014F53E0071F7E8 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatWindowVC.swift; sourceTree = "<group>"; };
 		7734A9A31FD6F2750013A923 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -505,6 +509,7 @@
 			children = (
 				849F46FA200D08D6001C216C /* UserVC.swift */,
 				7734A99F1FD6F2520013A923 /* ChatWindowVC.swift */,
+				772322A3201CF9D000FF0FB7 /* OpenPictureViewController.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -551,6 +556,7 @@
 			children = (
 				840D63C81FE9A534007A1F16 /* OfferingViewController.swift */,
 				84D95BAC2007E7E900EAB8D7 /* AvailibilityAndBookingViewController.swift */,
+				772322A1201CF34A00FF0FB7 /* PopUpViewController.swift */,
 			);
 			path = Offer;
 			sourceTree = "<group>";
@@ -1001,6 +1007,7 @@
 				199A68651FFD027A00047E5D /* CustomCell.swift in Sources */,
 				84FD43781FF52CB600CB546C /* AdvertisePageConentAvailibilityCalendar.swift in Sources */,
 				19A3F8621FF5AAEE00FA2D95 /* Rating.swift in Sources */,
+				772322A4201CF9D000FF0FB7 /* OpenPictureViewController.swift in Sources */,
 				196FD4ED1FAFC0F0000875AE /* Offering.swift in Sources */,
 				19636A0C2015490700423927 /* RatingProtocol.swift in Sources */,
 				2AD4E9481FA8A2250013D67E /* AppDelegate.swift in Sources */,
@@ -1030,6 +1037,7 @@
 				840D63D51FE9A746007A1F16 /* CarLocation.swift in Sources */,
 				19017049200BE7B000E21080 /* RequestProcessingProtocol.swift in Sources */,
 				19E458F220178D4000B45E7F /* SomebodyRented.swift in Sources */,
+				772322A2201CF34A00FF0FB7 /* PopUpViewController.swift in Sources */,
 				19BF06421FEA83D700E495C2 /* ViewController.swift in Sources */,
 				1922178D1FBDA5BE00D7FDFE /* Fuel.swift in Sources */,
 				840D63CF1FE9A56C007A1F16 /* FeaturesCollectionViewCell.swift in Sources */,
