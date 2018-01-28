@@ -306,15 +306,14 @@ extension OfferingViewController: UICollectionViewDataSource {
         
     }
     
+    //when you tab the image of a car you want to rent, opens the picture
     func popUpWindow() {
         let carImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabCarImageView(tapGestureRecognizer:)))
         carImageView.isUserInteractionEnabled = true
         carImageView.addGestureRecognizer(carImageTapGestureRecognizer)
-        
     }
     
     func tabCarImageView(tapGestureRecognizer: UITapGestureRecognizer) {
-        
         let storyboard = UIStoryboard(name: "Offering", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "PopUp") as! PopUpViewController
         guard let image = self.carImageView.image else { return }
