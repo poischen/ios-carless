@@ -95,10 +95,14 @@ class ProfileViewController: UIViewController {
             
             storageAPI.getRatingsByUserUID(userUID: user.id) { (ratings) in
                 self.usersRatings = ratings
+                self.collectionViewRatings.dataSource = self
+                self.collectionViewRatings.reloadData()
             }
             
             storageAPI.getOfferingsByUserUID(userUID: user.id, completion: { (offerings) in
                 self.usersOffers = offerings
+                self.collectionViewOffers.dataSource = self
+                self.collectionViewOffers.reloadData()
             })
     }
     

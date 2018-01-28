@@ -27,6 +27,8 @@ class ViewController: UIViewController, MessagingDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        //if user is already logged in, go directley to Home Page
         if Auth.auth().currentUser != nil {
             updateToken()
             goToHome()
@@ -42,7 +44,7 @@ class ViewController: UIViewController, MessagingDelegate {
         signup()
     }
     
-    //function
+    //functions
     func login() {
         if self.email.text == "" || self.password.text == "" {
             
@@ -68,8 +70,6 @@ class ViewController: UIViewController, MessagingDelegate {
                     //Go to the HomeViewController if the login is sucessful
                     self.goToHome()
                     
-                    
-                    
                 } else {
                     
                     //Tells the user that there is an error and then gets firebase to tell them the error
@@ -86,6 +86,7 @@ class ViewController: UIViewController, MessagingDelegate {
         
     }
     
+    //function that opens the Home Page View Controller
     func goToHome() {
         let storyboard = UIStoryboard(name: "HomePage", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "Navtabs")

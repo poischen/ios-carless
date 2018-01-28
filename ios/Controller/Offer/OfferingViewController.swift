@@ -44,6 +44,7 @@ class OfferingViewController: UIViewController {
     @IBOutlet weak var actionItem: UIBarButtonItem!
     @IBOutlet weak var priceLabel: UILabel!
     
+    
     let SEGUE_AVAILIBILITY_CHECK = "availibilityCheckSegue"
     let identifierBasicDataCollectionView = "basicDetailsCollectionViewCell"
     let identifierFeaturesCollectionView = "featuresCollectionViewCell"
@@ -75,7 +76,7 @@ class OfferingViewController: UIViewController {
     @IBAction func cancelButton(_ sender: Any) {
         if (cameFromAdvertise) {
             self.dismiss(animated: true, completion: nil)
-            advertisePagesController!.dismiss(animated: true, completion: nil)
+            advertisePagesController!.dismiss(animated: false, completion: nil)
         }
         else {
             self.dismiss(animated: true, completion: nil)
@@ -125,7 +126,7 @@ class OfferingViewController: UIViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
          // Offer is not the users own offer -> provide availibility check
         if (displayingOffering?.userUID != storageAPI.userID()) {
             self.navigationItem.title = "Offer"
@@ -221,6 +222,8 @@ class OfferingViewController: UIViewController {
         }
         
         priceLabel.text = "\(displayingOffering!.basePrice)" + CURRENCY
+        
+        self.popUpWindow()
 
     }
     
@@ -301,6 +304,22 @@ extension OfferingViewController: UICollectionViewDataSource {
             }
             return cell
         }
+        
+    }
+    
+    //when you tab the image of a car you want to rent, opens the picture
+    func popUpWindow() {
+        let carImageTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tabCarImageView(tapGestureRecognizer:)))
+        carImageView.isUserInteractionEnabled = true
+        carImageView.addGestureRecognizer(carImageTapGestureRecognizer)
+    }
+    
+    func tabCarImageView(tapGestureRecognizer: UITapGestureRecognizer) {
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "PopUp") as! PopUpViewController
+        guard let image = self.carImageView.image else { return }
+            vc.carImage = image
+            self.present(vc, animated: true, completion: nil)
         
     }
 
