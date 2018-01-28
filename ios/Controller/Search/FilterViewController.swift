@@ -171,10 +171,12 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         case self.pickGearTable:
             cellIdentifier = PICK_GEAR_TABLE_CELL_IDENTIFIER
             cellContent = gears[indexPath.row]
-        default: // covers pickVehicleTypeTable
-            // TODO: better way to provide an exhaustive switch here?
+        case self.pickVehicleTypeTable:
             cellIdentifier = PICK_VEHICLE_TYPE_TABLE_CELL_IDENTIFIER
             cellContent = vehicleTypes[indexPath.row]
+        default:
+            print("non-intended use of FilterViewController as delegate for an unknown table view (in numberOfRowsInSection)")
+            return UITableViewCell()
         }
         
         let returnCell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)

@@ -16,18 +16,23 @@ class HomePageModel {
     let maxDistanceFromNow:Double = 30 * 24 * 3600 // one month
     let rateableAfter:Double = 2 * 24 * 3600 // 2 days
     
-    var userRentingsCache: [RentingEvent] = []
-    var rentingsOfYourCarsCache: [String:[RentingEvent]] = [:] // key: offering's ID, value: rentings
-    var rentingsOfYourCarsCacheArray: [RentingEvent] {
+    private var userRentingsCache: [RentingEvent] = []
+    private var rentingsOfYourCarsCacheDict: [String:[RentingEvent]] = [:] // key: offering's ID, value: rentings
+    private var rentingsOfYourCarsCacheArray: [RentingEvent] {
         var result:[RentingEvent] = []
-        for (_, rentings) in rentingsOfYourCarsCache {
+        for (_, rentings) in rentingsOfYourCarsCacheDict {
             result += rentings
         }
         return result
     }
-    
-    // offerings being watched for new rentings
-    //var watchedOfferingsIDs:Set = Set<String>()
+    private var usersRentingRequestsDict: [String:[SomebodyRented]] = [:]
+    private var usersRentingRequestsArray: [SomebodyRented] {
+        var result:[SomebodyRented] = []
+        for (_, requestData) in usersRentingRequestsDict {
+            result += requestData
+        }
+        return result
+    }
     
     init(){
         storageAPI = StorageAPI.shared
@@ -112,10 +117,10 @@ class HomePageModel {
             // add or overwrite rentings for this offering
             if rentings.count > 0 {
                 // overwrite (maybe) existing requests for this offering in the map
-                self.rentingsOfYourCarsCache[offeringID] = rentings
+                self.rentingsOfYourCarsCacheDict[offeringID] = rentings
             } else {
                 // remove key from map if no rentings for the offering exist
-                self.rentingsOfYourCarsCache.removeValue(forKey: offeringID)
+                self.rentingsOfYourCarsCacheDict.removeValue(forKey: offeringID)
             }
             let mergedCaches = self.userRentingsCache + self.rentingsOfYourCarsCacheArray
             completion(mergedCaches)
@@ -127,10 +132,19 @@ class HomePageModel {
         storageAPI.subscribeToUsersOfferingsWithBrands(userUID: UID, completion: completion)
     }
     
-    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
+    func subscribeToUnconfirmedRequestsForUsersOfferings(UID: String, completion: @escaping (_ data: [SomebodyRented]) -> Void){
         subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, peopleRented) in
             let unconfirmedRequests = peopleRented.filter {!$0.renting.confirmationStatus}
-            completion(offeringID, unconfirmedRequests)
+            
+            // operations here will also change the computed property usersRentingRequestsArray which whill then be passed to the completion handler
+            if unconfirmedRequests.count > 0 {
+                // overwrite (maybe) existing requests for this offering in the map
+                self.usersRentingRequestsDict[offeringID] = unconfirmedRequests
+            } else {
+                // remove key from map if no requests for the offering exist
+                self.usersRentingRequestsDict.removeValue(forKey: offeringID)
+            }
+            completion(self.usersRentingRequestsArray)
         })
     }
     
@@ -140,6 +154,7 @@ class HomePageModel {
             completion(offeringID, unconfirmedRequests)
         })
     }
+
     
     // IMPORTANT: The completion callback will be fired individually for each offering.
     func subscribeToRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){

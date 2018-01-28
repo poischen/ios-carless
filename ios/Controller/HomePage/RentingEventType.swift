@@ -8,6 +8,8 @@
 
 import Foundation
 
+// data type to distinguish different kinds of renting events
+
 enum RentingEventType {
     case youRented
     case somebodyRented
