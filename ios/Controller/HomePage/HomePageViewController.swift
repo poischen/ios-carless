@@ -26,7 +26,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     
     var rentingEvents: [RentingEvent]?
     var usersOfferingsAndBrands: [(Offering,Brand)]?
-    var usersRentingRequests: [SomebodyRented]? // TODO: use optional here
+    var usersRentingRequests: [SomebodyRented]?
     let homePageModel = HomePageModel.shared
     
     override func viewDidLoad() {
