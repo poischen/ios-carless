@@ -26,7 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         
-        // TODO: move to AppDelegate?
         GMSPlacesClient.provideAPIKey("AIzaSyAyMV-s4s4QIw1KHLmgkqa2t5zcc1dxhCg")
         
         let configuration: AIConfiguration = AIDefaultConfiguration()
@@ -37,26 +36,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshToken(notification:)), name: NSNotification.Name.InstanceIDTokenRefresh, object: nil)
-        
-        //Messaging.messaging().delegate = self
-        
-       /* func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-            print("Firebase registration token: \(fcmToken)")
-            
-            // TODO: If necessary send token to application server.
-            // Note: This callback is fired at each app startup and whenever a new token is generated.
-        }*/
 
-        
         return true
     }
-    
-    /*func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
-    }*/
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -175,20 +157,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func FBHandler() {
         Messaging.messaging().shouldEstablishDirectChannel = true
     }
-    
-  /*  func messaging(_ messaging: Messaging, didRefreshRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
-        
-        // TODO: If necessary send token to application server.
-        // Note: This callback is fired at each app startup and whenever a new token is generated.
-    }
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-    print("Firebase registration token: \(fcmToken)")
-        
-        // TODO: If necessary send token to application server.
-        //Note: This callback is fired at each app startup and whenever a new token is generated.
-   }*/
-
 }
 

@@ -51,7 +51,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                     self.usersRentingsPlaceholderLabel.isHidden = false
                 } else {
                     // events exist -> hide placeholder and show table
-                    self.usersRentingsTable.reloadData() // TODO: necessary?
+                    self.usersRentingsTable.reloadData()
                     self.usersRentingsTable.isHidden = false
                     self.usersRentingsPlaceholderLabel.isHidden = true
                 }

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-//TODO: Implement interface?!
 class User {
     required convenience init?(id: String, dict: [String : AnyObject]) {
         guard let userName = dict[User.NAME] as? String,

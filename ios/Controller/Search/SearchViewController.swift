@@ -177,7 +177,8 @@ class SearchViewController: UIViewController {
             // next screen: search results
             guard let searchResultsViewController = segue.destination as? SearchResultsViewController,
                 let currentDesiredRentingStart = desiredRentingStart,
-                let currentDesiredRentingEnd = desiredRentingEnd else {
+                let currentDesiredRentingEnd = desiredRentingEnd,
+                let currentPickedPlace = pickedPlace else {
                     return
             }
             let newFilter:Filter = Filter(
@@ -186,13 +187,12 @@ class SearchViewController: UIViewController {
                 fuelIDs: nil,
                 gearIDs: nil,
                 minHP: nil,
-                // location: pickedPlace!.addressComponents![0].name, // only use the city name for the search // TODO: remove,
                 maxPrice: nil,
                 minSeats: occupantNumbers[occupantsPicker.selectedRow(inComponent: 0)],
                 vehicleTypeIDs: nil,
                 dateInterval: DateInterval(start: currentDesiredRentingStart, end: currentDesiredRentingEnd),
                 featureIDs: nil,
-                placePoint: CoordinatePoint(latitude: pickedPlace!.coordinate.latitude, longitude: pickedPlace!.coordinate.longitude) // TODO: do properly
+                placePoint: CoordinatePoint(latitude: currentPickedPlace.coordinate.latitude, longitude: currentPickedPlace.coordinate.longitude)
             )
             // send filter to the next view controller by setting an attribute of it to the filter
             searchResultsViewController.searchFilter = newFilter
@@ -227,7 +227,6 @@ extension SearchViewController: JTAppleCalendarViewDataSource{
 extension SearchViewController: JTAppleCalendarViewDelegate{
     // sets up a cell before it's displayed
     func calendar(_ calendar: JTAppleCalendarView, cellForItemAt date: Date, cellState: CellState, indexPath: IndexPath) -> JTAppleCell {
-        // TODO: error handling
         if let currentCell = calendar.dequeueReusableJTAppleCell(withReuseIdentifier: CELL_IDENTIFIER, for: indexPath) as? SearchCalendarCell {
             currentCell.dateLabel.text = cellState.text
             updateCellVisuals(for: currentCell, withState: cellState)
@@ -257,7 +256,7 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
                          first deselect current date interval
                          deselecting one date is enough as the shouldDeselect function ensures that when one date from the current date interval is deselected all others are also */
                         recursiveDeselectionCall = true
-                        calendarView.deselectDates(from: firstDate!, to: firstDate!, triggerSelectionDelegate: true)
+                        calendarView.deselectDates(from: currentFirstDate, to: currentFirstDate, triggerSelectionDelegate: true)
                         recursiveDeselectionCall = false
                         firstDate = date // deselection resets first date -> set after deselection
                         lastDate = nil // for safety :)
