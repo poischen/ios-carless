@@ -256,44 +256,79 @@ Time to earn some money!</string>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5M6-VC-WFA">
                                                             <rect key="frame" x="0.0" y="0.0" width="335" height="122"/>
                                                             <subviews>
-                                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="uah-Dv-non">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="122"/>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L5E-99-cAT">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="134" height="122"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRl-uH-u8H">
-                                                                            <rect key="frame" x="146.5" y="0.0" width="42" height="21"/>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P3d-k3-Sea">
+                                                                            <rect key="frame" x="17" y="11" width="100" height="100"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="height" constant="21" id="Qfs-UW-kLx"/>
-                                                                                <constraint firstAttribute="width" constant="42" id="ZAo-A3-1SJ"/>
+                                                                                <constraint firstAttribute="width" constant="100" id="rd0-0M-Bzb"/>
+                                                                                <constraint firstAttribute="height" constant="100" id="tcN-qo-FEB"/>
                                                                             </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWith">
+                                                                                    <integer key="value" value="1"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                                                    <color key="value" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
+                                                                        </imageView>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstItem="P3d-k3-Sea" firstAttribute="centerX" secondItem="L5E-99-cAT" secondAttribute="centerX" id="GMp-0G-H1X"/>
+                                                                        <constraint firstItem="P3d-k3-Sea" firstAttribute="centerY" secondItem="L5E-99-cAT" secondAttribute="centerY" id="mxl-F2-Z1L"/>
+                                                                    </constraints>
+                                                                </view>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GYL-fi-o0o">
+                                                                    <rect key="frame" x="134" y="0.0" width="201" height="122"/>
+                                                                    <subviews>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Brand" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJM-t6-hIt">
+                                                                            <rect key="frame" x="10" y="11" width="181" height="21.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AJM-t6-hIt">
-                                                                            <rect key="frame" x="146.5" y="21" width="42" height="20.5"/>
-                                                                            <constraints>
-                                                                                <constraint firstAttribute="width" constant="42" id="Vmu-yl-mBU"/>
-                                                                            </constraints>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                            <nil key="textColor"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="from 20 €" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRl-uH-u8H">
+                                                                            <rect key="frame" x="10" y="37.5" width="181" height="19.5"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1IM-7A-bGs">
-                                                                            <rect key="frame" x="144.5" y="41.5" width="46" height="80.5"/>
-                                                                            <state key="normal" title="Button"/>
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1IM-7A-bGs" customClass="PurpleButton" customModule="ios" customModuleProvider="target">
+                                                                            <rect key="frame" x="10" y="81" width="181" height="30"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="30" id="dGY-dy-CaO"/>
+                                                                            </constraints>
+                                                                            <state key="normal" title="more details"/>
                                                                             <connections>
                                                                                 <action selector="moreDetailsButton:" destination="hND-0r-7O9" eventType="touchUpInside" id="yDm-2J-y7K"/>
                                                                             </connections>
                                                                         </button>
                                                                     </subviews>
-                                                                </stackView>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="trailing" secondItem="AJM-t6-hIt" secondAttribute="trailing" constant="10" id="3LU-hh-H7B"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="dRl-uH-u8H" secondAttribute="trailing" constant="10" id="5aU-5C-lRj"/>
+                                                                        <constraint firstItem="dRl-uH-u8H" firstAttribute="top" secondItem="AJM-t6-hIt" secondAttribute="bottom" constant="5" id="QRe-Kj-lGw"/>
+                                                                        <constraint firstItem="AJM-t6-hIt" firstAttribute="leading" secondItem="GYL-fi-o0o" secondAttribute="leading" constant="10" id="Rfo-MB-9OJ"/>
+                                                                        <constraint firstItem="1IM-7A-bGs" firstAttribute="leading" secondItem="GYL-fi-o0o" secondAttribute="leading" constant="10" id="YAa-cS-c6b"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="1IM-7A-bGs" secondAttribute="trailing" constant="10" id="ko4-Of-eah"/>
+                                                                        <constraint firstItem="dRl-uH-u8H" firstAttribute="leading" secondItem="1IM-7A-bGs" secondAttribute="leading" id="x6g-w2-lKz"/>
+                                                                    </constraints>
+                                                                </view>
                                                             </subviews>
-                                                            <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
-                                                                <constraint firstItem="uah-Dv-non" firstAttribute="leading" secondItem="5M6-VC-WFA" secondAttribute="leading" id="Qc8-yk-Db6"/>
-                                                                <constraint firstAttribute="trailing" secondItem="uah-Dv-non" secondAttribute="trailing" id="hkk-m5-v62"/>
-                                                                <constraint firstAttribute="bottom" secondItem="uah-Dv-non" secondAttribute="bottom" id="nCG-rm-sdk"/>
-                                                                <constraint firstItem="uah-Dv-non" firstAttribute="top" secondItem="5M6-VC-WFA" secondAttribute="top" id="sop-Ty-eaq"/>
+                                                                <constraint firstAttribute="bottom" secondItem="GYL-fi-o0o" secondAttribute="bottom" id="KaO-Kh-Ef6"/>
+                                                                <constraint firstItem="L5E-99-cAT" firstAttribute="top" secondItem="5M6-VC-WFA" secondAttribute="top" id="NZu-Gi-43g"/>
+                                                                <constraint firstItem="GYL-fi-o0o" firstAttribute="top" secondItem="5M6-VC-WFA" secondAttribute="top" id="Qi8-Cl-qBS"/>
+                                                                <constraint firstAttribute="trailing" secondItem="GYL-fi-o0o" secondAttribute="trailing" id="bjg-Lp-Npq"/>
+                                                                <constraint firstItem="AJM-t6-hIt" firstAttribute="top" secondItem="P3d-k3-Sea" secondAttribute="top" id="by1-7g-oBe"/>
+                                                                <constraint firstItem="L5E-99-cAT" firstAttribute="width" secondItem="5M6-VC-WFA" secondAttribute="width" multiplier="0.4" id="d7c-aD-x1c"/>
+                                                                <constraint firstAttribute="bottom" secondItem="L5E-99-cAT" secondAttribute="bottom" id="dMj-eZ-jSf"/>
+                                                                <constraint firstItem="L5E-99-cAT" firstAttribute="leading" secondItem="5M6-VC-WFA" secondAttribute="leading" id="f9L-uG-GnB"/>
+                                                                <constraint firstItem="GYL-fi-o0o" firstAttribute="width" secondItem="5M6-VC-WFA" secondAttribute="width" multiplier="0.6" id="ncs-l0-1xR"/>
+                                                                <constraint firstItem="1IM-7A-bGs" firstAttribute="bottom" secondItem="P3d-k3-Sea" secondAttribute="bottom" id="wgx-jx-34J"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -306,14 +341,15 @@ Time to earn some money!</string>
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="mainView" destination="5M6-VC-WFA" id="xY1-U1-DET"/>
-                                                    <outlet property="offerCarName" destination="AJM-t6-hIt" id="1v1-I4-OrP"/>
+                                                    <outlet property="offerCarBrand" destination="AJM-t6-hIt" id="7Y4-wZ-rdr"/>
+                                                    <outlet property="offerCarImg" destination="P3d-k3-Sea" id="kBK-Yy-WrW"/>
                                                     <outlet property="offerCarPrice" destination="dRl-uH-u8H" id="xev-yc-wJf"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="inset">
-                                                <real key="value" value="10"/>
+                                                <real key="value" value="25"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>

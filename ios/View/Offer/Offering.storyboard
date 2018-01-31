@@ -801,6 +801,14 @@
                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e6m-0U-08p">
+                                                        <rect key="frame" x="0.0" y="66" width="355" height="230"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="5"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </mapView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sd6-aV-I5z" userLabel="Übergabe Zeit">
                                                         <rect key="frame" x="35.5" y="51" width="284" height="30"/>
                                                         <subviews>
@@ -858,14 +866,6 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
-                                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="e6m-0U-08p">
-                                                        <rect key="frame" x="0.0" y="66" width="355" height="230"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                                <integer key="value" value="5"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </mapView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="EQS-jl-UJx" firstAttribute="top" secondItem="XGd-Eu-us6" secondAttribute="top" constant="16" id="Brf-Di-HRc"/>

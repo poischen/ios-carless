@@ -182,6 +182,16 @@ extension HomePageViewController: RatingProtocol{
         return (rateNavController, rateController)
     }
     
+    func presentOfferView(offer: Offering){
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        guard let navigationController = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as? UINavigationController,
+            let targetController = navigationController.topViewController as? OfferingViewController else {
+                return
+        }
+        targetController.displayingOffering = offer
+        self.present(navigationController, animated: true, completion: nil)
+    }
+    
 }
 
 extension HomePageViewController: UICollectionViewDataSource {
@@ -235,9 +245,16 @@ extension HomePageViewController: UICollectionViewDataSource {
              // initialisation of this cell is in this class as no special cell class is used here
              let (offering, brand) = currentUsersOfferings[indexPath.row]
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! ProfileUsersOffersCollectionViewCell
+                cell.offer = offering
+                cell.eHomePageViewController = self
+                cell.offerCarPrice.text = "max." + "\(offering.basePrice)" + " €"
+                cell.offerCarBrand.text = brand.name
+                
+                let carImage: UIImage = UIImage(named: "carplaceholder")!
+                cell.offerCarImg.maskCircle(anyImage: carImage)
+                let CarImgUrl = URL(string: (offering.pictureURL))
+                cell.offerCarImg.kf.setImage(with: CarImgUrl)
 
-                cell.offerCarPrice.text = "max." + "\(offering.basePrice)"
-                cell.offerCarName.text = brand.name + " " + offering.type
                 return cell
              }
         case self.usersRentingsRequestsTable:
@@ -248,7 +265,6 @@ extension HomePageViewController: UICollectionViewDataSource {
                     cell.somebodyRented = somebodyRented
                     cell.delegate = self
                     return cell
-                
             }
         default:
             print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")

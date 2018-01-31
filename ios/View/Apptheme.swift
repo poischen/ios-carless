@@ -108,3 +108,16 @@ struct Palette {
         self.tintColor = tintColorCustom
     }
 }
+
+@IBDesignable class RoundImage: UIImageView {
+    @IBInspectable var borderColor: CGColor = Theme.palette.orange.cgColor
+    
+    override func draw(_ rect: CGRect) {
+        self.contentMode = UIViewContentMode.scaleAspectFill
+        self.layer.cornerRadius = self.frame.height / 2
+        self.layer.masksToBounds = false
+        self.clipsToBounds = true
+        self.layer.borderWidth = 1
+        self.layer.borderColor = borderColor
+    }
+}

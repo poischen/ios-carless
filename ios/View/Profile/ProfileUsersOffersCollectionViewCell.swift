@@ -11,15 +11,19 @@ import ScalingCarousel
 
 class ProfileUsersOffersCollectionViewCell: ScalingCarouselCell {
     @IBOutlet weak var offerCarImg: UIImageView!
-    @IBOutlet weak var offerCarName: UILabel!
+    @IBOutlet weak var offerCarBrand: UILabel!
     @IBOutlet weak var offerCarPrice: UILabel!
     
     var offer: Offering?
     var eProfileViewController: ProfileViewController?
+    var eHomePageViewController: HomePageViewController?
     
     @IBAction func moreDetailsButton(_ sender: Any) {
         if let offer = self.offer, let eProfileViewController = self.eProfileViewController {
             eProfileViewController.presentOfferView(offer: offer)
+        }
+        if let offer = self.offer, let eHomePageViewController = self.eHomePageViewController {
+            eHomePageViewController.presentOfferView(offer: offer)
         }
     }
     

@@ -236,7 +236,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 let imgUrl: URL = URL(string: offer.pictureURL)!
                 cell.offerCarImg.kf.indicatorType = .activity
                 cell.offerCarImg.kf.setImage(with: imgUrl)
-                cell.offerCarName.text = offer.type
                 cell.offerCarPrice.text = fromString + String(offer.basePrice) + currencyString
             }
             return cell
