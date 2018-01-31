@@ -571,6 +571,9 @@ Enjoy your day :)</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="6aV-j5-LeE"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
+                                                                            <connections>
+                                                                                <action selector="denyButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="sNO-IR-vaV"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gEV-fw-twN" userLabel="Button accept" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
@@ -578,6 +581,9 @@ Enjoy your day :)</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="qVN-lS-lmx"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
+                                                                            <connections>
+                                                                                <action selector="acceptButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="Qfc-hr-jzf"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -615,10 +621,12 @@ Enjoy your day :)</string>
                                                     <constraint firstAttribute="trailing" secondItem="4vi-1M-hcf" secondAttribute="trailing" id="feG-a9-ZHE"/>
                                                 </constraints>
                                                 <connections>
-                                                    <outlet property="carNameLabel" destination="kqC-HN-WdT" id="in3-Sr-M1W"/>
+                                                    <outlet property="carNameLabel" destination="kqC-HN-WdT" id="In3-23-5Rp"/>
+                                                    <outlet property="endDateLabel" destination="401-3E-BQr" id="oVg-Vj-G4J"/>
                                                     <outlet property="mainView" destination="4vi-1M-hcf" id="tKY-ta-19Z"/>
-                                                    <outlet property="numberOfRatingsLabel" destination="tJG-Pj-gnN" id="3BH-Xe-fuj"/>
-                                                    <outlet property="usernameButton" destination="9r2-dF-Q1M" id="EAQ-eY-3ph"/>
+                                                    <outlet property="priceLabel" destination="tJG-Pj-gnN" id="GbT-al-7MT"/>
+                                                    <outlet property="requestorUserImage" destination="BqN-FX-2Sl" id="EEa-Tp-FCK"/>
+                                                    <outlet property="startDateLabel" destination="iz8-t2-Old" id="nDf-S4-NTF"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
