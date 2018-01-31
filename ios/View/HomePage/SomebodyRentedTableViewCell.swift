@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ScalingCarousel
 
-class SomebodyRentedTableViewCell: UITableViewCell {
+class SomebodyRentedTableViewCell: ScalingCarouselCell {
     
     static let identifier = "SomebodyRentedTableViewCell"
 
@@ -60,8 +61,8 @@ class SomebodyRentedTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
+  /*  override func setSelected(_ selected: Bool, animated: Bool) {
+     super.isSelected(selected, animated: animated)
     }
-
+*/
 }

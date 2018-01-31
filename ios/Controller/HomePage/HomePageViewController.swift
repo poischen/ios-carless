@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ScalingCarousel
 
-class HomePageViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class HomePageViewController: UIViewController, UICollectionViewDelegate {
     let userUID = StorageAPI.shared.userID()
     
     let USER_RENTINGS_TABLE_CELL_IDENTIFIER = "userRentingsCell"
@@ -17,9 +18,10 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
     let RATING_NAVIGATION_IDENTIFIER = "RatingNav"
     let RATE_STORYBOARD_IDENTIFIER = "Rate"
     
-    @IBOutlet weak var usersRentingsTable: UITableView!
-    @IBOutlet weak var usersOfferingsTable: UITableView!
-    @IBOutlet weak var usersRentingsRequestsTable: UITableView!
+    @IBOutlet weak var usersRentingsTable: ScalingCarouselView!
+    @IBOutlet weak var usersOfferingsTable: ScalingCarouselView!
+    @IBOutlet weak var usersRentingsRequestsTable: ScalingCarouselView!
+    
     @IBOutlet weak var usersRentingsPlaceholderLabel: UILabel!
     @IBOutlet weak var userOfferingsPlaceholderLabel: UILabel!
     @IBOutlet weak var userRentingRequestsPlaceholderLabel: UILabel!
@@ -37,6 +39,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         usersOfferingsTable.delegate = self
         usersRentingsRequestsTable.dataSource = self
         usersRentingsRequestsTable.delegate = self
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,6 +59,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                     self.usersRentingsPlaceholderLabel.isHidden = true
                 }
             })
+            
             // data for the second table on the home page
             homePageModel.subscribeToUsersOfferings(UID: uid, completion: {offeringsAndBrands in
                 self.usersOfferingsAndBrands = offeringsAndBrands
@@ -71,6 +75,7 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
                     self.userOfferingsPlaceholderLabel.isHidden = true
                 }
             })
+            
             // data for the third table on the home page
             homePageModel.subscribeToUnconfirmedRequestsForUsersOfferings(UID: uid, completion: {rentingData in
                 self.usersRentingRequests = rentingData
@@ -88,116 +93,25 @@ class HomePageViewController: UIViewController, UITableViewDelegate, UITableView
         }
     }
     
-    override func updateViewConstraints() {
-        super.updateViewConstraints()
-        usersRentingsTable.sizeThatFits(<#T##size: CGSize##CGSize#>) tableHeightConstraint.constant = tableView.contentSize.height
-    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // set default count that is overwritten is one of the cases matches
-        var count = 0
-        
-        switch tableView {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        switch scrollView {
         case self.usersRentingsTable:
-            if let currentRentingEvents = rentingEvents {
-                count = currentRentingEvents.count
-            }
+            usersRentingsTable.didScroll()
+            
         case self.usersOfferingsTable:
-            if let currentUsersOfferings = usersOfferingsAndBrands {
-                count = currentUsersOfferings.count
-            }
+            usersOfferingsTable.didScroll()
+            
         case self.usersRentingsRequestsTable:
-            if let currentUsersRentingRequests = usersRentingRequests {
-                count = currentUsersRentingRequests.count
-            }
+            usersRentingsRequestsTable.didScroll()
+            
         default:
-            print("non-intended use of HomePageViewController as delegate for an unknown table view (in numberOfRowsInSection)")
+            break
         }
-        return count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // set default cell that is overwritten is one of the cases matches
-        var returnCell:UITableViewCell = UITableViewCell()
-        
-        switch tableView {
-        case self.usersRentingsTable:
-            if let currentRentingEvents = rentingEvents {
-                let event = currentRentingEvents[indexPath.row]
-                // check type of event and then get the right kind of table cell
-                switch event.type {
-                case .somebodyRented:
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell {
-                        // pass event to cell to fill the labels
-                        cell.event = event
-                        cell.delegate = self
-                        returnCell = cell
-                    }
-                case .youRented:
-                    if let cell = tableView.dequeueReusableCell(withIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as? YouRentedTableViewCell {
-                        // pass event to cell to fill the labels
-                        cell.event = event
-                        cell.delegate = self
-                        returnCell = cell
-                    }
-                }
-            }
-        case self.usersOfferingsTable:
-            if let currentUsersOfferings = usersOfferingsAndBrands {
-                // initialisation of this cell is in this class as no special cell class is used here
-                let (offering, brand) = currentUsersOfferings[indexPath.row]
-                let cell = tableView.dequeueReusableCell(withIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath)
-                cell.textLabel?.text = brand.name + " " + offering.type
-                returnCell = cell
-            }
-        case self.usersRentingsRequestsTable:
-            if let currentUsersRentingRequests = usersRentingRequests {
-                let somebodyRented = currentUsersRentingRequests[indexPath.row]
-                if let cell = tableView.dequeueReusableCell(withIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as? UserRentingRequestsTableViewCell {
-                    // pass event to cell to fill the labels
-                    cell.somebodyRented = somebodyRented
-                    cell.delegate = self
-                    returnCell = cell
-                }
-            }
-        default:
-            print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")
-        }
-        
-        
-        returnCell.selectionStyle = UITableViewCellSelectionStyle.none // remove blue background selection style
-        return returnCell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if (tableView == self.usersOfferingsTable) {
-            if let currentUsersOfferingsAndBrands = usersOfferingsAndBrands {
-                // user selected offering -> show offering
-                let (selectedOffering,_) = currentUsersOfferingsAndBrands[indexPath.row]
-                showSelectedOffering(selectedOffering: selectedOffering)
-            }
-        } else if (tableView == self.usersRentingsTable) {
-            if let currentRentingEvents = rentingEvents {
-                let event = currentRentingEvents[indexPath.row]
-                // user selected offering -> show offering
-                switch event.type {
-                case .somebodyRented:
-                    if let somebodyRented = event as? SomebodyRented {
-                        showSelectedOffering(selectedOffering: somebodyRented.offering)
-                    }
-                case .youRented:
-                    if let youRented = event as? YouRented {
-                        showSelectedOffering(selectedOffering: youRented.offering)
-                    }
-                }
-            }
-        }
-        
     }
     
     @IBAction func addOfferingButtonClicked(_ sender: Any) {
@@ -269,4 +183,81 @@ extension HomePageViewController: RatingProtocol{
     }
     
 }
+
+extension HomePageViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        // set default count that is overwritten is one of the cases matches
+        var count = 0
+        switch collectionView {
+        case self.usersRentingsTable:
+            if let currentRentingEvents = rentingEvents {
+                count = currentRentingEvents.count
+            }
+        case self.usersOfferingsTable:
+             if let currentUsersOfferings = usersOfferingsAndBrands {
+             count = currentUsersOfferings.count
+             }
+        case self.usersRentingsRequestsTable:
+            if let currentUsersRentingRequests = usersRentingRequests {
+                count = currentUsersRentingRequests.count
+            }
+        default:
+            print("non-intended use of HomePageViewController as delegate for an unknown table view (in numberOfRowsInSection)")
+        }
+        return count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        switch collectionView {
+        case self.usersRentingsTable:
+            if let currentRentingEvents = rentingEvents {
+                let event = currentRentingEvents[indexPath.row]
+                // check type of event and then get the right kind of table cell
+                switch event.type {
+                case .somebodyRented:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as! SomebodyRentedTableViewCell
+                        // pass event to cell to fill the labels
+                        cell.event = event
+                        cell.delegate = self
+                        return cell
+                    
+                case .youRented:
+                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as! YouRentedTableViewCell
+                        // pass event to cell to fill the labels
+                        cell.event = event
+                        cell.delegate = self
+                        return cell
+                    
+                }
+            }
+            case self.usersOfferingsTable:
+             if let currentUsersOfferings = usersOfferingsAndBrands {
+             // initialisation of this cell is in this class as no special cell class is used here
+             let (offering, brand) = currentUsersOfferings[indexPath.row]
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! ProfileUsersOffersCollectionViewCell
+
+                cell.offerCarPrice.text = "max." + "\(offering.basePrice)"
+                cell.offerCarName.text = brand.name + " " + offering.type
+                return cell
+             }
+        case self.usersRentingsRequestsTable:
+            if let currentUsersRentingRequests = usersRentingRequests {
+                let somebodyRented = currentUsersRentingRequests[indexPath.row]
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
+                    // pass event to cell to fill the labels
+                    cell.somebodyRented = somebodyRented
+                    cell.delegate = self
+                    return cell
+                
+            }
+        default:
+            print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")
+            return UICollectionViewCell()
+        }
+        return UICollectionViewCell()
+    }
+    
+
+}
+
 

@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ScalingCarousel
 
-class UserRentingRequestsTableViewCell: UITableViewCell {
+class UserRentingRequestsTableViewCell: ScalingCarouselCell {
     
     
     @IBOutlet weak var usernameButton: UIButton!
@@ -39,10 +40,10 @@ class UserRentingRequestsTableViewCell: UITableViewCell {
         super.awakeFromNib()
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
+/*    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
+  */
     @IBAction func acceptButtonTapped(_ sender: Any) {
         guard let currentDelegate = delegate,
             let currentRenting = showedRenting else {

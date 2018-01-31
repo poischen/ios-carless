@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import ScalingCarousel
 
-class ProfileUsersOffersCollectionViewCell: UICollectionViewCell {
+class ProfileUsersOffersCollectionViewCell: ScalingCarouselCell {
     @IBOutlet weak var offerCarImg: UIImageView!
     @IBOutlet weak var offerCarName: UILabel!
     @IBOutlet weak var offerCarPrice: UILabel!
