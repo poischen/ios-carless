@@ -18,6 +18,8 @@ class ViewController: UIViewController, MessagingDelegate {
     @IBOutlet weak var username: UITextField!
     @IBOutlet weak var email: UITextField!
     @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var loginButton: PurpleButton!
+    @IBOutlet weak var signUpButton: OrangeButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
