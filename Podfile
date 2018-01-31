@@ -23,6 +23,7 @@ target 'ios' do
     pod 'SDWebImage'
     pod 'AI'
     pod 'ApiAI'
+    pod 'ScalingCarousel'
     # pod 'FirebaseUI/Database', '~> 4.0'
 
   target 'iosTests' do
