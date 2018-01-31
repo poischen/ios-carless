@@ -232,11 +232,12 @@ extension HomePageViewController: UICollectionViewDataSource {
                         return cell
                     
                 case .youRented:
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as! YouRentedTableViewCell
+                    /*let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as! YouRentedTableViewCell
                         // pass event to cell to fill the labels
-                        cell.event = event
+
                         cell.delegate = self
-                        return cell
+                        return cell*/
+                    print("fix later")
                     
                 }
             }

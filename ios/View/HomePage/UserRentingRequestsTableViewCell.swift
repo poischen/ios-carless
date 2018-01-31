@@ -11,7 +11,7 @@ import ScalingCarousel
 
 class UserRentingRequestsTableViewCell: ScalingCarouselCell {
     
-    
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var usernameButton: UIButton!
     @IBOutlet weak var carNameLabel: UILabel!
     @IBOutlet weak var ratingScoreLabel: UILabel!
