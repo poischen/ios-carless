@@ -19,6 +19,9 @@ class ChatBotViewController: UIViewController, UITextFieldDelegate {
         chipResponse.numberOfLines = 0;
         print ("Possible Speech Voices" , AVSpeechSynthesisVoice.speechVoices())
         messageField.delegate = self
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil) 
     }
     
    

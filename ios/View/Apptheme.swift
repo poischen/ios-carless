@@ -43,7 +43,7 @@ struct Palette {
 }
 
 @IBDesignable class ChatInputField: UITextField {
-    @IBInspectable var cornerRadius: CGFloat = 3
+    @IBInspectable var cornerRadius: CGFloat = 5
     @IBInspectable var borderColor: CGColor = Theme.palette.lightgrey.cgColor
     @IBInspectable var borderWidth: CGFloat = 1
     

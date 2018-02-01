@@ -50,29 +50,45 @@
                                     <constraint firstAttribute="bottom" secondItem="VZ9-WE-pQy" secondAttribute="bottom" constant="15" id="QRK-Pd-Fhf"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe" customClass="InputField" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="16" y="318" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
-                                <rect key="frame" x="167" y="318" width="40" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Send"/>
-                                <connections>
-                                    <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptb-VG-Xy5">
                                 <rect key="frame" x="0.0" y="578" width="375" height="40"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe" customClass="InputField" customModule="ios" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="5" width="305" height="30"/>
+                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="1Kb-4S-mWC"/>
+                                        </constraints>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
+                                        <rect key="frame" x="325" y="5" width="40" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="40" id="f7Q-Bo-kL8"/>
+                                            <constraint firstAttribute="height" constant="30" id="sGX-K8-6wM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Send">
+                                            <color key="titleColor" red="0.66661661863327026" green="0.66669595241546631" blue="0.66658014059066772" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" red="0.97639912366867065" green="0.97651249170303345" blue="0.97634702920913696" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="VbU-D4-IoB" secondAttribute="bottom" constant="5" id="0MT-zj-RRK"/>
+                                    <constraint firstItem="BWs-cx-XCe" firstAttribute="leading" secondItem="ptb-VG-Xy5" secondAttribute="leading" constant="10" id="407-jH-9le"/>
+                                    <constraint firstAttribute="bottom" secondItem="BWs-cx-XCe" secondAttribute="bottom" constant="5" id="JsJ-7T-adC"/>
+                                    <constraint firstAttribute="trailing" secondItem="VbU-D4-IoB" secondAttribute="trailing" constant="10" id="KKe-Tk-b6s"/>
                                     <constraint firstAttribute="height" constant="40" id="QEz-FE-asB"/>
+                                    <constraint firstItem="BWs-cx-XCe" firstAttribute="top" secondItem="ptb-VG-Xy5" secondAttribute="top" constant="5" id="UR4-J0-6Zn"/>
+                                    <constraint firstItem="VbU-D4-IoB" firstAttribute="leading" secondItem="BWs-cx-XCe" secondAttribute="trailing" constant="10" id="beq-TG-DPC"/>
+                                    <constraint firstItem="VbU-D4-IoB" firstAttribute="top" secondItem="ptb-VG-Xy5" secondAttribute="top" constant="5" id="rzl-FS-WYb"/>
                                 </constraints>
                             </view>
                         </subviews>
