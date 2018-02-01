@@ -251,7 +251,7 @@
                                             <outlet property="delegate" destination="q1A-8t-pJA" id="RVG-Xj-peO"/>
                                         </connections>
                                     </collectionView>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This user does not have ratings yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYr-P5-JAO">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This user does not have ratings yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYr-P5-JAO">
                                         <rect key="frame" x="51" y="60" width="272" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -406,7 +406,7 @@
                                             <outlet property="delegate" destination="q1A-8t-pJA" id="Qbg-4b-VYY"/>
                                         </connections>
                                     </collectionView>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently no offers!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3A-OZ-a6Q">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currently no offers!" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="A3A-OZ-a6Q">
                                         <rect key="frame" x="85" y="62" width="203.5" height="41"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="203.5" id="hsJ-Xc-giU"/>

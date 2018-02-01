@@ -11,8 +11,8 @@ import AVFoundation
 import ApiAI
 
 class ChatBotViewController: UIViewController, UITextFieldDelegate {
-
     
+    @IBOutlet weak var textInputView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,11 +20,11 @@ class ChatBotViewController: UIViewController, UITextFieldDelegate {
         print ("Possible Speech Voices" , AVSpeechSynthesisVoice.speechVoices())
         messageField.delegate = self
         
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil) 
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-   
+
     
     
     
@@ -167,7 +167,21 @@ class ChatBotViewController: UIViewController, UITextFieldDelegate {
         
     }
 
-  
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.textInputView.frame.origin.y == 0{
+                self.textInputView.frame.origin.y -= keyboardSize.height
+            }
+        }
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            if self.textInputView.frame.origin.y != 0{
+                self.textInputView.frame.origin.y += keyboardSize.height
+            }
+        }
+    }
     
     
     override func didReceiveMemoryWarning() {

@@ -113,6 +113,7 @@
                     <connections>
                         <outlet property="chipResponse" destination="BMu-GN-UNA" id="Rlx-Tw-Wwv"/>
                         <outlet property="messageField" destination="BWs-cx-XCe" id="cYv-sS-D4K"/>
+                        <outlet property="textInputView" destination="ptb-VG-Xy5" id="vmr-nF-UYc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LFm-hc-Pw2" userLabel="First Responder" sceneMemberID="firstResponder"/>

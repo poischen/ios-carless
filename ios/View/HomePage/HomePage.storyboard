@@ -59,14 +59,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HOo-ep-g37" userLabel="Card Renting" customClass="CardView" customModule="ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="74" width="375" height="166"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUt-7A-iHh">
-                                        <rect key="frame" x="113.5" y="62" width="148" height="41"/>
-                                        <string key="text">Nothing to do here.
-Go and get a car!</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your current rentings and lettings:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qch-jM-owu">
                                         <rect key="frame" x="10" y="10" width="355" height="14"/>
                                         <constraints>
@@ -549,6 +541,14 @@ Go and get a car!</string>
                                             <outlet property="delegate" destination="PcC-rc-5Iw" id="hIA-XP-QyE"/>
                                         </connections>
                                     </collectionView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YUt-7A-iHh">
+                                        <rect key="frame" x="113" y="62" width="148" height="41"/>
+                                        <string key="text">Nothing to do here.
+Go and get a car!</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -566,14 +566,6 @@ Go and get a car!</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M3e-bS-Vsg" userLabel="Card Offering" customClass="CardView" customModule="ios" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="250" width="375" height="182"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFc-RM-uob">
-                                        <rect key="frame" x="86" y="70" width="203.5" height="41"/>
-                                        <string key="text">No offerings yet.
-Time to earn some money!</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.90072697401046753" green="0.32094269990921021" blue="0.00075562874553725123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your offerings:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyu-sF-jaf">
                                         <rect key="frame" x="10" y="10" width="355" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -706,6 +698,14 @@ Time to earn some money!</string>
                                             <outlet property="delegate" destination="PcC-rc-5Iw" id="oWV-BD-OqC"/>
                                         </connections>
                                     </collectionView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IFc-RM-uob">
+                                        <rect key="frame" x="86" y="70" width="203.5" height="41"/>
+                                        <string key="text">No offerings yet.
+Time to earn some money!</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.90072697401046753" green="0.32094269990921021" blue="0.00075562874553725123" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -727,14 +727,6 @@ Time to earn some money!</string>
                                         <rect key="frame" x="10" y="10" width="355" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfU-3n-HKP">
-                                        <rect key="frame" x="95" y="62" width="185.5" height="41"/>
-                                        <string key="text">Nothing to do right now!
-Enjoy your day :)</string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="B8x-W3-Yxo" customClass="ScalingCarouselView" customModule="ScalingCarousel">
@@ -974,6 +966,14 @@ Enjoy your day :)</string>
                                             <outlet property="delegate" destination="PcC-rc-5Iw" id="v0j-OX-B7c"/>
                                         </connections>
                                     </collectionView>
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pfU-3n-HKP">
+                                        <rect key="frame" x="95" y="62" width="185.5" height="41"/>
+                                        <string key="text">Nothing to do right now!
+Enjoy your day :)</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
