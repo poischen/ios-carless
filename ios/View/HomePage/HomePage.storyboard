@@ -256,9 +256,6 @@ Go and get a car!</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="5GT-v3-AcM"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="denyButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="yM4-KS-wXJ"/>
-                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ceo-L1-gJt" userLabel="Button rate" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
@@ -266,10 +263,6 @@ Go and get a car!</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="STu-az-jzg"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="acceptButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="s1v-UJ-ce0"/>
-                                                                                <action selector="offeringButtonTapped:" destination="p8c-IO-YIU" eventType="touchUpInside" id="kVk-07-3q1"/>
-                                                                            </connections>
                                                                         </button>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="status" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FmG-Pc-sub">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
@@ -492,9 +485,6 @@ Go and get a car!</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="aTa-WP-gYN"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="denyButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="k2z-mu-p7f"/>
-                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Bq-jna" userLabel="Button rate" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
@@ -502,10 +492,6 @@ Go and get a car!</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="8je-Qs-ddC"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="acceptButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="zti-PD-QWH"/>
-                                                                                <action selector="offeringButtonTapped:" destination="p8c-IO-YIU" eventType="touchUpInside" id="gWL-sd-K11"/>
-                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>
@@ -637,17 +623,9 @@ Time to earn some money!</string>
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <view alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KPl-g8-bqe">
-                                                                            <rect key="frame" x="27" y="21" width="80" height="80"/>
-                                                                            <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                                        </view>
                                                                     </subviews>
                                                                     <constraints>
-                                                                        <constraint firstItem="KPl-g8-bqe" firstAttribute="width" secondItem="P3d-k3-Sea" secondAttribute="width" id="EM8-c7-FeH"/>
                                                                         <constraint firstItem="P3d-k3-Sea" firstAttribute="centerX" secondItem="L5E-99-cAT" secondAttribute="centerX" id="GMp-0G-H1X"/>
-                                                                        <constraint firstItem="KPl-g8-bqe" firstAttribute="height" secondItem="P3d-k3-Sea" secondAttribute="height" id="XJx-nX-bS2"/>
-                                                                        <constraint firstItem="KPl-g8-bqe" firstAttribute="leading" secondItem="P3d-k3-Sea" secondAttribute="leading" id="fzG-N4-bCf"/>
-                                                                        <constraint firstItem="KPl-g8-bqe" firstAttribute="top" secondItem="P3d-k3-Sea" secondAttribute="top" id="iPp-oY-PGG"/>
                                                                         <constraint firstItem="P3d-k3-Sea" firstAttribute="centerY" secondItem="L5E-99-cAT" secondAttribute="centerY" id="mxl-F2-Z1L"/>
                                                                     </constraints>
                                                                 </view>
@@ -934,9 +912,6 @@ Enjoy your day :)</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="6aV-j5-LeE"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="denyButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="sNO-IR-vaV"/>
-                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gEV-fw-twN" userLabel="Button accept" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
@@ -944,9 +919,6 @@ Enjoy your day :)</string>
                                                                                 <constraint firstAttribute="height" constant="30" id="qVN-lS-lmx"/>
                                                                             </constraints>
                                                                             <state key="normal" title="Button"/>
-                                                                            <connections>
-                                                                                <action selector="acceptButtonTapped:" destination="ukc-8F-Ff9" eventType="touchUpInside" id="Qfc-hr-jzf"/>
-                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>

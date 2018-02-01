@@ -16,11 +16,13 @@ class YouRented: RentingEvent {
     let offering: Offering
     let brand: Brand
     let isRateable: Bool
+    let coUser: User
     
-    init(renting: Renting, offering: Offering, brand: Brand, isRateable: Bool) {
+    init(renting: Renting, offering: Offering, brand: Brand, isRateable: Bool, coUser: User) {
         self.renting = renting
         self.offering = offering
         self.brand = brand
         self.isRateable = isRateable
+        self.coUser = coUser
     }
 }

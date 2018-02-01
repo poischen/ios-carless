@@ -208,12 +208,15 @@ extension HomePageViewController: UICollectionViewDataSource {
              count = currentUsersOfferings.count
              }
         case self.usersRentingsRequestsTable:
+            print("CASE usersRentingsRequestsTable")
             if let currentUsersRentingRequests = usersRentingRequests {
                 count = currentUsersRentingRequests.count
             }
         default:
             print("non-intended use of HomePageViewController as delegate for an unknown table view (in numberOfRowsInSection)")
         }
+        print(collectionView)
+        print(count)
         return count
     }
     
@@ -222,14 +225,11 @@ extension HomePageViewController: UICollectionViewDataSource {
         var returnCell: ScalingCarouselCell = ScalingCarouselCell()
         switch collectionView {
         case self.usersRentingsTable:
-            print("CASE usersRentingsTable")
             if let currentRentingEvents = rentingEvents {
-                print("CASE rentingEvents")
                 let event = currentRentingEvents[indexPath.row]
                 // check type of event and then get the right kind of table cell
                 switch event.type {
                 case .somebodyRented:
-                    print("CASE somebodyRented")
                     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell{
                         // pass event to cell to fill the labels
                         cell.event = event
@@ -238,9 +238,7 @@ extension HomePageViewController: UICollectionViewDataSource {
                     }
                     
                 case .youRented:
-                    print("CASE youRented")
                     if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as? YouRentedTableViewCell {
-                        print("CASE youRented innerhalb")
                         // pass event to cell to fill the labels
                         cell.event = event
                         cell.delegate = self
@@ -249,7 +247,6 @@ extension HomePageViewController: UICollectionViewDataSource {
                 }
             }
             case self.usersOfferingsTable:
-                print("CASE usersOfferingTable")
              if let currentUsersOfferings = usersOfferingsAndBrands {
              // initialisation of this cell is in this class as no special cell class is used here
              let (offering, brand) = currentUsersOfferings[indexPath.row]
@@ -268,7 +265,6 @@ extension HomePageViewController: UICollectionViewDataSource {
                 }
              }
         case self.usersRentingsRequestsTable:
-            print("CASE usersRentingsRequestsTable")
             if let currentUsersRentingRequests = usersRentingRequests {
                 let somebodyRented = currentUsersRentingRequests[indexPath.row]
                 if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as? UserRentingRequestsTableViewCell {

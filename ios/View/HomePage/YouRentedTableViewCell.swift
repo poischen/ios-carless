@@ -13,7 +13,6 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     
     static let identifier = "YouRentedTableViewCell"
     
-    @IBOutlet var mainView: UIView!
     @IBOutlet weak var actionLabel: UILabel!
     @IBOutlet weak var carImage: RoundImage!
     @IBOutlet weak var startDateLabel: UILabel!
@@ -34,9 +33,10 @@ class YouRentedTableViewCell: ScalingCarouselCell {
                 return
             }
             // setting labels'/buttons' texts
-            carNameLabel.text = event.brand.name + " " + event.offering.type
+            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.coUser.name
             startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            priceLabel.text = "\(event.offering.basePrice)" + " €"
             if (event.renting.confirmationStatus) {
                 // renting is confirmed -> show message
                 statusLabel.text = YouRentedTableViewCell.ACCEPTED_STATUS_MESSAGE

@@ -85,8 +85,11 @@ class HomePageModel {
                     self.storageAPI.getOfferingWithBrandByOfferingID(offeringID: renting.inseratID, completion: {offeringResult in
                         if let (offering,offeringsBrand) = offeringResult {
                             let rateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: false)
-                            let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable)
-                            result.append(newYouRented)
+                            
+                            self.storageAPI.getUserByUID(UID: offering.userUID, completion: { (user) in
+                                let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable, coUser: user)
+                                result.append(newYouRented)
+                            })
                         } else {
                             // offering not found -> decrease number of offerings needed for completion
                             numberOfRentings = numberOfRentings - 1
@@ -168,8 +171,11 @@ class HomePageModel {
                             for renting in offeringsRentings {
                                 self.storageAPI.getUserByUID(UID: renting.userID, completion: {rentingUser in
                                     let isRateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: true)
-                                    let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable)
-                                    resultsForThisOffering.append(somebodyRented)
+                                    
+                                    self.storageAPI.getUserByUID(UID: renting.userID, completion: { (user) in
+                                        let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable, coUser: user)
+                                        resultsForThisOffering.append(somebodyRented)
+                                    })
                                     if (resultsForThisOffering.count == offeringsRentings.count) {
                                         // all rentings for this offering processed -> offering processed -> fire callback
                                         completion(offering.id!, resultsForThisOffering)

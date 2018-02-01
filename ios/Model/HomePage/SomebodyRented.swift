@@ -17,12 +17,14 @@ class SomebodyRented: RentingEvent {
     let brand: Brand
     let isRateable: Bool
     let userThatRented: User
+    let coUser: User
     
-    init(renting: Renting, offering: Offering, brand: Brand, userThatRented: User, isRateable: Bool) {
+    init(renting: Renting, offering: Offering, brand: Brand, userThatRented: User, isRateable: Bool, coUser: User) {
         self.renting = renting
         self.offering = offering
         self.brand = brand
         self.isRateable = isRateable
         self.userThatRented = userThatRented
+        self.coUser = coUser
     }
 }

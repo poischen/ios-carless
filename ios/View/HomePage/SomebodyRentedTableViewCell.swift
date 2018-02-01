@@ -13,7 +13,6 @@ class SomebodyRentedTableViewCell: ScalingCarouselCell {
     
     static let identifier = "SomebodyRentedTableViewCell"
 
-    @IBOutlet var mainView: UIView!
     @IBOutlet weak var actionLabel: UILabel!
     @IBOutlet weak var profileImage: RoundImage!
     @IBOutlet weak var startDateLabel: UILabel!
@@ -30,10 +29,11 @@ class SomebodyRentedTableViewCell: ScalingCarouselCell {
                 return
             }
             // setting labels'/buttons' texts
-            carNameLabel.text = event.brand.name + " " + event.offering.type
-            userButton.setTitle(event.userThatRented.name, for: .normal)
-            rentingStartLabel.text = DateHelper.dateToString(date: event.renting.startDate)
-            rentingEndLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.coUser.name
+            offeringButton.setTitle("about the car", for: .normal)
+            startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
+            priceLabel.text = "\(event.offering.basePrice)" + " €"
             if (event.isRateable) {
                 // renting is rateable -> show rating button
                 rateButton.isHidden = false
