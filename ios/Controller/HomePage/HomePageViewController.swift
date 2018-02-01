@@ -208,7 +208,6 @@ extension HomePageViewController: UICollectionViewDataSource {
              count = currentUsersOfferings.count
              }
         case self.usersRentingsRequestsTable:
-            print("CASE usersRentingsRequestsTable")
             if let currentUsersRentingRequests = usersRentingRequests {
                 count = currentUsersRentingRequests.count
             }
