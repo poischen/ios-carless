@@ -47,4 +47,24 @@ class CalendarLogic {
             }
         }
     }
+    
+    static func shouldDeselectDate(usingCalendar: UsingCalendar) -> Bool{
+        // this function ensures that when one date from the current date interval is deselected all others are too
+        // -> deselecting one date from the current date interval is sufficient
+        if usingCalendar.recursiveDeselectionCall == true {
+            // this is a reursive call -> only deselect cell and don't start a new recursive call
+            return true
+        } else {
+            if let currentFistDate = usingCalendar.firstDate, let currentLastDate = usingCalendar.lastDate {
+                // deselect current date interval
+                usingCalendar.recursiveDeselectionCall = true // prevent endless recursion
+                usingCalendar.calendarView.deselectDates(from: currentFistDate, to: currentLastDate, triggerSelectionDelegate: true)
+                usingCalendar.recursiveDeselectionCall = false
+                // unset first date and last date
+                usingCalendar.firstDate = nil
+                usingCalendar.lastDate = nil
+            }
+            return false
+        }
+    }
 }

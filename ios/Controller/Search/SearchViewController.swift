@@ -296,7 +296,7 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        // this function ensures that when one date from the current date interval is deselected all others are too
+        /*// this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
             // this is a reursive call -> only deselect cell and don't start a new recursive call
@@ -312,7 +312,8 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
                 lastDate = nil
             }
             return false
-        }
+        }*/
+        return CalendarLogic.shouldDeselectDate(usingCalendar: self)
     }
 }
 

@@ -9,7 +9,7 @@
 import UIKit
 import JTAppleCalendar
 
-class AvailibilityAndBookingViewController: UIViewController {
+class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
     
     var pageViewController: AdvertisePagesVC!
     let storageAPI = StorageAPI.shared
@@ -286,7 +286,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         guard let cell = cell as? AvailibilityCalendarCell else {return}
         handleSelectionVisually(view: cell, cellState: cellState)
-        if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
+        /*if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
             if let currentFirstDate = firstDate {
                 // first date set
                 if lastDate != nil {
@@ -320,7 +320,8 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                 // first date not set yet -> set first date
                 firstDate = date
             }
-        }
+        }*/
+        CalendarLogic.didSelectDate(usingCalendar: self, selectedDate: date)
         checkAvailibility()
     }
     
@@ -341,7 +342,7 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
     }
     
     func calendar(_ calendar: JTAppleCalendarView, shouldDeselectDate date: Date, cell: JTAppleCell?, cellState: CellState) -> Bool {
-        // this function ensures that when one date from the current date interval is deselected all others are too
+        /* // this function ensures that when one date from the current date interval is deselected all others are too
         // -> deselecting one date from the current date interval is sufficient
         if recursiveDeselectionCall == true {
             // this is a reursive call -> only deselect cell and don't start a new recursive call
@@ -359,7 +360,8 @@ extension AvailibilityAndBookingViewController: JTAppleCalendarViewDelegate {
                 reservationButton.isEnabled = false
             }
             return false
-        }
+        } */
+        return CalendarLogic.shouldDeselectDate(usingCalendar: self)
     }
 
 
