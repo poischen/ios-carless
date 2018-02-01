@@ -40,6 +40,8 @@
 		19CB76FC1FD44E8C00B291CE /* DBConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CB76FB1FD44E8C00B291CE /* DBConstants.swift */; };
 		19CE072C1FC41C250087E958 /* Brand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19CE072B1FC41C250087E958 /* Brand.swift */; };
 		19D4126B1FB707D500794F1F /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D4126A1FB707D500794F1F /* Feature.swift */; };
+		19D65F0220239D6B000B5183 /* UsingCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D65F0120239D6B000B5183 /* UsingCalendar.swift */; };
+		19D65F0420239E60000B5183 /* CalendaLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D65F0320239E60000B5183 /* CalendaLogic.swift */; };
 		19D87BF22018B83C00FCB93D /* YouRented.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19D87BF12018B83C00FCB93D /* YouRented.swift */; };
 		19E458EE20178A0B00B45E7F /* RentingEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E458ED20178A0B00B45E7F /* RentingEventType.swift */; };
 		19E458F020178A5500B45E7F /* RentingEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19E458EF20178A5500B45E7F /* RentingEvent.swift */; };
@@ -152,6 +154,8 @@
 		19CB76FB1FD44E8C00B291CE /* DBConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBConstants.swift; sourceTree = "<group>"; };
 		19CE072B1FC41C250087E958 /* Brand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Brand.swift; sourceTree = "<group>"; };
 		19D4126A1FB707D500794F1F /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		19D65F0120239D6B000B5183 /* UsingCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsingCalendar.swift; sourceTree = "<group>"; };
+		19D65F0320239E60000B5183 /* CalendaLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendaLogic.swift; sourceTree = "<group>"; };
 		19D87BF12018B83C00FCB93D /* YouRented.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YouRented.swift; sourceTree = "<group>"; };
 		19E458ED20178A0B00B45E7F /* RentingEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingEventType.swift; sourceTree = "<group>"; };
 		19E458EF20178A5500B45E7F /* RentingEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentingEvent.swift; sourceTree = "<group>"; };
@@ -376,6 +380,7 @@
 				19A3F8611FF5AAEE00FA2D95 /* Rating.swift */,
 				84FB20B91FFFD78300E351C1 /* Advertise.swift */,
 				847D337A2002A53D00493402 /* ShowOffer.swift */,
+				19D65F0320239E60000B5183 /* CalendaLogic.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -416,6 +421,7 @@
 				19EE2B921FD9F05B004674F0 /* DictionaryConvertibleEditable.swift */,
 				19C31D8620027A8D004534F0 /* DictionaryConvertibleStatic.swift */,
 				194C2E991FE7C44200E34EF8 /* SelectableItem.swift */,
+				19D65F0120239D6B000B5183 /* UsingCalendar.swift */,
 			);
 			path = "general Interfaces";
 			sourceTree = "<group>";
@@ -981,6 +987,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19C9E9AB1FB1A4BE002F4C84 /* StorageAPI.swift in Sources */,
+				19D65F0420239E60000B5183 /* CalendaLogic.swift in Sources */,
 				840D63C61FE9A4CB007A1F16 /* AdvertiseFeaturesCollectionViewCell.swift in Sources */,
 				84FC9CF5200C0C5C001B2B2B /* ProfileViewController.swift in Sources */,
 				84BD53FD2005290900BE9790 /* AdvertiseHelper.swift in Sources */,
@@ -1034,6 +1041,7 @@
 				19CE072C1FC41C250087E958 /* Brand.swift in Sources */,
 				19A7FA7A1FD2D2C900FA7C8D /* Renting.swift in Sources */,
 				19EE8F352006A40700204C73 /* CoordinatePoint.swift in Sources */,
+				19D65F0220239D6B000B5183 /* UsingCalendar.swift in Sources */,
 				193966C41FF57EDE008C76A8 /* RateViewController.swift in Sources */,
 				194769231FC8480000AB02E4 /* SearchResultsViewController.swift in Sources */,
 				7734A9A01FD6F2520013A923 /* ChatWindowVC.swift in Sources */,

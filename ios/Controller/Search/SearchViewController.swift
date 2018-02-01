@@ -10,7 +10,7 @@ import UIKit
 import JTAppleCalendar
 import GooglePlacePicker
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UsingCalendar {
     
     // UI components for the calendar
     @IBOutlet weak var calendarView: JTAppleCalendarView!
@@ -240,7 +240,7 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
     // handle the selection of a cell, select other cells between first and last date if necessary
     func calendar(_ calendar: JTAppleCalendarView, didSelectDate date: Date, cell: JTAppleCell?, cellState: CellState) {
         handleSelection(cell: cell, cellState: cellState) // always recolor cell ...
-        if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
+        /* if recursiveSelectionCall == false { // ... but only examine whether a recursive call is necessary when this isn't already a recursive cell
             if let currentFirstDate = firstDate {
                 // first date set
                 if lastDate != nil {
@@ -275,7 +275,8 @@ extension SearchViewController: JTAppleCalendarViewDelegate{
                 // first date not set yet -> set first date
                 firstDate = date
             }
-        }
+        } */
+        CalendarLogic.didSelectDate(usingCalendar: self, selectedDate: date)
     }
     
     // date deselected -> update cell's background
