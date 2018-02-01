@@ -8,8 +8,9 @@
 
 import UIKit
 import Cosmos
+import ScalingCarousel
 
-class RatingsCollectionViewCell: UICollectionViewCell {
+class RatingsCollectionViewCell: ScalingCarouselCell {
     
     @IBOutlet weak var userRatingDescription: UITextView!
     @IBOutlet weak var userRatingStars: CosmosView!

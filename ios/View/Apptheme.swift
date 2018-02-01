@@ -42,13 +42,15 @@ struct Palette {
     }
 }
 
-@IBDesignable class InputField: UITextField {
-    @IBInspectable var borderColor: CGColor = Theme.palette.darkgrey.cgColor
+@IBDesignable class ChatInputField: UITextField {
+    @IBInspectable var cornerRadius: CGFloat = 3
+    @IBInspectable var borderColor: CGColor = Theme.palette.lightgrey.cgColor
     @IBInspectable var borderWidth: CGFloat = 1
     
     override func layoutSubviews() {
         layer.borderWidth = borderWidth
         layer.borderColor = borderColor
+        layer.cornerRadius = cornerRadius
     }
 }
 

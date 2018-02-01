@@ -5,7 +5,6 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -19,11 +18,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMK-av-MJU">
-                                <rect key="frame" x="10" y="74" width="355" height="179.5"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMK-av-MJU" customClass="CardView" customModule="ios" customModuleProvider="target">
+                                <rect key="frame" x="10" y="74" width="355" height="207"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am Trobot, ask me anything about traffic rules or just talk to me if you are bored." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-GN-UNA">
-                                        <rect key="frame" x="15" y="15" width="325" height="149.5"/>
+                                        <rect key="frame" x="15" y="15" width="325" height="177"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -38,32 +37,11 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rv0-kQ-Pic" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="10" y="263.5" width="355" height="332.5"/>
+                                <rect key="frame" x="10" y="291" width="355" height="277"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bot" translatesAutoresizingMaskIntoConstraints="NO" id="VZ9-WE-pQy">
-                                        <rect key="frame" x="15" y="40" width="325" height="277.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="VZ9-WE-pQy" secondAttribute="height" multiplier="75:64" id="MBY-ne-fMi"/>
-                                        </constraints>
+                                        <rect key="frame" x="15" y="26" width="325" height="236"/>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe" customClass="InputField" customModule="ios" customModuleProvider="target">
-                                        <rect key="frame" x="6" y="123" width="343" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
-                                        <rect key="frame" x="157" y="123" width="40" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Send"/>
-                                        <connections>
-                                            <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -72,18 +50,46 @@
                                     <constraint firstAttribute="bottom" secondItem="VZ9-WE-pQy" secondAttribute="bottom" constant="15" id="QRK-Pd-Fhf"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe" customClass="InputField" customModule="ios" customModuleProvider="target">
+                                <rect key="frame" x="16" y="318" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VbU-D4-IoB">
+                                <rect key="frame" x="167" y="318" width="40" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Send"/>
+                                <connections>
+                                    <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptb-VG-Xy5">
+                                <rect key="frame" x="0.0" y="578" width="375" height="40"/>
+                                <color key="backgroundColor" red="0.97639912366867065" green="0.97651249170303345" blue="0.97634702920913696" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="QEz-FE-asB"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" red="0.0" green="0.50196081400000003" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="YMK-av-MJU" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" constant="10" id="8Jg-Z7-ms2"/>
                             <constraint firstItem="Rv0-kQ-Pic" firstAttribute="top" secondItem="YMK-av-MJU" secondAttribute="bottom" constant="10" id="EO3-d3-7Vs"/>
-                            <constraint firstItem="DQG-fw-oW6" firstAttribute="bottom" secondItem="Rv0-kQ-Pic" secondAttribute="bottom" constant="22" id="FHE-ni-o3E"/>
+                            <constraint firstItem="DQG-fw-oW6" firstAttribute="bottom" secondItem="Rv0-kQ-Pic" secondAttribute="bottom" constant="50" id="FHE-ni-o3E"/>
                             <constraint firstItem="YMK-av-MJU" firstAttribute="top" secondItem="DQG-fw-oW6" secondAttribute="top" constant="10" id="Qlt-NK-C3w"/>
                             <constraint firstItem="DQG-fw-oW6" firstAttribute="trailing" secondItem="Rv0-kQ-Pic" secondAttribute="trailing" constant="10" id="RbD-TC-x7n"/>
+                            <constraint firstItem="ptb-VG-Xy5" firstAttribute="trailing" secondItem="DQG-fw-oW6" secondAttribute="trailing" id="elP-cz-Op9"/>
                             <constraint firstItem="Rv0-kQ-Pic" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" constant="10" id="nIe-8g-Ozk"/>
-                            <constraint firstItem="Rv0-kQ-Pic" firstAttribute="height" secondItem="DQG-fw-oW6" secondAttribute="height" multiplier="0.6" id="rLU-IU-h9G"/>
+                            <constraint firstItem="Rv0-kQ-Pic" firstAttribute="height" secondItem="DQG-fw-oW6" secondAttribute="height" multiplier="0.5" id="rLU-IU-h9G"/>
                             <constraint firstItem="DQG-fw-oW6" firstAttribute="trailing" secondItem="YMK-av-MJU" secondAttribute="trailing" constant="10" id="uEj-f0-uC7"/>
+                            <constraint firstItem="ptb-VG-Xy5" firstAttribute="bottom" secondItem="DQG-fw-oW6" secondAttribute="bottom" id="xUY-Wx-PUd"/>
+                            <constraint firstItem="ptb-VG-Xy5" firstAttribute="leading" secondItem="DQG-fw-oW6" secondAttribute="leading" id="ybF-xd-czV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="DQG-fw-oW6"/>
                     </view>

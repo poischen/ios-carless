@@ -31,7 +31,7 @@ class ProfileViewController: UIViewController {
     static let PROFILE_STORYBOARD_IDENTIFIER = "Profile"
     
     let collectionViewRatingsIdentifier = "RatingsCollectionViewCell"
-    let collectionViewOffersIdentifier = "OffersCollectionViewCell"
+    let collectionViewOffersIdentifier = "usersOfferingsCell"
     
     let ratinsHL = "Other users about "
     let offersHL = "'s current offers"
@@ -58,7 +58,6 @@ class ProfileViewController: UIViewController {
         } else {
             self.setup(user: self.profileOwner!)
         }
-        
     }
     
     func setup(user: User) {
@@ -201,21 +200,27 @@ class ProfileViewController: UIViewController {
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        var count: Int
         if collectionView == self.collectionViewRatings {
             if let ratings = usersRatings {
-                return ratings.count
+                count = ratings.count
+                if count < 1 {
+                    noCurrentRatingsNote.isHidden = false
+                }
             } else {
-                noCurrentRatingsNote.isHidden = false
-                return 0
+                count = 0
             }
         } else {
             if let offers = usersOffers {
-                return offers.count
+                count = offers.count
+                if count < 1 {
+                    noCurrentOfferNote.isHidden = false
+                }
             } else {
-                noCurrentOfferNote.isHidden = false
-                return 0
+                count = 0
             }
         }
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -233,9 +238,10 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 cell.eProfileViewController = self
                 let offer = uo[indexPath.row] as Offering
                 cell.offer = offer
-                let imgUrl: URL = URL(string: offer.pictureURL)!
-                cell.offerCarImg.kf.indicatorType = .activity
-                cell.offerCarImg.kf.setImage(with: imgUrl)
+                let carImage: UIImage = UIImage(named: "carplaceholder")!
+                cell.offerCarImg.maskCircle(anyImage: carImage)
+                let CarImgUrl = URL(string: (offer.pictureURL))
+                cell.offerCarImg.kf.setImage(with: CarImgUrl)
                 cell.offerCarPrice.text = fromString + String(offer.basePrice) + currencyString
             }
             return cell
