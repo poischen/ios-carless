@@ -110,13 +110,13 @@ class ViewController: UIViewController, MessagingDelegate {
                 print("You have successfully signed up")
                 //Goes to the Setup page which lets the user take a photo for their profile picture and also chose a username
                 
-                self.goToHome()
-                
                 if let currentToken = self.fcmTokenLocal {
                     StorageAPI.shared.saveUser(withID: user!.uid, name: self.username.text!, email: self.email.text!, rating: 5.0, profileImg: "https://firebasestorage.googleapis.com/v0/b/ioscars-32e69.appspot.com/o/icons%2Fplaceholder%2Fuser.jpg?alt=media&token=5fd1a131-29d6-4a43-8d17-338590e01808", deviceID: currentToken)
                 } else {
                     print("Error: token is empty")
                 }
+                
+                
                 
             } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
