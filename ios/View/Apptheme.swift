@@ -113,11 +113,15 @@ struct Palette {
     @IBInspectable var borderColor: CGColor = Theme.palette.orange.cgColor
     
     override func draw(_ rect: CGRect) {
+        let image: UIImage = self.image
+        
         self.contentMode = UIViewContentMode.scaleAspectFill
         self.layer.cornerRadius = self.frame.height / 2
         self.layer.masksToBounds = false
         self.clipsToBounds = true
         self.layer.borderWidth = 1
         self.layer.borderColor = borderColor
+        
+        self.image = image
     }
 }

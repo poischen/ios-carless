@@ -13,14 +13,14 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     
     static let identifier = "YouRentedTableViewCell"
     
-    @IBOutlet weak var carNameLabel: UILabel!
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var userProfileImage: RoundImage!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
-    @IBOutlet weak var statusLabel: UILabel!
+    @IBOutlet weak var priceLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
-    
-    static let ACCEPTED_STATUS_MESSAGE = "confirmed"
-    static let PENDING_STATUS_MESSAGE = "pending"
+    @IBOutlet weak var offerButton: PurpleButton!
     
     var delegate: RatingProtocol?
     

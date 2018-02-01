@@ -218,34 +218,42 @@ extension HomePageViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        // set default cell that is overwritten is one of the cases matches
+        var returnCell: ScalingCarouselCell = ScalingCarouselCell()
         switch collectionView {
         case self.usersRentingsTable:
+            print("CASE usersRentingsTable")
             if let currentRentingEvents = rentingEvents {
+                print("CASE rentingEvents")
                 let event = currentRentingEvents[indexPath.row]
                 // check type of event and then get the right kind of table cell
                 switch event.type {
                 case .somebodyRented:
-                    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as! SomebodyRentedTableViewCell
+                    print("CASE somebodyRented")
+                    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SomebodyRentedTableViewCell.identifier, for: indexPath) as? SomebodyRentedTableViewCell{
                         // pass event to cell to fill the labels
                         cell.event = event
                         cell.delegate = self
-                        return cell
+                        returnCell = cell
+                    }
                     
                 case .youRented:
-                    /*let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as! YouRentedTableViewCell
+                    print("CASE youRented")
+                    if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: YouRentedTableViewCell.identifier, for: indexPath) as? YouRentedTableViewCell {
+                        print("CASE youRented innerhalb")
                         // pass event to cell to fill the labels
-
+                        cell.event = event
                         cell.delegate = self
-                        return cell*/
-                    print("fix later")
-                    
+                        returnCell = cell
+                    }
                 }
             }
             case self.usersOfferingsTable:
+                print("CASE usersOfferingTable")
              if let currentUsersOfferings = usersOfferingsAndBrands {
              // initialisation of this cell is in this class as no special cell class is used here
              let (offering, brand) = currentUsersOfferings[indexPath.row]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as! ProfileUsersOffersCollectionViewCell
+                if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as? ProfileUsersOffersCollectionViewCell {
                 cell.offer = offering
                 cell.eHomePageViewController = self
                 cell.offerCarPrice.text = "max." + "\(offering.basePrice)" + " €"
@@ -256,25 +264,25 @@ extension HomePageViewController: UICollectionViewDataSource {
                 let CarImgUrl = URL(string: (offering.pictureURL))
                 cell.offerCarImg.kf.setImage(with: CarImgUrl)
 
-                return cell
+                returnCell = cell
+                }
              }
         case self.usersRentingsRequestsTable:
+            print("CASE usersRentingsRequestsTable")
             if let currentUsersRentingRequests = usersRentingRequests {
                 let somebodyRented = currentUsersRentingRequests[indexPath.row]
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as! UserRentingRequestsTableViewCell
+                if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_REQUESTS_TABLE_CELL_IDENTIFIER, for: indexPath) as? UserRentingRequestsTableViewCell {
                     // pass event to cell to fill the labels
                     cell.somebodyRented = somebodyRented
                     cell.delegate = self
-                    return cell
+                    returnCell = cell
+                }
             }
         default:
             print("non-intended use of HomePageViewController as delegate for an unknown table view (in cellForRowAt)")
-            return UICollectionViewCell()
         }
-        return UICollectionViewCell()
+        return returnCell
     }
-    
-
 }
 
 
