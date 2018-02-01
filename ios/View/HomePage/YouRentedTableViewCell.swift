@@ -15,12 +15,16 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var actionLabel: UILabel!
-    @IBOutlet weak var userProfileImage: RoundImage!
+    @IBOutlet weak var carImage: RoundImage!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var statusLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
-    @IBOutlet weak var offerButton: PurpleButton!
+    @IBOutlet weak var profileButton: PurpleButton!
+    @IBOutlet weak var priceLabel: UILabel!
+    
+    static let ACCEPTED_STATUS_MESSAGE = "Renting confirmed"
+    static let PENDING_STATUS_MESSAGE = "Waiting for confirmation..."
     
     var delegate: RatingProtocol?
     
@@ -43,6 +47,7 @@ class YouRentedTableViewCell: ScalingCarouselCell {
             if (event.isRateable) {
                 // renting is rateable -> show rating button
                 rateButton.isHidden = false
+                statusLabel.isHidden = true
             } else {
                 rateButton.isHidden = true
             }
@@ -56,6 +61,13 @@ class YouRentedTableViewCell: ScalingCarouselCell {
         }
         currentDelegate.rateLessor(renting: currentEvent.renting)
     }
+    
+    @IBAction func offeringButtonTapped(_ sender: Any) {
+        /*if let offer = self.offer, let eHomePageViewController = self.eHomePageViewController {
+            eHomePageViewController.presentOfferView(offer: offer)
+        }*/
+    }
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -13,12 +13,14 @@ class SomebodyRentedTableViewCell: ScalingCarouselCell {
     
     static let identifier = "SomebodyRentedTableViewCell"
 
-    @IBOutlet weak var carNameLabel: UILabel!
-    @IBOutlet weak var userNameLabel: UILabel!
+    @IBOutlet var mainView: UIView!
+    @IBOutlet weak var actionLabel: UILabel!
+    @IBOutlet weak var profileImage: RoundImage!
+    @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var rateButton: UIButton!
-    @IBOutlet weak var userButton: UIButton!
-    @IBOutlet weak var rentingStartLabel: UILabel!
-    @IBOutlet weak var rentingEndLabel: UILabel!
+    @IBOutlet weak var offeringButton: PurpleButton!
+    @IBOutlet weak var priceLabel: UILabel!
     
     var delegate: RatingProtocol?
     
