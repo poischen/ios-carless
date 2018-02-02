@@ -75,6 +75,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
         
+        self.collectionView.backgroundColor = UIColor.lightGray
+        
         observeUserMessages()
         observeUserMediaMessages()
         
@@ -96,9 +98,9 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         let message = messages[indexPath.item]
         
         if message.senderId == self.senderId {
-            return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.blue)
+            return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.purple)
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.gray)
+            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.orange)
         }
         
     }

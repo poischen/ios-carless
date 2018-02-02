@@ -83,8 +83,8 @@
                     <view key="view" contentMode="scaleToFill" id="WmT-6y-q4e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.87836664915084839" green="0.87846916913986206" blue="0.87831944227218628" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <viewLayoutGuide key="safeArea" id="zmE-M5-ato"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="zmE-M5-ato" colorLabel="IBBuiltInLabel-Gray"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="37G-l3-ne7"/>
                 </viewController>
