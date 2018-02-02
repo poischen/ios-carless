@@ -116,7 +116,7 @@ class ViewController: UIViewController, MessagingDelegate {
                     print("Error: token is empty")
                 }
                 
-                
+                self.goToHome()
                 
             } else {
                     let alertController = UIAlertController(title: "Error", message: error?.localizedDescription, preferredStyle: .alert)
