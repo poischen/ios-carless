@@ -176,12 +176,8 @@ class HomePageModel {
                                 self.storageAPI.getUserByUID(UID: renting.userID, completion: {rentingUser in
                                     let isRateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: true)
                                     
-                                    let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable, coUser: rentingUser)
+                                    let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable)
                                     resultsForThisOffering.append(somebodyRented)
-                                    /* self.storageAPI.getUserByUID(UID: renting.userID, completion: { (user) in
-                                        let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable, coUser: user)
-                                        resultsForThisOffering.append(somebodyRented)
-                                    }) */
                                     if (resultsForThisOffering.count == offeringsRentings.count) {
                                         // all rentings for this offering processed -> offering processed -> fire callback
                                         completion(offering.id!, resultsForThisOffering)

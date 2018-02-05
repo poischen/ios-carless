@@ -29,7 +29,7 @@ class SomebodyRentedTableViewCell: ScalingCarouselCell {
                 return
             }
             // setting labels'/buttons' texts
-            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.coUser.name
+            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.userThatRented.name
             offeringButton.setTitle("about the car", for: .normal)
             startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
