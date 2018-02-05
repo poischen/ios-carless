@@ -14,7 +14,7 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     static let identifier = "YouRentedTableViewCell"
     
     @IBOutlet weak var actionLabel: UILabel!
-    @IBOutlet weak var carImage: RoundImage!
+    @IBOutlet weak var carImageView: RoundImage!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -23,7 +23,7 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     @IBOutlet weak var priceLabel: UILabel!
     
     static let ACCEPTED_STATUS_MESSAGE = "Renting confirmed"
-    static let PENDING_STATUS_MESSAGE = "Waiting for confirmation..."
+    static let PENDING_STATUS_MESSAGE = "Confirmation pending..."
     
     var delegate: RatingProtocol?
     
@@ -33,7 +33,8 @@ class YouRentedTableViewCell: ScalingCarouselCell {
                 return
             }
             // setting labels'/buttons' texts
-            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.coUser.name
+            actionLabel.text = "You rented " + event.brand.name + " " + event.offering.type + " from " + event.coUser.name
+            profileButton.setTitle("about " + event.coUser.name, for: .normal)
             startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             priceLabel.text = "\(event.offering.basePrice)" + " €"
@@ -51,7 +52,24 @@ class YouRentedTableViewCell: ScalingCarouselCell {
             } else {
                 rateButton.isHidden = true
             }
+            
+            let carImage: UIImage = UIImage(named: "carplaceholder")!
+            carImageView.maskCircle(anyImage: carImage)
+            let carImgUrl = URL(string: (event.offering.pictureURL))
+            carImageView.kf.setImage(with: carImgUrl)
+            
+            let carImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.offerPicTapped))
+            self.carImageView.isUserInteractionEnabled = true
+            self.carImageView.addGestureRecognizer(carImageGestureRecognizer)
         }
+    }
+    
+    func offerPicTapped(){
+        guard let currentDelegate = delegate,
+            let currentEvent = event as? YouRented else {
+                return
+        }
+        currentDelegate.goToOffer(offer: currentEvent.offering)
     }
     
     @IBAction func rateButtonTapped(_ sender: Any) {
@@ -62,10 +80,12 @@ class YouRentedTableViewCell: ScalingCarouselCell {
         currentDelegate.rateLessor(renting: currentEvent.renting)
     }
     
-    @IBAction func offeringButtonTapped(_ sender: Any) {
-        /*if let offer = self.offer, let eHomePageViewController = self.eHomePageViewController {
-            eHomePageViewController.presentOfferView(offer: offer)
-        }*/
+    @IBAction func profileButtonTapped(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentEvent = event as? SomebodyRented else {
+                return
+        }
+        currentDelegate.goToProfile(user: currentEvent.userThatRented)
     }
     
     
@@ -73,8 +93,4 @@ class YouRentedTableViewCell: ScalingCarouselCell {
         super.awakeFromNib()
     }
     
-/*    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-    }
-  */
 }

@@ -254,14 +254,17 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="5GT-v3-AcM"/>
                                                                             </constraints>
-                                                                            <state key="normal" title="Button"/>
+                                                                            <state key="normal" title="about the lessor"/>
+                                                                            <connections>
+                                                                                <action selector="profileButtonTapped:" destination="p8c-IO-YIU" eventType="touchUpInside" id="O1s-LY-hR8"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ceo-L1-gJt" userLabel="Button rate" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="STu-az-jzg"/>
                                                                             </constraints>
-                                                                            <state key="normal" title="Button"/>
+                                                                            <state key="normal" title="rate"/>
                                                                             <connections>
                                                                                 <action selector="rateButtonTapped:" destination="p8c-IO-YIU" eventType="touchUpInside" id="RMd-j5-T3p"/>
                                                                             </connections>
@@ -312,7 +315,7 @@
                                                 </constraints>
                                                 <connections>
                                                     <outlet property="actionLabel" destination="Ut9-fa-Xml" id="hKb-nF-qz7"/>
-                                                    <outlet property="carImage" destination="L3Z-2f-VaU" id="vyv-ha-7kk"/>
+                                                    <outlet property="carImageView" destination="L3Z-2f-VaU" id="vyv-ha-7kk"/>
                                                     <outlet property="endDateLabel" destination="yyL-Iz-Wd6" id="GeZ-Qk-K8Y"/>
                                                     <outlet property="mainView" destination="Hhm-wK-cID" id="Ojw-yW-dOR"/>
                                                     <outlet property="priceLabel" destination="nl3-zr-wmi" id="YXO-iK-KG9"/>

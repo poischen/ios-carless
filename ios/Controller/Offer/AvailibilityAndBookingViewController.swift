@@ -237,7 +237,11 @@ class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
         indicator.startAnimating()
         storageAPI.generateRentingKey(completion: {(rentingID) in
             if let uid = self.storageAPI.userID(){
-                let renting = Renting(id: rentingID, inseratID: self.offer!.id!, userID: uid, startDate: self.firstDate!, endDate: self.lastDate!, confirmationStatus: false, rentingPrice: self.totalPrice, lessorRated: false, lesseeRated: false)
+                guard let offering = self.offer, let offerID = offering.id, let firstDate = self.firstDate, let endDate = self.lastDate else {
+                    self.failureFeedback()
+                    return
+                }
+                let renting = Renting(id: rentingID, inseratID: offerID, userID: uid, startDate: firstDate, endDate: endDate, confirmationStatus: false, rentingPrice: self.totalPrice, lessorRated: false, lesseeRated: false)
                 self.storageAPI.saveRenting(renting: renting, completion: { (statusMessage) in
                     if (statusMessage == StorageAPI.STORAGE_API_SUCCESS) {
                         MessageHandler.shared.handleSend(senderID: MessageHandler.defaultUserButtlerJamesID, receiverID: self.offer!.userUID, text: MessageHandler.DEFAULT_MESSAGE_RENTING_REQUEST + " " + self.offer!.type + " for " + "\(self.totalPrice)" + " €")
@@ -250,17 +254,21 @@ class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
                             self.present(alert, animated: true, completion: nil)
                         
                     } else {
-                        self.reservationButton.isEnabled = true
-                        self.resultView.text = ""
-                        self.hiddenElementsView.isHidden = true
-                        let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
-                        let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
-                        alertMissingInputs.addAction(ok)
-                        self.present(alertMissingInputs, animated: true, completion: nil)
+                        self.failureFeedback()
                     }
                 })
             }
         })
+    }
+    
+    func failureFeedback(){
+        self.reservationButton.isEnabled = true
+        self.resultView.text = ""
+        self.hiddenElementsView.isHidden = true
+        let alertMissingInputs = UIAlertController(title: "Something went wrong", message: "Please try again later.", preferredStyle: .alert)
+        let ok = UIAlertAction(title: "OK", style:.default, handler: nil)
+        alertMissingInputs.addAction(ok)
+        self.present(alertMissingInputs, animated: true, completion: nil)
     }
     
 }

@@ -38,7 +38,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     let SEATS_LABEL_END_TEXT = " seats"
     let MILEAGE_LABEL_END_TEXT = "l/100km"
     let PRICE_LABEL_END_TEXT = "€ per day"
-    let PRICE_LABEL_START_TEXT = "from "
+    let PRICE_LABEL_START_TEXT = "max. "
     
     let LOADING_PLACEHOLDER_TEXT = "loading"
     
