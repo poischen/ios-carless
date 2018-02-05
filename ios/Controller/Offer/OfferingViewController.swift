@@ -21,6 +21,7 @@ class OfferingViewController: UIViewController {
     
     var lessor: User?
     var cameFromAdvertise = false
+    var cameFromHomepage = false
     var advertisePagesController: AdvertisePagesVC?
 
     @IBOutlet weak var carImageView: UIImageView!
@@ -48,6 +49,8 @@ class OfferingViewController: UIViewController {
     let SEGUE_AVAILIBILITY_CHECK = "availibilityCheckSegue"
     let identifierBasicDataCollectionView = "basicDetailsCollectionViewCell"
     let identifierFeaturesCollectionView = "featuresCollectionViewCell"
+    static let OFFERING_NAVIGATION_IDENTIFIER = "OfferingNavigation"
+    static let OFFERING_STORYBOARD_IDENTIFIER = "Offering"
     
     let PICKUP_RETURN_DEFAULT = "00:00"
     let CURRENCY = "€"
@@ -135,6 +138,9 @@ class OfferingViewController: UIViewController {
             self.navigationItem.title = "Preview"
             actionItem.image = UIImage(named: "icondelete")
             chatBtn.isEnabled = false
+        }
+        if (cameFromHomepage) {
+            availibilityBtn.isEnabled = false
         }
         
         //set car infos (image, name, basic details) area --------------------------------------------------

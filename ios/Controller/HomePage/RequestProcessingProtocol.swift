@@ -12,4 +12,5 @@ protocol RequestProcessingProtocol {
     func acceptRequest(renting: Renting)
     func denyRequest(renting: Renting)
     func goToProfile(user: User)
+    func goToOffer(offer: Offering)
 }

@@ -61,7 +61,6 @@ class UserRentingRequestsTableViewCell: ScalingCarouselCell {
     }
     
     func profilePicTapped() {
-        print("TAPPED")
         guard let currentDelegate = delegate,
             let currentUser = rentingUser else {
                 return

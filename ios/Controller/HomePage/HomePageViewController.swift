@@ -144,6 +144,18 @@ class HomePageViewController: UIViewController, UICollectionViewDelegate {
         self.present(navProfileController, animated: true, completion: nil)
     }
     
+    func goToOffer(offer: Offering) {
+        let storyboard = UIStoryboard(name: OfferingViewController.OFFERING_STORYBOARD_IDENTIFIER, bundle: nil)
+        guard let navOfferingController = storyboard.instantiateViewController(withIdentifier: OfferingViewController.OFFERING_NAVIGATION_IDENTIFIER) as? UINavigationController,
+            let offeringController = navOfferingController.topViewController as? OfferingViewController else {
+                return
+        }
+        offeringController.displayingOffering = offer
+        offeringController.cameFromHomepage = true
+        
+        self.present(navOfferingController, animated: true, completion: nil)
+    }
+    
 }
 
 extension HomePageViewController: RequestProcessingProtocol{

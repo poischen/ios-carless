@@ -29,26 +29,43 @@ class SomebodyRentedTableViewCell: ScalingCarouselCell {
                 return
             }
             // setting labels'/buttons' texts
-            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.coUser.name
-            offeringButton.setTitle("about the car", for: .normal)
+            actionLabel.text = "You let " + event.brand.name + " " + event.offering.type + " to " + event.userThatRented.name
+            rateButton.setTitle("rate " + event.userThatRented.name, for: .normal)
             startDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             endDateLabel.text = DateHelper.dateToString(date: event.renting.startDate)
             priceLabel.text = "\(event.offering.basePrice)" + " €"
             if (event.isRateable) {
                 // renting is rateable -> show rating button
-                rateButton.isHidden = false
+                rateButton.isEnabled = false
             } else {
-                rateButton.isHidden = true
+                rateButton.isEnabled = true
             }
+            
+            let userImage: UIImage = UIImage(named: "ProfilePic")!
+            profileImage.maskCircle(anyImage: userImage)
+            let userImgUrl = URL(string: (event.userThatRented.profileImgUrl))
+            profileImage.kf.setImage(with: userImgUrl)
+            
+            let profileImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.profilePicTapped))
+            self.profileImage.isUserInteractionEnabled = true
+            self.profileImage.addGestureRecognizer(profileImageGestureRecognizer)
         }
     }
     
-    @IBAction func userButtonClicked(_ sender: Any) {
+    func profilePicTapped() {
         guard let currentDelegate = delegate,
             let currentEvent = event as? SomebodyRented else {
                 return
         }
         currentDelegate.goToProfile(user: currentEvent.userThatRented)
+    }
+    
+    @IBAction func offerButtonClicked(_ sender: Any) {
+        guard let currentDelegate = delegate,
+            let currentEvent = event as? SomebodyRented else {
+                return
+        }
+        currentDelegate.goToOffer(offer: currentEvent.offering)
     }
     
     @IBAction func rateButtonClicked(_ sender: Any) {

@@ -17,7 +17,9 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="l5H-XD-s3q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="selectedImageTintColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="3Ky-Hl-zVh" kind="relationship" relationship="viewControllers" id="3gu-Yl-9VN"/>
@@ -110,7 +112,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cwJ-ve-msa" userLabel="0.3 View">
                                                                             <rect key="frame" x="0.0" y="0.0" width="94.5" height="54"/>
                                                                             <subviews>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="L3Z-2f-VaU" customClass="RoundImage" customModule="ios" customModuleProvider="target">
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="L3Z-2f-VaU" customClass="RoundImage" customModule="ios" customModuleProvider="target">
                                                                                     <rect key="frame" x="22" y="2.5" width="50" height="50"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="50" id="0E8-Ef-jKq"/>
@@ -345,7 +347,7 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0NH-lt-I6u" userLabel="0.3 View">
                                                                             <rect key="frame" x="0.0" y="0.0" width="94.5" height="54"/>
                                                                             <subviews>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yjL-Md-Mhc" customClass="RoundImage" customModule="ios" customModuleProvider="target">
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePic" translatesAutoresizingMaskIntoConstraints="NO" id="yjL-Md-Mhc" customClass="RoundImage" customModule="ios" customModuleProvider="target">
                                                                                     <rect key="frame" x="22" y="2" width="50" height="50"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="50" id="hBy-yX-hA0"/>
@@ -487,14 +489,20 @@
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="aTa-WP-gYN"/>
                                                                             </constraints>
-                                                                            <state key="normal" title="Button"/>
+                                                                            <state key="normal" title="about the car"/>
+                                                                            <connections>
+                                                                                <action selector="offerButtonClicked:" destination="42s-qa-pqe" eventType="touchUpInside" id="yMs-rX-Uua"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ffY-Bq-jna" userLabel="Button rate" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
                                                                             <rect key="frame" x="167.5" y="0.0" width="152.5" height="30"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="30" id="8je-Qs-ddC"/>
                                                                             </constraints>
-                                                                            <state key="normal" title="Button"/>
+                                                                            <state key="normal" title="rate after renting"/>
+                                                                            <connections>
+                                                                                <action selector="rateButtonClicked:" destination="42s-qa-pqe" eventType="touchUpInside" id="koT-5C-9JW"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <constraints>
@@ -544,7 +552,7 @@
                                         </cells>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="inset">
-                                                <real key="value" value="10"/>
+                                                <real key="value" value="25"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
@@ -772,12 +780,17 @@ Time to earn some money!</string>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nRt-5f-rz8" userLabel="0.3 View">
                                                                             <rect key="frame" x="0.0" y="0.0" width="94.5" height="55.5"/>
                                                                             <subviews>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="BqN-FX-2Sl">
+                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePic" translatesAutoresizingMaskIntoConstraints="NO" id="BqN-FX-2Sl">
                                                                                     <rect key="frame" x="22" y="2.5" width="50" height="50"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" constant="50" id="eBS-Si-wi9"/>
                                                                                         <constraint firstAttribute="height" constant="50" id="gTd-0t-4i5"/>
                                                                                     </constraints>
+                                                                                    <userDefinedRuntimeAttributes>
+                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                            <integer key="value" value="25"/>
+                                                                                        </userDefinedRuntimeAttribute>
+                                                                                    </userDefinedRuntimeAttributes>
                                                                                 </imageView>
                                                                             </subviews>
                                                                             <constraints>
@@ -1099,6 +1112,8 @@ Enjoy your day :)</string>
         </scene>
     </scenes>
     <resources>
+        <image name="ProfilePic" width="360" height="360"/>
+        <image name="carplaceholder" width="1280" height="603"/>
         <image name="iconarrowright" width="20" height="20"/>
         <image name="iconchat" width="30" height="30"/>
         <image name="icongeoffrey" width="30" height="30"/>

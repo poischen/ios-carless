@@ -12,4 +12,5 @@ protocol RatingProtocol {
     func rateLessor(renting: Renting)
     func rateLessee(renting: Renting, lesseeUser: User)
     func goToProfile(user: User)
+    func goToOffer(offer: Offering)
 }
