@@ -252,7 +252,7 @@ extension HomePageViewController: UICollectionViewDataSource {
                 if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: USER_OFFERINGS_TABLE_CELL_IDENTIFIER, for: indexPath) as? ProfileUsersOffersCollectionViewCell {
                 cell.offer = offering
                 cell.eHomePageViewController = self
-                cell.offerCarPrice.text = "max." + "\(offering.basePrice)" + " €"
+                cell.offerCarPrice.text = "max. " + "\(offering.basePrice)" + " €"
                 cell.offerCarBrand.text = brand.name
                 
                 let carImage: UIImage = UIImage(named: "carplaceholder")!

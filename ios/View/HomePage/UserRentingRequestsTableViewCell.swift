@@ -26,15 +26,19 @@ class UserRentingRequestsTableViewCell: ScalingCarouselCell {
                 return
             }
             //setting ui data
-            carNameLabel.text = (currentSomebodyRented.brand.name + " " + currentSomebodyRented.offering.type)
+            carNameLabel.text = (currentSomebodyRented.userThatRented.name + " wants to rent " + currentSomebodyRented.brand.name + " " + currentSomebodyRented.offering.type)
             
             let userImage: UIImage = UIImage(named: "ProfilePic")!
             requestorUserImage.maskCircle(anyImage: userImage)
             let userImgUrl = URL(string: (currentSomebodyRented.userThatRented.profileImgUrl))
             requestorUserImage.kf.setImage(with: userImgUrl)
             
-            startDateLabel.text = "\(currentSomebodyRented.renting.startDate)"
-            endDateLabel.text = "\(currentSomebodyRented.renting.endDate)"
+            let profileImageGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UserRentingRequestsTableViewCell.profilePicTapped))
+            self.requestorUserImage.isUserInteractionEnabled = true
+            self.requestorUserImage.addGestureRecognizer(profileImageGestureRecognizer)
+            
+            startDateLabel.text = DateHelper.dateToString(date: currentSomebodyRented.renting.startDate)
+            endDateLabel.text = DateHelper.dateToString(date: currentSomebodyRented.renting.endDate)
             
             priceLabel.text = "\(currentSomebodyRented.renting.rentingPrice)" + " €"
             
@@ -56,8 +60,8 @@ class UserRentingRequestsTableViewCell: ScalingCarouselCell {
         currentDelegate.acceptRequest(renting: currentRenting)
     }
     
-    //TODO: GESTURE RECOGNIZER
-    @IBAction func usernameButtonTapped(_ sender: Any) {
+    func profilePicTapped() {
+        print("TAPPED")
         guard let currentDelegate = delegate,
             let currentUser = rentingUser else {
                 return
