@@ -16,10 +16,12 @@
                 <navigationController id="uMe-9p-Di6" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="iconchat" id="DmC-qR-zfC" customClass="TabBarItem" customModule="ios" customModuleProvider="target"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AJI-fF-loP" customClass="NavBar" customModule="ios" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="AJI-fF-loP">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="t90-G8-1mJ" kind="relationship" relationship="rootViewController" id="gWS-oa-tns"/>
@@ -51,7 +53,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U61-Hy-3iD" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                                    <rect key="frame" x="5" y="2.5" width="365" height="50"/>
+                                                    <rect key="frame" x="5" y="2.5" width="365" height="49"/>
                                                     <subviews>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfilePic" translatesAutoresizingMaskIntoConstraints="NO" id="3DT-8K-iEa">
                                                             <rect key="frame" x="10" y="5" width="40" height="40"/>
@@ -62,7 +64,7 @@
                                                             </constraints>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h2U-HT-fB5">
-                                                            <rect key="frame" x="70" y="13" width="285" height="24"/>
+                                                            <rect key="frame" x="70" y="12.5" width="285" height="24"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -82,7 +84,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="U61-Hy-3iD" secondAttribute="trailing" constant="5" id="FxS-EN-Ivo"/>
-                                                <constraint firstAttribute="bottom" secondItem="U61-Hy-3iD" secondAttribute="bottom" constant="2" id="e2D-ZC-Kkp"/>
+                                                <constraint firstAttribute="bottom" secondItem="U61-Hy-3iD" secondAttribute="bottom" constant="3" id="e2D-ZC-Kkp"/>
                                                 <constraint firstItem="U61-Hy-3iD" firstAttribute="leading" secondItem="xJn-S7-U8D" secondAttribute="leading" constant="5" id="gzl-vj-Fpt"/>
                                                 <constraint firstItem="U61-Hy-3iD" firstAttribute="top" secondItem="xJn-S7-U8D" secondAttribute="top" constant="2" id="iSm-p2-7zZ"/>
                                             </constraints>
@@ -126,7 +128,6 @@
                     <view key="view" contentMode="scaleToFill" id="WmT-6y-q4e">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="zmE-M5-ato" colorLabel="IBBuiltInLabel-Gray"/>
                     </view>
                     <navigationItem key="navigationItem" title="Chat" id="37G-l3-ne7"/>
@@ -154,7 +155,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="2CY-qx-aAi"/>
                                         </constraints>
-                                        <state key="normal" title="Dismiss">
+                                        <state key="normal" title="back">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>

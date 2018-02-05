@@ -13,6 +13,7 @@ import AVKit
 import SDWebImage
 import Firebase
 import Photos
+import Kingfisher
 
 class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -20,12 +21,14 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     private var messages = [JSQMessage]()
     
     let picker = UIImagePickerController()
+    let storageAPI = StorageAPI.shared
     
     var receiverID: String = ""
     var receiverName: String = ""
     var receiverImage: UIImage?
+    var senderImage: UIImage?
     var selectedUser: String?
-    let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+    let receiverImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
     
     static let CHATWITHUSER_VIEWCONTROLLER_IDENTIFIER = "ChatWithUser"
     static let CHATWITHUSER_NAVCONTROLLER_IDENTIFIER = "NavControllerChatWindow"
@@ -35,28 +38,28 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.tabBarController?.tabBar.isHidden = true
-        
-        let navBarImgAndNameView = UIView()
-        
-        //writes name and picture of the receiver in NavBar
-        let title = UILabel()
-        title.text = "  " + receiverName
-        title.sizeToFit()
-        title.center = navBarImgAndNameView.center
-        title.textAlignment = NSTextAlignment.center
-        navBarImgAndNameView.addSubview(title)
-       if let image = receiverImage {
-            imageView.contentMode = .scaleAspectFit
-            imageView.image = image
-            let imageAspect = imageView.image!.size.width/imageView.image!.size.height
-            imageView.frame = CGRect(x: title.frame.origin.x-title.frame.size.height*imageAspect, y: title.frame.origin.y, width: title.frame.size.height*imageAspect, height: title.frame.size.height)
-            navBarImgAndNameView.addSubview(imageView)
-        }
 
-        self.navigationItem.titleView = navBarImgAndNameView
-        navBarImgAndNameView.sizeToFit()
+        let image = receiverImage
+        if (image == nil) {
+            storageAPI.getUserProfileImageUrl(uID: selectedUser!, completion: { (profileImgUrlString) in
+                let profileImgUrl = URL(string: profileImgUrlString)
+                self.receiverImageView.kf.setImage(with: profileImgUrl)
+                
+                self.receiverImage = self.receiverImageView.image
+                self.setNavBarTitle()
+            })
+        } else {
+            receiverImageView.image = receiverImage
+            self.setNavBarTitle()
+        }
+        
+        storageAPI.getUserProfileImageUrl(uID: storageAPI.userID()!) { (profileImgUrlString) in
+            let profileImgUrl = URL(string: profileImgUrlString)
+            let tempImageView = UIImageView()
+            tempImageView.kf.setImage(with: profileImgUrl)
+            
+            self.senderImage = tempImageView.image
+        }
         
         if cameFromOffer{
             let cancelButton = UIBarButtonItem(
@@ -107,6 +110,17 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
     
     //message icon picture
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
+        let message = messages[indexPath.item]
+        
+        if message.senderId == self.senderId {
+            if let senderImg = self.senderImage {
+                return JSQMessagesAvatarImageFactory.avatarImage(with: senderImg, diameter: 30)
+            }
+        } else {
+            if let receiverImg = self.receiverImage {
+                return JSQMessagesAvatarImageFactory.avatarImage(with: receiverImg, diameter: 30)
+            }
+        }
         return JSQMessagesAvatarImageFactory.avatarImage(with: UIImage(named: "ProfilePic"), diameter: 30)
     }
 
@@ -279,6 +293,29 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                 }
             })
         }
+    }
+    
+    func setNavBarTitle(){
+        self.tabBarController?.tabBar.isHidden = true
+        
+        let navBarImgAndNameView = UIView()
+        
+        //writes name and picture of the receiver in NavBar
+        let title = UILabel()
+        title.text = "  " + receiverName
+        title.sizeToFit()
+        title.center = navBarImgAndNameView.center
+        title.textAlignment = NSTextAlignment.center
+        navBarImgAndNameView.addSubview(title)
+        
+        receiverImageView.contentMode = .scaleAspectFit
+        let imageAspect = receiverImageView.image!.size.width/receiverImageView.image!.size.height
+        receiverImageView.frame = CGRect(x: title.frame.origin.x-title.frame.size.height*imageAspect, y: title.frame.origin.y, width: title.frame.size.height*imageAspect, height: title.frame.size.height)
+        receiverImageView.maskCircleContentImage()
+        navBarImgAndNameView.addSubview(receiverImageView)
+        
+        self.navigationItem.titleView = navBarImgAndNameView
+        navBarImgAndNameView.sizeToFit()
     }
     
      /* observes media messages in firebase and appends them in the chat */

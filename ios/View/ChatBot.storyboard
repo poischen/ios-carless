@@ -72,7 +72,7 @@
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Send">
-                                            <color key="titleColor" red="0.66661661863327026" green="0.66669595241546631" blue="0.66658014059066772" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="sendToBot:" destination="P78-LX-bv2" eventType="touchUpInside" id="EHF-4Q-ZaV"/>
@@ -126,9 +126,11 @@
                 <navigationController id="8JS-LZ-jSY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icongeoffrey" id="gIl-4u-BMa" customClass="TabBarItem" customModule="ios" customModuleProvider="target"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ay-rI-yeE" customClass="NavBar" customModule="ios" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ay-rI-yeE">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>
                         <segue destination="P78-LX-bv2" kind="relationship" relationship="rootViewController" id="ffn-dV-F1s"/>

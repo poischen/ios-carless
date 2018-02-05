@@ -19,15 +19,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xux-Us-W2I">
+                            <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xux-Us-W2I">
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="hQp-2j-dNx">
-                                        <rect key="frame" x="0.0" y="66.5" width="375" height="534"/>
+                                        <rect key="frame" x="0.0" y="83.5" width="375" height="500"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-NU-KLr">
-                                        <rect key="frame" x="0.0" y="600.5" width="375" height="66.5"/>
-                                        <state key="normal" title="Dismiss">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOM-NU-KLr" customClass="OrangeButton" customModule="ios" customModuleProvider="target">
+                                        <rect key="frame" x="47" y="593.5" width="281" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="IiF-zS-Hbf"/>
+                                        </constraints>
+                                        <state key="normal" title="back">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -35,15 +38,15 @@
                                         </connections>
                                     </button>
                                 </subviews>
+                                <color key="backgroundColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
+                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="centerX" secondItem="Xux-Us-W2I" secondAttribute="centerX" id="2VP-Wx-2Vu"/>
                                     <constraint firstItem="hQp-2j-dNx" firstAttribute="centerX" secondItem="Xux-Us-W2I" secondAttribute="centerX" id="JJD-ba-i5n"/>
                                     <constraint firstItem="hQp-2j-dNx" firstAttribute="width" secondItem="Xux-Us-W2I" secondAttribute="width" id="QhO-dD-QAb"/>
-                                    <constraint firstItem="hQp-2j-dNx" firstAttribute="height" secondItem="Xux-Us-W2I" secondAttribute="height" multiplier="0.8" id="Vck-3t-VDh"/>
+                                    <constraint firstItem="hQp-2j-dNx" firstAttribute="height" secondItem="Xux-Us-W2I" secondAttribute="height" multiplier="0.75" id="Vck-3t-VDh"/>
                                     <constraint firstItem="hQp-2j-dNx" firstAttribute="centerY" secondItem="Xux-Us-W2I" secondAttribute="centerY" id="YwG-4g-qBR"/>
-                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="leading" secondItem="Xux-Us-W2I" secondAttribute="leading" id="ZdP-4D-thk"/>
-                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="width" secondItem="Xux-Us-W2I" secondAttribute="width" id="iV7-b7-4yO"/>
-                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="height" secondItem="Xux-Us-W2I" secondAttribute="height" multiplier="0.1" id="jD8-ze-DB7"/>
-                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="top" secondItem="hQp-2j-dNx" secondAttribute="bottom" id="r1R-l8-r1E"/>
+                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="width" secondItem="Xux-Us-W2I" secondAttribute="width" multiplier="0.75" id="pcX-6G-y7J"/>
+                                    <constraint firstItem="JOM-NU-KLr" firstAttribute="top" secondItem="hQp-2j-dNx" secondAttribute="bottom" constant="10" id="r1R-l8-r1E"/>
                                 </constraints>
                             </view>
                         </subviews>
