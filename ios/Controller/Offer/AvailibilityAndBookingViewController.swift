@@ -145,6 +145,7 @@ class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
                 let rentingIntervall = DateInterval(start: renting.startDate, end: renting.endDate)
                 if (intervall2Check?.intersects(rentingIntervall))!{
                     self.resultView.text = self.RESULT_NEGATIVE
+                    self.resultView.isHidden = false
                     self.indicator.stopAnimating()
                     return
                 }
@@ -162,6 +163,7 @@ class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
                             let blockedDateIntervall = DateInterval(start: date, end: date)
                             if (intervall2Check?.intersects(blockedDateIntervall))!{
                                 self.resultView.text = self.RESULT_NEGATIVE
+                                self.resultView.isHidden = false
                                 self.indicator.stopAnimating()
                                 return
                             }
@@ -172,6 +174,7 @@ class AvailibilityAndBookingViewController: UIViewController, UsingCalendar {
         })
         
         self.resultView.text = RESULT_POSITIVE
+        self.resultView.isHidden = false
         calculatePrice(rentingIntervall: intervall2Check!)
     }
     
