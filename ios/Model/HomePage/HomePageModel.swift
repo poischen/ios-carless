@@ -89,14 +89,18 @@ class HomePageModel {
                             self.storageAPI.getUserByUID(UID: offering.userUID, completion: { (user) in
                                 let newYouRented = YouRented(renting: renting, offering: offering, brand: offeringsBrand, isRateable: rateable, coUser: user)
                                 result.append(newYouRented)
+                                if (result.count == numberOfRentings) {
+                                    // all offerings processed -> fire completion callback
+                                    completion(result)
+                                }
                             })
                         } else {
                             // offering not found -> decrease number of offerings needed for completion
                             numberOfRentings = numberOfRentings - 1
-                        }
-                        if (result.count == numberOfRentings) {
-                            // all offerings processed -> fire completion callback
-                            completion(result)
+                            if (result.count == numberOfRentings) {
+                                // all offerings processed -> fire completion callback
+                                completion(result)
+                            }
                         }
                     })
                 }
@@ -149,8 +153,8 @@ class HomePageModel {
     
     func subscribeToConfirmedRentingsForUsersOfferings(UID: String, completion: @escaping (_ offeringID: String, _ data: [SomebodyRented]) -> Void){
         subscribeToRentingsForUsersOfferings(UID: UID, completion: {(offeringID, peopleRented) in
-            let unconfirmedRequests = peopleRented.filter {$0.renting.confirmationStatus}
-            completion(offeringID, unconfirmedRequests)
+            let confirmedRequests = peopleRented.filter {$0.renting.confirmationStatus}
+            completion(offeringID, confirmedRequests)
         })
     }
 
@@ -172,10 +176,12 @@ class HomePageModel {
                                 self.storageAPI.getUserByUID(UID: renting.userID, completion: {rentingUser in
                                     let isRateable = self.isRentingRateable(renting: renting, ratingUserIsLessor: true)
                                     
-                                    self.storageAPI.getUserByUID(UID: renting.userID, completion: { (user) in
+                                    let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable, coUser: rentingUser)
+                                    resultsForThisOffering.append(somebodyRented)
+                                    /* self.storageAPI.getUserByUID(UID: renting.userID, completion: { (user) in
                                         let somebodyRented = SomebodyRented(renting: renting, offering: offering, brand: brand, userThatRented: rentingUser, isRateable: isRateable, coUser: user)
                                         resultsForThisOffering.append(somebodyRented)
-                                    })
+                                    }) */
                                     if (resultsForThisOffering.count == offeringsRentings.count) {
                                         // all rentings for this offering processed -> offering processed -> fire callback
                                         completion(offering.id!, resultsForThisOffering)
