@@ -132,7 +132,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75A-gp-8KZ" userLabel="Card Ratings" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="306" width="375" height="131"/>
+                                <rect key="frame" x="0.0" y="306" width="375" height="126"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other users about Name:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o0w-ca-0xf">
                                         <rect key="frame" x="10" y="10" width="355" height="14.5"/>
@@ -141,7 +141,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" pagingEnabled="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="P2u-ai-cYv" userLabel="Collection View user rating" customClass="ScalingCarouselView" customModule="ScalingCarousel">
-                                        <rect key="frame" x="10" y="34.5" width="355" height="86.5"/>
+                                        <rect key="frame" x="10" y="34.5" width="355" height="81.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="7yD-cB-SxQ">
                                             <size key="itemSize" width="350" height="124"/>
@@ -252,7 +252,7 @@
                                         </connections>
                                     </collectionView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" alpha="0.55000000000000004" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This user does not have ratings yet." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dYr-P5-JAO">
-                                        <rect key="frame" x="51" y="55" width="272" height="20.5"/>
+                                        <rect key="frame" x="51" y="52.5" width="272" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -272,7 +272,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kin-hB-4rt" userLabel="Card Offers" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="447" width="375" height="166"/>
+                                <rect key="frame" x="0.0" y="442" width="375" height="166"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your offerings:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Khg-2N-IwI">
                                         <rect key="frame" x="10" y="10" width="355" height="14.5"/>
@@ -433,7 +433,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="VlE-ro-HnY" firstAttribute="bottom" secondItem="Kin-hB-4rt" secondAttribute="bottom" constant="5" id="3g8-Ni-7LU"/>
+                            <constraint firstItem="VlE-ro-HnY" firstAttribute="bottom" secondItem="Kin-hB-4rt" secondAttribute="bottom" constant="10" id="3g8-Ni-7LU"/>
                             <constraint firstItem="75A-gp-8KZ" firstAttribute="top" secondItem="kOb-EM-7m5" secondAttribute="bottom" constant="10" id="6MG-5e-kR6"/>
                             <constraint firstItem="kOb-EM-7m5" firstAttribute="leading" secondItem="VlE-ro-HnY" secondAttribute="leading" id="86g-mu-jnD"/>
                             <constraint firstItem="Kin-hB-4rt" firstAttribute="height" secondItem="VlE-ro-HnY" secondAttribute="height" multiplier="0.3" id="93f-NU-se0"/>
@@ -472,9 +472,10 @@
                 <navigationController storyboardIdentifier="NavProfile" id="pIi-G2-kti" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="iconprince" id="rOh-z2-R5g"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sIZ-Gg-2al" customClass="NavBar" customModule="ios" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="sIZ-Gg-2al">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </navigationBar>
                     <connections>

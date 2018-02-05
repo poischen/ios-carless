@@ -82,10 +82,10 @@ class YouRentedTableViewCell: ScalingCarouselCell {
     
     @IBAction func profileButtonTapped(_ sender: Any) {
         guard let currentDelegate = delegate,
-            let currentEvent = event as? SomebodyRented else {
+            let currentEvent = event as? YouRented else {
                 return
         }
-        currentDelegate.goToProfile(user: currentEvent.userThatRented)
+        currentDelegate.goToProfile(user: currentEvent.coUser)
     }
     
     

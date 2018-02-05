@@ -78,7 +78,8 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         
         self.collectionView.backgroundColor = Theme.palette.lightgrey
         
-        self.inputToolbar.backgroundColor = Theme.palette.inputFieldGrey
+        self.inputToolbar.contentView.rightBarButtonItem.setTitleColor(Theme.palette.purple, for: .normal)
+        self.inputToolbar.barTintColor = Theme.palette.inputFieldGrey
         
         observeUserMessages()
         observeUserMediaMessages()

@@ -146,11 +146,11 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/50" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0O-6f-aV7">
-                                        <rect key="frame" x="313" y="453.5" width="42" height="35"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0/50" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D0O-6f-aV7">
+                                        <rect key="frame" x="285" y="453.5" width="70" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="35" id="Clt-SM-BrD"/>
-                                            <constraint firstAttribute="width" constant="42" id="Wrn-qs-E3S"/>
+                                            <constraint firstAttribute="width" constant="70" id="Wrn-qs-E3S"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                         <color key="textColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -170,8 +170,8 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="l9U-LS-ft9"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <state key="normal" title="Submit rating">
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <state key="normal" title="submit rating">
                                             <color key="titleColor" red="1" green="0.54141064080000001" blue="0.22546769559999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>

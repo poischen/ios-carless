@@ -47,8 +47,6 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         profileOwnerImageView.maskCircle(anyImage: profileOwnerImageView.image!)
-        profileOwnerImageView.layer.borderWidth = 1
-        profileOwnerImageView.layer.borderColor = UIColor.black.cgColor
         
         if profileOwner == nil {
             storageAPI.getUserByUID(UID: storageAPI.userID()!, completion: { (user) in
@@ -93,6 +91,8 @@ class ProfileViewController: UIViewController {
             profileOwnerRatingStars.rating = (Double) (user.rating)
             
             storageAPI.getRatingsByUserUID(userUID: user.id) { (ratings) in
+                print("RECEIVED RATINGS")
+                print(ratings)
                 self.usersRatings = ratings
                 self.collectionViewRatings.dataSource = self
                 self.collectionViewRatings.reloadData()
@@ -243,6 +243,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 let CarImgUrl = URL(string: (offer.pictureURL))
                 cell.offerCarImg.kf.setImage(with: CarImgUrl)
                 cell.offerCarPrice.text = fromString + String(offer.basePrice) + currencyString
+                storageAPI.getBrandByID(id: offer.brandID, completion: { (brand) in
+                    cell.offerCarBrand.text = brand.name
+                })
             }
             return cell
         }
