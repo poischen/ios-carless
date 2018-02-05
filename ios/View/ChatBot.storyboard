@@ -124,7 +124,7 @@
         <scene sceneID="Pte-h7-ego">
             <objects>
                 <navigationController id="8JS-LZ-jSY" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="icongeoffrey" id="gIl-4u-BMa"/>
+                    <tabBarItem key="tabBarItem" title="" image="icongeoffrey" id="gIl-4u-BMa" customClass="TabBarItem" customModule="ios" customModuleProvider="target"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ay-rI-yeE" customClass="NavBar" customModule="ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>

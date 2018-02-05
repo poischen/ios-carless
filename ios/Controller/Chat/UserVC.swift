@@ -21,12 +21,14 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var myTableView: UITableView!
     
     private let CHAT_SEGUE = "ChatSegue"
-    
+    let CELL_IDENTIFIER = "ChatUserCell"
  
     override func viewDidLoad() {
         super.viewDidLoad()
         //gets all the useres that are saved in the database
         StorageAPI.shared.getUsers(completion: dataReceived)
+        myTableView.backgroundColor = UIColor.clear
+        myTableView.separatorStyle = UITableViewCellSeparatorStyle.none
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -55,20 +57,24 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
        return users.count
     }
     
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        cell.textLabel?.text = users[indexPath.row].name
-
-        let palceholderImg: UIImage = UIImage(named: "ProfilePic")!
-        cell.imageView?.maskCircle(anyImage: palceholderImg)
+        let cell = tableView.dequeueReusableCell(withIdentifier: CELL_IDENTIFIER, for: indexPath) as! UsersViewCell
+        cell.userName.text = users[indexPath.row].name
+        
+        cell.userProfileImg.maskCircleContentImage()
         
         let userImg = URL(string: users[indexPath.row].profileImgUrl)
-        //cell.imageView?.kf.setImage(with: userImg)
-        
-        cell.imageView?.kf.setImage(with: userImg, completionHandler: {
+        cell.userProfileImg.kf.setImage(with: userImg, completionHandler: {
             (image, error, cacheType, imageUrl) in
-            cell.imageView?.maskCircle(anyImage: (cell.imageView?.image)!)
+            cell.userProfileImg.maskCircleContentImage()
         })
+
+        cell.selectionStyle = .none
+        cell.contentView.backgroundColor = UIColor.clear
         
         return cell
     }
@@ -96,4 +102,12 @@ class ChatViewController: UIViewController, UITableViewDelegate, UITableViewData
             chatVC.receiverImage = self.selectedUserImage
         }
     }
+}
+
+
+class UsersViewCell: UITableViewCell {
+    
+    @IBOutlet weak var userProfileImg: UIImageView!
+    @IBOutlet weak var userName: UILabel!
+    
 }

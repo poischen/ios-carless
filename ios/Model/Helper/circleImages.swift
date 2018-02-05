@@ -19,3 +19,15 @@ extension UIImageView {
         self.image = anyImage
     }
 }
+
+extension UIImageView {
+    public func maskCircleContentImage() {
+        if let UIImage = self.image {
+            print("Calc round image")
+            self.contentMode = UIViewContentMode.scaleAspectFill
+            self.layer.cornerRadius = self.frame.height / 2
+            self.layer.masksToBounds = false
+            self.clipsToBounds = true
+        }
+    }
+}

@@ -21,7 +21,7 @@ struct Palette {
     let orange = UIColor(red:0.90, green:0.32, blue:0.00, alpha:1.0)
     let darkgrey = UIColor(red:0.62, green:0.62, blue:0.62, alpha:1.0)
     let purple = UIColor(red:0.40, green:0.23, blue:0.72, alpha:1.0)
-    
+    let inputFieldGrey = UIColor(red:0.82, green:0.82, blue:0.82, alpha:1.0)
 }
 
 @IBDesignable class CardView: UIView {
@@ -44,7 +44,7 @@ struct Palette {
 
 @IBDesignable class ChatInputField: UITextField {
     @IBInspectable var cornerRadius: CGFloat = 5
-    @IBInspectable var borderColor: CGColor = Theme.palette.lightgrey.cgColor
+    @IBInspectable var borderColor: CGColor = Theme.palette.inputFieldGrey.cgColor
     @IBInspectable var borderWidth: CGFloat = 1
     
     override func layoutSubviews() {

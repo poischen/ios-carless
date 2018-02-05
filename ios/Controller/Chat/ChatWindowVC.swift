@@ -40,15 +40,13 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         
         let navBarImgAndNameView = UIView()
         
-        //writes name of the receiver in NavBar
+        //writes name and picture of the receiver in NavBar
         let title = UILabel()
-        title.text = receiverName
+        title.text = "  " + receiverName
         title.sizeToFit()
         title.center = navBarImgAndNameView.center
         title.textAlignment = NSTextAlignment.center
         navBarImgAndNameView.addSubview(title)
-        
-        //gives every user a picture in the user list
        if let image = receiverImage {
             imageView.contentMode = .scaleAspectFit
             imageView.image = image
@@ -67,7 +65,7 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
                 target: self,
                 action: #selector(cancelButton(sender:))
             )
-            self.navigationItem.rightBarButtonItem = cancelButton
+            self.navigationItem.leftBarButtonItem = cancelButton
         }
         
         picker.delegate = self
@@ -75,7 +73,9 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         self.senderId = StorageAPI.shared.userID()
         self.senderDisplayName = "default"
         
-        self.collectionView.backgroundColor = UIColor.lightGray
+        self.collectionView.backgroundColor = Theme.palette.lightgrey
+        
+        self.inputToolbar.backgroundColor = Theme.palette.inputFieldGrey
         
         observeUserMessages()
         observeUserMediaMessages()
@@ -98,9 +98,9 @@ class ChatWindowVC: JSQMessagesViewController, UINavigationControllerDelegate, U
         let message = messages[indexPath.item]
         
         if message.senderId == self.senderId {
-            return bubbleFactory?.outgoingMessagesBubbleImage(with: UIColor.purple)
+            return bubbleFactory?.outgoingMessagesBubbleImage(with: Theme.palette.purple)
         } else {
-            return bubbleFactory?.incomingMessagesBubbleImage(with: UIColor.orange)
+            return bubbleFactory?.incomingMessagesBubbleImage(with: Theme.palette.orange)
         }
         
     }
