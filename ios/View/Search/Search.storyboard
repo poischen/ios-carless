@@ -179,7 +179,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8xf-Zt-ujR">
-                                <rect key="frame" x="0.0" y="20" width="375" height="1190"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="1097"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BUv-yq-ywS">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1210"/>
@@ -668,7 +668,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="140" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dxT-GA-A4g">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1150,6 +1150,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="BvB-ri-T8X"/>
-        <segue reference="4fO-Ws-Ssu"/>
+        <segue reference="m9X-t4-fPa"/>
     </inferredMetricsTieBreakers>
 </document>
