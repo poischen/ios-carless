@@ -203,6 +203,7 @@ class FilterViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if let currentCellContent = cellContent, let currentCellIdentifier = cellIdentifier {
             let returnCell = tableView.dequeueReusableCell(withIdentifier: currentCellIdentifier, for: indexPath)
             returnCell.textLabel!.text = currentCellContent.name // set cell's text to items name
+            returnCell.textLabel?.textColor = Theme.palette.darkgrey
             if (currentCellContent.isSelected){
                 returnCell.accessoryType = UITableViewCellAccessoryType.checkmark // add checkmark if item is selected
             } else {

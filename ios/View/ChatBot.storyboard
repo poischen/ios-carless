@@ -15,11 +15,11 @@
             <objects>
                 <viewController storyboardIdentifier="chatbot" id="P78-LX-bv2" customClass="ChatBotViewController" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oLP-Je-hd9" customClass="AppBackgroundView" customModule="ios" customModuleProvider="target">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMK-av-MJU" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="10" y="74" width="355" height="207"/>
+                                <rect key="frame" x="10" y="10" width="355" height="207"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="I am Trobot, ask me anything about traffic rules or just talk to me if you are bored." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BMu-GN-UNA">
                                         <rect key="frame" x="15" y="15" width="325" height="177"/>
@@ -37,7 +37,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rv0-kQ-Pic" customClass="CardView" customModule="ios" customModuleProvider="target">
-                                <rect key="frame" x="10" y="291" width="355" height="277"/>
+                                <rect key="frame" x="10" y="227" width="355" height="277"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bot" translatesAutoresizingMaskIntoConstraints="NO" id="VZ9-WE-pQy">
                                         <rect key="frame" x="15" y="26" width="325" height="236"/>
@@ -51,7 +51,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ptb-VG-Xy5">
-                                <rect key="frame" x="0.0" y="578" width="375" height="40"/>
+                                <rect key="frame" x="0.0" y="514" width="375" height="40"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="New Message" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BWs-cx-XCe" customClass="InputField" customModule="ios" customModuleProvider="target">
                                         <rect key="frame" x="10" y="5" width="305" height="30"/>
@@ -126,7 +126,7 @@
                 <navigationController id="8JS-LZ-jSY" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="icongeoffrey" id="gIl-4u-BMa" customClass="TabBarItem" customModule="ios" customModuleProvider="target"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3ay-rI-yeE" customClass="NavBar" customModule="ios" customModuleProvider="target">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translucent="NO" id="3ay-rI-yeE" customClass="NavBar" customModule="ios" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
