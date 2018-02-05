@@ -19,7 +19,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.59999999999999998" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xux-Us-W2I">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xux-Us-W2I">
                                 <rect key="frame" x="-0.5" y="-0.5" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="carplaceholder" translatesAutoresizingMaskIntoConstraints="NO" id="hQp-2j-dNx">
@@ -38,7 +38,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="JOM-NU-KLr" firstAttribute="centerX" secondItem="Xux-Us-W2I" secondAttribute="centerX" id="2VP-Wx-2Vu"/>
                                     <constraint firstItem="hQp-2j-dNx" firstAttribute="centerX" secondItem="Xux-Us-W2I" secondAttribute="centerX" id="JJD-ba-i5n"/>

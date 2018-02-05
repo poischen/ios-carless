@@ -144,7 +144,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.59999999999999998" contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="tY0-Mg-zeq">
+                            <view contentMode="scaleAspectFill" translatesAutoresizingMaskIntoConstraints="NO" id="tY0-Mg-zeq">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car1" translatesAutoresizingMaskIntoConstraints="NO" id="7ma-mt-LAN">
@@ -163,7 +163,7 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.39869743590000001" green="0.23199698329999999" blue="0.72166293859999997" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="7ma-mt-LAN" firstAttribute="centerY" secondItem="tY0-Mg-zeq" secondAttribute="centerY" id="27n-1H-uPA"/>
                                     <constraint firstAttribute="bottom" secondItem="wxm-hp-qQM" secondAttribute="bottom" constant="50" id="LkR-zD-ZxR"/>
