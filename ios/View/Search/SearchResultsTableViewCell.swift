@@ -11,13 +11,17 @@ import UIKit
 class SearchResultsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var modelLabel: UILabel!
-    @IBOutlet weak var gearshiftLabel: UILabel!
     @IBOutlet weak var mileageLabel: UILabel!
-    @IBOutlet weak var seatsLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
-    @IBOutlet weak var fuelLabel: UILabel!
     @IBOutlet weak var photo: UIImageView!
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var fuelIcon: UIImageView!
+    @IBOutlet weak var gearIcon: UIImageView!
+    @IBOutlet weak var seatsIcon: UIImageView!
+    @IBOutlet weak var priceButton: PurpleButton!
+    @IBOutlet weak var brandIcon: UIImageView!
+    
+    var offering: Offering?
+    var parent: SearchResultsViewController?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -27,4 +31,9 @@ class SearchResultsTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
+    @IBAction func priceButtonSelected(_ sender: Any) {
+        if let searchResultsVC = parent, let offer = offering {
+            parent?.goToOffering(offer: offer)
+        }
+    }
 }

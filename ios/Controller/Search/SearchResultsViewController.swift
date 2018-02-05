@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class SearchResultsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
@@ -22,6 +23,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var searchResultsTable: UITableView!
     
     let SEARCH_OFFER_SEGUE = "SearchOfferSegue"
+    let SEARCH_BUTTON_OFFER_SEGUE = "SearchButtonOfferSegue"
     let FILTER_SEGUE = "showFilter"
     let SEARCH_RESULTS_CELL_IDENTIFIER = "SearchResultsCell"
     
@@ -45,6 +47,9 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         // set this view controller as the data source and delegate of the table view
         searchResultsTable.delegate = self
         searchResultsTable.dataSource = self
+        
+        searchResultsTable.backgroundColor = UIColor.clear
+        searchResultsTable.separatorStyle = UITableViewCellSeparatorStyle.none
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -78,39 +83,63 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
         if let cell = tableView.dequeueReusableCell(withIdentifier: SEARCH_RESULTS_CELL_IDENTIFIER, for: indexPath) as? SearchResultsTableViewCell, let currentOfferings = offerings {
             // get offering to be displayed
             let offering = currentOfferings[indexPath.row]
+            cell.offering = offering
+            cell.parent = self
             
             cell.modelLabel.text = LOADING_PLACEHOLDER_TEXT
             // get the offering's brand and set the model label to the right name after receiving it
             self.storageAPI.getBrandByID(id: offering.brandID, completion: {brand in
-                cell.modelLabel.text = brand.name + " " + offering.type
+                let icon = UIImage(named: brand.name)
+                cell.brandIcon.image = icon
+                cell.modelLabel.text = offering.type
             })
             
-            cell.gearshiftLabel.text = LOADING_PLACEHOLDER_TEXT
             // get the offering's gear and set the gear label to the right name after receiving it
             self.storageAPI.getGearByID(id: offering.gearID, completion: {gear in
-                cell.gearshiftLabel.text = gear.name
+                let icon = UIImage(named: gear.name)
+                if (icon == nil) {
+                    let iconURL = URL(string: gear.iconURL)
+                    cell.gearIcon.kf.setImage(with: iconURL)
+                } else {
+                    cell.gearIcon.image = icon
+                }
             })
             
-            cell.fuelLabel.text = LOADING_PLACEHOLDER_TEXT
             // get the offering's fuel and set the fuel label to the right name after receiving it
             self.storageAPI.getFuelByID(id: offering.fuelID, completion: {fuel in
-                cell.fuelLabel.text = fuel.name
+                let icon = UIImage(named: fuel.name)
+                if (icon == nil) {
+                    let iconURL = URL(string: fuel.iconURL)
+                    cell.fuelIcon.kf.setImage(with: iconURL)
+                } else {
+                    cell.fuelIcon.image = icon
+                }
             })
             
             // set remaining labels that can be set with values from the offering itself
-            cell.seatsLabel.text = String(offering.seats) + SEATS_LABEL_END_TEXT
+            let iconName = String(offering.seats)
+            let icon = UIImage(named: iconName)
+            cell.seatsIcon.image = icon
+            
             cell.mileageLabel.text = String(offering.consumption) + MILEAGE_LABEL_END_TEXT
             cell.locationLabel.text = offering.location
-            cell.priceLabel.text = PRICE_LABEL_START_TEXT + String(offering.basePrice) + PRICE_LABEL_END_TEXT
+            let price: String = PRICE_LABEL_START_TEXT + String(offering.basePrice) + PRICE_LABEL_END_TEXT
+            cell.priceButton.setTitle(price, for: .normal)
             
             // get offering's picture from it's pricture url
-            let url = URL(string: offering.pictureURL)
+            /*let url = URL(string: offering.pictureURL)
             let data = try? Data(contentsOf: url!)
             if let currentData = data, let currentImage = UIImage(data: currentData) {
                 cell.photo.image = currentImage
             } else {
                 print("error while getting an offerings image in cellForRowAt")
-            }
+            }*/
+            
+            let carImageUrl = URL(string: offering.pictureURL)
+            cell.photo.kf.setImage(with: carImageUrl)
+            
+            cell.selectionStyle = .none
+            cell.contentView.backgroundColor = UIColor.clear
             
             return cell
         } else {
@@ -133,6 +162,25 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
             self.searchResultsTable.reloadData()
         }
     }
+
+    func goToOffering(offer: Offering) {
+        let storyboard = UIStoryboard(name: "Offering", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "OfferingNavigation") as! UINavigationController
+        let offeringController = vc.topViewController as? OfferingViewController
+    
+        // pass selected dates to offering view
+        if let psd = preselectedStartDate, let ped = preselectedEndDate, let offeringVC = offeringController {
+            offeringVC.preselectedStartDate = psd
+            offeringVC.preselectedEndDate = ped
+            offeringVC.displayingOffering = offer
+        }
+
+    
+        // remember that the offering controller is shown
+        cameFromOffering = true
+    
+        self.present(vc, animated: true, completion: nil)
+    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if (segue.identifier == SEARCH_OFFER_SEGUE) {
@@ -143,7 +191,7 @@ class SearchResultsViewController: UIViewController, UITableViewDelegate, UITabl
                 let currentOfferings = offerings else {
                     return
             }
-      
+            
             let index = indexPath.row
             let selectedOffering = currentOfferings[index]
             // pass selected dates to offering view
