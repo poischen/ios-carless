@@ -750,16 +750,6 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="da5-tc-sDk">
                                                         <rect key="frame" x="10" y="14.5" width="162.5" height="121.5"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertisePickUpField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ao7-rJ-XEd" userLabel="pickUpTextField">
-                                                                <rect key="frame" x="0.0" y="46" width="157.5" height="30"/>
-                                                                <color key="backgroundColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="g7a-o7-vbJ"/>
-                                                                </constraints>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
                                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-v3-qRX" userLabel="PickUpDate Picker">
                                                                 <rect key="frame" x="0.0" y="0.0" width="157.5" height="121.5"/>
                                                                 <date key="date" timeIntervalSinceReferenceDate="538524513.75201905">
@@ -776,10 +766,7 @@
                                                         <constraints>
                                                             <constraint firstItem="IrY-v3-qRX" firstAttribute="height" secondItem="da5-tc-sDk" secondAttribute="height" id="1Tr-TV-vlR"/>
                                                             <constraint firstItem="IrY-v3-qRX" firstAttribute="leading" secondItem="da5-tc-sDk" secondAttribute="leading" id="5BU-L8-mAF"/>
-                                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="centerY" secondItem="da5-tc-sDk" secondAttribute="centerY" id="8Vq-Ak-zdN"/>
                                                             <constraint firstItem="IrY-v3-qRX" firstAttribute="centerY" secondItem="da5-tc-sDk" secondAttribute="centerY" id="ET5-gI-u1f"/>
-                                                            <constraint firstItem="ao7-rJ-XEd" firstAttribute="leading" secondItem="da5-tc-sDk" secondAttribute="leading" id="Ft2-zn-y7i"/>
-                                                            <constraint firstAttribute="trailing" secondItem="ao7-rJ-XEd" secondAttribute="trailing" constant="5" id="fpk-r0-HXu"/>
                                                             <constraint firstAttribute="trailing" secondItem="IrY-v3-qRX" secondAttribute="trailing" constant="5" id="yGM-bu-zhX"/>
                                                         </constraints>
                                                     </view>
@@ -810,16 +797,6 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wM2-Su-T5d">
                                                         <rect key="frame" x="5" y="14.5" width="167.5" height="121.5"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" restorationIdentifier="advertiseReturnTextField" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rJM-Yy-A1o" userLabel="returnTextField">
-                                                                <rect key="frame" x="5" y="46" width="162.5" height="30"/>
-                                                                <color key="backgroundColor" red="0.90072697400000001" green="0.32094269990000002" blue="0.0007556287455" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="30" id="A7W-KY-t5x"/>
-                                                                </constraints>
-                                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                                <textInputTraits key="textInputTraits"/>
-                                                            </textField>
                                                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="30" translatesAutoresizingMaskIntoConstraints="NO" id="VIS-cE-86O" userLabel="PickUpDate Picker">
                                                                 <rect key="frame" x="0.0" y="0.0" width="167" height="121.5"/>
                                                                 <date key="date" timeIntervalSinceReferenceDate="538524513.75201905">
@@ -835,12 +812,9 @@
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         <constraints>
                                                             <constraint firstItem="VIS-cE-86O" firstAttribute="centerY" secondItem="wM2-Su-T5d" secondAttribute="centerY" id="40R-ym-Vt5"/>
-                                                            <constraint firstAttribute="trailing" secondItem="rJM-Yy-A1o" secondAttribute="trailing" id="8yG-Ad-hxg"/>
-                                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="leading" secondItem="wM2-Su-T5d" secondAttribute="leading" constant="5" id="LjU-gn-1Cg"/>
                                                             <constraint firstAttribute="trailing" secondItem="VIS-cE-86O" secondAttribute="trailing" id="NFU-Gw-fw1"/>
                                                             <constraint firstItem="VIS-cE-86O" firstAttribute="width" secondItem="wM2-Su-T5d" secondAttribute="width" id="OYx-6K-su8"/>
                                                             <constraint firstItem="VIS-cE-86O" firstAttribute="height" secondItem="wM2-Su-T5d" secondAttribute="height" id="aAS-PR-s7Z"/>
-                                                            <constraint firstItem="rJM-Yy-A1o" firstAttribute="centerY" secondItem="wM2-Su-T5d" secondAttribute="centerY" id="f3U-qz-gxX"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>

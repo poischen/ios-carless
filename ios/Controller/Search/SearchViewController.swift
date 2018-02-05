@@ -135,9 +135,9 @@ class SearchViewController: UIViewController, UsingCalendar {
             return
         }
         if cellState.dateBelongsTo == .thisMonth {
-            currentCell.dateLabel.textColor = UIColor.black
+            currentCell.dateLabel.textColor = Theme.palette.white
         } else {
-            currentCell.dateLabel.textColor = UIColor.darkGray
+            currentCell.dateLabel.textColor = Theme.palette.lightgrey
         }
     }
     
@@ -153,7 +153,7 @@ class SearchViewController: UIViewController, UsingCalendar {
         } else {
             // cell is not selected -> hide special background and adapt font color
             currentCell.selectedView.isHidden = true
-            currentCell.dateLabel.textColor = UIColor.black
+            currentCell.dateLabel.textColor = Theme.palette.white
         }
         
     }
