@@ -169,9 +169,9 @@ class ChatBotViewController: UIViewController, UITextFieldDelegate {
 
     @objc func keyboardWillShow(notification: NSNotification) {
         if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            if self.textInputView.frame.origin.y == 0{
-                self.textInputView.frame.origin.y -= keyboardSize.height
-            }
+                let tabbarhight = self.tabBarController?.tabBar.frame.height
+                let keyboardhight = keyboardSize.height
+                self.textInputView.frame.origin.y -= (keyboardhight - tabbarhight!)
         }
     }
     
