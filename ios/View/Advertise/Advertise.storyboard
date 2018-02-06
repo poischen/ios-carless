@@ -34,7 +34,7 @@
                 <pageViewController storyboardIdentifier="AdvertisePages" autoresizesArchivedViewToFullSize="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="YnE-ab-HEt" customClass="AdvertisePagesVC" customModule="ios" customModuleProvider="target" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" title="Advertise your car" leftItemsSupplementBackButton="YES" id="2jK-7c-gvX">
                         <barButtonItem key="backBarButtonItem" title="Your Homepage" id="r5w-j6-vRI"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="yHs-Vw-aub">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="yHs-Vw-aub">
                             <connections>
                                 <action selector="cancelAction:" destination="YnE-ab-HEt" id="BPW-kt-uuF"/>
                             </connections>
